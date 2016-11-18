@@ -1,0 +1,1 @@
+@include('front.user.register')

@@ -1,0 +1,12 @@
+/* Webfont: Charlemagne-Regular */@font-face {
+    font-family: 'Charlemagne';
+    src: url('charlemagne-regular.eot'); /* IE9 Compat Modes */
+    src: url('charlemagne-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('charlemagne-regular.woff') format('woff'), /* Modern Browsers */
+         url('charlemagne-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('charlemagne-regular.svg#Charlemagne-Regular') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

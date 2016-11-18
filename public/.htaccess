@@ -1,0 +1,29 @@
+Options +FollowSymLinks -Indexes -MultiViews
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+# RewriteCond %{QUERY_STRING} transport=polling
+# RewriteRule socket.io/(.*)$ http://localhost:6001/socket.io/$1 [P]
+
+# ProxyPass ^/socket.io/ ws://localhost:6001/socket.io/
+# ProxyPassReverse ^/socket.io/ ws://localhost:6001/socket.io/	
+	
+
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^socket.io/(.*) http://localhost:6001/$1 [L,P]
+	
+    # Redirect Trailing Slashes If Not A Folder...
+    # RewriteCond %{REQUEST_FILENAME} !-d
+    # RewriteRule ^(.*)/$ /$1 [L,R=301]
+	
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+	
+
+</IfModule>

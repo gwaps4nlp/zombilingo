@@ -1,0 +1,126 @@
+% ====================================================================================================
+features {
+  % phon and lemma features are built-in CONLL format features (phon is field 2 and lemma is field 3)
+  phon: *;
+  lemma: *;
+
+  % cat and pos features are built-in CONLL format features (phon is field 4 and lemma is field 5)
+  cat:  V, N, C, CL, P, I, PONCT, A, ADV, PRO, D, ET, "P+D", "P+PRO", PREF;
+  pos:  V, VS, VINF, VPP, VPR, VIMP, N, NC, NPP, C, CS, CC, CL, CLS, CLO, CLR, P, "P+D", "P+PRO", I, PONCT, ET, ADJ, ADJWH, ADV, ADVWH, PRO, PROREL, PROWH, DET, DETWH, PREF;
+
+  % In Sequoia, sentence identifier are given through a feature sentid on the first node of the CONLL description.
+  sentid: *;
+
+  % basic features
+  g: m,f;
+  n: s,p;
+  p: 1,2,3;
+  s: c, card, def, dem, exel, ind, int, neg, obj, ord, p, part, pers, poss, qual, refl, rel, s, suj, w;
+  m: ind, inf, part, subj, imp;
+  t: pst, impft, past, fut, cond;
+
+  % Features introduced in deep-sequoia
+  diat: caust, caust_seobj, causi, sefaire, passif, impers, passif_impers, demsuj;
+  def:y;
+  intrinsimp: y;
+  se: ppdc;
+  cltype : int, imp, excl;
+  lexicalisation: causi_fige, caust_fige;
+
+  % fctpath encode information needed to deal with non-projectivity of some sentences
+  fctpath:*;
+
+  % --------------------------------------------------
+  % features that are used only in the deep representation
+  % --------------------------------------------------
+  dl: *;
+  dm: ind, inf, part, subj, imp, pastpart, pstpart;
+  void:y;
+}
+
+% ====================================================================================================
+labels {
+
+  % --------------------------------------------------
+  % surface labels
+  % --------------------------------------------------
+  root,
+
+  % function used in diathesis alternation: they are not used like this in deep-sequoia but with the double function notation X:Y
+  suj, obj, de_obj, a_obj, ats, ato, p_obj.agt,
+
+  p_obj.o,
+  obj.p, obj.cpl,
+  aux.tps, aux.pass, aux.caus,
+  dis,
+  aff, aff.demsuj,
+
+  det, mod,
+  mod, mod.app, mod.cleft, mod.inc, mod.rel, mod.voc,
+  ponct, coord, dep.coord,
+  dep, arg,
+
+  % --------------------------------------------------
+  % deep only labels
+  % --------------------------------------------------
+  argc,
+  mod.comp, mod.super, mod.rel.part,
+  arg.comp, arg.cons, dep.de,
+  void,
+
+  % --------------------------------------------------
+  % mixed labels
+  % --------------------------------------------------
+  S:root, D:root,
+
+  % bilabel
+  suj:suj@black, D:suj:suj@blue@bottom, S:suj:suj@red, I:suj:suj@grey@bottom,
+  suj:obj@black, D:suj:obj@blue@bottom, S:suj:obj@red, I:suj:obj@grey@bottom,
+  obj:obj@black, D:obj:obj@blue@bottom, S:obj:obj@red, I:obj:obj@grey@bottom,
+  a_obj:a_obj@black, D:a_obj:a_obj@blue@bottom, S:a_obj:a_obj@red, I:a_obj:a_obj@grey@bottom,
+  de_obj:de_obj@black, D:de_obj:de_obj@blue@bottom, S:de_obj:de_obj@red, I:de_obj:de_obj@grey@bottom,
+  a_obj:suj@black, D:a_obj:suj@blue@bottom, S:a_obj:suj@red,
+  p_obj.agt:suj@black, D:p_obj.agt:suj@blue@bottom, S:p_obj.agt:suj@red,
+  obj:suj@black, S:obj:suj@red, D:obj:suj@blue@bottom,
+  suj:_@black, D:suj:_@blue@bottom, S:suj:_@red,
+  suj:argc@black, D:suj:argc@blue@bottom,
+
+  ats:ats, S:ats:ats@red, D:ats:ats@blue@bottom,
+  ato:ato, S:ato:ato@red, D:ato:ato@blue@bottom,
+  ats:ato@black,
+
+  dis:dis@black,
+  dis:suj@black, S:dis:suj@red, D:dis:suj@blue@bottom,
+  dis:obj@black, S:dis:obj@red, D:dis:obj@blue@bottom,
+
+  % modifier unconsidered in surface annoation and defined in deep
+  D:mod.comp@blue@bottom, I:mod.comp@grey@bottom,
+  D:arg.comp@blue@bottom, I:arg.comp@grey@bottom,
+  D:arg.cons@blue@bottom, I:arg.cons@grey@bottom,
+  D:dep.de@blue@bottom, I:dep.de@grey@bottom,
+  D:mod.super@blue@bottom,
+  D:mod.rel.part @blue@bottom, % TODO comment
+
+  %relation specific to surface:
+  S:aux.tps@red, S:aux.pass@red, S:aux.caus@red,
+
+  D:p_obj.o@blue@bottom, S:p_obj.o@red,
+  D:mod@blue@bottom, S:mod@red,
+  S:aff@red,
+  S:aff.demsuj@red,
+
+  S:arg@red, D:arg@blue@bottom, I:arg@grey@bottom,
+  S:mod.rel@red, D:mod.rel@blue@bottom,
+  D:mod.app@blue@bottom, S:mod.app@red,
+
+  S:ponct@red, D:ponct@blue@bottom,
+  S:coord@red, D:coord@blue@bottom,
+  S:dep.coord@red, D:dep.coord@blue@bottom,
+  S:dep@red, D:dep@blue@bottom, I:dep@grey@bottom,
+  S:det@red, D:det@blue@bottom,
+
+  D:obj.p@blue@bottom, S:obj.p@red,
+  D:obj.cpl@blue@bottom, S:obj.cpl@red,
+}
+
+sequences {}

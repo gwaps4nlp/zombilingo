@@ -1,0 +1,46 @@
+id;parent_id;slug;name
+1;0;V;
+2;0;N;
+3;0;C;
+4;0;CL;
+5;0;P;
+6;0;P+D;
+7;0;P+PRO;
+8;0;I;
+9;0;PONCT;
+10;0;ET;
+11;0;A;
+12;0;ADV;
+13;0;PRO;
+14;0;D;
+15;0;PREF;
+16;1;V_pos;verbe indicatif
+17;1;VS_pos;verbe subjonctif
+18;1;VINF_pos;verbe infinitif
+19;1;VPP_pos;participe passé
+20;1;VPR_pos;participe présent
+21;1;VIMP_pos;verbe impératif
+22;2;NC_pos;nom commun
+23;2;NPP_pos;nom propre
+24;3;CS_pos;conjonction de subordination
+25;3;CC_pos;conjonction de coordination
+26;4;CLS_pos;clitique sujet
+27;4;CLO_pos;clitique objet
+28;4;CLR_pos;clitique réfléchi
+29;5;P_pos;préposition non amalgamée
+30;6;P+D_pos;préposition+dét :le lutindesalpages
+31;7;P+PRO_pos;préposition+prorel :le lieuauquelon pense
+32;8;I_pos;interjection
+33;9;PONCT_pos;ponctuation
+34;10;ET_pos;mots étrangers
+35;11;ADJ_pos;adjectifs non interrogatifs
+36;11;ADJWH_pos;adjectifs interrogatifs
+37;12;ADV_pos;adverbes non interrogatifs
+38;12;ADVWH_pos;adverbes interrogatifs
+39;13;PRO_pos;pronoms ni interrogatifs ni relatifs
+40;13;PROREL_pos;pronoms relatifs
+41;13;PROWH_pos;pronoms interrogatifs
+42;14;DET_pos;déterminants non interrogatifs
+43;14;DETWH_pos;déterminants interrogatifs
+44;15;PREF_pos;préfixe
+45;0;UNK;aucune catégorie ne convient

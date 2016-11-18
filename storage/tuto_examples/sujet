@@ -1,0 +1,71 @@
+% ============================================
+% Niveau 1: Nom propre simple
+match { GOV []; DEP [pos = NPP]; GOV -[suj]-> DEP }
+without { DEP -> * }
+suj	1	+1	annodis.er_00072	9	Si le sujet est un nom propre simple, on le choisit : ici, le sujet est <span class=solution>Guy</span>.
+suj	1	+1	annodis.er_00074	1	Si le sujet est un nom propre simple, on le choisit : ici, le sujet est <span class=solution>Guy</span>
+suj	1	+1	annodis.er_00346	1	Si le sujet est un nom propre simple, on le choisit : ici, le sujet est <span class=solution>Paris</span>
+suj	1	+1	Europar.550_00474	15	Si le sujet est un nom propre simple, on le choisit : ici, le sujet est <span class=solution>Mugabe</span>
+suj	1	+1	frwiki_50.1000_00302	12	Si le sujet est un nom propre simple, on le choisit : ici, le sujet est <span class=solution>Bigedain</span>
+suj	1	+1	frwiki_50.1000_00914	5	Si le sujet est un nom propre simple, on le choisit : ici, le sujet est <span class=solution>Reuters</span>
+
+% ============================================
+% Niveau 2: prénom + nom
+match { N [pos=NPP]; * -[suj]-> N; N -[mod]-> *}
+suj	2	+1	frwiki_50.1000_00132	1	Le sujet est un nom propre composé (prénom, nom): il faut choisir le prénom, ici c'est <span class=solution>Jacques</span>
+suj	2	+1	annodis.er_00092	1	Le sujet est un nom propre composé (prénom, nom): il faut choisir le prénom, ici c'est <span class=solution>Joseph</span>
+suj	2	+1	annodis.er_00280	18	Le sujet est un nom propre composé (prénom, nom): il faut choisir le prénom, ici c'est <span class=solution>Arsène</span>
+suj	2	+1	frwiki_50.1000_00862	35	Le sujet est un nom propre composé (prénom, nom): il faut choisir le prénom, ici c'est <span class=solution>Ernest</span>
+
+% ============================================
+% Niveau 3: groupe nominal
+suj	3	+1	annodis.er_00006	6	Si le sujet est un groupe nominal, on choisit la tête (le nom principal du groupe) : ici <span class=solution>sites</span>
+suj	3	+1	annodis.er_00010	2	Si le sujet est un groupe nominal, on choisit la tête (le nom principal du groupe) : ici <span class=solution>pose</span>
+suj	3	+1	annodis.er_00056	3	Si le sujet est un groupe nominal, on choisit la tête (le nom principal du groupe) : ici <span class=solution>rencontre</span>
+suj	3	+1	annodis.er_00110	2	Si le sujet est un groupe nominal, on choisit la tête (le nom principal du groupe) : ici <span class=solution>voiture</span>
+suj	3	+1	annodis.er_00126	16	Si le sujet est un groupe nominal, on choisit la tête (le nom principal du groupe) : ici <span class=solution>astronome</span>
+suj	3	+1	annodis.er_00356	2	Si le sujet est un groupe nominal, on choisit la tête (le nom principal du groupe) : ici <span class=solution>obligations</span>
+
+% ============================================
+% Niveau 4: pronom
+match { N [cat=CL|PRO]; * -[suj]-> N;}
+suj	4	+1	annodis.er_00028	1	Le sujet peut être un pronom, ici <span class=solution>Elle</span>
+suj	4	+1	annodis.er_00038	1	Le sujet peut être un pronom, ici <span class=solution>Il</span>
+suj	4	+1	annodis.er_00104	6	Le sujet peut être un pronom, ici <span class=solution>tout</span>
+suj	4	+1	annodis.er_00110	16	Le sujet peut être un pronom, ici <span class=solution>elle</span>
+suj	4	+1	annodis.er_00218	10	Le sujet peut être un pronom, ici <span class=solution>plusieurs</span>
+suj	4	+1	frwiki_50.1000_00036	18	Le sujet peut être un pronom, ici <span class=solution>toutes</span>
+suj	4	+1	frwiki_50.1000_00272	31	Le sujet peut être un pronom, ici <span class=solution>cela</span>
+
+% ============================================
+% Niveau 5: la coordination
+match { N []; * -[suj]-> N; N -[coord]-> *}
+suj	5	+1	annodis.er_00026	14	S'il y a une coordination de plusieurs sujets, il faut choisir le premier. Par exemple, ici <span class=solution>maire</span>
+suj	5	+1	annodis.er_00130	3	S'il y a une coordination de plusieurs sujets, il faut choisir le premier. Par exemple, ici <span class=solution>société</span>
+suj	5	+1	annodis.er_00192	17	S'il y a une coordination de plusieurs sujets, il faut choisir le premier. Par exemple, ici <span class=solution>scolaires</span>
+suj	5	+1	annodis.er_00432	1	S'il y a une coordination de plusieurs sujets, il faut choisir le premier. Par exemple, ici <span class=solution>Arturo</span>
+suj	5	+1	annodis.er_00488	2	S'il y a une coordination de plusieurs sujets, il faut choisir le premier. Par exemple, ici <span class=solution>conducteur</span>
+suj	5	+1	frwiki_50.1000_00838	1	S'il y a une coordination de plusieurs sujets, il faut choisir le premier. Par exemple, ici le premier <span class=solution>Marcel</span>
+
+% ============================================
+% Niveau 6: "qui" comme sujet
+match { N [phon=qui]; * -[suj]-> N}
+suj	6	+1	annodis.er_00040	14	Si le verbe est dans une relative introduite par "qui", le sujet du verbe est <span class=solution>qui</span>
+suj	6	+1	annodis.er_00044	26	Si le verbe est dans une relative introduite par "qui", le sujet du verbe est <span class=solution>qui</span>
+suj	6	+1	annodis.er_00102	9	Si le verbe est dans une relative introduite par "qui", le sujet du verbe est <span class=solution>qui</span>
+suj	6	+1	Europar.550_00262	39	Si le verbe est dans une relative introduite par "qui", le sujet du verbe est <span class=solution>qui</span>
+suj	6	+1	frwiki_50.1000_00292	24	Si le verbe est dans une relative introduite par "qui", le sujet du verbe est <span class=solution>qui</span>
+
+% ============================================
+% Niveau 7: examples négatifs
+match { N [cat="V"] } without { N -[suj]-> *}
+suj	7	-1	annodis.er_00010	15	Mais attention, certains verbes n'ont pas de sujet (ici un infinitif), il faut cliquer sur la croix d'os !
+suj	7	-1	annodis.er_00044	12	Mais attention, certains verbes n'ont pas de sujet (ici un infinitif), il faut cliquer sur la croix d'os !
+suj	7	-1	annodis.er_00044	13	Mais attention, certains verbes n'ont pas de sujet (ici un infinitif), il faut cliquer sur la croix d'os !
+suj	7	-1	annodis.er_00026	3	Mais attention, certains verbes n'ont pas de sujet (ici un participe passé), il faut cliquer sur la croix d'os !
+suj	7	-1	annodis.er_00036	36	Mais attention, certains verbes n'ont pas de sujet (ici un participe passé), il faut cliquer sur la croix d'os !
+suj	7	-1	Europar.550_00088	1	Mais attention, certains verbes n'ont pas de sujet (ici un impératif), il faut cliquer sur la croix d'os !
+suj	7	-1	emea-fr-test_00438	19	Mais attention, certains verbes n'ont pas de sujet (ici un impératif), il faut cliquer sur la croix d'os !
+suj	7	-1	annodis.er_00076	2	Mais attention, certains verbes n'ont pas de sujet (ici un auxiliaire), il faut cliquer sur la croix d'os !
+suj	7	-1	annodis.er_00090	27	Mais attention, certains verbes n'ont pas de sujet (ici un auxiliaire), il faut cliquer sur la croix d'os !
+

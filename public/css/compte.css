@@ -1,0 +1,191 @@
+label {
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
+h2 img {
+  width: 45px;
+}
+
+.error {
+  color: #FF0000;
+}
+
+.infos {
+  display: inline-block;
+  vertical-align: top;
+  font-size: 1.5em;
+}
+
+#classement .ligne:nth-of-type(2n+1) {
+  background-color: #9bc5aa;
+}
+
+.trophee {
+  margin-right: 5px;
+}
+
+#classement .ligne {
+  font-size: 2em;
+  width: 100%;
+  margin: 0px;
+}
+
+#classement {
+  padding: 0px;
+  padding-top: 50px;
+}
+
+#classement #entete {
+  text-align: center;
+}
+
+#classement #placeUser {
+  background: #4a1710;
+}
+
+#classement #currentPage {
+  background-color: #9bc5aa;
+  color: black;
+}
+
+#classement #class-top {
+    margin-top: 20px;
+}
+
+.trophee {
+  display: inline-block;
+  color: transparent;
+  height: 50px;
+}
+
+#pages {
+  margin-top: 20px;
+  color: black;
+}
+#pages a {
+  color: black;
+}
+
+#trophees {
+  display: inline-block;
+  vertical-align: top;
+  background-color: #9bc5aa;
+  margin-top: 20px;
+  margin-left: 10px;
+  padding: 5px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  width: 60%;
+}
+
+.pseudoUser {
+  color: black;
+}
+
+#show-user #right,#show-user #left {
+  margin-top: 20px;
+  width: 48%;
+  display: inline-block;
+}
+#show-user #right div, #show-user #left div {
+  background-color: #9bc5aa;
+  padding: 5px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#show-user #left {
+  margin-right: 4%;
+}
+
+#topInfos {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background-color: #9bc5aa;
+  width: 37%;
+  padding: 5px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#avatar {
+  margin-right: 10px;
+}
+
+.infos, #avatar {
+  margin-bottom: 0px;
+}
+
+#classement {
+  margin-top: 0px;
+}
+
+.min {
+  width: 10%;
+  height: auto;
+}
+
+#current {
+  width: 40%;
+}
+
+.blackened {
+  opacity: 0.3;
+}
+
+.trophee, .bonus {
+  position: relative;
+  cursor: help;
+  display: inline-block;
+  outline: none;
+}
+
+.trophee > span, .bonus > span {
+  visibility: hidden;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  z-index: 999;
+  width: 230px;
+  margin-left: -127px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background-color: #9BC5AA;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  color: #75211f;
+}
+
+.trophee:hover > span, .bonus:hover > span {
+  visibility: visible;
+}
+
+.trophee > span:before,
+.trophee > span:after,
+.bonus > span:before,
+.bonus > span:after {
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -8px;
+  border-top: 8px solid #ddd;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0;
+}
+
+.trophee > span:before, .bonus > span:before {
+  border-top-color: #ccc;
+  bottom: -8px;
+}
+
+.trophee .nom, .bonus .nom {
+  color: black;
+}

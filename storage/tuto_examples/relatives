@@ -1,0 +1,26 @@
+% ============================================
+Toutes les relatives:
+match { G []; D []; G -[mod.rel]-> D; PR[s=rel]; G.position < PR.position; PR.position < D.position }
+
+% ============================================
+% Niveau 1: les relatives en qui
+match { G []; D []; G -[mod.rel, lemma=qui]-> D; PR[s=rel]; G.position < PR.position; PR.position < D.position }
+mod.rel	1	+1	annodis.er_00026	8	La tête de la relative en "qui" modifiant "ruban" est le verbe "marque"
+mod.rel	1	+1	annodis.er_00102	10	La tête de la relative en "qui" modifiant "malaise" est le verbe "pourrait"
+mod.rel	1	+1	annodis.er_00154	38	La tête de la relative en "qui" modifiant "assemblée" est le verbe (un peu éloigné) "tenait"
+mod.rel	1	+1	annodis.er_00184	10	La tête de la relative en "qui" modifiant "musiciens" est le verbe "faisaient"
+mod.rel	1	+1	annodis.er_00214	16	La tête de la relative en "qui" modifiant "animation" est le verbe "déroulera"
+
+% ============================================
+% Niveau 2: autres pronoms, sauf dont
+match { G []; D []; G -[mod.rel, lemma<>qui|dont]-> D; PR[s=rel]; G.position < PR.position; PR.position < D.position }
+
+% ============================================
+% Niveau 3: le cas particulier de "dont"
+match { G []; D []; G -[mod.rel, lemma=dont]-> D; PR[s=rel]; G.position < PR.position; PR.position < D.position }
+
+% ============================================
+% Niveau 4: tête = VPP (avec aux)
+
+% ============================================
+% Niveau 5: examples négatifs ???

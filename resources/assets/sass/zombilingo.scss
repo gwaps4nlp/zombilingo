@@ -1,0 +1,837 @@
+#header_new {
+  z-index:1;
+  position:relative;
+}
+#link_logout{
+	display:block;
+	height:87px;
+	width:105px;
+}
+#homepage {
+    background-image: url("../../img/background-home.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position:relative;
+    top:-59px;
+    
+    #menu-play {
+        width:36%;
+        float:left;
+
+    }
+    #text-play {
+        width:36%;
+        padding-top: 14%;
+        padding-left: 6%;
+        padding-right: 5%;    
+        position:absolute;
+    }  
+    #explication-play {
+        width:36%;
+        padding-top: 31%;
+        padding-left: 6%;
+        padding-right: 5%;    
+        position:absolute;
+    }
+    #menu-demo {
+        width:36%;
+        float:right;
+        margin-right:10%;
+    }
+    #text-demo {
+        margin-right: 15%;
+        width: 28%;
+        padding-top: 14%;
+        padding-left: 0;
+        padding-right: 0;
+        right: 0px;
+        position: absolute;
+    }
+    #explication-demo {
+        width:36%;
+        margin-right:10%;    
+        padding-top: 31%;
+        padding-left: 5%;
+        padding-right: 6%;
+        position:absolute;
+        right:0;
+    }
+    .explication{
+        font-family: "anothershabby";
+        color: #3c1715;
+        font-size: 1.4vw;
+        height: 47%;
+        line-height: 130%;
+    }
+
+    .text-menu {
+        position:absolute;
+        font-family: "Charlemagne Std Bold";
+        font-size: 2vw;
+        text-transform: uppercase !important;
+        font-weight: bold;
+    }
+    a div.text-menu,a:visited div.text-menu {
+        color:black;
+    }
+    a:hover div.text-menu {
+        text-shadow:0px 0px 9px #fff;
+    }
+    #menu-home {
+        padding-top:104px;
+    }
+    #explication-text {
+        width: 100%;
+        padding-top: 0;  
+    }
+    #panel{
+        width: 85%;
+        margin-left: 4%;
+        margin-top: 30%;
+        color: #3c1715;  
+        font-family: "Charlemagne Std Bold";
+        text-transform: uppercase; 
+        font-size: 1.05vw;
+        line-height:1.25vw;     
+    }
+    #leader-board {
+        width:98%;
+        padding-top:10%;
+        height:10%;
+        font-family: "Charlemagne Std Bold"; 
+    }
+    #leader-board img{
+        width:100%;
+        position:absolute;
+        left:0;
+        top:0;
+        margin-top:8%;
+    }
+    #periode-board{
+      position: absolute;
+      margin-top: 15%;
+      padding-left:59%;
+      color: #FFF;
+      font-size: 0.9vw;
+      font-family: "anothershabby";
+      right:20%;
+      text-align: right;
+      width:100%;
+      z-index:2;
+    }
+    #periode-board .focus{
+      font-size: 1.4vw;
+      text-align: left;
+      position: absolute;
+      left: 44%;
+      top: 54%;
+    }
+    .score-choice{
+        position:absolute;
+        cursor:pointer;
+        left: 44%;
+        top: 124%;    
+    }
+    .periode-choice{
+      text-transform: uppercase;
+      cursor:pointer;
+    }
+    .periode-choice:hover{
+      text-shadow:0px 0px 5px #a8a8a8;  
+    }
+    #leaders-1-2{
+        font-size:0.8vw;
+        position:absolute;    
+        margin-top: 47%;
+        text-align: left;
+        padding-left:11%;
+    }
+    #leaders-3-4-5{
+        font-size:0.7vw;
+        margin-top: 91%;
+        position:absolute;
+        text-align: left;
+        padding-left:1.5%;      
+    }    
+}
+@media (min-width: 1200px) {
+	#home.col-md-10{
+		width:85.333333%;
+		left:-1%;
+	}
+}
+#home.col-md-10, #home .link{
+	border-radius : 1% 1%;
+    position:relative;
+	color:#3c1715;
+}
+#home {
+	#header_new {
+		z-index:1;
+		position:relative;
+	}
+
+	#scores{
+		position: absolute;
+		margin-top: 18%;
+		margin-left: 15%;
+		font-family: "Charlemagne Std Bold"; 
+	}
+	.col-md-10{
+		padding-left:0;
+		padding-right:0;
+	}
+	.herbe {
+		display:none;
+	}
+	img#trophies{
+		width: 2.5vw;
+		position: relative;
+		left: 0vw;
+	}
+	img#money{
+		width: 6vw;
+		position: relative;
+		left: -1.7vw;
+	}
+	img#points{
+		width: 4vw;
+	}
+	img#level{
+		width: 4vw;
+	}
+	img.level {
+	    width: 70%;
+	    position: absolute;
+	    margin-top: 107%;
+	    left: -39%;
+	}
+	#leader-board {
+		width: 101%;
+		padding-top: 10%;
+		font-family: "Charlemagne Std Bold";
+		position: absolute;
+		margin-top: -17%;
+		margin-left: 18%;
+		color:white;	
+	}
+	#number-friends {
+	    width: 70%;
+	    font-family: "Charlemagne Std Bold";
+	    position: absolute;
+	    margin-top: 64%;
+	    margin-left: 0%;
+	    color: #FFF;
+	    z-index: 2;
+	    text-align: center;
+	    vertical-align: middle;
+	    padding: 6% 1%;
+	    cursor:pointer;
+	}
+	#friends {
+		font-family: "Charlemagne Std Bold";
+		position: absolute;
+		margin-top: 87%;
+		margin-left: -36%;
+		color: #FFF;
+		z-index: 2;
+		text-align: center;
+		vertical-align: middle;
+		cursor: pointer;
+		width: 41%;
+		line-height:0.9vw;
+		overflow:hidden;
+	}
+	img.level-friend {
+	    width: 66%;
+	    padding-bottom:10%;
+	}
+	#label-friend {
+		width: 80%;
+		color: #000;
+		font-size: 0.7vw;
+		left: 0px;
+		position: absolute;
+		top: 85%;
+	}
+	#leader-board img{
+	    width:100%;
+	    position:absolute;
+	    left:0;
+	}
+	#periode-board{
+		position: absolute;
+		margin-top: 39%;
+		padding-left:59%;
+		color: #FFF;
+		font-size: 0.9vw;
+		font-family: "anothershabby";
+		right:30%;
+		text-align: right;
+		width:100%;
+		z-index:2;
+	}
+	#periode-board .focus{
+		font-size: 1.4vw;
+		text-align: left;
+		position: absolute;
+		left: 48%;
+		top: 34%;
+	}
+	#toggleScore{
+		text-align: left;
+		position: absolute;
+		left:48%;
+		cursor:pointer;
+	}
+	.periode-choice{
+		text-transform: uppercase;
+		cursor:pointer;
+	}
+	#my-position{
+		text-transform: uppercase;
+		cursor:pointer;
+		font-size: 0.5vw;	
+	}
+	.periode-choice:hover{
+		text-shadow:0px 0px 5px #a8a8a8;	
+	}
+	.rank_neighbor{
+		display:none;
+	}
+	.rank.self, .rank_neighbor.self{
+		color:#fffd6c;
+	}
+	#leaders-1-2{
+	    font-size:0.8vw;
+	    position:absolute;    
+	    margin-top: 73%;
+	    text-align: left;
+	    padding-left:26%;
+	}
+	#leaders-3-4-5{
+	    font-size:0.8vw;
+	    margin-top: 127%;
+	    position:absolute;
+	    text-align: left;
+	    padding-left:14%;      
+	}
+	#panel-trophies{
+		background-image: url("../../img/white-background.png");
+		position: absolute;
+		width: 320px;
+		border-radius: 12px;
+		left: 79.5%;
+		margin-top: -76%;
+		font-family: "Charlemagne Std Bold";
+		font-weight: bold;
+		font-size: 1.1vw;
+		text-transform: uppercase;
+		z-index:1;
+	}
+	#panel-trophies td.img{
+		width:29%;
+	}
+	#panel-trophies td.text{
+		vertical-align:middle;
+		padding-left:4%;
+	}
+	#panel-duel{
+		background-image: url("../../img/white-background.png");
+		position: absolute;
+		width: 18%;
+		border-radius: 12px;
+		left: 20.5%;
+		margin-top: 21%;
+		font-family: "Charlemagne Std Bold";
+		font-weight: bold;
+		font-size: 1.1vw;
+		text-transform: uppercase;
+	}
+	#panel-duel td.img{
+		width:29%;
+	}
+	#panel-duel td.text{
+		vertical-align:middle;
+		padding-left:4%;
+	}
+	#block-trophies {
+		cursor:pointer;
+	}
+	#block-trophies > #panel-trophies {
+		display:none;
+	}
+	#block-trophies:hover > #panel-trophies {
+		display:block;
+	}
+	div.label {
+		font-family: "Charlemagne Std Bold";
+		font-weight: bold;
+		font-size: 1.7vw;
+		text-transform: uppercase;
+		color:#261012;
+	}
+	div.label-friends {
+		font-family: "Charlemagne Std Bold";
+		font-weight: bold;
+		font-size: 1.1vw;
+		text-transform: uppercase;
+		color:#261012;
+	}
+	#stats {
+		position: absolute;
+		margin-top: 51.3%;
+		left: 61.5%;
+		z-index: 2;
+		font-family: "anothershabby";
+		font-weight: normal;
+		width: 15%;
+		line-height: 1.5em;
+		font-size: 1.2vw;
+	}
+	#news {
+	    position: absolute;
+		margin-top: 51.2%;
+		left: 21%;    
+	    z-index: 2;
+	    font-family: "";
+	    font-weight: normal;
+	    font-size: 1.3vw;
+	    width: 18%;
+	    font-style: italic;
+	    line-height:1.2em;
+	}
+	#account {
+		position: absolute;
+		margin-top: 54%;
+		left: 45.5%;
+		z-index: 2;
+		font-weight: normal;
+		width: 12%;
+		font-family: "anothershabby";
+		font-size: 1.2vw;
+		line-height: 1.2em;
+	}
+	#panel-trophies span.label{
+		font-family: "anothershabby";
+		text-transform: none;
+		color:#261012;
+		font-weight:normal;
+		font-size:1vw;
+	}
+	#panel-duel span.label{
+		font-family: "anothershabby";
+		text-transform: none;
+		color:#261012;
+		font-weight:normal;
+		font-size:1vw;
+	}
+	#stats span{
+		font-family: "Charlemagne Std Bold";
+		font-weight: normal;
+		font-size:1.3vw;
+	}
+	.curvilinear {
+		font-family: "anothershabby";
+	}
+	label {
+		color : white;
+	}	
+}
+
+#index-game {
+
+	.aideTool {
+		float:right;
+	}
+	#relation-done-small {
+		ul li {
+			float:left;
+			padding:0;
+			.relation-done {
+				position:absolute;
+				top:0;
+				height:100%;
+				width:105%;
+				padding: 0% 12%;
+			}
+			.relation_name {
+				font-size:0.6vw;
+				font-weight:normal;
+			}
+			.points {
+				font-size:0.6vw;font-weight:normal;
+			}
+		}
+
+	}
+
+	div.relation-done span.relation_name {
+	  color:#85832D;
+	  text-shadow: -1px -1px #FFFB56;
+	}
+	div.disabled-relation span.relation_name {
+	  color:#3b3d3e;
+	  text-shadow: 0px -1px #b8b8b8;  
+	}
+	div.relation-done span.points {
+	  color:#85832D;
+	  text-shadow: -1px -1px #FFFB56;
+	}
+	div.disabled-relation span.points {
+	  color:#3b3d3e;
+	  text-shadow: 0px -1px #b8b8b8;  
+	}
+	div span.relation_name {
+	  color:#0a0a0a;
+	  text-shadow: -1px -1px #888;
+	  font-weight: normal;
+	  box-sizing: border-box;
+	}
+	.phenomeneSelection label.control-label {
+	  color:#0a0a0a;
+	  text-shadow: -1px -1px #888;
+	  font-weight: normal;
+	  box-sizing: border-box;
+	  font-size:1.2vw;
+	}
+	div.scores div.points{
+	  color:#000;
+	  text-shadow: -1px -1px #888;
+	  font-weight:bold;
+	  text-transform: none;
+	  font-size: 0.7em;
+	}
+	div.relation_name, li.phenomeneSelection div.form-group {
+	  font-size: 1.2vw;
+	  font-family: "Charlemagne Std Bold";
+	  text-transform: uppercase;
+	  line-height: 1.6vw;
+	  min-height: 36%;
+	  padding: 15% 0% 3% !important;
+	}
+	div.relation_name-done {
+	  font-size: 1.1vw;
+	  font-family: "Charlemagne Regular";
+	  text-transform: uppercase;
+	  line-height: 1.6vw;
+	  min-height: 36%;
+	  padding: 24% 0% 3% !important;
+	  text-align: center;     
+	}
+	div.relation_name-done-small {
+	  font-size: 0.6vw;
+	  font-family: "Charlemagne Regular";
+	  text-transform: uppercase;
+	  line-height: 0.8vw;
+	  min-height: 36%;
+	  padding: 20% 0% 3% !important;
+	  text-align: center;     
+	}
+	div.relation_name.short {
+	  padding-top: 22% !important;
+	}
+	span.points{
+	  color:#000;
+	  font-size:1vw;
+	  font-family: "Times";         
+	}
+	div.scores-done span.points{
+	  font-size:0.8vw;
+	  font-family: "Times";         
+	}
+	.links-level .link-level{
+	  color:#0a0a0a;
+	  text-shadow: 0px -1px #b8b8b8;      
+	  font-size:1.2vw;
+	  font-family: "Charlemagne Std Bold";
+	  background-color:#7F7F7F;
+	  border:solid 1px #181818;
+	  padding: 0% 4%;
+	  box-shadow: 0px 1px 0px #181818;
+	  text-transform: uppercase;
+	}
+	div.relation-done .link-level, div.disabled-relation .link-level,.links-level  a.link-level-disabled,.links-level  a.link-level-disabled:hover{
+	  color:#3b3d3e;
+	  text-shadow: 0px -1px #b8b8b8;        
+	  background-color:#4e5152;
+	  border:solid 0px #181818;
+	  box-shadow: -1px -1px 0px #181818;
+	}
+	div.detail-relation {
+	  position:absolute;
+	  top:0;
+	  width:100%;
+	  height:100%;
+	  padding:5% 14%;
+	}
+	div.relations-choice {
+	  position:absolute;
+	  top:0;
+	  width:95%;
+	  padding:5% 14% 5% 20%;
+	}
+	div.level_relation{
+	  position: absolute;
+	  width: 100%;
+	  top: 0px;
+	  padding-top: 9%;
+	  font-size:0.7vw;
+	  font-family: "Charlemagne Std Bold";
+	  color:#000;
+	  z-index:1;
+	}
+	.links-level  .link-level:hover{
+	  color:#000;
+	  text-shadow: 1px 0px #a8a8a8;
+	  background-color:#7F7F7F;
+	  border:solid 1px #010101;     
+	  box-shadow: -1px -1px 0px #181818;
+	}
+	.phenomeneSelection select {
+	  width:93%;
+	  margin-left: 5%;
+	  margin-top: 8%;
+	  font-family: "Charlemagne Regular";
+	  text-transform: uppercase;
+	  background-color: #7F7F7F;  
+	  color:#000;
+	  border:solid 1px #000;
+	  
+	}
+	.scores {
+	  position: absolute;
+	  padding: 0% 0% 16%;
+	  box-sizing: border-box;
+	  width: 100%;
+	  left: 0;
+	  bottom: 0;
+	}
+	.scores-done {
+	  position: absolute;
+	  padding: 0% 0% 23%;
+	  box-sizing: border-box;
+	  width: 100%;
+	  left: 0;
+	  bottom: 0;
+	  text-align:center;
+	}
+	.scores-done-small {
+	  position: absolute;
+	  padding: 0% 0% 14%;
+	  box-sizing: border-box;
+	  width: 100%;
+	  left: 0;
+	  bottom: 0;
+	  text-align:center;
+	  line-height:0.5vw;
+	}
+	#relation-done-small {
+	  margin-left:3%;
+	  margin-right:1%;
+	  margin-top: 2%;
+	}	
+}
+#shop {
+	.object {
+	  color: #4a1710;
+	  background: #9bc5aa;
+	  display: inline-block;
+	  padding-top: 20px;
+	  padding-bottom: 10px;
+	  margin-top: 20px;
+	  position: relative;
+	}
+	.object .image {
+	  width: 200px;
+	  height: auto;
+	  float: left;
+	  position: absolute;
+	  top: 0px;
+	  left: 0px;
+	}
+	.object p {
+	  display: inline-block;
+	  margin-left: 250px;
+	}
+	.object .name {
+	  font-size: 1.5em;
+	}
+
+	.btn {
+	  color: #4a1710;
+	}
+
+	.row {
+	  margin-left: 0px;
+	}
+
+	#caddy {
+	  height: 212px;
+	  background-image: url("../img/caddy.png");
+	  background-repeat: no-repeat;
+	}
+
+	#purse {
+	  margin-top: 70px;
+	}
+	#purse h2 {
+	  position: absolute;
+	  right: 0px;
+	  font-size: 2em;
+	}
+
+	.particle-text {
+	  position: absolute;
+	  top: 50px;
+	  left: 290px;
+	  color: white;
+	  height: 0px;
+	  width: 0px;
+	  text-shadow: 1px 1px 10px #FFFFFF;
+	}
+	span.error {
+		color: #d01a27;
+		font-size: 95%;
+	}
+	.buy {
+	  margin-right:20px;
+	}
+	@media (max-width: 980px) {
+	  #purse {
+	    margin-top: 0px;
+	  }
+	  #purse h2 {
+	    position: inherit;
+	    margin-top: 0px;
+	  }
+	}
+
+}
+#index-duel {
+
+	tr.duel:hover, tr.win:hover, tr.lost:hover, tr.draw:hover {
+	    background-color:#5cb85c;
+	}
+	.center-duel {
+	    background-color: #DADADA;
+	    color: #4a1710;
+	}
+	tr.completed:hover{
+	    border-top:solid 1px black;
+	    cursor:pointer;
+	}
+
+	div.progress {
+	    color:black;
+	}
+	div.bloc_pagination {
+	    text-align:center;
+	}
+	tr.not-seen div.result {
+	    display:none;
+	}
+	td.winner {
+	    color: #75211f;
+	}
+	ul.nav {
+	    font-family: "Charlemagne Std Bold";
+	    text-transform: uppercase;
+	}
+	.badge {
+	    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	}
+
+	label.level-not-available {
+		margin-top:15%;
+	}
+	.progress-bar-success-duel {
+		background-color:#75211f;
+	}
+	.progress-bar-danger-duel {
+		color:#000;background-color:#fff;
+	}
+}
+
+#modalCompareDuel {
+	
+	#content {
+	    color:black;
+	    text-align:left;
+	}
+	.source_1 {
+		background-color:#81F7BE;
+	}
+	.source_2.rank_0 {
+		background-color:#FF4000;
+	}
+	.source_3.rank_0 {
+		background-color:#9FF781;
+	}
+	.source_3 {
+		font-style: italic;
+	}
+	.highlight {
+	    font-weight: 900;
+	    font-style: italic;
+	    color:green;
+	}
+	.user_answer {
+	    font-weight: 900;
+	    color:blue;
+	}
+	.challenger_answer {
+	    font-weight: 900;
+	    color:red;
+	}
+	.challenger_answer.user_answer {
+	    font-weight: 900;
+	    color:#00b40c;
+	}
+
+}
+
+#modalEndGame {
+	.row {
+		margin:0;
+	}
+	#endGame {
+	    text-align: center;
+	    background: #9BC5AA none repeat scroll 0% 0%;
+	    margin-top: 0px;
+	    padding-bottom: 0px;
+	    border-radius: 6px;
+	}
+	.modal-body {
+	    position: relative;
+	    padding: 5px;
+	    background-color: #0E7F3C;
+	    border-radius: 6px;
+	}
+	.modal-content {
+	    border-radius: 9px;
+	}
+	.modal-dialog {
+	    width: 610px;
+	}
+	.btn-lg {
+		margin:10px;
+	}	
+}
+
+#modalReport {
+	label.report-label {
+		font-size:1em;
+	}
+}
+
+#informations {
+	.table-striped > tbody > tr:nth-child(odd) > td,
+	.table-striped > tbody > tr:nth-child(odd) > th {
+  		background-color: #9bc5aa;
+	}
+	.date-export {
+		font-size:small;
+		font-style: italic;
+	}
+}

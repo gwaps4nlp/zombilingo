@@ -1,0 +1,71 @@
+header {
+/*	width: 100%;
+	overflow: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	background-color: #fff;
+	transition: background-color 0.4s ease 0s, color 0.4s ease 0s, transform 0.4s ease 0s, opacity 0.4s ease-in-out 0s;
+	padding-top:10px;
+	-webkit-transition: height 1s;
+	-moz-transition: height 1s;
+	-ms-transition: height 1s;
+	-o-transition: height 1s;
+	transition: height 1s;*/
+}
+header #blocLogo {
+/*	display: inline-block;
+	height: 180px;
+
+	float: left;
+	font-family: "Oswald", sans-serif;
+	font-size: 60px;
+	color: white;
+	font-weight: 400;
+	transition: background-color 0.4s ease 0s, color 0.4s ease 0s, transform 0.4s ease 0s, opacity 0.4s ease-in-out 0s;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-ms-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+*/
+}
+ header nav {
+	display: inline-block;
+	float: right;
+}
+header nav a {
+	line-height: 150px;
+	margin-left: 20px;
+	color: #9fdbfc;
+	font-weight: 700;
+	font-size: 18px;
+	-webkit-transition: all 1s;
+	-moz-transition: all 1s;
+	-ms-transition: all 1s;
+	-o-transition: all 1s;
+	transition: all 1s;
+}
+header nav a:hover {
+	color: white;
+}
+header.smaller {
+	height: 75px;
+}
+header.smaller #blocLogo {
+	width: 150px;
+	height: 0px;
+	line-height: 0px;
+	font-size: 30px;
+}
+header.smaller nav a {
+	line-height: 75px;
+}
+
+span.link {
+	cursor: pointer;
+}
+span.link:hover {
+	text-decoration: underline;
+}

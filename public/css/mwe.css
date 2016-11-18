@@ -1,0 +1,117 @@
+#mwe_id {
+  display: none;
+}
+
+h1 {
+  font-size: 4em;
+  padding-bottom: 30px;
+  padding-top: 20px;
+}
+
+.savant {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  width: 100px;
+  height: 100px;
+  background: url("../img/savant.jpg");
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  border: solid 4px #36140f;
+}
+
+.center {
+  background-color: #75211f;
+}
+
+#unfrozen {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+a.btn {
+  font-size: 2em;
+}
+
+.progress {
+  height: 50px;
+}
+.progress .progress-bar {
+  line-height: 50px;
+}
+.progress .progress-bar span {
+  font-size: 40px;
+}
+
+.tool {
+  position: relative;
+  /*display: inline-block;*/
+  outline: none;
+}
+
+.tool > .tip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  z-index: 999;
+  width: 230px;
+  margin-left: -127px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background-color: #9bc5aa;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #75211f;
+}
+
+.tool:hover > .tip {
+  visibility: visible;
+}
+
+.tool > .tip:before,
+.tool > .tip:after {
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -8px;
+  border-top: 8px solid #ddd;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0;
+}
+
+.tool > .tip:before {
+  border-top-color: #ccc;
+  bottom: -8px;
+}
+
+.aideTool {
+  position: relative;
+  /*display: inline-block;*/
+  outline: none;
+}
+
+.aideTool > .aideTip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 0px;
+  left: -800px;
+  z-index: 999;
+  width: 800px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background-color: #9bc5aa;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #75211f;
+}
+
+.aideTool:hover > .aideTip {
+  visibility: visible;
+}

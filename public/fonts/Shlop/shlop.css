@@ -1,0 +1,12 @@
+/* Webfont: Shlop-Regular */@font-face {
+    font-family: 'Shlop';
+    src: url('shlop.eot'); /* IE9 Compat Modes */
+    src: url('shlop.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('shlop.woff') format('woff'), /* Modern Browsers */
+         url('shlop.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('shlop.svg#Shlop-Regular') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
