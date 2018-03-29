@@ -165,9 +165,7 @@ public $sentences_done;
                     unset($annotation_min['features']);
                     unset($annotation_min['lemma']);
                     unset($annotation_min['category_id']);
-                    unset($annotation_min['pos_id']);
-                    unset($annotation_min['governor_position']);
-                    
+                    unset($annotation_min['pos_id']);                    
 
                     if($this->mode=="update"){
                         unset($annotation_min['relation_id']);
@@ -183,23 +181,19 @@ public $sentences_done;
                         }
                     } else {
                         $annotation = Annotation::where($annotation_min)->first();
-                        if(!$annotation)
+                        if(!$annotation) {
                             $annotation = Annotation::create($annot);
-                        else {
-                            if($annotation->pos_id != $annot['pos_id'] && $annotation->governor_position != $annot['governor_position']){
-                                $annotation->playable = 1;
-                                $annotation->save();
-                                $annotation = Annotation::create($annot);
-                            } elseif($annotation->pos_id == $annot['pos_id'] && $annotation->governor_position != $annot['governor_position']){
-                                $annotation->playable = 1;
-                                $annotation->save();
-                                $annotation = Annotation::create($annot);
-                            } elseif($annotation->pos_id != $annot['pos_id'] && $annotation->governor_position == $annot['governor_position']){
-                                $annotation->playable = 0;
-                                $annotation->save();
-                                $annotation = Annotation::create($annot);
+                            $annotation->playable = 1;
+                            $annotation->save();
+                            $annotations_in_competition = $annotation->getAnnotationsInCompetition();
+                            if($annotations_in_competition->count()>0){
+                                $annotations_in_competition->update(['playable' => 0]);
                             }
+                        }
+                        else {
+                            // The annotation already exists => non-playable (the 2 parsers are agree)
                             $annotation->playable = 0;
+                            $annotation->save();
                         }
 
                         // if the annotation exists, we add the features and lemma if they are different from the existent

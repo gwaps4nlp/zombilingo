@@ -173,6 +173,23 @@ class Annotation extends Model
         return $this->source_id==Source::getUser()->id;
     }
 
+    public function getAnnotationsInCompetition()
+    {
+    	if($this->relation->type=="trouverDependant"){
+    		$annotations = Annotation::where('governor_position',$this->governor_position)
+    			->where('relation_id',$this->relation_id)
+    			->where('id','!=',$this->id)
+    			->get();
+    	} else {
+    		// $this->relation->type=="trouverTete"
+    		$annotations = Annotation::where('word_position',$this->word_position)
+    			->where('relation_id',$this->relation_id)
+    			->where('id','!=',$this->id)
+    			->get();
+    	}
+        return $annotations;
+    }
+
     public static function setAnswerId(){
 
     	DB::update('update annotation_users, annotations 
