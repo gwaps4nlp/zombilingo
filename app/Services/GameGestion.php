@@ -178,8 +178,13 @@ class GameGestion extends Game implements GameGestionInterface
 					$this->annotation = $this->annotations->getRandomReference($this->current_relation);
 				}
 
-			} else 
-				$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation,$this->user);
+			} else {
+				if(!$this->corpus->is_playable){
+					$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation);	
+				} else {
+					$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation,$this->user);
+				}
+			}
         }
 			
 		$this->set('reference_again',0);
@@ -332,7 +337,7 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
     public function addGain(){
-    	if($this->errors) return;
+    	if($this->errors || !$this->corpus->is_playable) return;
 		$this->user->increment('money',ConstantGame::get("gain-sentence"));
 		$this->increment('money_earned',ConstantGame::get("gain-sentence"));
 		$this->user->increment('score',ConstantGame::get("gain-sentence"));
@@ -401,43 +406,44 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
 	public function processAnswer(){
+		if($this->corpus->is_playable){
+			$this->annotation_users->save($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation);
+			
+			$this->corpus->increment('number_answers',1);
+			if($this->corpus_id == $this->default_corpus_id)
+				Event::fire(new BroadCastNewAnnotation($this->corpus->number_answers));
+			
+			$score_multiplier = $this->annotation_users->score_multiplier;
+			
+			if($score_multiplier==1)
+				$this->increment('nb_successes');
 
-		$this->annotation_users->save($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation);
+			$this->gain*=$score_multiplier;
+
+			$this->gain = intval($this->gain);
+
+			Event::fire(new ScoreUpdated($this->user, $this->gain,1,$this->challenge_id));
+
+			if($this->annotation_users->error)
+				$this->set('reference_again',1);
+			if($this->annotation_users->error==3)
+				$this->deleteInProgress();
+			
+			$this->set('errors',$this->annotation_users->error);
+			
 		
-		$this->corpus->increment('number_answers',1);
-		if($this->corpus_id == $this->default_corpus_id)
-			Event::fire(new BroadCastNewAnnotation($this->corpus->number_answers));
-		
-		$score_multiplier = $this->annotation_users->score_multiplier;
-		
-		if($score_multiplier==1)
-			$this->increment('nb_successes');
-
-		$this->gain*=$score_multiplier;
-
-		$this->gain = intval($this->gain);
-
-		Event::fire(new ScoreUpdated($this->user, $this->gain,1,$this->challenge_id));
-
-		if($this->annotation_users->error)
-			$this->set('reference_again',1);
-		if($this->annotation_users->error==3)
-			$this->deleteInProgress();
-		
-		$this->set('errors',$this->annotation_users->error);
-
+			if($this->in_progress && $inProgress = AnnotationInProgress::where('user_id','=',$this->user->id)
+				->where('relation_id','=',$this->relation_id)->where('corpus_id','=',$this->corpus_id)->first()
+			){
+				$inProgress->annotation_id=null;
+				$inProgress->save();
+			}
+		}
 		$this->addGain();
 		$this->addLoot();
 
 		$this->incrementTurn();
-	
-		if($this->in_progress && $inProgress = AnnotationInProgress::where('user_id','=',$this->user->id)
-			->where('relation_id','=',$this->relation_id)->where('corpus_id','=',$this->corpus_id)->first()
-		){
-			$inProgress->annotation_id=null;
-			$inProgress->save();
-		}
-		
+
 		$this->set('annotation_id',null);
 		$this->set('spell',null);
 		$this->set('effect',0);
