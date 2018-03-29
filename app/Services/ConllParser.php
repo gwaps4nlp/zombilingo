@@ -187,7 +187,11 @@ public $sentences_done;
                             $annotation->save();
                             $annotations_in_competition = $annotation->getAnnotationsInCompetition();
                             if($annotations_in_competition->count()>0){
-                                $annotations_in_competition->update(['playable' => 0]);
+                                foreach($annotations_in_competition as $annotation_in_competition){
+                                    $annotation_in_competition->playable = 0;
+                                    $annotation_in_competition->save();
+                                }
+                                
                             }
                         }
                         else {
