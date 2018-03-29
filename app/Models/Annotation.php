@@ -177,12 +177,14 @@ class Annotation extends Model
     {
     	if($this->relation->type=="trouverDependant"){
     		$annotations = Annotation::where('governor_position',$this->governor_position)
+    		    ->where('sentence_id',$this->sentence_id)
     			->where('relation_id',$this->relation_id)
     			->where('id','!=',$this->id)
     			->get();
     	} else {
     		// $this->relation->type=="trouverTete"
     		$annotations = Annotation::where('word_position',$this->word_position)
+    			->where('sentence_id',$this->sentence_id)
     			->where('relation_id',$this->relation_id)
     			->where('id','!=',$this->id)
     			->get();
