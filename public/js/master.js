@@ -590,12 +590,30 @@ function scrollTo(id){
     }, 0);    
 }
 function resizeIframe(obj) {
-    var new_height = obj.contentWindow.document.body.scrollHeight+200;
-    obj.style.height = new_height + 'px';
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
     var arrFrames = parent.parent.document.getElementsByTagName("IFRAME");
     for (var i = 0; i < arrFrames.length; i++) {
-        if (arrFrames[i].name != obj.name) {
-            resizeIframe(arrFrames[i]);
+      if (arrFrames[i].name != obj.name) {
+        resizeIframe(arrFrames[i]);
         }
-    }        
+    }
 }
+function resizeIframe2(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    var arrFrames = parent.parent.parent.document.getElementsByTagName("IFRAME");
+    for (var i = 0; i < arrFrames.length; i++) {
+      if (arrFrames[i].name != obj.name) {
+        resizeIframe2(arrFrames[i]);
+        }
+    }
+}
+function resizeIframeAgain(obj) {
+    obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+    var arrFrames = parent.document.getElementsByTagName("IFRAME");
+    for (var i = 0; i < arrFrames.length; i++) {
+      if (arrFrames[i].name != obj.name) {
+        resizeIframeAgain(arrFrames[i]);
+        }
+    }
+}
+

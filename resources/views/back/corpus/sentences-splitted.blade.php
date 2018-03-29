@@ -29,7 +29,7 @@
 
 
 
-@stop
+@endsection
 
 @section('scripts')
 <script type="text/javascript">
@@ -41,7 +41,6 @@ $('#form-parse').submit(function(event){
   	$( "#form-parse" ).submit();
   }
 });
-
 </script>
-@stop
+@endsection
 
