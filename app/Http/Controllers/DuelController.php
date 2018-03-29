@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Repositories\RelationRepository;
 use App\Repositories\DuelRepository;
-use App\Repositories\UserRepository;
+use Gwaps4nlp\Repositories\UserRepository;
 use App\Repositories\AnnotationRepository;
 use App\Repositories\ChallengeRepository;
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Models\Corpus;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
 use App\Models\Challenge;
 use App\Models\Duel;
 use App\Http\Requests\DuelCreateRequest;
@@ -154,11 +154,11 @@ class DuelController extends GameController
         
         $relation=null;
 
-        if($request->has('relation_id')){
+        if($request->has('relation_id') && $request->input('relation_id')){
             $relation = $relations->getById($request->input('relation_id'));
         }
 
-        if($request->has('challenger_id')){
+        if($request->has('challenger_id') && $request->input('challenger_id')){
             $challenger = $users->getById($request->input('challenger_id'));
             if(!$relation){
                 $relation = $relations->getRandom(min($challenger->level_id,$user->level_id));
@@ -179,7 +179,7 @@ class DuelController extends GameController
                 
                 if(!$annotation){
                     $duel->delete();
-                    return Response::json(['nb_turns'=> ["pas assez de phrase"]],422);
+                    return Response::json(['errors'=>['nb_turns'=> ["pas assez de phrases"]]],422);
                 }
                 
                 $already_selected[]=$annotation->id;
@@ -207,7 +207,7 @@ class DuelController extends GameController
 
                     if(!$annotation){
                         $duel->delete();
-                        return Response::json(['nb_turns'=> ["pas assez de phrase"]],422);
+                        return Response::json(['errors'=>['nb_turns'=> ["pas assez de phrases"]]],422);
                     }
 
                     $already_selected[]=$annotation->id;

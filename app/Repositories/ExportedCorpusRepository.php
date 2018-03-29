@@ -5,7 +5,8 @@ namespace App\Repositories;
 use App\Models\Corpus;
 use App\Models\ExportedCorpus;
 use App\Models\User;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class ExportedCorpusRepository extends BaseRepository
 {
@@ -42,7 +43,7 @@ class ExportedCorpusRepository extends BaseRepository
 	{
 		$admin = User::getAdmin();
         $source_preannotated = Source::getPreAnnotated();
-        $corpora = Corpus::where('source_id','=',$source_preannotated->id)->get();
+        $corpora = Corpus::where('exportable','=',1)->get();
         $result = [];
         foreach($corpora as $corpus){
         	$exported_corpus = $this->model->where('user_id',$admin->id)->where('corpus_id',$corpus->id)->orderBy('created_at','desc')->first();

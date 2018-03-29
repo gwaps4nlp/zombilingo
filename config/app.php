@@ -2,7 +2,7 @@
 
 return [
     
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'local'),
     
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost/zombilingo/public',
+    'url' => 'http://127.0.0.1:9515',
 
     /*
     |--------------------------------------------------------------------------
@@ -56,6 +56,7 @@ return [
 
     'locale' => 'fr',
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -67,7 +68,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'fr',
+    'fallback_locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -129,6 +130,7 @@ return [
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
         Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
@@ -141,7 +143,8 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         App\Providers\BusServiceProvider::class,
-
+        Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -150,7 +153,14 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Services\Html\HtmlServiceProvider::class,        
-        App\Providers\GameServiceProvider::class,        
+        
+        // 'Sofa\Eloquence\ServiceProvider',
+        Chumper\Zipper\ZipperServiceProvider::class,
+        Barryvdh\TranslationManager\ManagerServiceProvider::class,
+        Gwaps4nlp\FaqManager\FaqServiceProvider::class,
+        Gwaps4nlp\NewsManager\NewsServiceProvider::class,
+        // Gwaps4nlp\GameServiceProvider::class,
+        // Gwaps4nlp\CoreServiceProvider::class,
 
     ],
 
@@ -203,6 +213,10 @@ return [
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Debugbar'  => Barryvdh\Debugbar\Facade::class,  
+        'Zipper'    => 'Chumper\Zipper\Zipper',
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Parser' => App\Services\Facades\Parser::class,
+
        // 'Game'      => App\Services\GameFacade::class,        
 
     ],

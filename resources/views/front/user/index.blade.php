@@ -1,29 +1,29 @@
 @extends('front.template')
 
 @section('main')
-
-<div class="row">
-
-    <div class="col-md-10 col-md-offset-1 center" id="classement">
-  
-        <div class="row" id="entete">
-        <h1>
+	<div id="classement">
+        <h1 class="text-center mb-4">
         @if($relation->id)
 			{{ trans('game.ranking-relation', ['relation' => $relation->name]) }}
         @else
             {{ trans('game.overall-ranking') }}
         @endif
-        </h1>
-		<div class="col-md-6 col-md-offset-3">
+        </h1> 
+        <div class="row" id="entete">
+		<div class="col-md-6 offset-md-3">
 			{!! Form::open(['url' => 'user/players', 'method' => 'get', 'role' => 'form']) !!}
 			<div class="row">
 			{!! Form::control('selection', 5, 'corpus_id', $errors, '',$corpora,null,trans('game.all-corpora'),$params['corpus_id']) !!}
 			{!! Form::control('selection', 5, 'relation_id', $errors, '',$relations,null,trans('game.all-phenomena'),$params['relation_id']) !!}
-			<input type="submit" value="Filtrer" class="btn btn-success" />
+			<div class="col-2">
+			<button type="submit" class="btn btn-success">Filtrer</button>
+			</div>
 			</div>
 			<div class="row">
 			{!! Form::control('text', 10, 'username', $errors, '', '','','Trouver un joueur : pseudonyme') !!}
-			<input type="submit" value="Chercher" class="btn btn-success" />
+			<div class="col-2">
+			<button type="submit" class="btn btn-success">Chercher</button>
+			</div>
 			</div>
 			{!! Form::close() !!}	
         </div>
@@ -77,14 +77,12 @@
 
 		@endforeach
 		<div class="row">
-		<div class="col-md-10 col-md-offset-1 text-center">
+		<div class="col-md-10 offset-md-1 text-center">
 		{!! $users->render() !!}
 		</div>
 		</div>
     @else
 		<center><h2 class="alert">{{ trans('game.no-player-phenomenon') }}</h2></center>
     @endif
-
     </div>
-</div>
 @stop

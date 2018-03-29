@@ -42,9 +42,9 @@ class ComputeStatistics extends Command
     {
         $evaluation_corpora = $corpora->getEvaluation();
 
-        foreach($evaluation_corpora as $corpus){        
+        foreach($evaluation_corpora as $corpus){
             $yesterday_date = \Carbon\Carbon::now()->subDay()->format('Y-m-d');
-            StatsParser::updateStats('game', $corpus, $yesterday_date);
+            StatsParser::computeStats($corpus, $yesterday_date);
         }
     }
 }

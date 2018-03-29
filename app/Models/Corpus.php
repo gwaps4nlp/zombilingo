@@ -4,46 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
-use App\Models\Sentence;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Models\Corpus as Gwaps4nlpCorpus;
 
-class Corpus extends Model
+class Corpus extends Gwaps4nlpCorpus
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'corpuses';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name','description','source_id','language_id','license_id','playable','title','url_source','url_info_license'];  
-     
-    protected $visible = ['id','name'];
-	
-	/**
-	 * One to Many relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\HasMany
-	 */
-	public function sentences()
-	{
-	  return $this->hasMany('App\Models\Sentence')->whereIn('corpus_id', array_merge([$this->id],$this->subcorpora->pluck('id')->toArray()));
-	}	
-
-	/**
-	 * One to Many relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\HasMany
-	 */
-	public function all_sentences()
-	{
-	  return Sentence::whereIn('corpus_id', array_merge([$this->id],$this->subcorpora->pluck('id')->toArray()));;
-	}
-
 	/**
 	 * One to Many relation
 	 *
@@ -63,45 +28,14 @@ class Corpus extends Model
 	{
 	  return $this->belongsToMany('App\Models\Corpus','preannotated_evaluation_corpus','corpus_id','evaluation_corpus_id');
 	}
-
 	/**
 	 * One to Many relation
 	 *
 	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
 	 */
-	public function subcorpora()
+	public function evaluated_corpus()
 	{
-	  return $this->belongsToMany('App\Models\Corpus','corpus_subcorpus','corpus_id','subcorpus_id');
-	}
-
-	/**
-	 * One to One relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
-	public function language()
-	{
-	  return $this->belongsTo('App\Models\Language');
-	}
-
-	/**
-	 * One to One relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\BelongsTo
-	 */
-	public function license()
-	{
-	  return $this->belongsTo('App\Models\License');
-	}
-
-	/**
-	 * One to One relation
-	 *
-	 * @return Illuminate\Database\Eloquent\Relations\HasOne
-	 */
-	public function source()
-	{
-	  return $this->hasOne('App\Models\Source');
+	  return $this->belongsToMany('App\Models\Corpus','preannotated_evaluation_corpus','evaluation_corpus_id','corpus_id');
 	}
 	
 	/**
@@ -112,7 +46,7 @@ class Corpus extends Model
 	public function annotations()
 	{
 	  return $this->hasManyThrough('App\Models\Annotation','App\Models\Sentence');
-	}
+	}	
 
 	/**
 	 * 
@@ -132,6 +66,16 @@ class Corpus extends Model
 	public function isPreAnnotated()
 	{
 	  return $this->source_id == Source::getPreAnnotated()->id;
+	}
+
+	/**
+	 * 
+	 *
+	 * @return boolean
+	 */
+	public function isPreAnnotatedForEvaluation()
+	{
+	  return $this->source_id == Source::getPreAnnotatedForEvaluation()->id;
 	}
 
 	/**

@@ -13,11 +13,9 @@ foreach($sentence->annotations as $annotation){
 
 <table class="table table-striped table-bordered">
 <tr><th colspan="2"></th><th colspan="3">Control</th>
-
 @foreach($parsers as $parser)
-	<th colspan="3">{{ $parser->name }}</th>
+<th colspan="3">{{ $parser->name }}</th>
 @endforeach
-
 <th colspan="3">zombilingo</th>
 </tr>
 	@foreach($annotations as $annot)
@@ -25,10 +23,8 @@ foreach($sentence->annotations as $annotation){
 		<?php
 		$conll = [];
 		$annots = $annot->sentence->annotations()->with('parsers')->get();
-
 		?>
 <tr><td colspan="14">{{ $annot->sentence->sentid }}<br/>{{ $annot->sentence->content }}</td></tr>
-
 		@foreach($annots as $annotation)
 			@if($annotation->source_id==1)
 					<?php
@@ -49,51 +45,48 @@ foreach($sentence->annotations as $annotation){
 			}
 			?>
 		@endforeach
-
+<br/><br/>
 		@foreach($conll as $word_position=>$annotation)
 		<tr>
 		@if(isset($annotation['ref']))
-			<td>{{ $annotation['ref']->pos_id }}</td>
-			<td>{{ $annotation['ref']->relation_name }}</td>
-			<td>{{ $annotation['ref']->governor_position }}</td>
-		@endif
-		@foreach($parsers as $parser)
-			@if(isset($annotation[$parser->id]))
-				<td>{{ $annotation[$parser->id]->word_position }}</td>
-				<td>{{ $annotation[$parser->id]->word }}</td>			
-				<td>{{ $annotation[$parser->id]->pos_id }}</td>
-				<td>{{ $annotation[$parser->id]->relation_name }}</td>
-				<td>{{ $annotation[$parser->id]->governor_position }}</td>
+				<td>{{ $annotation['ref']->word_position }}</td>
+				<td>{{ $annotation['ref']->word }}</td>
+				<td>{{ $annotation['ref']->pos_id }}</td>
+				<td>{{ $annotation['ref']->relation_name }}</td>
+				<td>{{ $annotation['ref']->governor_position }}</td>
+			@foreach($parsers as $parser)
+				@if(isset($annotation[$parser->id]))
+					<td>{{ $annotation[$parser->id]->pos_id }}</td>
+					<td>{{ $annotation[$parser->id]->relation_name }}</td>
+					<td>{{ $annotation[$parser->id]->governor_position }}</td>
+				@else
+				ERREUR !! {{ $annotation['ref']->id }} {{ $parser->id }}
+				@endif
+			@endforeach	
+			@if(isset($annotation['ZombiLingo']))
+				<?php 
+					if($annotation['ref']->pos_id == $annotation['ZombiLingo']->pos_id)
+						$class="identical";
+					else
+						$class="different";
+				?>
+				<td class="{{ $class }}">{{ $annotation['ZombiLingo']->pos_id }}</td>
+				<?php 
+					if($annotation['ref']->relation_name == $annotation['ZombiLingo']->relation_name)
+						$class="identical";
+					else
+						$class="different";
+				?>				
+				<td class="{{ $class }}">{{ $annotation['ZombiLingo']->relation_name }}</td>
+				<td>{{ $annotation['ZombiLingo']->governor_position }}</td>
 			@else
-			ERREUR !! {{ $annotation['ref']->id }} {{ $parser->id }}
+				<td>-</td>
+				<td>-</td>
+				<td>-</td>
 			@endif
-		@endforeach	
-		@if(isset($annotation['ZombiLingo']))
-			<?php 
-				// if($annotation['ref']->pos_id == $annotation['ZombiLingo']->pos_id)
-				// 	$class="identical";
-				// else
-				// 	$class="different";
-			$class="identical";
-			?>
-			<td class="{{ $class }}">{{ $annotation['ZombiLingo']->pos_id }}</td>
-			<?php 
-				// if($annotation['ref']->relation_name == $annotation['ZombiLingo']->relation_name)
-				// 	$class="identical";
-				// else
-				// 	$class="different";
-			$class="identical";	
-			?>
-			<td class="{{ $class }}">{{ $annotation['ZombiLingo']->relation_name }}</td>
-			<td>{{ $annotation['ZombiLingo']->governor_position }}</td>
-		@else
-			<td>-</td>
-			<td>-</td>
-			<td>-</td>
+		@else 
+
 		@endif
-
-
-		
 
 		</tr>
 		@endforeach

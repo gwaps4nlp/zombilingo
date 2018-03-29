@@ -41,6 +41,7 @@ class BatchStatistics extends Command
      */
     public function handle(CorpusRepository $corpora)
     {
+
         $evaluation_corpora = $corpora->getEvaluation();
         $scores_init = [0,5,10];
         $weights_level = [1,2];

@@ -34,7 +34,7 @@ class RelationTableSeeder extends Seeder
             'description' => 'Trouve le sujet du verbe indiqué&#8239;!',
             'help_file' => 'suj',
             'type' => 'trouverDependant',
-            'level_id' => 2
+            'level_id' => 1
         ]);
         Relation::create([
             'slug' => 'obj',
@@ -90,7 +90,7 @@ class RelationTableSeeder extends Seeder
             'description' => 'Trouve l\'auxiliaire de temps du verbe donné',
             'help_file' => 'aux_tps',
             'type' => 'trouverDependant',
-            'level_id' => 1
+            'level_id' => 2
         ]);
         Relation::create([
             'slug' => 'aux.pass',
@@ -281,6 +281,14 @@ class RelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'not-exists',
             'name' => "Relation inexistante",
+            'description' => '',
+            'help_file' => '',
+            'type' => 'nonJouable',
+            'level_id' => 10
+        ]);
+        Relation::create([
+            'slug' => 'dep_cpd',
+            'name' => "dep_cpd",
             'description' => '',
             'help_file' => '',
             'type' => 'nonJouable',

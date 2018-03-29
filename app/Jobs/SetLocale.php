@@ -3,10 +3,9 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
-use Request;
-use Illuminate\Contracts\Bus\SelfHandling;
+use Request, Config;
 
-class SetLocale extends Job implements SelfHandling
+class SetLocale extends Job
 {
     /**
      * The availables languages.
@@ -24,7 +23,7 @@ class SetLocale extends Job implements SelfHandling
     {
         if(!session()->has('locale'))
         {
-            session()->put('locale', 'fr');
+            session()->put('locale', Config::get('app.locale'));
             // session()->put('locale', Request::getPreferredLanguage($this->languages));
         }
 

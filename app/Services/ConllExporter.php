@@ -5,7 +5,7 @@ use App\Models\Sentence;
 use App\Models\Annotation;
 use App\Models\Corpus;
 use App\Models\User;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
 use App\Models\ExportedCorpus;
 use App\Repositories\SentenceRepository;
 use App\Events\BroadCastExport;
@@ -14,7 +14,7 @@ use DB;
 
 class ConllExporter {
 
-protected $_columns = array('word_position','word','lemma','category','pos','features','governor_position','relation_name','projective_governor','projective_relation_name');
+protected $_columns = array('word_position','word','lemma','pos','category','features','governor_position','relation_name','projective_governor','projective_relation_name');
 
 protected $_ignoreFirstLine = false;
 protected $_separator = "\t";
@@ -66,7 +66,8 @@ public function export($file=null){
 
     foreach ($sentences as $sentence) {
     	fputs($this->file, "# sentid: ".$sentence->sentid."\n");
-		$annotations = $sentence->annotations()->with('parsers')->whereNotNull('custom_score')
+		$annotations = $sentence->annotations()->with('parsers')->with('relation')
+		->whereNotNull('custom_score')
 		->orderBy('sentence_id')
 		->orderBy('word_position')
 		->orderBy('custom_score','desc')
@@ -92,7 +93,7 @@ public function export($file=null){
 					$annotation->relation_id.="_Z";
 			}
 			//we pass to the next word
-			if($annotation->word_position!=$previous_annotation->word_position ){
+			if($annotation->word_position!=$previous_annotation->word_position){
 
 				$this->addToFile($previous_annotation);
 				$previous_annotation = $annotation;
@@ -103,7 +104,7 @@ public function export($file=null){
 				$previous_annotation->relation_id .= '|'.$annotation->relation_id;
 				$previous_annotation->governor_position .= '|'.$annotation->governor_position;
 
-			}elseif($annotation->score < $previous_annotation->score){
+			} elseif($annotation->score < $previous_annotation->score){
 				//TODO : add an option to choose if this annotation have to be exported 
 				//$this->addToFile($previous_annotation,'#');
 				//$previous_annotation = $annotation;
@@ -131,7 +132,7 @@ public function export($file=null){
 		$this->error = "Aucune phrase exportée";
 	}
 	
-	fclose($this->file);	
+	fclose($this->file);
 	Event::fire(new BroadCastExport($this));
 
 	}

@@ -3,7 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Relation;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Repositories\BaseRepository;
 use DB;
 use Config;
 
@@ -15,7 +16,7 @@ class RelationRepository extends BaseRepository
 	 * Create a new RelationRepository instance.
 	 *
 	 * @param  App\Models\Relation $relation
-	 * @param  App\Models\Source $source
+	 * @param  Gwaps4nlp\Models\Source $source
 	 * @return void
 	 */
 	public function __construct(
@@ -39,7 +40,7 @@ class RelationRepository extends BaseRepository
 		if($user)
 			$query = $query->where('level_id','<=',$user->level_id);
 
-		return $query->where('level_id','<=',7)->orderBy('level_id')->lists('name','id');
+		return $query->where('level_id','<=',7)->orderBy('level_id')->pluck('name','id');
 	}
 
 	/**
@@ -49,7 +50,7 @@ class RelationRepository extends BaseRepository
 	 */
 	public function getList()
 	{
-		return $this->model->where('level_id','<=',10)->where('type','!=','special')->orderBy('slug')->lists('slug','id');
+		return $this->model->where('level_id','<=',10)->where('type','!=','special')->orderBy('slug')->pluck('slug','id');
 	}
 
 	/**
@@ -76,7 +77,7 @@ class RelationRepository extends BaseRepository
 	 */
 	public function getByUser($user,$relation_id=null,$slug=null,$level_id=null)
 	{
-		$sources_ids = [Source::getPreAnnotated()->id,Source::getPreAnnotatedForEvaluation()->id];
+		$sources_ids = [Source::getPreAnnotated()->id];
 		if(isset($this->corpus)){
 			$corpora_ids = array_merge([$this->corpus->id],$this->corpus->subcorpora->pluck('id')->toArray(),$this->corpus->evaluation_corpora->pluck('id')->toArray());
 		}	

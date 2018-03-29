@@ -1,0 +1,35 @@
+file: Star_Wars_I.raw
+url: https://fr.wikipedia.org/wiki/Star_Wars,_%C3%A9pisode_I_:_La_Menace_fant%C3%B4me
+date: 2015/12/14
+parsing: talismane-core-2.4.7b.jar
+languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Star_Wars_II.raw
+url: https://fr.wikipedia.org/wiki/Star_Wars,_%C3%A9pisode_II_:_L'Attaque_des_clones
+date: 2015/12/14
+parsing: talismane-core-2.4.7b.jar
+languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Star_Wars_III.raw
+url: https://fr.wikipedia.org/wiki/Star_Wars,_%C3%A9pisode_III_:_La_Revanche_des_Sith
+date: 2015/12/14
+parsing: talismane-core-2.4.7b.jar
+languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Star_Wars_IV.raw
+url: https://fr.wikipedia.org/wiki/Star_Wars,_%C3%A9pisode_IV_:_Un_nouvel_espoir
+date: 2015/12/14
+parsing: talismane-core-2.4.7b.jar
+languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Star_Wars_V.raw
+url: https://fr.wikipedia.org/wiki/Star_Wars,_%C3%A9pisode_V_:_L'Empire_contre-attaque
+date: 2015/12/14
+parsing: talismane-core-2.4.7b.jar
+languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Star_Wars_VI.raw
+url: https://fr.wikipedia.org/wiki/Star_Wars,_%C3%A9pisode_VI_:_Le_Retour_du_Jedi
+date: 2015/12/14
+parsing: talismane-core-2.4.7b.jar
+languagePack: frenchLanguagePack-2.4.4b.zip

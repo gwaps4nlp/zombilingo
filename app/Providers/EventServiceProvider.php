@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -15,18 +15,19 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'Illuminate\Auth\Events\Login' => ['App\Services\Statut@setLoginStatut'],
         'Illuminate\Auth\Events\Logout' => ['App\Services\Statut@setVisitorStatut'],
-        'user.access' => ['App\Services\Statut@setStatut'], 
+        'user.access' => ['App\Services\Statut@setStatut'],
+        'App\Events\MessagePosted' => ['App\Listeners\SendMessageNotification'],
+        'App\Events\ScoreUpdated' => ['App\Listeners\UpdateScore'],
     ];
 
     /**
      * Register any other events for your application.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $events
      * @return void
      */
-    public function boot(DispatcherContract $events)
+    public function boot()
     {
-        parent::boot($events);
+        parent::boot();
 
         //
     }

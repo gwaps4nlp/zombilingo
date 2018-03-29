@@ -14,10 +14,12 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('annotation_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('message_id')->unsigned()->nullable();
+            $table->integer('discussion_id')->unsigned();
+            $table->integer('parent_message_id')->unsigned()->nullable();
             $table->text('content');
+            $table->integer('deletion_reason_id')->unsigned()->nullable();
+            $table->softDeletes();            
             $table->timestamps();
         });
     }

@@ -11,8 +11,8 @@ use App\Repositories\ScoreRepository;
 use App\Repositories\ObjectRepository;
 use App\Repositories\CorpusRepository;
 use App\Repositories\DuelRepository;
-use App\Models\Source;
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
@@ -58,18 +58,10 @@ class DuelGestion extends Game implements GameGestionInterface
 		$this->html = null;
 		$this->user = auth()->user();
 
-		if($this->duel_id){
-			$this->duel=Duel::find($this->duel_id);
-		}
-
-		if($this->annotation_id){
-			$this->annotation=$this->annotations->get($this->annotation_id);
-		}
-
 	}
 	
-	public function begin($duel_id){
-        
+	public function begin(Request $request, $duel_id){
+        $this->loadSession($request);
 		$this->loadDuel($duel_id);
 		$turn = $this->duel->annotation_users()->where('annotation_user_duel.user_id',$this->user->id)->count();
 		$this->set('annotation_id',null);
@@ -94,7 +86,21 @@ class DuelGestion extends Game implements GameGestionInterface
 		if( $this->relation->tutorial < ConstantGame::get("turns-game") )
 			throw new GameException(trans('game.do-the-training',['name'=>$this->relation->name]).'<br/><a style="text-decoration:underline;" href="'.url('game/training/begin',[$this->relation->id]).'"">Faire la formation maintenant.</a>');
 	}
-	
+
+	public function loadSession(Request $request){
+		
+		parent::loadSession($request);
+
+		if($this->duel_id){
+			$this->duel=Duel::find($this->duel_id);
+		}
+
+		if($this->annotation_id){
+			$this->annotation=$this->annotations->get($this->annotation_id);
+		}
+
+	}
+
 	public function loadContent(){
 
 		$this->annotation = $this->annotations->getNextAnnotationDuel($this->duel,$this->user);
@@ -108,8 +114,9 @@ class DuelGestion extends Game implements GameGestionInterface
 
 	}
 
-	public function jsonAnswer(){
+	public function jsonAnswer(Request $request){
 
+		$this->loadSession($request);
 		$this->processAnswer();
 
         $reponse = array('answer' => $this->request->input('word_position'),

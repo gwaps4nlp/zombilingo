@@ -9,11 +9,10 @@ use App\Services\ConllExporter;
 
 class BroadCastExport extends Event implements ShouldBroadcast
 {
-
     use InteractsWithQueue, SerializesModels;
 
     public $parser;
-    
+
     /**
      * Create the event listener.
      *
@@ -22,7 +21,8 @@ class BroadCastExport extends Event implements ShouldBroadcast
     public function __construct(ConllExporter $parser)
     {
         $this->parser = $parser;
-    }    
+    }
+
     /**
      * Get the channels the event should be broadcast on.
      *

@@ -1,4 +1,4 @@
-@extends('back.template')
+@extends('back.template-blank')
 
 @section('main')
 
@@ -131,7 +131,7 @@ $(function () {
 </script>
 @stop
 
-@section('style')
+@section('css')
 <style>
 body {
 	color:black;

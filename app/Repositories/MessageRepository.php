@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Message;
+use Gwaps4nlp\Repositories\BaseRepository;
 use DB;
 
 class MessageRepository extends BaseRepository
@@ -26,9 +27,9 @@ class MessageRepository extends BaseRepository
 	 * @param  App\Models\Annotation $annotation	 
 	 * @return Collection of Message
 	 */
-	public function getByAnnotation($annotation)
+	public function getByDiscussion($discussion)
 	{
-		$query = $this->model->where('annotation_id','=',$annotation->id);
+		$query = $this->model->withTrashed()->where('discussion_id',$discussion->id);
 
 		return $query->with('user')->orderBy('created_at')->get();
 	}

@@ -19,7 +19,7 @@
 	{!! Form::close() !!}	
 <div class="col-md-10 col-md-offset-1">
 Nombre de résultats : {!! $annotations_user->total() !!}
-{!! $annotations_user->render() !!}
+{!! $annotations_user->render() !!} 
 </div>
 <table class="table">
 @foreach($annotations_user as $annotation)

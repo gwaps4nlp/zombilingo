@@ -1,0 +1,41 @@
+# sentid: https://fr.wikipedia.org/wiki/Star_Wars_20170912_1443_1624
+# sentence-text: En accord avec les lois du genre space opera, l'action se déroule "il y a bien longtemps, dans une galaxie lointaine" et se fonde sur la lutte entre les chevaliers Jedi et les Sith.
+# tokenizer: talismane-2.5.0b, postag: melt-2.0b7, parser: grew-0.29.2 + grs-rev9022
+1	En	en	P	P	_	14	mod	_	_
+2	accord	accord	N	NC	s=c	1	obj.p	_	_
+3	avec	avec	P	P	_	2	dep	_	_
+4	les	le	D	DET	_	5	det	_	_
+5	lois	loi	N	NC	det=y|s=c	3	obj.p	_	_
+6	du	*du	P+D	P+D	type=deloc	5	dep	_	_
+7	genre	genre	N	NC	det=y|s=c	6	obj.p	_	_
+8	space	*space	ET	ET	_	9	dep	_	_
+9	opera	*opera	ET	ET	det=y	7	mod	_	_
+10	,	,	PONCT	PONCT	_	14	ponct	_	_
+11	l'	le	D	DET	_	12	det	_	_
+12	action	action	N	NC	det=y|s=c	14	suj	_	_
+13	se	se	CL	CLR	det=y|s=refl	14	aff	_	_
+14	déroule	dérouler	V	V	m=ind	_	_	_	_
+15	"	"	PONCT	PONCT	_	16	ponct	_	_
+16	il_y_a	il_y_a	P	P	_	_	_	_	_
+17	bien	bien	ADV	ADV	_	18	mod	_	_
+18	longtemps	longtemps	ADV	ADV	_	_	_	_	_
+19	,	,	PONCT	PONCT	_	20	ponct	_	_
+20	dans	dans	P	P	type=loc	_	_	_	_
+21	une	un	D	DET	_	22	det	_	_
+22	galaxie	galaxie	N	NC	det=y|s=c	20	obj.p	_	_
+23	lointaine	lointain	A	ADJ	_	22	mod	_	_
+24	"	"	PONCT	PONCT	_	25	ponct	_	_
+25	et	et	C	CC	s=c	_	_	_	_
+26	se	se	CL	CLR	det=y|s=refl	27	obj	_	_
+27	fonde	fonder	V	V	m=ind	25	dep.coord	_	_
+28	sur	sur	P	P	type=loc	27	p_obj.o	_	_
+29	la	le	D	DET	_	30	det	_	_
+30	lutte	lutte	N	NC	det=y|s=c	28	obj.p	_	_
+31	entre	entre	P	P	type=loc	30	dep	_	_
+32	les	le	D	DET	_	33	det	_	_
+33	chevaliers	chevalier	N	NC	det=y|s=c	31	obj.p	_	_
+34	Jedi	*Jedi	N	NPP	det=y|s=p	33	mod	_	_
+35	et	et	C	CC	s=c	34	coord	_	_
+36	les	le	D	DET	_	37	det	_	_
+37	Sith	*Sith	N	NPP	det=y|s=p	35	dep.coord	_	_
+38	.	.	PONCT	PONCT	_	_	_	_	_

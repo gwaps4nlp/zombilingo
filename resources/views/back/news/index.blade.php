@@ -36,11 +36,11 @@
 			<td>-</td>
 		@endif
 		<td style="width:100px;">
-		<a href="{{ url('news/edit',['id'=>$new->id]) }}" style="margin-left:20px;"><span class="glyphicon glyphicon-edit"></span></a>
+		<a href="{{ url('news/edit',['id'=>$new->id]) }}" style="margin-left:20px;"><i class="fa fa-edit"></i></a>
 		{!! Form::open(['url' => 'news/delete', 'method' => 'post', 'role' => 'form','style'=>'display:inline']) !!}
 		<input type="hidden" name="id" value="{{ $new->id }}" />
 		<button type="submit" class="btn btn-link" onclick="return confirm('Etes-vous sûr de vouloir supprimer cette news ?')">
-			<span class="glyphicon glyphicon-trash"></span>
+			<i class="fa fa-trash"></i>
 		</button>
 		{!! Form::close() !!}
 

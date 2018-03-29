@@ -2,12 +2,11 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use App\Models\ConstantGame;
-use App\Services\Game;
-use App\Models\Source;
-
+use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Game;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\GameGestionInterface;
 use App\Models\AnnotationInProgress;
 use App\Repositories\RelationRepository;
 use App\Repositories\AnnotationRepository;
@@ -44,17 +43,11 @@ class DemoGestion extends Game implements GameGestionInterface
 		$this->annotation = null;
 		$this->html = null;
 
-		if($this->relation_id){
-			$this->relation = $this->relations_repo->getById($this->relation_id);
-			if($this->annotation_id){
-				$this->annotation=$this->annotations->get($this->annotation_id,$this->relation);
-			}
-		}
-
 	}
 	
-	public function begin($relation_id=null){
+	public function begin(Request $request, $relation_id){
 
+        $this->loadSession($request);
         $this->relation = $this->relations_repo->getBySlug(ConstantGame::get('relation-demo'));
 		$this->set('relation_id',$this->relation->id);
 		$this->set('annotation_id',null);
@@ -84,8 +77,9 @@ class DemoGestion extends Game implements GameGestionInterface
     	}
 	}
 
-	public function jsonAnswer(){
+	public function jsonAnswer(Request $request){
 
+		$this->loadSession($request);
 		$this->processAnswer();
 
         $reponse = array('answer' => $this->request->input('word_position'),
@@ -131,5 +125,14 @@ class DemoGestion extends Game implements GameGestionInterface
 		$this->set('annotation_id',null);
 		
 	}
-	
+	public function loadSession(Request $request){
+		parent::loadSession($request);
+		if($this->relation_id){
+			$this->relation = $this->relations_repo->getById($this->relation_id);
+			if($this->annotation_id){
+				$this->annotation=$this->annotations->get($this->annotation_id,$this->relation);
+			}
+		}
+
+	}
 }

@@ -3,7 +3,7 @@
 @section('main')
 	<div class="row">
 		<div class="box">
-			<div class="col-lg-10 center col-lg-offset-1">
+			<div class="col-lg-10 center offset-lg-1">
 
 				<h2 class="text-center">Fréquence d'envoi des notifications par email *</h2>
 				@if(session()->has('message'))

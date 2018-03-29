@@ -19,7 +19,7 @@ $('document').ready(function(){
                 $('#viande').remove();
                 // if(response != ''){
                     // var result = JSON.parse(response);
-                    var url = '../assets/img/objet/' + response.image;
+                    var url = '../assets/img/object/' + response.image;
                     
                     $('body').append('<img src="' + url + '" id="loot" />');
                     setTimeout(function(){$('#loot').remove()}, 5000);

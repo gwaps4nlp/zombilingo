@@ -19,17 +19,6 @@ class Melt extends Parser {
 	 * @param  
 	 * @return void
 	 */
-	public function tokenize($text)
-	{
-
-	}
-
-	/**
-	 * 
-	 * 
-	 * @param  
-	 * @return void
-	 */
 	public function posTag($text,$filename=null)
 	{
 
@@ -45,7 +34,7 @@ class Melt extends Parser {
         $output_file = storage_path()."/app/$md5-pos-melt.txt";
 
 
-        $this->command = 'export PATH=$PATH:'.$this->path.';'."cat $input_file | {$this->binary} -L > $output_file";
+        $this->command = 'export PATH=$PATH:'.$this->path.';'."cat $input_file | {$this->binary} -Lr > $output_file";
         exec($this->command,$output,$retour);
         $result = Storage::disk('local')->get("$md5-pos-melt.txt");
         $sentences="";
@@ -76,14 +65,18 @@ class Melt extends Parser {
         return $sentences;
 	}
 
-	public static function str_replace_nth($search, $replace, $subject, $nth)
-	{
-	    $found = preg_match_all('#'.preg_quote($search).'#', $subject, $matches, PREG_OFFSET_CAPTURE);
-	    if (false !== $found && $found > $nth) {
-	        return substr_replace($subject, $replace, $matches[0][$nth][1], strlen($search));
-	    }
-	    return $subject;
+	public function splitSentences($text){
+		throw new \Exception('Not implemented');
 	}
+
+	public function parse($text,$text_id){
+		throw new \Exception('Not implemented');
+	}
+
+	public function parseFromConll($filename){
+		throw new \Exception('Not implemented');
+	}
+
 	/**
 	 * 
 	 * 
@@ -92,9 +85,21 @@ class Melt extends Parser {
 	 */
 	public function getVersion()
 	{
-
+        $this->command = 'export PATH=$PATH:'.$this->path."; {$this->binary} -v";
+        exec($this->command,$output,$retour);
+        return $output[0];
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param  
+	 * @return void
+	 */
+	public function tokenize($text)
+	{
+		throw new \Exception('Not implemented');
+	}
 
 	/**
 	 * 

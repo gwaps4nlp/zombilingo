@@ -14,7 +14,7 @@ $('document').ready(function(){
             method : 'GET',
             success : function(response){
                 $('#viande').remove();
-                    var url = "{{ asset('img/objet') }}/"+ response.image;
+                    var url = "{{ asset('img/object') }}/"+ response.image;
   
                     $('body').append('<img src="' + url + '" id="loot" />');
                     setTimeout(function(){$('#loot').remove()}, 5000);

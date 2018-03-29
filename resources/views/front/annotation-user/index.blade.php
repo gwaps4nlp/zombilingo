@@ -3,7 +3,7 @@
 @section('main')
 {!! Form::open(['url' => 'annotation-user/index', 'method' => 'get', 'role' => 'form']) !!}
 <div class="row" id="index-game">
-<div class="col-md-10 col-md-offset-1 center" id="blocJeu">
+<div class="col-md-10 col-md-offset-1" id="block-game">
 <div class="col-md-10 col-md-offset-1">
 
 	{!! Form::control('selection', 3, 'corpus_id', $errors, '',$corpora,null,trans('game.all-corpora'),$params['corpus_id']) !!}
@@ -24,10 +24,37 @@ Nombre de résultats : {!! $annotations_user->total() !!}
 </div>
 <table class="table">
 @foreach($annotations_user as $annotation)
+<?php 
+$count=[];
+?>
 	<tr>
 		<td>{{ $annotation->relation->name }}</td>
 		<td><span class="sentence" focus="{{ $annotation->focus }}" user_answer="{{ $annotation->user_answer }}">{{ $annotation->sentence->content }}</span></td>
 		<td style="width:20%">
+
+		@foreach($annotation->answers as $answer)
+			<?php 
+				if(!isset($count[$answer['word_position']]))
+					$count[$answer['word_position']]=0;
+				$count[$answer['word_position']]++;
+			?>
+		@endforeach
+		<?php
+		$nb_answers = array_sum($count);
+		?>
+		@foreach($count as $word_position=>$number)
+			<?php
+			$percent = round(100*$number/$nb_answers);
+			?>		
+			<div class="progress">
+				<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar"
+				aria-valuenow="{{$percent}}" aria-valuemin="0" aria-valuemax="100" style="width:{{ $percent }}%">
+				{{ $percent }}%
+				</div>
+			</div>
+		@endforeach		
+
+	
 	@foreach($annotation->statistics as $key=>$stats)
 		<span class="source_{{ $stats->source_id }} rank_{{ $key }} {{ ($stats->user_answer==$annotation->user_answer)?'user_answer':'' }}">{{ $stats->word }}({{ $stats->number_answers }} - {{round($stats->number_answers/$stats->number_answers_total,2)}})</span>  {{ $stats->score }} - {{ round($stats->score/$stats->score_total,2) }}<br/>
 	@endforeach

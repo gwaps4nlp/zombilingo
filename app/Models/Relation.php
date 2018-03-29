@@ -51,13 +51,33 @@ class Relation extends Model
 		}
 	}
 
+	public static function getById($id){
+		try {
+			return Cache::rememberForever('relation_'.$id, function() use ($id) {
+				$relation = parent::where('id','=',$id)->first();
+				if($relation){
+					return $relation;
+				} else {
+					return parent::where('slug','=','UNK')->first();
+				}
+			});
+		} catch (Exception $Ex){
+			$relation = parent::where('id','=',$id)->first();
+			if($relation){
+				return $relation->id;
+			} else {
+				return parent::where('slug','=','UNK')->first()->id;
+			}			
+		}
+	}
+
 	public static function getSlugById($id){
 		if(!$id) return '_';
 		try {
 			return Cache::rememberForever($id, function() use ($id) {
 				return parent::select('slug')->where('id','=',$id)->first()->slug;
 			});
-		} catch (Excpetion $Ex){
+		} catch (Exception $Ex){
 			return Cache::rememberForever($id, function() use ($id) {
 				return parent::select('slug')->where('id','=',$id)->first()->slug;
 			});			

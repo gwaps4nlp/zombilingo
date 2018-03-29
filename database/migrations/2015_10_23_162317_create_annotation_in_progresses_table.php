@@ -35,6 +35,9 @@ class CreateAnnotationInProgressesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('annotation_in_progresses');
+        Schema::table('annotation_in_progress', function ($table) {
+            $table->dropForeign(['corpus_id']);   
+        });        
+        Schema::drop('annotation_in_progress');
     }
 }

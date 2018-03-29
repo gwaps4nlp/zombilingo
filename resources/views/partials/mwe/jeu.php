@@ -1,7 +1,7 @@
 
 
 <div class="row">
-    <div class="col-md-10 col-md-offset-1 center text-center" id="blocJeu">
+    <div class="col-md-10 col-md-offset-1 center text-center" id="block-game">
         <!-- <div id="aidePetit">
             <h3>Aide?</h3>
         </div>
@@ -25,7 +25,7 @@
            </div>
     
             <div class="col-md-1 col-md-offset-1">
-                <div class="savant aideTool">
+                <div class="savant help aideTool">
                     <div class="aideTip">
                         Une expression "figée" est un ensemble de mots dont le sens ne peut pas être déduit du sens de chaque mot.
                         Par exemple, un "cordon bleu" n'est pas un cordon et n'est pas bleu.

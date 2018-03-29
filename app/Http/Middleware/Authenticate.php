@@ -38,15 +38,15 @@ class Authenticate
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('auth/login');
+                return redirect()->guest('login');
             }
         }
         if(auth()->user()->session_id != Session::getId()){
             $this->auth->logout();
             
-            if($request->ajax()) return Response::json(['error'=>"Tu as été déconnecté, merci de t'authentifier à nouveau."],401);
+            if($request->ajax()) return Response::json(['error'=>"Ta session a expiré, merci de t'authentifier à nouveau."],401);
 
-            return redirect()->guest('auth/login')->withErrors(['message' => "Tu as été déconnecté, merci de t'authentifier à nouveau."]);
+            return redirect()->guest('login')->withErrors(['message' => "Ta session a expiré, merci de t'authentifier à nouveau."]);
         }
 
         return $next($request);

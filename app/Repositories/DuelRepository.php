@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Duel;
 use App\Models\DuelUser;
+use Gwaps4nlp\Repositories\BaseRepository;
 use DB;
 
 class DuelRepository extends BaseRepository
@@ -55,7 +56,7 @@ class DuelRepository extends BaseRepository
 				->where('users.email','!=','')
 				->where('email_frequency_id','!=','1')
 				->where('email_duel','=','1')
-				->lists('user_id');
+				->pluck('user_id');
 
 	}
 

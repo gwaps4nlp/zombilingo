@@ -53,7 +53,7 @@ abstract class Parser  {
 	}
 
     protected function addCommentaries($conll,$sentences,$text_id){
-    	$sentences = preg_replace('/(\\n+)/',"\n",$sentences);
+    	$sentences = preg_replace('/(\\n+)/',"\n",trim($sentences));
         $sentences = explode("\n",$sentences);
         $sentences_splitted = "";
         $index = 1;
@@ -61,6 +61,7 @@ abstract class Parser  {
         $array_sentences = [];
         foreach($sentences as $sentence){
         	$sentence = trim($sentence);
+            if(!$sentence) continue;
             if(mb_strlen($sentence)>1){
                 $array_sentences[$index_sentence]=[];
                 $array_sentences[$index_sentence]['sentid']= $index."_".($index+mb_strlen($sentence));
@@ -70,7 +71,7 @@ abstract class Parser  {
                 $index_sentence++;
             }
         }
-        $conll = preg_replace('/(\\n){3,}/',"\n\n",$conll);
+        $conll = preg_replace('/(\\n){3,}/',"\n\n",trim($conll));
         $lines = explode("\n",$conll);
         $index_sentence = 0;
         $result = "";
@@ -79,10 +80,9 @@ abstract class Parser  {
         $result.= "# ".$this->version."\n";
         $done = array();
         foreach($lines as $line){
-            if(mb_strlen($line)>3){
+            if(mb_strlen(trim($line))>3){
                 $result.= $line."\n";
             } else {
-
                 if(!isset($done[$index_sentence+1])&&isset($array_sentences[$index_sentence+1])){
                     $index_sentence++;
                     $done[$index_sentence]=true;
@@ -96,6 +96,7 @@ abstract class Parser  {
         }
         return $result;
     }
+    
     protected function addSentIds($conll){
 
         $index = 1;

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\ScheduledEmail;
 use App\Repositories\ScoreRepository;
 use App\Repositories\DuelRepository;
+use App\Repositories\ChallengeRepository;
 use App\Repositories\AnnotationUserRepository;
 use DB,Mail;
 
@@ -41,11 +42,12 @@ class SendEmails extends Command
      *
      * @return mixed
      */
-    public function handle(ScoreRepository $scores, AnnotationUserRepository $scores_annotation, DuelRepository $duels)
+    public function handle(ScoreRepository $scores, AnnotationUserRepository $scores_annotation, DuelRepository $duels, ChallengeRepository $challenges)
     {
         $scheduled_emails = ScheduledEmail::whereRaw('scheduled_at <= NOW()')
             ->whereNull('sent_at')
-            ->take(15)->get();
+            ->take(200)->get();
+        $challenge = $challenges->getById(5);    
         foreach($scheduled_emails as $email){
 
             try {
@@ -60,7 +62,8 @@ class SendEmails extends Command
                 $pending_enemies = $user->getAskFriendRequests();
                 $scores_user = $scores->getByUser($user);
                 $scores_annotation_user = $scores_annotation->getByUser($user);
-                Mail::send('emails.daily-email', ['scores_annotation_user' => $scores_annotation_user , 'scores_user' => $scores_user , 'email' => $email, 'user' => $user, 'enemies' => $enemies, 'duels' => $duels, 'neighbors' => $neighbors, 'pending_enemies' => $pending_enemies, 'scores' => $scores, 'scores_annotation' => $scores_annotation, 'neighbors_challenge' => $neighbors_challenge], function ($m) use ($user) {
+                
+                Mail::send('emails.daily-email', ['scores_annotation_user' => $scores_annotation_user , 'scores_user' => $scores_user , 'email' => $email, 'user' => $user, 'enemies' => $enemies, 'duels' => $duels, 'neighbors' => $neighbors, 'pending_enemies' => $pending_enemies, 'scores' => $scores, 'scores_annotation' => $scores_annotation, 'challenge' => $challenge, 'neighbors_challenge' => $neighbors_challenge], function ($m) use ($user) {
                     $m->from('contact@zombilingo.org', 'ZombiLingo');
 
                     $m->to($user->email, $user->username)->subject('Alerte ZombiLingo - Résultats du challenge');

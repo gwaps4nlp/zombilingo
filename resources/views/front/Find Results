@@ -1,0 +1,57 @@
+Searching 215 files for "mix"
+
+/Applications/MAMP/htdocs/zombt/resources/views/back/master.blade.php:
+   13  
+   14          <!-- CSS principal -->
+   15:         {!! Html::style(mix("css/app.css")) !!}
+   16  		
+   17  		@yield('css')
+   ..
+   28          </script>
+   29          <script src="{{ asset('js/socket.io.js') }}"></script>
+   30:         <script src="{{ asset(mix("js/app.js")) }}"></script>
+   31  		
+   32  		@yield('scripts')
+
+/Applications/MAMP/htdocs/zombt/resources/views/front/master.blade.php:
+   14          <link rel="shortcut icon" type="image/x-icon" href="{!! asset('img/favicon.ico') !!}" />
+   15  
+   16:         {!! Html::style(mix("css/app.css")) !!}
+   17          
+   18          @yield('css')
+   ..
+   30          </script>
+   31          <script src="{{ asset('js/socket.io.js') }}"></script>
+   32:         <script src="{{ asset(mix("js/all.js")) }}"></script>
+   33  
+   34          @yield('scripts')
+
+/Applications/MAMP/htdocs/zombt/resources/views/front/template-home.blade.php:
+   12  
+   13          <!-- CSS principal -->
+   14:         {!! Html::style( mix('css/app.css')) !!}
+   15  		
+   16  		@yield('css')
+   ..
+   26          
+   27          <script src="{{ asset('js/socket.io.js') }}"></script>
+   28:         <script src="{{ asset(mix("js/app.js")) }}"></script>
+   29  
+   30  
+
+/Applications/MAMP/htdocs/zombt/resources/views/front/template-iframe.blade.php:
+   38      </script>
+   39          {!! Html::script('js/jQuery.js') !!}
+   40:         <script src="{{ asset(mix("js/app.js")) }}"></script>    
+   41      </head>
+   42      <body class="{{ App::environment('local')?'test':'' }}">
+
+/Applications/MAMP/htdocs/zombt/resources/views/js/data-js.blade.php:
+   38   * @param integer n: length of decimal
+   39   * @param integer x: length of whole part
+   40:  * @param mixed   s: sections delimiter
+   41:  * @param mixed   c: decimal delimiter
+   42   */
+   43  Number.prototype.format = function(n, x, s, c) {
+
+9 matches across 5 files

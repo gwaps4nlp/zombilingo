@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Tutorial;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class TutorialRepository extends BaseRepository
 {
@@ -34,7 +35,7 @@ class TutorialRepository extends BaseRepository
 			->first()){
 			$id = $this->model->insertGetId(['user_id'=>$user_id, 'relation_id'=>$relation_id]);
 			$tutorial = $this->model->where('id',$id)->first();
-		}	
+		}
 		$tutorial->increment('number_success');
 	}
 	

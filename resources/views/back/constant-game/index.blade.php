@@ -19,7 +19,7 @@
 	<td>{{ $constant->key }}</td>
 	<td>{{ $constant->value }}</td>
 	<td>{{ $constant->description }}</td>
-	<td>{!! link_to('constant-game/edit/?id='.$constant->id,'edit') !!}</td>
+	<td>{!! link_to('constant-game/edit/'.$constant->id,'edit') !!}</td>
 	</tr> 
 	@endforeach
 	</tbody>

@@ -1,0 +1,11 @@
+file: Bail_Organa.raw
+  url: https://fr.wikipedia.org/wiki/Bail_Organa
+  date: 2015/12/08
+
+file: Bail_Organa_PA.conll
+  parsing: talismane-core-2.4.7b.jar
+  languagePack: frenchLanguagePack-2.4.4b.zip
+  see: https://gforge.inria.fr/scm/viewvc.php/semagramme/parsing_pipeline/ (rev 8870)
+
+file: Bail_Organa_REF.sconll
+  manual verifications: Bruno + Guy

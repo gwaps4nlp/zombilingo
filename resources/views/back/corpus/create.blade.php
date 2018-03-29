@@ -25,6 +25,12 @@
 		{!! Form::radioInLine('playable', '0', 'No',null,$errors) !!}
 	</div>
 
+	<div class="form-group preannotated"  style="display:none;" id="corpus_exportable">
+		<label for="reference">Exportable corpus ?</label><br />
+		{!! Form::radioInLine('exportable', '1','Yes',null,$errors) !!}
+		{!! Form::radioInLine('exportable', '0', 'No',null,$errors) !!}
+	</div>
+
 	<div class="form-group preannotated" style="display:none;" id="bound_corpora">
 		<label for="description" class="control-label">Subcorpora</label>
 		{!! Form::select('subcorpus[]',$preannotated_corpora,null,['multiple'=>true,'class'=>'form-control']) !!}

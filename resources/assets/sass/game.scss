@@ -1,0 +1,430 @@
+h2 {
+  color: white;
+}
+
+li {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+ul {
+  padding: 0px;
+}
+
+.contentObject {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 5px;
+  min-width: 200px;
+}
+.contentObject .nombre {
+  position: absolute;
+  top: 15%;
+  right: 40%;
+  color: black;
+  background: #9bc5aa;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#totalCerveaux {
+  position: relative;
+}
+
+.volatile {
+  position: absolute;
+  top: 0px;
+  left: 45%;
+  color: white;
+  height: 45px;
+  width: 45px;
+  text-shadow: 1px 1px 10px #FFFFFF;
+}
+
+#sentence {
+  background: #9bc5aa;
+  padding: 20px;
+  position: relative;
+  margin-bottom: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  font-size: 1.7rem;
+  display: block;
+  min-width: 100%;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+#sentence .word, #sentence span {
+  color: #4a1710;
+}
+/*#sentence .word:hover {
+  color: #00b40c;
+}*/
+#sentence .highlight {
+  font-family: 'shlop';
+  color: #0e7f3c;
+}
+
+.highlight {
+  font-family: 'shlop';
+  color: #0e7f3c;
+}
+
+@media (min-width: 1200px) {
+  #sentence .word:hover {
+    color: #00b40c !important;
+  }
+}
+  #sentence .hover, .solution {
+    color: #00b40c !important;
+  }
+
+#resultat .solution, #resultat .not_solution {
+  padding: 0 1rem;
+}
+
+.not_solution {
+  color: #F43E3B  !important;
+}
+
+#sentence_id {
+  color: #0e7f3c;
+}
+
+#menuObject {
+  width: 104px;
+  height: 106px;
+  margin-bottom: -10px;
+  background-image: url("#{$image-path}/sac.png");
+  background-repeat: no-repeat;
+  display: inline-block;
+  cursor: pointer;
+  -moz-border-radius-topleft: 10px;
+  -webkit-border-top-left-radius: 10px;
+  border-top-left-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  -webkit-border-top-right-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.savant {
+  margin-top: 20px;
+  /*margin-left: 40%;*/
+  margin-right: 10%;
+  width: 100px;
+  height: 100px;
+  background: url("#{$image-path}/savant.jpg");
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  border: solid 4px #36140f;
+}
+
+.help {
+  margin-top: 20px;
+  margin-right: 10%;
+}
+
+#erreur, .loot, #correct, #niveau {
+  position: absolute;
+  vertical-align: middle;
+  top: 50%;
+  left: 50%;
+}
+
+#erreur {
+  margin-top: -277px;
+  margin-left: -261px;
+  width: 554px;
+  height: 522px;
+  background: url("#{$image-path}/erreur.png");
+  background-repeat: no-repeat;
+  z-index: 50000000;
+}
+
+#niveau {
+  width: 10%;
+  height: auto;
+  top: 50%;
+  left: 45%;
+  z-index: 50000000;
+}
+
+.loot {
+  margin-top: -12.5%;
+  margin-left: -12.5%;
+  width: 50%;
+  height: 50%;
+  z-index: 50000000;
+}
+
+#correct {
+  font-size: 20em;
+  color: #0C0;
+  margin-top: -25%;
+  margin-left: -25%;
+  width: 50%;
+  height: 50%;
+}
+
+.phenomeneSelection, .modeSelection {
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.8em;
+}
+
+.modeSelection {
+  font-size: 0.75em;
+}
+
+.back {
+  width: 50%;
+  margin: auto;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  border: solid 4px #36140f;
+  color: #36140f;
+}
+.back a {
+  color: #36140f;
+}
+
+.niveau1 {
+  background-color: #FFEE00;
+}
+
+.niveau2 {
+  background-color: #FFBB00;
+}
+
+.niveau3 {
+  background-color: #FF7700;
+}
+
+.niveau4 {
+  background-color: #FF4400;
+}
+
+.cerveau_vide, .cerveau_plein {
+  width: 45px;
+  height: 45px;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.cerveau_vide {
+  background-image: url("#{$image-path}/cerveau_vide.png");
+}
+
+.reponse, .disabled-reponse {
+  background-color: #9bc5aa;
+  display: inline-block;
+  margin-right: 20px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding: 40px;
+  margin-bottom: 20px;
+  border: solid #36140f 5px;
+}
+
+#resultat {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 0px;
+}
+
+#bottom div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.cerveau_plein {
+  background-image: url("#{$image-path}/cerveau_plein.png");
+}
+
+#parole {
+  margin-bottom: 2px;
+}
+
+@media (max-width: 1720px) {
+  /*.savant, #aide {
+    display: none;
+  }*/
+
+  .phenomeneSelection, .modeSelection {
+    font-size: 0.7em;
+  }
+}
+
+#next-sentence,#retourMenu {
+  background-image: url("#{$image-path}/phraseSuivante.png");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+  padding-right: 50px;
+  padding-left: 15px;
+/*  width: 190px;
+  height: 190px;*/
+  z-index: 50000;
+  display: inline-block;
+  margin-left: 150px;
+}
+
+@media (max-width: 980px) {
+  #passer {
+    padding: 0px;
+    position: inherit;
+  }
+}
+#sentence .word.special:hover {
+  color: #4a1710;
+}
+
+.tool {
+  position: relative;
+  /*display: inline-block;*/
+  outline: none;
+}
+
+.tool > .tip {
+  visibility: hidden;
+  display: none;
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  z-index: 999;
+  width: 230px;
+  margin-left: -127px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background-color: #9bc5aa;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #75211f;
+}
+
+.tool:hover > .tip {
+  visibility: visible;
+  display: block;  
+}
+
+.tool > .tip:before,
+.tool > .tip:after {
+  content: "";
+  position: absolute;
+  z-index: 1000;
+  bottom: -7px;
+  left: 50%;
+  margin-left: -8px;
+  border-top: 8px solid #ddd;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 0;
+}
+
+.tool > .tip:before {
+  border-top-color: #ccc;
+  bottom: -8px;
+}
+
+.aideTool  > .help {
+  position: relative;
+  outline: none;
+}
+
+.aideTool > .help > .aideTip {
+  display:none;
+  position: absolute;
+  bottom: 0px;
+  left: -800px;
+  z-index: 999;
+  width: 800px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background-color: #9bc5aa;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #75211f;
+}
+
+.aideTool:hover > .help > .aideTip {
+  display:block;
+  visibility: visible;
+}
+
+#phase {
+  padding: 0px;
+  margin: 0px;
+}
+
+.tuto {
+  text-shadow: 1px 1px 10px #FFF;
+}
+
+.btn-small{
+  border-radius: 15px;
+  border: 2px solid #79b579;
+  background-color: rgb(155, 197, 170);
+  color: #4A1710;
+}
+.btn-small:hover{
+  border: 2px solid #375e37;
+}
+#indication {
+  display:none;
+}
+#profil-duel {
+  margin-top:20px;
+  text-align:center;
+}
+.aideTool h4 {
+  margin-top:20px;  
+}
+.help_object {
+  position:relative;
+  width:410px;
+  left:-437px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  background-color: #9bc5aa;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  color: #75211f;
+  z-index: 100;
+}
+#arrow_border{
+  width:0;
+  height:0;
+  line-height:0;
+  border-bottom:30px solid transparent;
+  border-left:30px solid #ccc;
+  border-right:30px solid transparent; /* couleur de la bordure de la bulle */
+  position:absolute;
+  bottom:22px;
+  right:-60px;  
+}
+#arrow_inner{
+  width:0;
+  height:0;
+  line-height:0;
+  border-bottom:30px solid transparent;
+  border-left:30px solid #9bc5aa;
+  border-right:30px solid transparent; /* couleur du fond de la bulle */
+  position:absolute;
+  bottom:20px;
+  right:-55px;  
+}

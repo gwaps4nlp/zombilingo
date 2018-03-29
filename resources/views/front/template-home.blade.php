@@ -1,5 +1,5 @@
 <?php
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\ConstantGame;
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,19 +11,22 @@ use App\Models\ConstantGame;
         <link rel="shortcut icon" type="image/x-icon" href="{!! asset('img/favicon.ico') !!}" />
 
         <!-- CSS principal -->
-        {!! Html::style( elixir('css/app.css')) !!}
+        {!! Html::style( mix('build/css/app.css')) !!}
 		
 		@yield('css')
 
     </head>
-    <body class="{{ App::environment('local')?'test':'' }}">
+    <body class="{{ App::environment('local')?'test':'' }}" style="padding-top: 10px;">
 
 		@yield('main')
         <div id="containerModal"></div>
 		<script>
             @include('js.data-js')
 		</script>
-        <script src="{{ asset(elixir("js/app.js")) }}"></script>
+        
+        <script src="{{ asset('js/socket.io.js') }}"></script>
+        <script src="{{ asset(mix("build/js/app.js")) }}"></script>
+
 
 		@yield('scripts')
 
@@ -37,9 +40,9 @@ use App\Models\ConstantGame;
                     echo HTML::script('js/coccinelle.js');
                 }else{
                     if(rand(0,100) < ConstantGame::get('proba-meat')){
-                        echo HTML::image('img/viande.png', trans('game.you-won-an-object'), ['id'=>"viande"]);
+                        echo HTML::image('img/viande.png', trans('game.you-won-an-object'), ['id'=>"bonus-object"]);
                         session()->put('object_won',1);
-						echo Html::script(route('asset',['asset'=>'js/bonus-object.js']));
+						echo "<script>bonusObject();</script>";
                     }
                 }
             }

@@ -97,14 +97,14 @@ $('document').ready(function(){
 	var graph2total = [];
 	var total2 = 0;
 
-	$.each(annByWeek , function () {
-		if (this.week == null) {
-			week = "Données non datées";
+	$.each(annotationsByPeriod , function () {
+		if (this.period == null) {
+			period = "Données non datées";
 		}else{
-            week = "Semaine " +  String.substr(this.week,4, 2)+" "+String.substr(this.week,0, 4);
+            period = this.period;
 		}
         graph2data.push({
-        	name: week,
+        	name: period,
             y: parseInt(this.count)
         });
         	total2 +=  parseInt(this.count);
@@ -120,7 +120,7 @@ $('document').ready(function(){
             shared: true
         },
         title: {
-            text: 'Nombre d\'annotations par semaine'
+            text: 'Nombre d\'annotations par '+label_period
         },
         xAxis: {
             type:'category'
@@ -153,23 +153,23 @@ $('document').ready(function(){
 
     var graph3data = [];
     var graph3total = [];
-	var total3 = 0;
+    var total3 = 0;
 
-	$.each(subByWeek , function () {
-		if (this.week == null) {
-			week = "Données non datées";
-		}else{
-			week = "Semaine " +  String.substr(this.week,4, 2)+" "+String.substr(this.week,0, 4);
-		}
+    $.each(registrationsByPeriod , function () {
+        if (this.period == null) {
+            period = "Données non datées";
+        }else{
+            period = this.period;
+        }
         graph3data.push({
-        	name: week,
-           	y: parseInt(this.count)
+            name: period,
+            y: parseInt(this.count)
         });
         total3 +=  parseInt(this.count);
         graph3total.push(total3);
     });
 
-	var options3 = {
+    var options3 = {
         chart: {
             zoomType: 'xy',
             renderTo:'graph3'
@@ -178,7 +178,7 @@ $('document').ready(function(){
             shared: true
         },
         title: {
-            text: 'Nombre d\'inscriptions par semaine'
+            text: 'Nombre d\'inscriptions par '+label_period
         },
         xAxis: {
             type:'category'

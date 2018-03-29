@@ -3,11 +3,11 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\News;
 use App\Models\User;
 use App\Repositories\ScoreRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\DuelRepository;
+use App\Repositories\ChallengeRepository;
 use App\Models\ScheduledEmail;
 use DB,App;
 
@@ -44,23 +44,26 @@ class PlanDailyEmails extends Command
      */
     public function handle(ScoreRepository $scores, 
         AnnotationUserRepository $scores_annotation,
+        ChallengeRepository $challenges,
         DuelRepository $duels
         )
     {
         if(App::environment('local')){
-            $users = User::where('email_frequency_id','=',2)->where('role_id','=',2)
-                ->where('email','!=','')->get();
+            $users = User::where('email_frequency_id','!=',1)->where('updated_at','>=','2015-12-01')
+                ->where('email','!=','')->where('id','=','438')->get();
         } else {
-            $users = User::where('email_frequency_id','=',2)->where('updated_at','>=','2015-12-01')
+            $users = User::where('email_frequency_id','!=',1)->where('updated_at','>=','2015-12-01')
                 ->where('email','!=','')->get();
         }
             
         $now = "0 day";
         $previous_period = "1 day";
+        $challenge = $challenges->getById(5);
         foreach($users as $user){
 
             $send_email = false;
-            $score = $scores->getByUserAndCorpus($user,17);
+
+            $score = $scores->getByUserAndChallenge($user,$challenge);
             // $score = $scores_annotation->getByUserAndPeriode($user,null,$now,14);
             // $previous_score = $scores_annotation->getByUserAndPeriode($user,null,$previous_period,14);            
             // if($score && $previous_score)

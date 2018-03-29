@@ -67,7 +67,7 @@
 			$('#corpus'+corpus_id).append("<alert>Error : "+message.parser.error+"</alert>");
 		}        
 		if(message.parser.url_file){
-			$('#corpus'+corpus_id).append('Téléchargement : <a href="{{asset('/')}}'+message.parser.url_file+'"><span class="glyphicon glyphicon-download-alt"></span></a>');
+			$('#corpus'+corpus_id).append('Téléchargement : <a href="{{asset('/')}}'+message.parser.url_file+'"><i class="fa fa-download"></i></a>');
 		}
      });
 

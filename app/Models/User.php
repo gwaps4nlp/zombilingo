@@ -2,35 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Authenticatable;
+use Gwaps4nlp\Models\User as Gwaps4nlpUser;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use DB;
 
-class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+class User extends Gwaps4nlpUser
 {
-    use Authenticatable, Authorizable, CanResetPassword, SoftDeletes;
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['username', 'email', 'password','role_id'];
 
     /**
      * The attributes visible from the model's JSON form.
@@ -60,9 +40,9 @@ class User extends Model implements AuthenticatableContract,
 	 *
 	 * @return Illuminate\Database\Eloquent\Relations\hasOne
 	 */
-	public function role() 
+	public function roles()
 	{
-		return $this->belongsTo('App\Models\Role');
+		return $this->belongsToMany('App\Models\Role');
 	}
 
 	/**
@@ -82,7 +62,7 @@ class User extends Model implements AuthenticatableContract,
 	 */
 	public function bonuses()
 	{
-		return $this->belongsToMany('App\Models\Bonus');
+		return $this->belongsToMany('Gwaps4nlp\Models\Bonus');
 	}
 	
 	/**
@@ -93,6 +73,24 @@ class User extends Model implements AuthenticatableContract,
 	public function objects()
 	{
 		return $this->belongsToMany('App\Models\Object');
+	}	
+	/**
+	 * Many to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\belongToMany
+	 */
+	public function messages()
+	{
+		return $this->belongsToMany('App\Models\Message');
+	}	
+	/**
+	 * Many to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\belongToMany
+	 */
+	public function discussions()
+	{
+		return $this->belongsToMany('App\Models\Discussion');
 	}
 
     public function getNextLevelAttribute()
@@ -125,7 +123,7 @@ class User extends Model implements AuthenticatableContract,
 	 */
 	public function trophies()
 	{
-		return $this->belongsToMany('App\Models\Trophy');
+		return $this->belongsToMany('Gwaps4nlp\Models\Trophy');
 	}
 
 	/**
@@ -185,7 +183,8 @@ class User extends Model implements AuthenticatableContract,
 	 */
 	public function isAdmin()
 	{
-		return $this->role->slug == 'admin';
+		$role_admin = Role::where('slug','admin')->first();
+		return $this->roles->contains('id',$role_admin->id);
 	}
 
 	/**
@@ -226,6 +225,20 @@ class User extends Model implements AuthenticatableContract,
 	{
 		return $this->friends->contains('friend_id', $user->id);
 	}
+
+	public function followsThread($discussion_id)
+	{
+		return ($this->discussions()->where('discussion_user.discussion_id',$discussion_id)->count()>0);
+	}
+
+	public function followsDiscussionAnnotation($annotation_id)
+	{
+		return ($this->discussions()
+				->where('discussions.entity_id',$annotation_id)
+				->where('discussions.entity_type','App\\Models\\Annotation')
+				->whereRaw('discussion_user.discussion_id=discussions.id')
+				->count()>0);
+	}
 	
 	public function getAcceptedFriends()
 	{
@@ -234,8 +247,8 @@ class User extends Model implements AuthenticatableContract,
 
 	public function getListFriends()
 	{
-		$enemies = $this->friends()->where('accepted', 1)->with('friend')->get()->lists('friend_id');
-		return $this->select(DB::raw('concat(username," - '.trans('game.level').' ",level_id) as username'),'id')->whereIn('id',$enemies)->lists('username','id');
+		$enemies = $this->friends()->where('accepted', 1)->with('friend')->get()->pluck('friend_id');
+		return $this->select(DB::raw('concat(username," - '.trans('game.level').' ",level_id) as username'),'id')->whereIn('id',$enemies)->pluck('username','id');
 	}
 
 	public function getPendingFriendRequests()
@@ -250,7 +263,7 @@ class User extends Model implements AuthenticatableContract,
 
 	public function getListAcceptedFriends()
 	{
-		return $this->friends()->where('accepted', 1)->lists('friend_id')->map(function($id)
+		return $this->friends()->where('accepted', 1)->pluck('friend_id')->map(function($id)
 		{
 			return intval($id);
 		});
@@ -258,7 +271,7 @@ class User extends Model implements AuthenticatableContract,
 
 	public function getListPendingFriendRequests()
 	{
-		return $this->friends()->where('accepted', 0)->lists('friend_id')->map(function($id)
+		return $this->friends()->where('accepted', 0)->pluck('friend_id')->map(function($id)
 		{
 			return intval($id);
 		});
@@ -266,12 +279,12 @@ class User extends Model implements AuthenticatableContract,
 
 	public function getListAskFriendRequests()
 	{
-		return Friend::where('accepted', 0)->where('friend_id',$this->id)->lists('user_id')->map(function($id)
+		return Friend::where('accepted', 0)->where('friend_id',$this->id)->pluck('user_id')->map(function($id)
 		{
 			return intval($id);
 		});
 	}
-
+/*
 	public function getRememberToken()
 	{
 		return null; // not supported
@@ -286,10 +299,11 @@ class User extends Model implements AuthenticatableContract,
 	{
 		return "remember_token"; // not supported
 	}
-
+*/
 	/**
 	* Overrides the method to ignore the remember token.
 	*/
+/*
 	public function setAttribute($key, $value)
 	{
 		$isRememberTokenAttribute = ($key == $this->getRememberTokenName());
@@ -298,4 +312,5 @@ class User extends Model implements AuthenticatableContract,
 		  parent::setAttribute($key, $value);
 		}
 	}
+	*/
 }

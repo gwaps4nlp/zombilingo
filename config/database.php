@@ -124,4 +124,10 @@ return [
 
     ],
 
+    'backup-server' => [
+        'host'  => 'host',
+        'path'  => '/var/www/mon-site/storage/app/dump.sql',
+        'user'  => 'user',
+    ],
+
 ];

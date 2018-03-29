@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\EmailFrequency;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class EmailFrequencyRepository extends BaseRepository
 {

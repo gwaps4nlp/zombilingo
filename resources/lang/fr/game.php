@@ -13,7 +13,7 @@ return [
 	'annotations' => 'Annotations',	
 	'do-a-party-with' => 'Faire une partie avec le phénomène',
 	'do-the-training-with' => 'Faire la formation pour le phénomène',	
-	'next-sentence' => "Passer à la phrase suivante",
+	'next-sentence' => "Phrase suivante",
 	'no-more-attempt' => "Tu as un peu oublié comment jouer ce phénomène. Pour continuer à jouer sur celui-ci, tu vas devoir refaire le tutoriel correspondant.",
 	'you-found-object' => "Tu as trouvé :name dans les cerveaux dévorés !",
 	'bad-answer' => "Tu as répondu :answer et il fallait répondre :response",
@@ -106,6 +106,7 @@ return [
 	'number-turns' => 'Nombre de tours',
 	'begin-the-duel' => 'Commencer le duel',
 	'asterisk-new-duel' => "Pour affronter un adversaire en particulier, il doit faire partie de tes ennemis.",
+	'results' => "Résultats",
 	
 	/*Names and descriptions of the objects*/
 	'name-midas' => 'Main de Midas',
@@ -151,6 +152,12 @@ return [
 	'description-trophy-accro' => "Tu as gagné des parties&nbsp;!",
 	'name-trophy-zombie' => "Zombie d'or",
 	'description-trophy-zombie' => "Tu as gagné de nombreuses parties&nbsp;!",
+	/* trophies for rigor mortis (mwe game) */
+	'name-trophy-novice-adventurer' => "Aventurier prometteur",
+	'name-trophy-amateur-adventurer' => "Aventurier confirmé",
+	'name-trophy-expert-adventurer' => "Aventurier expert",
+	'name-trophy-trained-adventurer' => "Avant tu riais, maintenant c’est du sérieux !",
+
 	/*Name and descriptions of the bonuses*/
 	'name-bonus-choice-corpus' => "Cerveau entrainé",
 	'description-bonus-choice-corpus' => "Tu peux maintenant choisir le corpus sur lequel tu veux jouer.",
@@ -162,5 +169,6 @@ return [
 	'you-can-accede-to-the-phenomena' => 'Vous avez maintenant accès aux phénomènes :',
 	'you-have-played-all-the-annotations' => 'Bien joué ! Tu as annoté toutes les phrases du phénomène !',
 
+	'mwe' => "expression figée|expressions figées",
 
 ];

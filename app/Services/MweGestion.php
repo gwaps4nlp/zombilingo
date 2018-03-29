@@ -4,22 +4,20 @@ namespace App\Services;
 
 
 use Illuminate\Http\Request;
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Models\AnnotationInProgress;
 
 use App\Exceptions\GameException;
-use App\Services\Game;
+use Gwaps4nlp\Game;
 use App\Repositories\MweRepository;
 use Response, View;
 
-class MweGestion extends Game 
+class MweGestion extends Game implements GameGestionInterface
 {
 
 	public $mwe_id;
 	
 	public $mode = 'mwe';
-	
-	// protected $in_progress = false;
 
 	protected $fillable = ['turn', 'nb_turns', 'mwe_id', 'enabled' ];
 
@@ -28,19 +26,11 @@ class MweGestion extends Game
 	public function __construct(Request $request, MweRepository $mwes){
 
 		parent::__construct($request);
-
 		$this->mwes=$mwes;
-		$this->mwe = null;
-
-		$this->user = auth()->user();
-
-		if($this->mwe_id){
-			$this->mwe=$this->mwes->getById($this->mwe_id);
-		}			
-
 	}
 	
-	public function begin($mwe_id){
+	public function begin(Request $request, $mwe_id){
+        $this->loadSession($request);
 		if($this->user->last_mwe+ConstantGame::get('time-mwe') > time()|| !$this->enabled)
 			throw new GameException("Tu ne peux pas accéder à ce jeu pour l'instant.");
 		if($this->request->ajax()){
@@ -66,7 +56,8 @@ class MweGestion extends Game
 		return $this->annotation;
 	}
 
-	public function jsonAnswer(){
+	public function jsonAnswer(Request $request){
+		$this->loadSession($request);
 		$this->processAnswer();
         $reponse = array(
 			'nb_turns' => $this->nb_turns,
@@ -105,4 +96,10 @@ class MweGestion extends Game
 		return ($this->user->end_mwe<time());
 	}
 
+	public function loadSession(Request $request){
+		parent::loadSession($request);
+		if($this->mwe_id){
+			$this->mwe=$this->mwes->getById($this->mwe_id);
+		}
+	}
 }

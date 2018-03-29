@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Repositories\ObjectRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Response, App;
+use Response, App, Auth;
 
 class ObjectController extends Controller
 {
@@ -20,13 +20,12 @@ class ObjectController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
-        
+
         $this->middleware('auth');
         $this->middleware('ajax', ['except' => ['index']]);
-
-        $this->game = App::make('App\Services\GameGestionInterface');
+        $this->game = App::make('Gwaps4nlp\GameGestionInterface');
 
     }
 
@@ -35,7 +34,8 @@ class ObjectController extends Controller
      *  
      * @return Illuminate\Http\Response
      */
-    public function index(){
+    public function index(Request $request){
+        $this->game->loadSession($request);
         $games_in_progress = $this->game->getInProgress();
         return view('front.shop.index',array('game'=>$this->game,'games_in_progress'=>$games_in_progress));
     }
@@ -56,7 +56,7 @@ class ObjectController extends Controller
      * @return void
      */    
     public function checkHelpAsSeen($id){
-        $this->game->user->objects()->updateExistingPivot($id, ['help_seen'=>1]);
+        Auth::user()->objects()->updateExistingPivot($id, ['help_seen'=>1]);
     }
 
     /**
@@ -66,14 +66,15 @@ class ObjectController extends Controller
      * @param int $id the identifier of the object used 
      * @return lluminate\Http\Response
      */    
-    public function useObject($mode,$id){
+    public function useObject(Request $request, $mode, $id){
 
         //Current effect
+        $this->game->loadSession($request);
         $effet = $this->game->effect;
 
         $response = array();
 
-        $object = $this->game->user->inventaire()->find($id);
+        $object = Auth::user()->inventaire()->find($id);
 
         if(!$object){
             $response['message'] = trans('shop.error-unknown-object');
@@ -170,11 +171,12 @@ class ObjectController extends Controller
      * @param int $id the identifier of the object bought 
      * @return lluminate\Http\Response
      */    
-    public function buyObject($id){
+    public function buyObject(Request $request, $id){
 
+        $this->game->loadSession($request);
         $response = array();
 
-        $object = $this->game->user->inventaire()->find($id);
+        $object = Auth::user()->inventaire()->find($id);
 		
         if(!$object){
             $response['message'] = trans('shop.error-unknown-object');
@@ -190,14 +192,14 @@ class ObjectController extends Controller
             return $this->inventaire($response);         
         }
 		if($object->object_user_id)
-			$this->game->user->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+			Auth::user()->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
 		else
-			$this->game->user->objects()->save($object, ['quantity'=>1]);
+			Auth::user()->objects()->save($object, ['quantity'=>1]);
 		
 		$this->game->decrementMoney($price);
 
     
-		return $this->inventaire(['money'=>$this->game->user->money,"spell"=>$this->game->get('spell')]);
+		return $this->inventaire(['money'=>Auth::user()->money,"spell"=>$this->game->get('spell')]);
 		
     }
 
@@ -215,12 +217,12 @@ class ObjectController extends Controller
 		
 		session()->put('object_won',0);
 		
-        $object = $this->game->user->inventaire()->find($object_id);
+        $object = Auth::user()->inventaire()->find($object_id);
 		
 		if($object->object_user_id)
-			$this->game->user->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+			Auth::user()->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
 		else
-			$this->game->user->objects()->save($object, ['quantity'=>1]);
+			Auth::user()->objects()->save($object, ['quantity'=>1]);
     
 		return Response::json($object);
 		

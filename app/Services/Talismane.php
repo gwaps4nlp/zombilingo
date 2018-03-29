@@ -17,8 +17,8 @@ class Talismane extends Parser {
 	/**
 	 * 
 	 * 
-	 * @param  
-	 * @return void
+	 * @param  string $text
+	 * @return string $text
 	 */
 	public function splitSentences($text)
 	{
@@ -30,7 +30,8 @@ class Talismane extends Parser {
         $output_file = storage_path()."/app/$md5-splitted.txt";
 
         Storage::disk('local')->put("$md5-raw.txt", $text);
-        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} command=analyse module=sentenceDetector inFile=$input_file outFile=$output_file encoding=UTF-8";
+        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} --analyse --sessionId=fr --startModule=sentenceDetector --endModule=sentenceDetector --inFile=$input_file --outFile=$output_file --encoding=UTF-8";
+
         exec($this->command,$output,$retour);
     	$this->output_file = "$md5-splitted.txt";
         $sentences_splitted = Storage::disk('local')->get($this->output_file);
@@ -53,8 +54,9 @@ class Talismane extends Parser {
         $input_file = storage_path()."/app/$md5-splitted.txt";
         $output_file = storage_path()."/app/$md5-tmp.conll";
 
-        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} command=analyse startModule=tokenise inFile=$input_file outFile=$output_file encoding=UTF-8";
+        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} --analyse --sessionId=fr --startModule=tokeniser --inFile=$input_file --outFile=$output_file --encoding=UTF-8";
     	exec($this->command,$output,$retour);
+    	echo $this->command;
         $conll = Storage::disk('local')->get("$md5-tmp.conll");
         $conll = $this->addCommentaries($conll,$text,$text_id);
         Storage::disk('local')->put("$md5-tmp.conll",$conll);
@@ -82,7 +84,7 @@ class Talismane extends Parser {
 
         $output_file = storage_path()."/app/$md5-tmp-tal.conll";
         if(!Storage::disk('local')->has("$md5-tmp.conll")){
-            $command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} command=analyse startModule=postag inFile=$input_file outFile=$output_file encoding=UTF-8";
+            $command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} --analyse --sessionId=fr --startModule=posTagger --inFile=$input_file --outFile=$output_file --encoding=UTF-8";
 
         	exec($command,$output,$retour);
 	        $conll = Storage::disk('local')->get("$md5-tmp-tal.conll");
@@ -90,7 +92,7 @@ class Talismane extends Parser {
 	        Storage::disk('local')->put("$md5-tmp-tal.conll",$conll);
         }
         $this->output_file = "$md5-tmp-tal.conll";
-        $this->postParse();
+        $this->postParse();	
         return Storage::disk('local')->get($this->output_file);
 	}
 
@@ -110,15 +112,14 @@ class Talismane extends Parser {
         $output_file = storage_path()."/app/$md5-tokenized.txt";
 
         if(!Storage::disk('local')->has("$md5-tokenized.txt")){
-	        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} command=analyse module=tokenise inFile=$input_file outFile=$output_file encoding=UTF-8";
+	        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} --analyse --sessionId=fr --startModule=tokeniser --endModule=tokeniser --inFile=$input_file --outFile=$output_file --encoding=UTF-8";
 	        exec($this->command,$output,$retour);
     	}
-
         $result = Storage::disk('local')->get("$md5-tokenized.txt");
         $sentences="";
         foreach(explode("\n",$result) as $ligne){
             if($ligne)
-                $sentences .= " ".str_replace(' ','_',explode(" ",$ligne,2)[1]);
+                $sentences .= " ".str_replace(' ','_',explode("\t",$ligne,2)[1]);
             else        
                 $sentences .="\n";
         }
@@ -142,7 +143,7 @@ class Talismane extends Parser {
         $this->output_file = storage_path()."/app/$md5-postag-talismane.txt";
 
         if(!Storage::disk('local')->has("$md5-postag-talismane.txt")){
-	        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} command=analyse startModule=tokenise endModule=postag inFile=$input_file outFile=$this->output_file encoding=UTF-8";
+	        $this->command = "java -Xmx1G -jar -Dconfig.file={$this->language_pack} {$this->binary} --analyse --sessionId=fr --startModule=tokeniser --endModule=posTagger --inFile=$input_file --outFile=$this->output_file --encoding=UTF-8";
 	        exec($this->command,$output,$retour);
     	}
 
@@ -159,7 +160,7 @@ class Talismane extends Parser {
 	 */
 	public function getVersion()
 	{
-
+        return $this->version;
 	}
 
 
@@ -182,7 +183,7 @@ class Talismane extends Parser {
 	    while(!feof($file)){
 			$line = fgets($file);
 			$line_splitted = explode("\t",$line);
-			if(count($line_splitted)==10){
+			if(count($line_splitted)==count($columns)){
 				$line_splitted = array_combine($columns,$line_splitted);
 				if($line_splitted['word_position']==1){
 					preg_match('/\|?sentid=(?<sentid>[^|]+)\|?/', $line_splitted['features'], $matches);

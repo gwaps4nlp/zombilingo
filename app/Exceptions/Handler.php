@@ -48,11 +48,13 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-		if ($e instanceof GameException){
+        if ($e instanceof GameException){
+            if($request->ajax()) return Response::json(['error'=>$e->getMessage()],403);
+            return redirect('game')->with('error', $e->getMessage());
+        }
+		elseif ($e instanceof UplGameException){
 			if($request->ajax()) return Response::json(['error'=>$e->getMessage()],403);
-			// if($request->ajax()) return response($e->getMessage(), 500);
-			// $response = new RedirectResponse(route('game'));
-			return redirect('game')->with('error', $e->getMessage());
+			return redirect('upl')->with('error', $e->getMessage());
 		}
 		
 		if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)

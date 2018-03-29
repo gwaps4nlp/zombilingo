@@ -1,0 +1,20 @@
+Since november 2015, ZL contains half of sequoia-7.0, splitted in 4 sub-corpora:
+- sequoia-7.0_Europar_pair
+- sequoia-7.0_frwiki_pair
+- sequoia-7.0_Emea_pair 
+- sequoia-7.0_Annodis_pair
+
+----------------------------------------------------
+HISTORY:
+
+In ZL, half of the sentence of Sequioa-6.0 (with even sentid) were imported.
+The imported files are in folder 6.0.
+
+In november 2015, annotation of these sentences were updated to Sequoia-7.0 data.
+The file bonus_sequoia_7 contains the list of relation diff from 6.0 to 7.0
+
+example: 
+	Europar.550_00206	4	2	suj
+means that the word 4 of "Europar.550_00206" changes in 7.0 to have word 2 as a governor with relation "suj".
+
+

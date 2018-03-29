@@ -47,6 +47,10 @@ return [
             'driver' => 'local',
             'root'   => storage_path('app'),
         ],
+        'lang' => [
+            'driver' => 'local',
+            'root'   => base_path('resources/lang'),
+        ],
 
         'ftp' => [
             'driver'   => 'ftp',

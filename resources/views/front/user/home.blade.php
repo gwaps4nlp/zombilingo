@@ -2,8 +2,8 @@
 
 @section('main')
 
-<div class="row">
-    <div class="col-md-10 col-md-offset-1" id="home">
+<div id="home">
+
 		{!! Html::image('img/labo-opacity-reduce.jpg','Points',['style'=>'z-index:-1;position:absolute;top:0;left:0;width:100%;border-radius:1% 1%;']) !!}
 		{!! Html::image('img/tuyaux-small.png','Tuyau',['style'=>'z-index:1;position:absolute;margin-top:41.4%;left:0%;width:12.9%;']) !!}
 		{!! Html::image('img/porte-document.png','Points',['style'=>'z-index:1;position:absolute;margin-top:44%;left:18%;width:81%;']) !!}
@@ -27,7 +27,168 @@
 	            <span class="link curvilinear">lire la suite...</span>
             @endif
 		</div>
-		<div id="stats">
+		<div id="scores">
+			<div id="block-trophies">
+				{!! Html::image('img/objet-medaille.png','Trophies',['id'=>'trophies']) !!}
+				<span style="position: relative;left: 17%;">{{ count($user->trophies) }}</span>
+				<div id="panel-trophies">
+					<table>
+					<tr><th style="text-align:center;">{{ trans('site.your-trophies') }}</th></tr>
+					<tr>
+						<td class="text" style="padding:10px;">
+							@foreach ($trophy->getAll() as $key => $_trophy)
+							    <span class="trophee">
+							    @if($user->hasTrophy($_trophy))
+							        {!! Html::image('img/trophee/'.$_trophy->image,$_trophy->name.' : '.$_trophy->description) !!}	
+							    @elseif($_trophy->is_secret)
+						            {!! Html::image('img/trophee/secret.png','Trophée secret') !!}
+							    @endif
+							    </span>
+							@endforeach					
+						</td>
+					</tr>
+					<!--<tr>
+						<td class="img">
+							{!! Html::image('img/objet-rigormortis.png','Rigor Mortis',['style'=>'width:100%;']) !!}
+						</td>
+						<td class="text">
+							{{ trans('site.hidden-games') }}<br/>
+				            <?php
+				            if($user->number_mwes > 0){
+				                echo '<span class="label">Rigor mortis : </span>' . $user->number_mwes . '<br />';
+				            }
+				            ?>					
+						</td>
+					</tr>-->
+					</table>
+				</div>						
+			</div>
+			<div>
+				{!! Html::image('img/argent.png','Money',['id'=>'money']) !!}
+				<span style="position: relative;left: -23%;">{{ Html::formatScore($user->money) }}</span>
+			</div>
+			<div>
+				{!! Html::image('img/cerveau.png','Points',['id'=>'points']) !!}
+				<span>{{ Html::formatScore($user->score) }}</span>
+			</div>
+			<div>
+			{!! Html::image('img/objet-evolution.png','Niveau',['id'=>'level']) !!}
+			</div>
+		</div>
+		{!! Html::image('img/level/zombie'.$user->level->id.'.png','ZombiLingo',array('style'=>'display:none;z-index:0;position:absolute;margin-top:18%;left:9%;width:11.5%;')) !!}
+		<div id="zombie-level" style="position:absolute;margin-top:18%;left:7%;width:11.5%;">
+			{!! Html::image('img/level/zombie'.$user->level->id.'.png','ZombiLingo',array('style'=>'z-index:0;margin:0;width:100%;')) !!}
+		</div>
+		<div id="friends" onclick="$('#modalFriends').modal();">
+			<div id="img-level"></div>
+			<span id="label-friend"></span>
+		</div>
+		<div id="number-friends">
+			{{ count($user->getAcceptedFriends()) }}
+	    	@if(count($user->getAskFriendRequests()))
+				<span id="pending-enemies" style="color:red;">({{ count($user->getAskFriendRequests()) }})</span>			    		
+	    	@endif
+		</div>
+		<div id="leader-board">
+            <div id="periode-board">
+                @if($challenge)
+                    <div id="challenge" class="periode-choice focus">{{ trans('home.challenge') }}</div>
+                    <input type="hidden" id="periode" value="challenge" />
+                @else
+                    <div id="week" class="periode-choice focus">{{ trans('home.week') }}</div>
+                    <input type="hidden" id="periode" value="week" />
+                @endif
+                <div id="month" class="periode-choice">{{ trans('home.month') }}</div>
+                <div id="total" class="periode-choice">{{ trans('home.total') }}</div>
+                @if($challenge && $challenge->type_score=="annotations")
+                    <div id="toggleScore" class="score-choice annotations">annotations</div>
+                    <input type="hidden" id="type_score" value="annotations" />
+                @else
+                    <div id="toggleScore" class="score-choice points">points</div>
+                    <input type="hidden" id="type_score" value="points" />
+                @endif
+
+            </div>
+            <div id="leaders-1-2">
+            <?php
+					foreach(array_keys($leaders) as $ranking_periode){
+					?>
+					@if(!$leaders[$ranking_periode]->contains('user_id',$user->id)&&$scores_user[$ranking_periode])
+						<?php $in_leader[$ranking_periode] = false; ?>
+					@else
+						<?php $in_leader[$ranking_periode] = true; ?>
+					@endif
+					
+					@if(!$leaders_annotations[$ranking_periode]->contains('user_id',$user->id)&&$scores_annotation_user[$ranking_periode])
+						<?php $in_leader_annotations[$ranking_periode] = false; ?>
+					@else
+						<?php $in_leader_annotations[$ranking_periode] = true; ?>
+					@endif
+
+					<?php 							
+					$rank = 1;
+                    foreach ($leaders[$ranking_periode]->splice(0,6) as $ranking) {
+	                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
+						$rank++;
+					} 							
+					$rank_annotations = 1;						
+                    foreach ($leaders_annotations[$ranking_periode]->splice(0,6) as $ranking) {	                 
+	                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank_annotations . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
+						$rank_annotations++;
+					}
+				}
+            ?>					
+            </div>  
+            <div id="leaders-3-4-5">
+            <?php
+
+					foreach(array_keys($leaders) as $ranking_periode){
+						$rank = 7;
+						$rank_annotations = 7;
+					?>
+					@if(!$in_leader[$ranking_periode]&&$scores_user[$ranking_periode])
+						@foreach($neighbors[$ranking_periode]['sup'] as $neighbor)
+							<div user_id="{{ $neighbor->user_id }}" class="rank rank-points {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
+						@endforeach
+							<div user_id="{{ Auth::user()->id }}" class="rank rank-points {{ $ranking_periode }} self">{{ $scores_user[$ranking_periode]->rank }} {{ $scores_user[$ranking_periode]->username }}&nbsp;: {{ Html::formatScore($scores_user[$ranking_periode]->score) }}</div>
+						@if($scores_user[$ranking_periode])
+							@foreach($neighbors[$ranking_periode]['inf'] as $neighbor)
+								<div user_id="{{ $neighbor->user_id }}" class="rank rank-points {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
+							@endforeach
+						@endif							
+					@else
+                        <?php
+                        foreach ($leaders[$ranking_periode]->splice(0,5) as $ranking) {
+		                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
+							$rank++;
+						}
+						?>
+					@endif
+					@if(!$in_leader_annotations[$ranking_periode]&&$scores_annotation_user[$ranking_periode])
+						@foreach($neighbors_annotations[$ranking_periode]['sup'] as $neighbor)
+							<div user_id="{{ $neighbor->user_id }}" class="rank rank-annotations {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
+						@endforeach
+							<div user_id="{{ Auth::user()->id }}" class="rank rank-annotations {{ $ranking_periode }} self">{{ $scores_annotation_user[$ranking_periode]->rank }} {{ $scores_annotation_user[$ranking_periode]->username }}&nbsp;: {{ Html::formatScore($scores_annotation_user[$ranking_periode]->score) }}</div>
+						@if($scores_annotation_user[$ranking_periode])
+							@foreach($neighbors_annotations[$ranking_periode]['inf'] as $neighbor)
+								<div user_id="{{ $neighbor->user_id }}" class="rank rank-annotations {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
+							@endforeach
+						@endif							
+					@else
+                        <?php
+                        foreach ($leaders_annotations[$ranking_periode]->splice(0,5) as $ranking) {
+		                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank_annotations . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
+							$rank_annotations++;
+						}
+						?>								
+					@endif
+
+					<?php			
+				}
+            ?>
+            </div>                                 
+        </div>
+        <div id="stats">
             {{ trans('game.parties-won') }} : <span>{{ $user->won }}</span><br />
             {{ trans('game.perfect-parties') }} : <span>{{ $user->perfect }}</span><br />
             {{ trans('game.number-objects-found') }} : <span>{{ $user->number_objects }}</span><br />
@@ -37,14 +198,14 @@
 			    <div class="modal-content">
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1>News</h1>
+						<h2>News</h2>
 						<div  style="text-align:left;">
 						@foreach($news as $new)
 							{{ substr($new->created_at,0,10) }} : {!! $new->content !!}<br/>
 						@endforeach
 						</div>
 			            <div class="modal-footer">
-	  						<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('site.close') }}</button>
+	  						<button type="button" class="btn btn-danger" data-dismiss="modal">{{ trans('site.close') }}</button>
 						</div>			                					       	
 			        </div>
 			    </div>
@@ -59,7 +220,7 @@
 			<table>
 			<tr>
 				<td class="img" style="text-align:center;">
-					<span style="font-size:30px;">VS.</span>
+					<span style="font-size:2vw;">VS.</span>
 				</td>
 				<td class="text">
 					Mes duels<br/>
@@ -71,15 +232,16 @@
 				</td>
 			</tr>
 			</table>
-		</div>	
+		</div>
 		<div class="modal fade" id="modalChangePassword" role="dialog">
 		    <div class="modal-dialog">
+		    {!! Form::open(['url' => 'password/change', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-password']) !!} 
 			    <div class="modal-content">
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1>Modification du mot de passe</h1>
+						<h2>Modification du mot de passe</h2>
 						   <span id="error-change-password" class="error"></span>
-				          {!! Form::open(['url' => 'password/change', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-password']) !!} 
+				          
 				            <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 				              <label for="password">{{ trans('site.new-password') }}</label>
 				              <input type="password" class="form-control" name="password" id="password" placeholder="{{ trans('site.placeholder-enter-password') }}">
@@ -90,25 +252,30 @@
 				              <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="{{ trans('site.placeholder-confirm-password') }}">
 				              {{ $errors->first('password_confirmation', '<small class="help-block">:message</small>') }}
 				            </div>
-				            <button type="submit" class="btn btn-success">{{ trans('site.button-validate') }}</button>
-				            <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal">{{ trans('site.cancel') }}</button>
-				          {!! Form::close() !!}		                					       	
+			          	                					       	
 			            <div class="modal-footer">
-
+				            <button type="submit" class="btn btn-success">
+				            	{{ trans('site.button-validate') }}
+				            </button>
+				            <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal">
+				            	{{ trans('site.cancel') }}
+				            </button>
 						</div>			        
 			        </div>        
 			    </div>
+			{!! Form::close() !!}
 		    </div>
 		</div>
 
 		<div class="modal fade" id="modalChangeEmail" role="dialog">
 		    <div class="modal-dialog">
+		    {!! Form::open(['url' => 'user/change-email', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-email']) !!} 
 			    <div class="modal-content">
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1>Envoi des emails</h1>
+						<h2>Envoi des emails</h2>
 						   <span id="error-change-email" class="error"></span>
-				          {!! Form::open(['url' => 'user/change-email', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-email']) !!} 
+				          
 				            <div class="form-group {{ $errors->has('email_frequency_id') ? 'has-error' : '' }}">
 				              <label for="frequency">{{ trans('site.email-frequency') }}</label>
 				              <div style="text-align:left;">
@@ -127,14 +294,14 @@
 				              <input type="text" class="form-control" name="email" id="email" value="{{ $user->email }}">
 				              {{ $errors->first('email', '<small class="help-block">:message</small>') }}
 				            </div>
+			          	                					       	
+			            <div class="modal-footer">
 				            <button type="submit" class="btn btn-success">{{ trans('site.button-validate') }}</button>
 				            <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal">{{ trans('site.cancel') }}</button>
-				          {!! Form::close() !!}		                					       	
-			            <div class="modal-footer">
-
 						</div>			        
 			        </div>        
 			    </div>
+			{!! Form::close() !!}
 		    </div>
 		</div>
 		<div class="modal fade" id="modalDeleteAccount" role="dialog">
@@ -142,7 +309,7 @@
 			    <div class="modal-content">
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1>Suppression du compte</h1>
+						<h2>Suppression du compte</h2>
 				          {!! Form::open(['url' => 'user/delete', 'method' => 'get', 'role' => 'form', 'id'=>'form-delete']) !!} 
 				            <div class="form-group">
 				            	{{ trans('site.confirm-delete-account') }}
@@ -165,78 +332,22 @@
 		@endif
 		<div class="row">
 			<div class="col-sm-2 col-md-2">
-				<div id="scores">
-					<div id="block-trophies">
-						{!! Html::image('img/objet-medaille.png','Trophies',['id'=>'trophies']) !!}
-						<span style="position: relative;left: 17%;">{{ count($user->trophies) }}</span>
-						<div id="panel-trophies">
-							<table>
-							<tr><th style="text-align:center;">{{ trans('site.your-trophies') }}</th></tr>
-							<tr>
-								<td class="text" style="padding:10px;">
-									@foreach ($trophy->getAll() as $key => $_trophy)
-									    <span class="trophee">
-									    @if($user->hasTrophy($_trophy))
-									        {!! Html::image('img/trophee/'.$_trophy->image,$_trophy->name.' : '.$_trophy->description) !!}	
-									    @elseif($_trophy->is_secret)
-								            {!! Html::image('img/trophee/secret.png','Trophée secret') !!}
-									    @endif
-									    </span>
-									@endforeach					
-								</td>
-							</tr>
-							<!--<tr>
-								<td class="img">
-									{!! Html::image('img/objet-rigormortis.png','Rigor Mortis',['style'=>'width:100%;']) !!}
-								</td>
-								<td class="text">
-									{{ trans('site.hidden-games') }}<br/>
-						            <?php
-						            if($user->number_mwes > 0){
-						                echo '<span class="label">Rigor mortis : </span>' . $user->number_mwes . '<br />';
-						            }
-						            ?>					
-								</td>
-							</tr>-->
-							</table>
-						</div>						
-					</div>
-					<div>
-						{!! Html::image('img/argent.png','Money',['id'=>'money']) !!}
-						<span style="position: relative;left: -23%;">{{ Html::formatScore($user->money) }}</span>
-					</div>
-					<div>
-						{!! Html::image('img/cerveau.png','Points',['id'=>'points']) !!}
-						<span>{{ Html::formatScore($user->score) }}</span>
-					</div>
-					<div>
-					{!! Html::image('img/objet-evolution.png','Niveau',['id'=>'level']) !!}
-					</div>
-				</div>
+
 			</div>
 			<div class="col-sm-2 col-md-2">
-				{!! Html::image('img/level/zombie'.$user->level->id.'.png','ZombiLingo',array('class'=>'level')) !!}
+			
 			</div>
 			<div class="col-sm-2 col-md-2">
 
 			</div>
 			<div class="col-sm-2 col-md-2">
-				<div id="friends" onclick="$('#modalFriends').modal();">
-					<div id="img-level"></div>
-					<span id="label-friend"></span>
-				</div>
-				<div id="number-friends">
-					{{ count($user->getAcceptedFriends()) }}
-			    	@if(count($user->getAskFriendRequests()))
-						<span id="pending-enemies" style="color:red;">({{ count($user->getAskFriendRequests()) }})</span>			    		
-			    	@endif
-				</div>
+
 				<div class="modal fade" id="modalFriends" role="dialog">
 				    <div class="modal-dialog">
 				    <div class="modal-content">
 				        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1>{{trans('site.your-enemies')}}</h1>
+						<h2>{{trans('site.your-enemies')}}</h2>
 							@if(count($user->getAcceptedFriends()))
 								<div id="amis" present="1">
 
@@ -256,7 +367,7 @@
 
 							@foreach ($user->getPendingFriendRequests() as $key=>$request)
 								@if($key==0)
-									<h1 id="soi">{{ trans('site.your-enemies-request') }}</h1>
+									<h2 id="soi">{{ trans('site.your-enemies-request') }}</h2>
 								@endif
 							<div class="demande" user_id="{{ $request->friend_id }}">
 								{!! link_to('user/'.$request->friend->id, $request->friend->username) !!}&nbsp;
@@ -275,7 +386,9 @@
 			                    @endforeach
 			                @endif
 				            <div class="modal-footer">
-          						<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('site.close') }}</button>
+          						<button type="button" class="btn btn-danger" data-dismiss="modal">
+          							{{ trans('site.close') }}
+          						</button>
         					</div>			                					       	
 				        </div>
 				    </div>
@@ -284,110 +397,12 @@
 				</div>
 			</div>
             <div class="col-sm-3 col-md-3">
-                <div id="leader-board">
-                    <div id="periode-board">
-                        @if($challenge)
-                            <div id="challenge" class="periode-choice focus">{{ trans('home.challenge') }}</div>
-                            <input type="hidden" id="periode" value="challenge" />
-                        @else
-                            <div id="week" class="periode-choice focus">{{ trans('home.week') }}</div>
-                            <input type="hidden" id="periode" value="week" />
-                        @endif
-                        <div id="month" class="periode-choice">{{ trans('home.month') }}</div>
-                        <div id="total" class="periode-choice">{{ trans('home.total') }}</div>
-                        @if($challenge && $challenge->type_score=="annotations")
-                            <div id="toggleScore" class="score-choice annotations">annotations</div>
-                            <input type="hidden" id="type_score" value="annotations" />
-                        @else
-                            <div id="toggleScore" class="score-choice points">points</div>
-                            <input type="hidden" id="type_score" value="points" />
-                        @endif
-
-                    </div>
-                    <div id="leaders-1-2">
-                    <?php
- 						foreach(array_keys($leaders) as $ranking_periode){
-							?>
-							@if(!$leaders[$ranking_periode]->contains('user_id',$user->id)&&$scores_user[$ranking_periode])
-								<?php $in_leader[$ranking_periode] = false; ?>
-							@else
-								<?php $in_leader[$ranking_periode] = true; ?>
-							@endif
-							
-							@if(!$leaders_annotations[$ranking_periode]->contains('user_id',$user->id)&&$scores_annotation_user[$ranking_periode])
-								<?php $in_leader_annotations[$ranking_periode] = false; ?>
-							@else
-								<?php $in_leader_annotations[$ranking_periode] = true; ?>
-							@endif
-
-							<?php 							
-							$rank = 1;
-	                        foreach ($leaders[$ranking_periode]->splice(0,6) as $ranking) {
-			                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
-								$rank++;
-							} 							
-							$rank_annotations = 1;						
-	                        foreach ($leaders_annotations[$ranking_periode]->splice(0,6) as $ranking) {	                 
-			                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank_annotations . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
-								$rank_annotations++;
-							}
-						}
-                    ?>					
-                    </div>  
-                    <div id="leaders-3-4-5">
-                    <?php
-
- 						foreach(array_keys($leaders) as $ranking_periode){
-	 						$rank = 7;
-	 						$rank_annotations = 7;
- 						?>
-							@if(!$in_leader[$ranking_periode]&&$scores_user[$ranking_periode])
-								@foreach($neighbors[$ranking_periode]['sup'] as $neighbor)
-									<div user_id="{{ $neighbor->user_id }}" class="rank rank-points {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
-								@endforeach
-									<div user_id="{{ Auth::user()->id }}" class="rank rank-points {{ $ranking_periode }} self">{{ $scores_user[$ranking_periode]->rank }} {{ $scores_user[$ranking_periode]->username }}&nbsp;: {{ Html::formatScore($scores_user[$ranking_periode]->score) }}</div>
-								@if($scores_user[$ranking_periode])
-									@foreach($neighbors[$ranking_periode]['inf'] as $neighbor)
-										<div user_id="{{ $neighbor->user_id }}" class="rank rank-points {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
-									@endforeach
-								@endif							
-							@else
-		                        <?php
-		                        foreach ($leaders[$ranking_periode]->splice(0,5) as $ranking) {
-				                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
-									$rank++;
-								}
-								?>
-							@endif
-							@if(!$in_leader_annotations[$ranking_periode]&&$scores_annotation_user[$ranking_periode])
-								@foreach($neighbors_annotations[$ranking_periode]['sup'] as $neighbor)
-									<div user_id="{{ $neighbor->user_id }}" class="rank rank-annotations {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
-								@endforeach
-									<div user_id="{{ Auth::user()->id }}" class="rank rank-annotations {{ $ranking_periode }} self">{{ $scores_annotation_user[$ranking_periode]->rank }} {{ $scores_annotation_user[$ranking_periode]->username }}&nbsp;: {{ Html::formatScore($scores_annotation_user[$ranking_periode]->score) }}</div>
-								@if($scores_annotation_user[$ranking_periode])
-									@foreach($neighbors_annotations[$ranking_periode]['inf'] as $neighbor)
-										<div user_id="{{ $neighbor->user_id }}" class="rank rank-annotations {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
-									@endforeach
-								@endif							
-							@else
-		                        <?php
-		                        foreach ($leaders_annotations[$ranking_periode]->splice(0,5) as $ranking) {
-				                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank_annotations . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
-									$rank_annotations++;
-								}
-								?>								
-							@endif
-
-							<?php			
-						}
-                    ?>
-                    </div>                                          
-                </div>
+                
                 
             </div>
 
 		</div> 
-    </div>    	
+ 	
 </div>
 
 @stop
@@ -406,6 +421,10 @@
         @endif
         @if(isset($_GET['enemies']))
         	$('#modalFriends').modal('show');
+        @elseif(isset($_GET['email']))	
+        	$('#modalChangeEmail').modal('show');
+        @elseif(isset($_GET['password']))	
+        	$('#modalChangePassword').modal('show');
         @endif
     }
 
@@ -470,7 +489,7 @@
 		left:-1%;
 	}
 }
-#home.col-md-10, #home .link{
+#home, #home .link{
 	border-radius : 1% 1%;
     position:relative;
 	color:#3c1715;
@@ -481,7 +500,7 @@
 	margin-left: 15%;
 	font-family: "Charlemagne Std Bold"; 
 }
-.col-md-10{
+.col-lg-10{
 	padding-left:0;
 	padding-right:0;
 }

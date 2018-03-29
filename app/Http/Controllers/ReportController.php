@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportRequest;
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Models\Report;
 use App\Models\User;
 use App\Models\Role;
@@ -14,15 +14,6 @@ use Response, Mail;
 
 class ReportController extends Controller
 {
-    /**
-     * Create a new ReportController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('admin',['only'=>'getIndex']);
-    }
 
     /**
      * Send a new report.

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
+use Gwaps4nlp\Repositories\UserRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\LevelRepository;
@@ -56,14 +56,25 @@ class AdminController extends Controller
     public function getReporting(Request $request, AnnotationUserRepository $annotations_user, UserRepository $users_repo, RelationRepository $relations_repo)
     {
 
+        if($request->has('period') && $request->input('period')=='week'){
+            $annotations = $annotations_user->countByWeek($request->input('relation_id'));
+            $registrations = $users_repo->countRegistrationsByWeek();
+            $label_period = "semaine";
+        } else {
+            $annotations = $annotations_user->countByMonth($request->input('relation_id'));    
+            $registrations = $users_repo->countRegistrationsByMonth();
+            $label_period = "mois";
+        }
         $relations = $relations_repo->getListPlayable();
         $users = $users_repo->getList();
         $annotationsByUser = $annotations_user->countByUser($request->input('relation_id'));
-        $annotationsByWeek = $annotations_user->countByWeek($request->input('relation_id'));
-        $registrationsByWeek = $users_repo->countRegistrationsByWeek();
+        
+        // $registrationsByWeek = $users_repo->countRegistrationsByWeek();
+        // $registrationsByMonth = $users_repo->countRegistrationsByMonth();
+
         $annotationsByRelation = $annotations_user->countByRelation($request->input('user_id'));
         $daysOfActivityByUser = $annotations_user->countDaysOfActivityByUser();
-        return view('back.reporting',compact('request','relations','users','annotationsByUser','annotationsByWeek','daysOfActivityByUser','registrationsByWeek','annotationsByRelation'));
+        return view('back.reporting',compact('request','relations','users','annotationsByUser','annotations','daysOfActivityByUser','registrations','annotationsByRelation','label_period'));
     }
 
 }

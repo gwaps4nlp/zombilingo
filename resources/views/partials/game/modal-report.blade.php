@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h1>Je ne suis pas d'accord</h1>
+                <h3 class="text-center">Je ne suis pas d'accord</h3>
                   {!! Form::open(['url' => 'report/send', 'method' => 'post', 'role' => 'form', 'id'=>'form-report']) !!} 
                     <div class="form-group">
                         <ul class="report-options">
@@ -30,12 +30,14 @@
                             </li>
                         </ul>
                     </div>
-                    <button type="submit" disabled="disabled" class="btn btn-success" id="submitReport">{{ trans('site.submit') }}</button>
-                    <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal" id="cancelReport">{{ trans('site.cancel') }}</button>
+                    <div class="text-center">
+                        <button type="submit" disabled="disabled" class="btn btn-success" id="submitReport">{{ trans('site.submit') }}</button>
+                        <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal" id="cancelReport">{{ trans('site.cancel') }}</button>
+                    </div>
                   {!! Form::close() !!}                                                 
-                <div class="modal-footer">
+<!--                 <div class="modal-footer">
 
-                </div>
+                </div> -->
             </div>        
         </div>
     </div>

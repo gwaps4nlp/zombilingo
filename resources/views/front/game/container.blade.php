@@ -1,18 +1,15 @@
-@extends('front.template')
+@extends('front.template-game')
 
 @section('css')
     @if($game->mode=='mwe')
     {!! Html::style('css/mwe.css') !!}
     @endif
     {!! Html::style('css/bootstrap-tour.css') !!}
-    {!! Html::style('css/non-sass.css') !!}
 @stop
 
 @section('main')
-<div class="row">
-    <div class="col-md-10 col-md-offset-1 center" id="blocJeu">
-        @include('partials.'.$game->mode.'.container')
-    </div>
+<div id="block-game" class="container-game">
+    @include('partials.'.$game->mode.'.container')
 </div>
 @stop
 
@@ -34,10 +31,14 @@
     @elseif($game->mode=='admin-game')
     $(document).ready(function(){
         initGame('{{$game->mode}}','{{$game->relation->id}}');
-    })   
-	@elseif($game->mode=='duel')
+    })
+    @elseif($game->mode=='duel')
     $(document).ready(function(){
         initGame('{{$game->mode}}','{{$game->duel->id}}');
+    })  
+	@elseif($game->mode=='upl')
+    $(document).ready(function(){
+        initGame('{{$game->mode}}','{{$game->stage->id}}');
     })	
 	@else
     $(document).ready(function(){

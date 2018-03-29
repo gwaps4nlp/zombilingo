@@ -9,39 +9,40 @@ else
     $active_tab = 'available';
 ?>
 
-@extends('front.template')
+@extends('front.template-duel')
 
 @section('main')
 
-<div class="row" id="index-duel">
-    <div class="col-md-10 col-md-offset-1 center" id="blocJeu">
-    <div id="duel-summary" style="float:right;text-align:right;">
+<div id="index-duel">
+    <div id="block-game" class="row" >
+    <div class="col-12">
+    <div id="duel-summary" class="float-right" style="text-align:right;">
                     <span class="win">{{ trans('game.won-duels') }} : {{ $duels->countWon($user) }}</span><br/>
                     <span class="lost">{{ trans('game.lost-duels') }} : {{ $duels->countLost($user) }}</span><br/>
                     <span class="draw">{{ trans('game.draws') }} : {{ $duels->countDraw($user) }}</span>
     </div>    
     <h1>
         {{ trans('site.duels') }}
-        {!! link_to('duel/new',trans('game.new-duel'),['id'=>"openNewDuel",'class'=>"btn btn-success btn-lg",'style'=>"display:inline;"]) !!}        
+        {!! link_to('duel/new',trans('game.new-duel'),['id'=>"openNewDuel",'class'=>"btn btn-success",'style'=>"display:inline;"]) !!}        
     </h1>
 
     <br/>
     <ul class="nav nav-tabs">
-        <li class="{{ $active_tab=='available'? 'active':'' }}">
-            <a data-toggle="tab" href="#available">
+        <li class="nav-item">
+            <a class="nav-link {{ $active_tab=='available'? 'active':'' }}" data-toggle="tab" href="#available">
                 {{ trans('game.available-duels') }} <span class="badge">{{ $duels->countPendingAvailable($user) }}</span>
             </a>
         </li>
-        <li class="{{ $active_tab=='in_progress'? 'active':'' }}">
-            <a data-toggle="tab" href="#in_progress">
+        <li class="nav-item">
+            <a class="nav-link {{ $active_tab=='in_progress'? 'active':'' }}" data-toggle="tab" href="#in_progress">
                 {{ trans('game.my-duels-in-progress') }} <span class="badge">{{ $duels->countInProgress($user)-$duels->countNotCompleted($user) }}</span>
                 @if($duels->countNotCompleted($user))
                     <span class="badge" style="background-color:#75211f;">+{{ $duels->countNotCompleted($user) }}</span>
                 @endif
             </a>
         </li>
-        <li class="{{ $active_tab=='completed'? 'active':'' }}">
-            <a data-toggle="tab" href="#completed" onclick="showResults();">
+        <li class="nav-item">
+            <a class="nav-link {{ $active_tab=='completed'? 'active':'' }}" data-toggle="tab" href="#completed" onclick="showResults();">
                 {{ trans('game.my-duels-ended') }} <span class="badge" id="completed_seen">{{ $duels->countCompleted($user) - $duels->countCompletedNotSeen($user)}}</span>
                 @if($duels->countCompletedNotSeen($user))
                     <span class="badge" id="completed_not_seen" style="background-color:#75211f;">+<span id="count_completed_not_seen">{{ $duels->countCompletedNotSeen($user) }}</span></span>
@@ -51,11 +52,11 @@ else
     </ul>
 
     <div class="tab-content">
-        <div id="available" class="tab-pane fade in {{ $active_tab=='available'? 'active':'' }}">
+        <div id="available" class="tab-pane fade in {{ $active_tab=='available'? 'show active':'' }}">
             @if(count($available_duels))
             <table class="table">
                 @foreach($available_duels as $duel)
-                    <tr class="duel pending-duel" title="Rejoindre le duel" data-href="{{ url('duel/join') }}?duel_id={{ $duel->id }}">
+                    <tr id="duel_{{ $duel->id }}" class="duel pending-duel" title="Rejoindre le duel" data-href="{{ url('duel/join') }}?duel_id={{ $duel->id }}">
                     @foreach($duel->users as $key=>$user_duel)
                         @if($key==0)
                         <td style="text-align:right;width:40%;">
@@ -106,7 +107,7 @@ else
                 {{ trans('game.no-duel-available') }}
             @endif            
         </div>
-        <div id="in_progress" class="tab-pane fade in {{ $active_tab=='in_progress'? 'active':'' }}">
+        <div id="in_progress" class="tab-pane fade in {{ $active_tab=='in_progress'? 'show active':'' }}">
             @if(count($pending_duels))
             <table class="table">
                 @foreach($pending_duels as $duel)
@@ -150,7 +151,7 @@ else
                 {{ trans('game.no-duel-in-progress') }}
             @endif
         </div>
-        <div id="completed" class="tab-pane fade in {{ $active_tab=='completed'? 'active':'' }}"> 
+        <div id="completed" class="tab-pane fade in {{ $active_tab=='completed'? 'show active':'' }}"> 
             @if(count($completed_duels))
             <table class="table">
                 @foreach($completed_duels as $duel)
@@ -167,9 +168,9 @@ else
                     
                     <td style="padding:23px;">
                         @if($class=='win')
-                            <span class="glyphicon glyphicon-thumbs-up" style="color:#EFD807"></span>
+                            <i class="fa fa-thumbs-up" style="color:#EFD807"></i>
                         @elseif($class=='lost')
-                            <span class="glyphicon glyphicon-thumbs-down" style="color:rgb(117, 33, 31)"></span>
+                            <i class="fa fa-thumbs-down" style="color:rgb(117, 33, 31)"></i>
                         @endif
                     </td>
                     @foreach($duel->users as $key=>$user_duel)
@@ -224,9 +225,10 @@ else
         </div>
     </div>
     </div>
+    </div>
 </div>
 
-<div class="modal fade" id="modalConfirmJoin" role="dialog">
+<div class="modal fade text-center" id="modalConfirmJoin" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -245,8 +247,8 @@ else
                                 <span id="duel_id"></span>
                             </div>
                             <div class="form-group" style="margin-top:25px;">
+                                <input type="submit" id="submitJoinDuel" value="Rejoindre" class="btn btn-success btn-lg" />                            
                                 <input type="button" value="{{ trans('site.cancel') }}" data-dismiss="modal" class="btn btn-danger btn-lg" />
-                                <input type="submit" id="submitJoinDuel" value="Rejoindre" class="btn btn-success btn-lg" />
                             </div>
                         </div>
                     </div>

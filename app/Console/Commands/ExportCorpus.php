@@ -6,7 +6,8 @@ use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Corpus;
 use App\Models\Annotation;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
+use App\Models\ExportedCorpus;
 use App\Services\ConllExporter;
 use App\Services\MweExporter;
 
@@ -43,15 +44,53 @@ class ExportCorpus extends Command
      */
     public function handle()
     {
-        Annotation::computeScore();
+        // Annotation::computeScore();
         $user = User::where('username','admin')->first();
-        $source_preannotated = Source::getPreAnnotated();
-        $corpora = Corpus::where('source_id','=',$source_preannotated->id)->get();
+        $corpora = Corpus::where('exportable',1)->get();
 
         foreach($corpora as $corpus){
-            $parser = new ConllExporter($corpus,$user);
-            $file = str_replace(' ','-',$corpus->name).'-'.date('Ymd').'.conll';
-            $parser -> export($file);
+            if($corpus->id!=12)
+                continue;
+            if(count($corpus->subcorpora)){
+                $nb_sentences = 0;
+                $files = [];
+                $readme = $corpus->description."\xA";
+                $readme .= "This archive contains the files :\xA";
+                foreach($corpus->subcorpora as $subcorpus){
+                    print("sub : ".$subcorpus->id. "\xA");
+                    $parser = new ConllExporter($subcorpus,$user);
+                    $file = str_replace(' ','-',$subcorpus->name).'-'.date('Ymd').'.conll';
+                    $parser -> export($file);
+                    if($parser->sentences_done>0){
+                        $files[] = storage_path('export/'.$file);
+                        $nb_sentences += $parser->sentences_done;
+                        $readme.=$file."\xA";
+                        if($subcorpus->url_source)
+                            $readme.="Source : ".$subcorpus->url_source."\xA";
+                        $readme.="License : ".$subcorpus->license->label."\xA\xA";
+                    }
+                }
+
+                $file = str_replace(' ','-',$corpus->name).'-'.date('Ymd').'.zip';
+
+                $zipper = new \Chumper\Zipper\Zipper;
+
+                $zipper->make(storage_path('export/'.$file))
+                    ->folder($file)
+                    ->add($files)
+                    ->addString("README.txt", $readme);
+
+                $exported_corpus = ExportedCorpus::create(['file'=>$file,'user_id'=>$user->id,'corpus_id'=>$corpus->id]);
+                $exported_corpus->type = 'simple';
+                $exported_corpus->nb_sentences = $nb_sentences;
+                $exported_corpus->save();           
+            }
+            else {
+                $parser = new ConllExporter($corpus,$user);
+                $file = str_replace(' ','-',$corpus->name).'-'.date('Ymd').'.conll';
+                $parser -> export($file);                
+            }
+
         }
         $parser = new MweExporter($user);
         $file = 'mwe-'.date('Ymd').'.csv';

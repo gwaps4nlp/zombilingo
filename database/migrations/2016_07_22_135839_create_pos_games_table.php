@@ -35,7 +35,13 @@ class CreatePosGamesTable extends Migration
      */
     public function down()
     {
+        Schema::table('cat_pos_pos_game', function($table)
+        {
+            $table->dropForeign(['cat_pos_id']);
+            $table->dropForeign(['pos_game_id']);
+        });        
+        Schema::drop('cat_pos_pos_game');
         Schema::drop('pos_games');
-        Schema::drop('pos_games');
+        
     }
 }

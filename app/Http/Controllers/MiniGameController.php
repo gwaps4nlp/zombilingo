@@ -9,14 +9,9 @@ use App\Http\Controllers\Controller;
 
 class MiniGameController extends Controller
 {
-    /**
-     * Display the index
-     *
-     * @return Illuminate\Http\Response
-     */
-    public function getIndex()
+    public function __construct()
     {
-        return view('front.minigame.index');
+
     }
     /**
      * Display the game

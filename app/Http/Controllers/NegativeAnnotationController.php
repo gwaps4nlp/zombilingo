@@ -25,7 +25,6 @@ class NegativeAnnotationController extends Controller
      */
     public function __construct(NegativeAnnotationRepository $negative_annotations)
     {
-        $this->middleware('admin');
         $this->negative_annotations=$negative_annotations;
     }
 	
@@ -86,7 +85,7 @@ class NegativeAnnotationController extends Controller
      * @param  int $relation_id
      * @return Illuminate\Http\Response
      */
-    public function getDeleteByRelation(Request $request, $relation_id)
+    public function getDeleteByRelation($relation_id)
     {
         NegativeAnnotation::where('relation_id', $relation_id)->delete();
 		return new RedirectResponse(url('/negative-annotation/index'));

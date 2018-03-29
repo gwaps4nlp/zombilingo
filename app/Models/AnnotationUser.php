@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnnotationUser extends Model
 {
+
+	protected $fillable = ['annotation_id','relation_id','sentence_id','user_id','source_id'];
 	/**
 	 * One to One relation
 	 *
@@ -21,11 +23,10 @@ class AnnotationUser extends Model
 	 *
 	 * @return int
 	 */
-	public static function countByCorpus($corpus_id)
+	public static function countByCorpus($corpus)
 	{
-		$count = AnnotationUser::join('annotations','annotations.id','=','annotation_users.annotation_id')->where('annotation_users.user_id','!=',0);
-		if($corpus_id)
-			$count->where('corpus_id','=',$corpus_id);
+		$corpora_ids = array_merge([$corpus->id], $corpus->subcorpora->pluck('id')->toArray());
+		$count = AnnotationUser::join('annotations','annotations.id','=','annotation_users.annotation_id')->whereIn('corpus_id',$corpora_ids);
 		return $count->count();
 	}
 

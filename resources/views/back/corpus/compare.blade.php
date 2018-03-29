@@ -8,6 +8,7 @@ $recalls = [];
 $fscores = [];
 ?>
 {!! Form::open(['url' => 'corpus/compare', 'method' => 'get', 'role' => 'form']) !!}
+{!! Form::control('selection', 0, 'corpus_id', $errors, 'Corpus',$corpora_list,null,'Select a corpus...', $corpus_evaluation->id) !!}
 	<div class="form-group  {{ $errors->has('date') ? 'has-error' : '' }}" id="date">
 		<label for="start_date" class="control-label">Statistics until the date (including) :</label>
 		{!! $errors->first('date', '<small class="help-block">:message</small>') !!}
@@ -40,15 +41,15 @@ $fscores = [];
 	<thead>
 	<tr>
 		<td rowspan="2">relation</td>
-		@foreach($parsers as $parser_id=>$parser_name)
+		@foreach($parsers as $_parser_id=>$parser_name)
 			<td colspan="3">
 			<?php
-			$precisions[$parser_name] = ['name'=>$parser_name,'data'=>[]];
-			$recalls[$parser_name] = ['name'=>$parser_name,'data'=>[]];
-			$fscores[$parser_name] = ['name'=>$parser_name,'data'=>[]];
+			$precisions[$parser_name] = ['id'=>$parser_name, 'name'=>$parser_name,'data'=>[]];
+			$recalls[$parser_name] = ['id'=>$parser_name, 'name'=>$parser_name,'data'=>[]];
+			$fscores[$parser_name] = ['id'=>$parser_name, 'name'=>$parser_name,'data'=>[]];
 			?>
 			{{ $parser_name }}<br/>
-			UAS = {{ $scores[$parser_id]->uas }}, LAS = {{ $scores[$parser_id]->las }}
+			UAS = {{ $scores[$_parser_id]->uas }}, LAS = {{ $scores[$_parser_id]->las }}
 			</td>
 		@endforeach
 		<tr>
@@ -126,22 +127,22 @@ $fscores = [];
 	@foreach($stats as $relation_name=>$stat)
 	<tr>
 		<td>{{ $relation_name }}</td>
-		@foreach($parsers as $parser_id=>$parser_name)
+		@foreach($parsers as $_parser_id=>$parser_name)
 			<td><?php
-			if($stat[$parser_id]['total_parser']>0)
-				echo '<span title="'.$stat[$parser_id]['correct'].'/'.$stat[$parser_id]['total_parser'].'">'.$stat[$parser_id]['precision'].'</span>';
+			if($stat[$_parser_id]['total_parser']>0)
+				echo '<span title="'.$stat[$_parser_id]['correct'].'/'.$stat[$_parser_id]['total_parser'].'">'.$stat[$_parser_id]['precision'].'</span>';
 			else
 				echo '-';
-			$precisions[$parser_name]['data'][] = round($stat[$parser_id]['precision'],3);
+			$precisions[$parser_name]['data'][] = round($stat[$_parser_id]['precision'],3);
 			?></td>
 			<td><?php
-				echo '<span title="'.$stat[$parser_id]['correct'].'/'.$stat[$parser_id]['total_control'].'">'.$stat[$parser_id]['recall'].'</span>';
-				$recalls[$parser_name]['data'][] = round($stat[$parser_id]['recall'],3);
+				echo '<span title="'.$stat[$_parser_id]['correct'].'/'.$stat[$_parser_id]['total_control'].'">'.$stat[$_parser_id]['recall'].'</span>';
+				$recalls[$parser_name]['data'][] = round($stat[$_parser_id]['recall'],3);
 			?></td>
 			<td>
 			<?php
-				echo '<span>'.$stat[$parser_id]['fscore'].'</span>';
-				$fscores[$parser_name]['data'][] = round($stat[$parser_id]['fscore'],3);
+				echo '<span>'.$stat[$_parser_id]['fscore'].'</span>';
+				$fscores[$parser_name]['data'][] = round($stat[$_parser_id]['fscore'],3);
 			?>			
 			</td>
 		@endforeach
@@ -152,6 +153,7 @@ $fscores = [];
 
 <h3>Confusion Matrix</h3>
 {!! Form::open(['url' => 'corpus/compare', 'method' => 'get', 'role' => 'form']) !!}
+<label>First row :</label>
 {!! Form::select('parser_id', $parsers, $parser_id, ['placeholder' => 'Select a parser...']); !!}
 {!! Form::submit('OK', null,['class' => 'btn btn-success']) !!}
 {!! Form::close() !!}
@@ -186,7 +188,7 @@ $fscores = [];
 			?>
 			<td class="{{ $class }}">{!!
 			isset($stats_by_relation[$control_relation_id][$parser_relation_id])?
-			'<span class="coef_matrix" data-params="corpus_id=16&control_relation_id='.$control_relation_id.'&parser_relation_id='.$parser_relation_id.'&parser_id='.$parser_id.'">'.$stats_by_relation[$control_relation_id][$parser_relation_id].'</span>':"" 
+			'<span class="coef_matrix" data-params="corpus_id=14&control_relation_id='.$control_relation_id.'&parser_relation_id='.$parser_relation_id.'&parser_id='.$parser_id.'">'.$stats_by_relation[$control_relation_id][$parser_relation_id].'</span>':"" 
 			!!}</td>
 		@endforeach
 		</tr>
@@ -209,11 +211,11 @@ foreach($fscores as $score) $datas['fscore'][] =$score;
     {!! Html::script('js/bootstrap-datepicker.js') !!}
 <script>
 
-	$('.datepicker').datepicker({
-	    format: 'yyyy-mm-dd',
-	    autoclose: true,
-	    todayBtn: "linked",
-	});
+$('.datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    autoclose: true,
+    todayBtn: "linked",
+});
 
 $(function () {
 	$(document).on('click', '.coef_matrix', function(event){
@@ -225,6 +227,15 @@ $(function () {
     });
     $('#container-fscore').highcharts({
         chart: {
+	        events: {
+		            load: function(event) {
+		                this.series.forEach(function(d,i){
+		                	if(d.options.name=='union' || d.options.name=='inter'){
+		                		d.hide();
+		                	}
+		                });
+		            }
+		        },        	
             type: 'column'
         },
         title: {
@@ -259,6 +270,15 @@ $(function () {
     });
     $('#container-precision').highcharts({
         chart: {
+	        events: {
+		            load: function(event) {
+		                this.series.forEach(function(d,i){
+		                	if(d.options.name=='union' || d.options.name=='inter'){
+		                		d.hide();
+		                	}
+		                });
+		            }
+		        },        	
             type: 'column'
         },
         title: {
@@ -293,6 +313,15 @@ $(function () {
     });
     $('#container-recall').highcharts({
         chart: {
+	        events: {
+		            load: function(event) {
+		                this.series.forEach(function(d,i){
+		                	if(d.options.name=='union' || d.options.name=='inter'){
+		                		d.hide();
+		                	}
+		                });
+		            }
+		        },        	
             type: 'column'
         },
         title: {

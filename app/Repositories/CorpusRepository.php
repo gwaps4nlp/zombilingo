@@ -3,7 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Corpus;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Repositories\BaseRepository;
 use App\Models\Annotation;
 use DB;
 use Config;
@@ -40,7 +41,7 @@ class CorpusRepository extends BaseRepository
 	 */
 	public function getList()
 	{
-		return $this->model->lists('name','id');
+		return $this->model->pluck('name','id');
 	}
 
 	/**
@@ -61,6 +62,16 @@ class CorpusRepository extends BaseRepository
 	public function getListPreAnnotated()
 	{
 		return $this->model->where('source_id','=',Source::getPreAnnotated()->id)->pluck('name','id');
+	}
+
+	/**
+	 * Get a list of pre-annotated corpora
+	 *
+	 * @return Illuminate\Support\Collection [name => id]
+	 */
+	public function getListPlayable()
+	{
+		return $this->model->where('playable','=',1)->pluck('name','id');
 	}
 
 	/**

@@ -1,0 +1,20 @@
+NOTE: manual editing of raw file to remove "[réf. nécessaire]" and fixed sentences at the end of the file.
+
+file: Star_Wars.*
+  url: https://fr.wikipedia.org/wiki/Star_Wars
+  date: 2015/12/04
+  parsing: talismane-core-2.4.7b.jar
+  languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Palpatine.*
+  NOTE: manual editing of Palpatine._sent to deal with "av. BY."
+  url: https://fr.wikipedia.org/wiki/Palpatine
+  date: 2015/12/08
+  parsing: talismane-core-2.4.7b.jar
+  languagePack: frenchLanguagePack-2.4.4b.zip
+
+file: Anakin_Skywalker.*
+  url: https://fr.wikipedia.org/wiki/Anakin_Skywalker
+  date: 2015/12/08
+  parsing: talismane-core-2.4.7b.jar
+  languagePack: frenchLanguagePack-2.4.4b.zip

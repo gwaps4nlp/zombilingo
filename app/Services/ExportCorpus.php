@@ -20,54 +20,54 @@ protected $annotations = array();
 protected $lines = array();
 public $nb_sentences = 0;
 
-    public function __construct($corpus,$filename){
-    	$this->corpus = $corpus;
-    	parent::__construct($filename);
-    }
+public function __construct($corpus,$filename){
+	$this->corpus = $corpus;
+	parent::__construct($filename);
+}
 
-    public function parseLine($line){
+public function parseLine($line){
 
-        if($line['word_position']==1){
-    		
-    		//extract of the sentid from attribute features
-            preg_match('/\|?sentid=(?P<sentid>[^|]+)\|?/', $line['features'], $matches);
-    		
-            if(isset($matches['sentid'])) {
-            	$this->sentid = $matches['sentid'];
-    			$this->sentence = Sentence::create([
-    				'corpus_id' => $this->corpus->id,
-    				'source_id' => $this->corpus->source_id,
-    				'sentid' => $this->sentid,
-    			]);
-    			$this->sentence->content=$line['word'].' ';
-            } else {
-    			$this->errors[]="sentid not found line no.".$this->_line_number;
-    		}
+    if($line['word_position']==1){
+		
+		//extract of the sentid from attribute features
+        preg_match('/\|?sentid=(?P<sentid>[^|]+)\|?/', $line['features'], $matches);
+		
+        if(isset($matches['sentid'])) {
+        	$this->sentid = $matches['sentid'];
+			$this->sentence = Sentence::create([
+				'corpus_id' => $this->corpus->id,
+				'source_id' => $this->corpus->source_id,
+				'sentid' => $this->sentid,
+			]);
+			$this->sentence->content=$line['word'].' ';
         } else {
-    		$this->sentence->content.=$line['word'].' ';
-    	}
-    	$line['relation_id'] = Relation::getIdBySlug($line['relation_id']);
-    	$line['projective_relation_id'] = Relation::getIdBySlug($line['projective_relation_id']);
-    	$line['sentence_id'] = $this->sentence->id;
-    	$line['source_id'] = $this->corpus->source_id;
-    	$this->annotations[]= $line;
-    }
+			$this->errors[]="sentid not found line no.".$this->_line_number;
+		}
+    } else {
+		$this->sentence->content.=$line['word'].' ';
+	}
+	$line['relation_id'] = Relation::getIdBySlug($line['relation_id']);
+	$line['projective_relation_id'] = Relation::getIdBySlug($line['projective_relation_id']);
+	$line['sentence_id'] = $this->sentence->id;
+	$line['source_id'] = $this->corpus->source_id;
+	$this->annotations[]= $line;
+}
 
-    public function parseBlankLine($line){
-    	$this->postParse();
-    }
+public function parseBlankLine($line){
+	$this->postParse();
+}
 
-    public function postParse() {
-    	
-    	if(!is_null($this->sentence->id)){
-    		Annotation::insert($this->annotations);
-    		$this->sentence->difficulty = $this->getDifficulty();
-    		$this->sentence->save();
-    		$this->sentence->id=null;
-    		$this->nb_sentences++;
-    	}
-    	$this->annotations=[];
-    }
+public function postParse() {
+	
+	if(!is_null($this->sentence->id)){
+		Annotation::insert($this->annotations);
+		$this->sentence->difficulty = $this->getDifficulty();
+		$this->sentence->save();
+		$this->sentence->id=null;
+		$this->nb_sentences++;
+	}
+	$this->annotations=[];
+}
     private function getDifficulty(){
         //On initialise l'index
         $i = 1.5;

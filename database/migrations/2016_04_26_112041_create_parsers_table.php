@@ -38,10 +38,7 @@ class CreateParsersTable extends Migration
         //                 ->onDelete('restrict')
         //                 ->onUpdate('restrict');        
         // });
-        
-        Schema::table('annotations', function ($table) {
-            $table->boolean('playable')->default(1)->after('undecided');
-        });        
+     
     }
 
     /**
@@ -53,8 +50,5 @@ class CreateParsersTable extends Migration
     {
         Schema::drop('parsers');
         Schema::drop('annotation_parser');
-        Schema::table('annotations', function ($table) {
-            $table->dropColumn(array('playable'));
-        });    
     }
 }

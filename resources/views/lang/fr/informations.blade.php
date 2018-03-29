@@ -69,4 +69,4 @@ Pour citer ZombiLingo :<br />
 	</li>
 </ul>
 
-<h2>Export</h2>
+<h2 id="export">Export</h2>

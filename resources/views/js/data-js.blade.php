@@ -1,4 +1,5 @@
 var base_url = '{{ asset('') }}';
+var url_broadcast = '{{ Config::get('broadcasting.url') }}';
 var translations = {
     'game.you-found-object' : "{{ trans('game.you-found-object') }}",
     'game.bad-answer' : "{{ trans('game.bad-answer') }}",
@@ -19,7 +20,6 @@ var translations = {
     'site.will-not-be-your-friend' : "{{ trans('site.will-not-be-your-friend') }}",
     'site.confirm-delete-account' : "{{ trans('site.confirm-delete-account') }}",    
 };
-var hahahahahaha = "test";
 var img_croix_os = '{!! Html::imageNotRelationHere() !!}';
 @if(Auth::check())
     var enemies = {!! Auth::user()->getListAcceptedFriends()->toJson() !!};

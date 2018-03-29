@@ -4,7 +4,11 @@
 
 	{!! Form::open(['url' => 'admin/reporting', 'method' => 'get', 'role' => 'form']) !!}
 	{!! Form::select('relation_id', $relations,$request->input('relation_id'),['placeholder'=>'Tous les phénomènes', 'id' => 'select-relation']) !!}
-	<input type="submit" value="Filtrer" class="btn btn-success" />
+	<select name="period">
+		<option value="month">Mois</option>
+		<option value="week" {!! $request->input('period')=='week'?"selected":'' !!}>Semaine</option>
+	</select>
+	<input type="submit" value="Rafraichir" class="btn btn-sm btn-success" />
 	{!! Form::close() !!}	
 
 	<div id="graph1" style="width:100%; height:400px;"></div>
@@ -30,9 +34,10 @@
     {!! Html::script('js/jquery.cookie.js') !!}
 <script type="text/javascript">
 	var annByUsers = {!! $annotationsByUser !!};
-	var annByWeek = {!! $annotationsByWeek !!};
-	var subByWeek = {!! $registrationsByWeek->toJson() !!};
+	var annotationsByPeriod = {!! $annotations !!};
+	var registrationsByPeriod = {!! $registrations->toJson() !!};
 	var countByPhenom = {!! $annotationsByRelation !!};
 	var daysByUser = {!! $daysOfActivityByUser !!};
+	var label_period = "{{ $label_period }}";
 </script>
 @stop

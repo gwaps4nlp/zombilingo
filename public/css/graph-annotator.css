@@ -1,0 +1,238 @@
+#sidebar-graph {
+  position: fixed;
+  top: 70px;
+  right: 0;
+  background: #FFFFFF none repeat scroll 0% 0%;
+  color: #0e7f3c;
+  border-style: solid;
+  border-color: black;
+  border-width: 0px 0px 1px 1px;
+  border-radius: 0px 0px 0px 8px;
+  font-size: 1rem;
+}
+
+#sidebar-graph a {
+  color: #0e7f3c;
+  margin-right: 100px;
+}
+
+#menu-sidebar {
+  background-color: #01040d;
+  color: #fff;
+  display: block;
+  height: 100vh;
+  left: -390px;
+  opacity: 0;
+  overflow: auto;
+  position: fixed;
+  text-align: left;
+  top: 0;
+  transition: all .25s ease;
+  width: 390px;
+  z-index: 20000;
+}
+
+#menu-sidebar.menu-sidebar-opened {
+  opacity: 1;
+  left: 0;
+  transition: all .5s ease;
+}
+
+ul.pagination {
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+
+ul.pagination li {
+  padding: 0.2rem;
+}
+
+.graph_svg {
+  position: relative;
+}
+
+.container_svg_sentence {
+  position: relative;
+  overflow-x: scroll;
+  padding-bottom: 20px;
+}
+
+.container_svg {
+  position: relative;
+}
+
+#elements_html {
+  display: none;
+}
+
+#myMarkerrelation_2_1 {
+  cursor: move;
+}
+
+select.select_relations {
+  font-size: 12px;
+}
+
+/*
+#sentence .highlight {
+    color : red;
+}
+*/
+path.default {
+  stroke-width: 0.75;
+  stroke: #888;
+}
+
+text.default {
+  fill: black;
+}
+
+path.disabled {
+  stroke-width: 0.75;
+  stroke: #888;
+}
+
+text.disabled {
+  font-weight: normal;
+  fill: #888;
+}
+
+path.alert, path.danger {
+  /* stroke-width: 1;*/
+  stroke: #d43f3a;
+}
+
+text.alert, text.danger {
+  fill: #d9534f;
+}
+
+path.alert, path.danger {
+  /* stroke-width: 1;*/
+  stroke: red;
+}
+
+text.alert, text.danger {
+  fill: red;
+}
+
+path.warning {
+  stroke-width: 1;
+  stroke: #eea236;
+}
+
+text.warning {
+  fill: #f0ad4e;
+}
+
+path.primary {
+  stroke-width: 1;
+  stroke: #0070C0;
+}
+
+text.primary {
+  fill: #0070C0;
+}
+
+path.info {
+  stroke-width: 1;
+  stroke: #46b8da;
+}
+
+text.info {
+  fill: #5bc0de;
+}
+
+path.success {
+  stroke-width: 1;
+  stroke: #00B050;
+}
+
+text.success {
+  fill: #00B050;
+}
+
+path.hl-alert, path.hl-danger {
+  /* stroke-width: 1;*/
+  stroke: #d43f3a;
+}
+
+text.hl-alert, text.hl-danger {
+  fill: #d9534f;
+}
+
+path.hl-alert, path.hl-danger {
+  /* stroke-width: 1;*/
+  stroke: red;
+}
+
+text.hl-alert, text.hl-danger {
+  fill: red;
+}
+
+path.hl-warning {
+  stroke-width: 1;
+  stroke: #eea236;
+}
+
+text.hl-warning {
+  fill: #f0ad4e;
+}
+
+path.hl-primary {
+  stroke-width: 1;
+  stroke: #0070C0;
+}
+
+text.hl-primary {
+  fill: #0070C0;
+}
+
+path.hl-info {
+  stroke-width: 1;
+  stroke: #46b8da;
+}
+
+text.hl-info {
+  fill: #5bc0de;
+}
+
+path.hl-success {
+  stroke-width: 1;
+  stroke: #00B050;
+}
+
+text.hl-success {
+  fill: #00B050;
+}
+
+path.unhighlight, path.unselected {
+  stroke-width: 0.75;
+  stroke: #888;
+}
+
+text.unhighlight, text.unselected {
+  fill: #888;
+}
+
+path.highlight, path.selected {
+  stroke-width: 1.5;
+}
+
+text.highlight, text.selected {
+  font-weight: 1.1em;
+  fill: blue;
+}
+
+text.selected {
+  text-decoration: underline;
+}
+
+svg.graph_svg_view > text.label_relation {
+  cursor: copy;
+}
+
+svg.graph_svg_edit > use, svg.graph_svg_edit > rect {
+  cursor: move;
+}
+
+/*# sourceMappingURL=graph-annotator.css.map */

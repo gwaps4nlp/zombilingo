@@ -1,0 +1,690 @@
+# sentid: Bail_Organa_0_43
+# sentence-text: Bail Organa est un personnage de Star Wars.
+1	Bail	NPP	3	suj
+2	Organa	NPP	1	mod
+3	est	V	0	root
+4	un	DET	5	det
+5	personnage	NC	3	ats
+6	de	P	5	dep
+7	Star	NPP	6	obj.p
+8	Wars	NPP	7	mod
+9	.	PONCT	0	_
+
+# sentid: Bail_Organa_44_279
+# sentence-text: Sénateur à Coruscant de la planète Alderaan, il apparaît dans Star Wars, épisode II : L'Attaque des clones et Star Wars, épisode III : La Revanche des Sith, et est un pionnier de la rébellion qui a été membre de la délégation des 2000.
+1	Sénateur	NC	10	mod
+2	à	P	1	dep
+3	Coruscant	NPP	2	obj.p
+4	de	P	1	dep
+5	la	DET	6	det
+6	planète	NC	4	obj.p
+7	Alderaan	NPP	6	mod
+8	,	PONCT	0	_
+9	il	CLS	10	suj
+10	apparaît	V	0	root
+11	dans	P	10	mod
+12	Star	NPP	11	obj.p
+13	Wars	NPP	12	mod
+14	,	PONCT	0	_
+15	épisode	NC	12	mod
+16	II	N	15	mod
+17	:	PONCT	0	_
+18	L'	DET	19	det
+19	Attaque	N	15	mod
+20	des	P+D	19	dep
+21	clones	NC	20	obj.p
+22	et	CC	12	coord
+23	Star	NPP	22	dep.coord
+24	Wars	NPP	23	mod
+25	,	PONCT	0	_
+26	épisode	NC	23	mod
+27	III	ADJ	26	mod
+28	:	PONCT	0	_
+29	La	DET	30	det
+30	Revanche	N	26	mod
+31	des	P+D	30	dep
+32	Sith	N	31	obj.p
+33	,	PONCT	0	_
+34	et	CC	10	coord
+35	est	V	34	dep.coord
+36	un	DET	37	det
+37	pionnier	NC	35	ats
+38	de	P	37	dep
+39	la	DET	40	det
+40	rébellion	NC	38	obj.p
+41	qui	PROREL	43	suj
+42	a	V	43	aux.tps
+43	été	VPP	37	mod.rel
+44	membre	NC	43	ats
+45	de	P	44	dep
+46	la	DET	47	det
+47	délégation	NC	45	obj.p
+48	des	P+D	47	dep
+49	2000	NC	48	obj.p
+50	.	PONCT	0	_
+
+# sentid: Bail_Organa_280_510
+# sentence-text: Après l'Ordre 66, il vient en aide aux Jedi Yoda et Obi-Wan Kenobi et assiste avec eux à la naissance des jumeaux Luke Skywalker et celle qu'il va adopter avec sa femme : Leia Organa, qui le remplacera plus tard au Sénat impérial.
+1	Après	P	7	mod
+2	l'	DET	3	det
+3	Ordre	N	1	obj.p
+4	66	N	3	mod
+5	,	PONCT	0	_
+6	il	CLS	7	suj
+7	vient	V	0	root
+8	en	P	7	obj.o
+9	aide	NC	8	obj.p
+10	aux	P+D	7	a_obj
+11	Jedi	N	10	obj.p
+12	Yoda	N	11	mod
+13	et	CC	11	coord
+14	Obi-Wan	N	13	dep.coord
+15	Kenobi	N	14	mod
+16	et	CC	7	coord
+17	assiste	V	16	dep.coord
+18	avec	P	17	mod
+19	eux	PRO	18	obj.p
+20	à	P	17	a_obj
+21	la	DET	22	det
+22	naissance	NC	20	obj.p
+23	des	P+D	22	dep
+24	jumeaux	NC	23	obj.p
+25	Luke	NPP	24	mod
+26	Skywalker	NPP	25	mod
+27	et	CC	25	coord
+28	celle	PRO	24	dep.coord
+29	qu'	PROREL	32	obj
+30	il	CLS	31	suj
+31	va	V	28	mod.rel
+32	adopter	VINF	31	obj
+33	avec	P	32	mod
+34	sa	DET	35	det
+35	femme	NC	33	obj.p
+36	:	PONCT	0	_
+37	Leia	NPP	35	mod
+38	Organa	NPP	37	mod
+39	,	PONCT	0	_
+40	qui	PROREL	42	suj
+41	le	CLO	42	obj
+42	remplacera	V	35	mod.rel
+43	plus	ADV	44	mod
+44	tard	ADV	42	mod
+45	au	P+D	42	mod
+46	Sénat	N	45	obj.p
+47	impérial	ADJ	46	mod
+48	.	PONCT	0	_
+
+# sentid: Bail_Organa_511_633
+# sentence-text: Grand défenseur de la démocratie, il essaie d'alerter l'opinion sur le danger que représente un dirigeant comme Palpatine.
+1	Grand	ADJ	2	mod
+2	défenseur	NC	8	mod
+3	de	P	2	dep
+4	la	DET	5	det
+5	démocratie	NC	3	obj.p
+6	,	PONCT	0	_
+7	il	CLS	8	suj
+8	essaie	V	0	root
+9	d'	P	8	obj
+10	alerter	VINF	9	obj.p
+11	l'	DET	12	det
+12	opinion	NC	10	obj
+13	sur	P	10	mod
+14	le	DET	15	det
+15	danger	NC	13	obj.p
+16	que	PROREL	17	obj
+17	représente	V	15	mod.rel
+18	un	DET	19	det
+19	dirigeant	NC	17	suj
+20	comme	P	19	dep
+21	Palpatine	NPP	20	obj.p
+22	.	PONCT	0	_
+
+# sentid: Bail_Organa_634_749
+# sentence-text: Voyant la démocratie mourir sous ses yeux, il fondera l'Alliance rebelle auprès de Starkiller à qui il doit la vie.
+1	Voyant	VPR	10	mod
+2	la	DET	3	det
+3	démocratie	NC	1	obj
+4	mourir	VPP	1	ato
+5	sous	P	4	mod
+6	ses	DET	7	det
+7	yeux	NC	5	obj.p
+8	,	PONCT	0	_
+9	il	CLS	10	suj
+10	fondera	V	0	root
+11	l'	DET	12	det
+12	Alliance	N	10	obj
+13	rebelle	ADJ	12	mod
+14	auprès_de	P	10	mod
+15	Starkiller	N	14	obj.p
+16	à	P	19	a_obj
+17	qui	PROREL	16	obj.p
+18	il	CLS	19	suj
+19	doit	V	15	mod.rel
+20	la	DET	21	det
+21	vie	NC	19	obj
+22	.	PONCT	0	_
+
+# sentid: Bail_Organa_750_815
+# sentence-text: Il sera tué lors de la destruction d'Alderaan par l'Étoile Noire.
+1	Il	CLS	3	suj
+2	sera	V	3	aux.pass
+3	tué	VPP	0	root
+4	lors_de	P	3	mod
+5	la	DET	6	det
+6	destruction	NC	4	obj.p
+7	d'	P	6	dep
+8	Alderaan	N	7	obj.p
+9	par	P	6	dep
+10	l'	DET	11	det
+11	Étoile	N	9	obj.p
+12	Noire	N	11	mod
+13	.	PONCT	0	_
+
+# sentid: Bail_Organa_816_848
+# sentence-text: Bail Organa naquit sur Alderaan.
+1	Bail	NPP	3	suj
+2	Organa	NPP	1	mod
+3	naquit	V	0	root
+4	sur	P	3	mod
+5	Alderaan	N	4	obj.p
+6	.	PONCT	0	_
+
+# sentid: Bail_Organa_849_958
+# sentence-text: Après un conflit qui fut réglé à l'aide du Maître Jedi Jorus C'baoth, il fut proclamé Vice-Roi de la planète.
+1	Après	P	19	mod
+2	un	DET	3	det
+3	conflit	NC	1	obj.p
+4	qui	PROREL	6	suj
+5	fut	V	6	aux.pass
+6	réglé	VPP	3	mod.rel
+7	à	P	6	mod
+8	l'	DET	9	det
+9	aide	NC	7	obj.p
+10	du	P+D	9	dep
+11	Maître	NC	10	obj.p
+12	Jedi	N	11	mod
+13	Jorus	N	11	mod
+14	C'	N	11	mod
+15	baoth	N	11	mod
+16	,	PONCT	0	_
+17	il	CLS	19	suj
+18	fut	V	19	aux.pass
+19	proclamé	VPP	0	root
+20	Vice-Roi	N	19	ats
+21	de	P	20	dep
+22	la	DET	23	det
+23	planète	NC	21	obj.p
+24	.	PONCT	0	_
+
+# sentid: Bail_Organa_959_1042
+# sentence-text: Il prit également les fonctions de Sénateur en remplaçant Bail Antilles à ce poste.
+1	Il	CLS	2	suj
+2	prit	V	0	root
+3	également	ADV	2	mod
+4	les	DET	5	det
+5	fonctions	NC	2	obj
+6	de	P	5	dep
+7	Sénateur	N	6	obj.p
+8	en	P	2	mod
+9	remplaçant	VPR	8	obj.p
+10	Bail	NPP	9	obj
+11	Antilles	NPP	10	mod
+12	à	P	9	mod
+13	ce	DET	14	det
+14	poste	NC	12	obj.p
+15	.	PONCT	0	_
+
+# sentid: Bail_Organa_1043_1204
+# sentence-text: Ardent défenseur de la démocratie et de la République, il fit partie du Comité Loyaliste lors de la Crise Séparatiste et soutint le Chancelier Suprême Palpatine.
+1	Ardent	ADJ	2	mod
+2	défenseur	NC	12	mod
+3	de	P	2	dep
+4	la	DET	5	det
+5	démocratie	NC	3	obj.p
+6	et	CC	3	coord
+7	de	P	6	dep.coord
+8	la	DET	9	det
+9	République	N	7	obj.p
+10	,	PONCT	0	_
+11	il	CLS	12	suj
+12	fit	V	0	root
+13	partie	NC	12	obj
+14	du	P+D	12	de_obj
+15	Comité	N	14	obj.p
+16	Loyaliste	N	15	mod
+17	lors_de	P	12	mod
+18	la	DET	19	det
+19	Crise	N	17	obj.p
+20	Séparatiste	ADJ	19	mod
+21	et	CC	12	coord
+22	soutint	V	21	dep.coord
+23	le	DET	24	det
+24	Chancelier	N	22	obj
+25	Suprême	ADJ	24	mod
+26	Palpatine	NPP	24	mod
+27	.	PONCT	0	_
+
+# sentid: Bail_Organa_1205_1341
+# sentence-text: Il soutint également la motion du Sénateur Binks afin d'attribuer les pleins pouvoirs au Chancelier à la veille de la Guerre des Clones.
+1	Il	CLS	2	suj
+2	soutint	V	0	root
+3	également	ADV	2	mod
+4	la	DET	5	det
+5	motion	NC	2	obj
+6	du	P+D	5	dep
+7	Sénateur	N	6	obj.p
+8	Binks	N	7	mod
+9	afin_d'	P	2	mod
+10	attribuer	VINF	9	obj.p
+11	les	DET	13	det
+12	pleins	ADJ	13	mod
+13	pouvoirs	NC	10	obj
+14	au	P+D	10	a_obj
+15	Chancelier	N	14	obj.p
+16	à	P	10	mod
+17	la	DET	18	det
+18	veille	NC	16	obj.p
+19	de	P	18	dep
+20	la	DET	21	det
+21	Guerre	N	19	obj.p
+22	des	P+D	21	dep
+23	Clones	N	22	obj.p
+24	.	PONCT	0	_
+
+# sentid: Bail_Organa_1342_1577
+# sentence-text: Néanmoins, il se rendit compte durant le conflit et grâce à l'aide de l'ex-chancellier Finis Valorum, que Palpatine était beaucoup moins bienveillant qu'il voulait bien le montrer et que ses méthodes laissaient pour le moins à désirer.
+1	Néanmoins	ADV	5	mod
+2	,	PONCT	0	_
+3	il	CLS	5	suj
+4	se	CLR	5	aff
+5	rendit	V	0	root
+6	compte	NC	5	obj
+7	durant	P	5	mod
+8	le	DET	9	det
+9	conflit	NC	7	obj.p
+10	et	CC	7	coord
+11	grâce_à	P	10	dep.coord
+12	l'	DET	13	det
+13	aide	NC	11	obj.p
+14	de	P	13	dep
+15	l'	DET	16	det
+16	ex-chancellier	N	14	obj.p
+17	Finis	N	16	mod
+18	Valorum	NPP	16	mod
+19	,	PONCT	0	_
+20	que	CS	5	de_obj
+21	Palpatine	NPP	22	suj
+22	était	V	20	obj.cpl
+23	beaucoup	ADV	24	mod
+24	moins	ADV	25	mod
+25	bienveillant	ADJ	22	ats
+26	qu'	CS	25	dep
+27	il	CLS	28	suj
+28	voulait	V	26	obj.cpl
+29	bien	ADV	28	mod
+30	le	CLO	31	obj
+31	montrer	VINF	28	obj
+32	et	CC	26	coord
+33	que	CS	32	dep.coord
+34	ses	DET	35	det
+35	méthodes	NC	36	suj
+36	laissaient	V	33	obj.cpl
+37	pour	P	36	mod
+38	le	DET	39	det
+39	moins	ADV	37	obj.p
+40	à	P	36	obj
+41	désirer	VINF	40	obj.p
+42	.	PONCT	0	_
+
+# sentid: Bail_Organa_1578_1852
+# sentence-text: Sa conviction fut renforcée lorsque Palpatine le "menaça gentiment" (selon Organa lui-même) et encore plus lorsque Valorum mourut lors de l'explosion d'un cargo permettant au Chancelier à la fois d'éliminer cette menace et de faire passer une loi pour renforcer la sécurité.
+1	Sa	DET	2	det
+2	conviction	NC	4	suj
+3	fut	V	4	aux.pass
+4	renforcée	VPP	0	root
+5	lorsque	CS	4	mod
+6	Palpatine	NPP	9	suj
+7	le	CLO	9	obj
+8	"	ponct	0	_
+9	menaça	V	5	obj.cpl
+10	gentiment	ADV	9	mod
+11	"	PONCT	0	_
+12	(	PONCT	0	_
+13	selon	P	9	mod
+14	Organa	NPP	13	obj.p
+15	lui-même	PRO	14	mod
+16	)	PONCT	0	_
+17	et_encore	CC	5	coord
+18	plus	ADV	17	mod
+19	lorsque	CS	17	dep.coord
+20	Valorum	NPP	21	suj
+21	mourut	V	19	obj.cpl
+22	lors_de	P	21	mod
+23	l'	DET	24	det
+24	explosion	NC	22	obj.p
+25	d'	P	24	dep
+26	un	DET	27	det
+27	cargo	NC	25	obj.p
+28	permettant	VPR	21	mod
+29	au	P+D	28	a_obj
+30	Chancelier	N	29	obj.p
+31	à_la_fois	ADV	28	mod
+32	d'	P	28	obj
+33	éliminer	VINF	32	obj.p
+34	cette	DET	35	det
+35	menace	NC	33	obj
+36	et	CC	32	coord
+37	de	P	36	dep.coord
+38	faire	VINF	39	aux.caus
+39	passer	VINF	37	obj.p
+40	une	DET	41	det
+41	loi	NC	39	obj
+42	pour	P	39	mod
+43	renforcer	VINF	42	obj.p
+44	la	DET	45	det
+45	sécurité	NC	43	obj
+46	.	PONCT	0	_
+
+# sentid: Bail_Organa_1853_2038
+# sentence-text: Lors du conflit, Organa se rapprocha des Jedi et de certains Sénateurs comme Fang Zar, Padmé Amidala et surtout Mon Mothma, la Sénatrice de Chandrila, future dirigeante de la rébellion.
+1	Lors_du	P+D	6	mod
+2	conflit	NC	1	obj.p
+3	,	PONCT	0	_
+4	Organa	NPP	6	suj
+5	se	CLR	6	aff
+6	rapprocha	V	0	root
+7	des	P+D	6	de_obj
+8	Jedi	N	7	obj.p
+9	et	CC	7	coord
+10	de	P	9	dep.coord
+11	certains	DET	12	det
+12	Sénateurs	N	10	obj.p
+13	comme	P	12	dep
+14	Fang	NPP	13	obj.p
+15	Zar	N	14	mod
+16	,	PONCT	0	_
+17	Padmé	N	14	coord
+18	Amidala	N	17	mod
+19	et	CC	14	coord
+20	surtout	ADV	19	mod
+21	Mon	N	19	dep.coord
+22	Mothma	N	21	mod
+23	,	PONCT	0	_
+24	la	DET	25	det
+25	Sénatrice	N	22	mod.app
+26	de	P	25	dep
+27	Chandrila	NPP	26	obj.p
+28	,	PONCT	0	_
+29	future	ADJ	30	mod
+30	dirigeante	NC	25	mod.app
+31	de	P	30	dep
+32	la	DET	33	det
+33	rébellion	NC	31	obj.p
+34	.	PONCT	0	_
+
+# sentid: Bail_Organa_2039_2150
+# sentence-text: Bail Organa accueillit Anakin Skywalker et Obi-Wan Kenobi, les deux héros Jedi, après la Bataille de Coruscant.
+1	Bail	NPP	3	suj
+2	Organa	NPP	1	mod
+3	accueillit	V	0	root
+4	Anakin	NPP	3	obj
+5	Skywalker	N	4	mod
+6	et	CC	4	coord
+7	Obi-Wan	N	6	dep.coord
+8	Kenobi	N	7	mod
+9	,	PONCT	0	_
+10	les	DET	12	det
+11	deux	ADJ	12	mod
+12	héros	NC	4	mod.app
+13	Jedi	N	12	mod
+14	,	PONCT	0	_
+15	après	P	3	mod
+16	la	DET	17	det
+17	Bataille	N	15	obj.p
+18	de	P	17	dep
+19	Coruscant	N	18	obj.p
+20	.	PONCT	0	_
+
+# sentid: Bail_Organa_2151_2356
+# sentence-text: Il se trouvait toujours sur Coruscant lorsque l'Ordre 66 fut donné et il se rendit au Temple Jedi alors que les clones de la 501e légion le prenaient d'assaut sous le commandement de Dark Vador et de Appo.
+1	Il	CLS	3	suj
+2	se	CLR	3	aff
+3	trouvait	V	0	root
+4	toujours	ADV	3	mod
+5	sur	P	3	p_obj.o
+6	Coruscant	N	5	obj.p
+7	lorsque	CS	3	mod
+8	l'	DET	9	det
+9	Ordre	N	12	suj
+10	66	ADJ	9	mod
+11	fut	V	12	aux.pass
+12	donné	VPP	7	obj.cpl
+13	et	CC	3	coord
+14	il	CLS	16	suj
+15	se	CLR	16	aff
+16	rendit	V	13	dep.coord
+17	au	P+D	16	p_obj.o
+18	Temple	NPP	17	obj.p
+19	Jedi	N	18	mod
+20	alors_que	CS	16	mod
+21	les	DET	22	det
+22	clones	NC	28	suj
+23	de	P	22	dep
+24	la	DET	26	det
+25	501e	ADJ	26	mod
+26	légion	NC	23	obj.p
+27	le	CLO	28	obj
+28	prenaient	V	20	obj.cpl
+29	d'	P	28	de_obj
+30	assaut	NC	29	obj.p
+31	sous	P	28	mod
+32	le	DET	33	det
+33	commandement	NC	31	obj.p
+34	de	P	33	dep
+35	Dark	N	34	obj.p
+36	Vador	N	35	mod
+37	et	CC	34	coord
+38	de	P	37	dep.coord
+39	Appo	N	38	obj.p
+40	.	PONCT	0	_
+
+# sentid: Bail_Organa_2357_2439
+# sentence-text: Il assista en direct au meurtre de Zett Jukassa et parvint à s'enfuir in extremis.
+1	Il	CLS	2	suj
+2	assista	V	0	root
+3	en_direct	ADV	2	mod
+4	au	P+D	2	a_obj
+5	meurtre	NC	4	obj.p
+6	de	P	5	dep
+7	Zett	N	6	obj.p
+8	Jukassa	N	7	mod
+9	et	CC	2	coord
+10	parvint	V	9	dep.coord
+11	à	P	10	a_obj
+12	s'	CLR	13	aff
+13	enfuir	VINF	11	obj.p
+14	in_extremis	ADV	13	mod
+15	.	PONCT	0	_
+
+# sentid: Bail_Organa_2440_2497
+# sentence-text: Seul son statut de sénateur lui sauva la vie à ce moment.
+1	Seul	ADJ	3	mod
+2	son	DET	3	det
+3	statut	NC	7	suj
+4	de	P	3	dep
+5	sénateur	NC	4	obj.p
+6	lui	CLO	7	a_obj
+7	sauva	V	0	root
+8	la	DET	9	det
+9	vie	NC	7	obj
+10	à	P	7	mod
+11	ce	DET	12	det
+12	moment	NC	10	obj.p
+13	.	PONCT	0	_
+
+# sentid: Bail_Organa_2498_2656
+# sentence-text: Il décida alors de partir à la recherche d'éventuels survivants Jedi pour leur porter secours et parvint à réunir Obi-Wan Kenobi et Yoda à bord du Tantive IV.
+1	Il	CLS	2	suj
+2	décida	V	0	root
+3	alors	ADV	2	mod
+4	de	P	2	obj
+5	partir	VINF	4	obj.p
+6	à	P	5	a_obj
+7	la	DET	8	det
+8	recherche	NC	6	obj.p
+9	d'	P	8	dep
+10	éventuels	ADJ	11	mod
+11	survivants	NC	9	obj.p
+12	Jedi	N	11	mod
+13	pour	P	5	mod
+14	leur	CLO	15	a_obj
+15	porter	VINF	13	obj.p
+16	secours	NC	15	obj
+17	et	CC	2	coord
+18	parvint	V	17	dep.coord
+19	à	P	18	a_obj
+20	réunir	VINF	19	obj.p
+21	Obi-Wan	N	20	obj
+22	Kenobi	N	21	mod
+23	et	CC	21	coord
+24	Yoda	N	23	dep.coord
+25	à	P	20	mod
+26	bord	NC	25	obj.p
+27	du	P+D	26	dep
+28	Tantive	N	27	obj.p
+29	IV	N	28	mod
+30	.	PONCT	0	_
+
+# sentid: Bail_Organa_2657_2835
+# sentence-text: Il fut alors convoqué au Sénat pour une session extraordinaire où Palpatine annonça la fin de la République et le début de l'Empire ainsi que l'extermination des "traîtres" Jedi.
+1	Il	CLS	4	suj
+2	fut	V	4	aux.pass
+3	alors	ADV	4	mod
+4	convoqué	VPP	0	root
+5	au	P+D	4	p_obj.o
+6	Sénat	N	5	obj.p
+7	pour	P	4	mod
+8	une	DET	9	det
+9	session	NC	7	obj.p
+10	extraordinaire	ADJ	9	mod
+11	où	PROREL	13	mod
+12	Palpatine	NPP	13	suj
+13	annonça	V	9	mod.rel
+14	la	DET	15	det
+15	fin	NC	13	obj
+16	de	P	15	dep
+17	la	DET	18	det
+18	République	N	16	obj.p
+19	et	CC	15	coord
+20	le	DET	21	det
+21	début	NC	19	dep.coord
+22	de	P	21	dep
+23	l'	DET	24	det
+24	Empire	N	22	obj.p
+25	ainsi_que	CC	15	coord
+26	l'	DET	27	det
+27	extermination	NC	25	dep.coord
+28	des	P+D	27	dep
+29	"	PONCT	0	_
+30	traîtres	NC	28	obj.p
+31	"	PONCT	0	_
+32	Jedi	N	30	mod
+33	.	PONCT	0	_
+
+# sentid: Bail_Organa_2836_3001
+# sentence-text: Il récupéra Yoda à la fin de son duel contre Palpatine et ils partirent alors sur Polis Massa où Obi-Wan les rejoignit après son propre affrontement avec Dark Vador.
+1	Il	CLS	2	suj
+2	récupéra	V	0	root
+3	Yoda	N	2	obj
+4	à	P	2	mod
+5	la	DET	6	det
+6	fin	NC	4	obj.p
+7	de	P	6	dep
+8	son	DET	9	det
+9	duel	NC	7	obj.p
+10	contre	P	9	dep
+11	Palpatine	NPP	10	obj.p
+12	et	CC	2	coord
+13	ils	CLS	14	suj
+14	partirent	V	12	dep.coord
+15	alors	ADV	14	mod
+16	sur	P	14	p_obj.o
+17	Polis	N	16	obj.p
+18	Massa	N	17	mod
+19	où	PROREL	22	mod
+20	Obi-Wan	N	22	suj
+21	les	CLO	22	obj
+22	rejoignit	V	17	mod.rel
+23	après	P	22	mod
+24	son	DET	26	det
+25	propre	ADJ	26	mod
+26	affrontement	NC	23	obj.p
+27	avec	P	26	dep
+28	Dark	N	27	obj.p
+29	Vador	N	28	mod
+30	.	PONCT	0	_
+
+# sentid: Bail_Organa_3002_3230
+# sentence-text: Il décida, après l'accouchement et la mort de Padmé Amidala, d'adopter sa fille Leia qu'il ramena alors sur Alderaan auprès de sa femme, Breha, en faisant d'abord un arrêt sur Naboo afin de rendre le corps de Padmé à sa famille.
+1	Il	CLS	2	suj
+2	décida	V	0	root
+3	,	PONCT	0	_
+4	après	P	2	mod
+5	l'	DET	6	det
+6	accouchement	NC	4	obj.p
+7	et	CC	6	coord
+8	la	DET	9	det
+9	mort	NC	7	dep.coord
+10	de	P	9	dep
+11	Padmé	N	10	obj.p
+12	Amidala	N	11	mod
+13	,	PONCT	0	_
+14	d'	P	2	obj
+15	adopter	VINF	14	obj.p
+16	sa	DET	17	det
+17	fille	NC	15	obj
+18	Leia	NPP	17	mod
+19	qu'	PROREL	21	obj
+20	il	CLS	21	suj
+21	ramena	V	17	mod.rel
+22	alors	ADV	21	mod
+23	sur	P	21	p_obj.o
+24	Alderaan	N	23	obj.p
+25	auprès_de	P	21	mod
+26	sa	DET	27	det
+27	femme	NC	25	obj.p
+28	,	PONCT	0	_
+29	Breha	N	27	mod.app
+30	,	PONCT	0	_
+31	en	P	21	mod
+32	faisant	VPR	31	obj.p
+33	d'abord	ADV	32	mod
+34	un	DET	35	det
+35	arrêt	NC	32	obj
+36	sur	P	35	dep
+37	Naboo	N	36	obj.p
+38	afin_de	P	32	mod
+39	rendre	VINF	38	obj.p
+40	le	DET	41	det
+41	corps	NC	39	obj
+42	de	P	41	dep
+43	Padmé	N	42	obj.p
+44	à	P	39	a_obj
+45	sa	DET	46	det
+46	famille	NC	44	obj.p
+47	.	PONCT	0	_
+
+# sentid: Bail_Organa_3231_3279
+# sentence-text: Le rôle de Bail Organa est joué par Jimmy Smits.
+1	Le	DET	2	det
+2	rôle	NC	7	suj
+3	de	P	2	dep
+4	Bail	NPP	3	obj.p
+5	Organa	NPP	4	mod
+6	est	V	7	aux.pass
+7	joué	VPP	0	root
+8	par	P	7	p_obj.agt
+9	Jimmy	NPP	8	obj.p
+10	Smits	N	9	mod
+11	.	PONCT	0	_
+

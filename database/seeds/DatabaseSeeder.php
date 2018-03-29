@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Role, App\Models\User, App\Models\Contact, App\Models\Language, App\Models\Object, App\Models\Level;
+use Gwaps4nlp\Models\Role, Gwaps4nlp\Models\Language;
+use App\Models\Object, App\Models\Level;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -13,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-
+        
         Role::create([
             'label' => 'User',
             'slug' => 'user'
@@ -38,12 +39,12 @@ class DatabaseSeeder extends Seeder
             'label' => 'English',
             'slug' => 'en'
         ]);
-        
+
         Object::create([
             'name' => 'Main de Midas',
             'slug' => 'midas',
             'price' => 100,
-            'description' => 'Transforme les cerveaux gagnÃ©s en or.',
+            'description' => 'Transforme les cerveaux gagnés en or.',
             'image' => 'main_midas.png'
         ]);
         
@@ -51,7 +52,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Lunettes',
             'slug' => 'glasses',
             'price' => 10,
-            'description' => 'Permet de revoir les phrases effacÃ©es.',
+            'description' => 'Permet de revoir les phrases effacées.',
             'image' => 'lunettes.png'
         ]);
         
@@ -59,7 +60,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Extracteur',
             'slug' => 'extractor',
             'price' => 200,
-            'description' => 'Permet de rÃ©cupÃ©rer plus de cerveaux lors de l\'annotation d\'une phrase',
+            'description' => 'Permet de récupérer plus de cerveaux lors de l\'annotation d\'une phrase',
             'image' => 'extracteur.png'
         ]);
 
@@ -67,13 +68,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Longue vue',
             'slug' => 'telescope',
             'price' => 10,
-            'description' => 'Permet de faire rÃ©apparaÃ®tre une phrase qui s\'est rapetissÃ©e',
+            'description' => 'Permet de faire réapparaître une phrase qui s\'est rapetissée',
             'image' => 'longue_vue.png'
         ]);
 
         Level::create([
             'id' => 1,
-            'name' => 'LÃ©gÃ¨rement infectÃ©',
+            'name' => 'Légèrement infecté',
             'slug' => 'level1',
             'image' => 'z1.png',
             'required_score' => '0'
@@ -81,7 +82,7 @@ class DatabaseSeeder extends Seeder
 
         Level::create([
             'id' => 2,
-            'name' => 'ZombifiÃ©!',
+            'name' => 'Zombifié!',
             'slug' => 'level2',
             'image' => 'z2.png',
             'required_score' => '5000'
@@ -97,7 +98,7 @@ class DatabaseSeeder extends Seeder
 
         Level::create([
             'id' => 4,
-            'name' => 'DÃ©voreur de cerveaux',
+            'name' => 'Dévoreur de cerveaux',
             'slug' => 'level4',
             'image' => 'z4.png',
             'required_score' => '120000'
@@ -105,7 +106,7 @@ class DatabaseSeeder extends Seeder
 
         Level::create([
             'id' => 5,
-            'name' => 'Ã‰tat de dÃ©composition avancÃ©',
+            'name' => 'État de décomposition avancé',
             'slug' => 'level5',
             'image' => 'z5.png',
             'required_score' => '250000'
@@ -121,7 +122,7 @@ class DatabaseSeeder extends Seeder
 
         Level::create([
             'id' => 7,
-            'name' => 'PutrÃ©faction absolue',
+            'name' => 'Putréfaction absolue',
             'slug' => 'level7',
             'image' => 'z7.png',
             'required_score' => '1045000'
@@ -133,7 +134,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TrophyTableSeeder::class);
         $this->call(ConstantGameTableSeeder::class);
         $this->call(CatPosTableSeeder::class);
-        $this->call(PosGameTableSeeder::class);
+        // $this->call(PosGameTableSeeder::class);
         $this->call(CatPosPosGameTableSeeder::class);
 
         Model::reguard();

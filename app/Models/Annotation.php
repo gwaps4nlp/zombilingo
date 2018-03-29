@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Relation;
 use App\Models\Statistic;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
 use DB;
 
 class Annotation extends Model
 {
 
-
-	protected $fillable = ['corpus_id', 'sentence_id','word_position','word','lemma','category_id','pos_id','governor_position','relation_id','projective_governor','projective_relation_id','source_id'];
+	protected $fillable = ['corpus_id', 'sentence_id','word_position','word','lemma','category_id','pos_id','governor_position','relation_id','projective_governor','projective_relation_id','source_id','playable'];
 	protected $guarded_insert = ['id','focus','expected_answer','created_at','updated_at','relation_type','expected_answers'];
 	
 	protected $visible = ['id', 'focus', 'explanation', 'sentence'];
@@ -45,7 +44,7 @@ class Annotation extends Model
 	 */
 	public function source()
 	{
-		return $this->belongsTo('App\Models\Source');
+		return $this->belongsTo('Gwaps4nlp\Models\Source');
 	}
 
 	/**
@@ -87,7 +86,24 @@ class Annotation extends Model
 	{
 		return $this->hasMany('App\Models\Statistic')->orderBy('score','desc');
 
-	}	
+	}
+
+	/**
+	 * One to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\hasMany
+	 */
+	public function answers()
+	{
+		return $this->hasMany('App\Models\AnnotationUser');
+
+	}
+
+    public function discussion()
+    {
+        return $this->morphOne('App\Models\Discussion', 'entity');
+    }
+
 	/**
 	 * One to One relation
 	 *
@@ -245,6 +261,8 @@ class Annotation extends Model
 				where 1=1 
 				and annotations.id = annotation_users.annotation_id 
 				and annotation_users.annotation_id != annotation_users.answer_id
+				and annotation_users.word_position!=99999
+				and annotation_users.governor_position!=99999
 				and annotations.source_id = 3 
 				group by annotations.id', [$weight_level, $weight_confidence_user]);
         DB::insert('insert into annotations_temp 
@@ -324,7 +342,7 @@ class Annotation extends Model
 			  and annotation_users.created_at < DATE_ADD(?,INTERVAL 1 DAY) )
 			LEFT JOIN confidence_users on annotation_users.user_id=confidence_users.user_id and annotation_users.relation_id=confidence_users.relation_id 
 			where 1=1 
-			and annotations.source_id in (3,5) 
+			and annotations.source_id = 3
 			group by annotations.sentence_id,annotations.word_position,annotations.governor_position,annotations.relation_id', [$weight_level, $weight_confidence_user, $date]);
  		/*
  		If answer != pre-annotated annotation : we substract the user's level to the score of the annotation 
@@ -338,7 +356,9 @@ class Annotation extends Model
 				where 1=1 
 				and annotations.id = annotation_users.annotation_id 
 				and annotation_users.annotation_id != annotation_users.answer_id
-				and annotations.source_id in (3,5)
+				and annotations.source_id  = 3
+				and annotation_users.word_position!=99999
+				and annotation_users.governor_position!=99999				
 				and annotation_users.created_at < DATE_ADD(?,INTERVAL 1 DAY) 
 				group by annotations.id', [$weight_level, $weight_confidence_user, $date]);
         
@@ -365,10 +385,10 @@ class Annotation extends Model
 			  select ?,1, score, annotations.source_id,annotations.id  
 			  from annotations where source_id = 3 and not exists (select 1 from annotation_parser 
 			    where annotation_parser.annotation_id=annotations.id)', [$score_init]);
-        // parsed annotations with multiple parser
+        // parsed annotations with multiple parsers
         DB::insert('insert into annotations_temp 
 			  select ?,1 , score, annotations.source_id,annotations.id 
-			  from annotations, annotation_parser where source_id = 3 and annotation_parser.annotation_id=annotations.id', [$score_init]);        
+			  from annotations, annotation_parser where source_id = 3 and relation_id not in (31,34,37) and annotation_parser.annotation_id=annotations.id', [$score_init]);        
         
         DB::statement('ALTER TABLE `annotations_temp` ADD INDEX(`annotation_id`)');
         
@@ -383,12 +403,12 @@ class Annotation extends Model
     	DB::insert('create table stats_temp
 			SELECT  a2.id as annotation_id, max(a2.custom_score) as score_max  FROM `annotations` AS `a2` 
 			WHERE  
-			  a2.source_id in  (2,3,5)
+			  a2.source_id in  (2,3)
 			  and not exists (select 1 from `annotations` as `a1` where a2.sentence_id=a1.sentence_id
 			    and a2.word_position = a1.word_position
 			    and a2.id != a1.id
 			  and a1.corpus_id = a2.corpus_id 
-			    and a1.source_id in (2,3,5) 
+			    and a1.source_id in (2,3) 
 			    and a1.custom_score >= a2.custom_score)
 			  group by a2.sentence_id, a2.word_position');
 		DB::statement('ALTER TABLE `stats_temp` ADD INDEX(`annotation_id`)');
@@ -397,23 +417,34 @@ class Annotation extends Model
 			WHERE exists (select 1 from stats_temp where annotations.id=stats_temp.annotation_id)');
     }
     public static function setBestAnnotationsByDate($date){
+        DB::statement('DROP TABLE if exists annotations_temp');
+    	DB::insert('create table annotations_temp
+			SELECT id, sentence_id, word_position, governor_position, relation_id , SUM(custom_score) as custom_score from annotations 
+			where source_id in (2,3) 
+			group by sentence_id,word_position, governor_position, relation_id'); 
+    	DB::statement('ALTER TABLE `annotations_temp` ADD INDEX(`id`)');
+    	DB::update('update annotations, annotations_temp set annotations.custom_score = annotations_temp.custom_score
+    		where annotations.id = annotations_temp.id');
         DB::statement('DROP TABLE if exists stats_temp');
     	DB::insert('create table stats_temp
 			SELECT  a2.id as annotation_id, max(a2.custom_score) as score_max  FROM `annotations` AS `a2` 
 			WHERE  
-			  a2.source_id in (2,3,5)
+			  a2.source_id in (2,3)
 			  and not exists (select 1 from `annotations` as `a1` where a2.sentence_id=a1.sentence_id
 			    and a2.word_position = a1.word_position
 			    and a2.id != a1.id
 			  and a1.corpus_id = a2.corpus_id     
-			    and a1.source_id in (2,3,5)
+			    and a1.source_id in (2,3)
 			    and a1.custom_score >= a2.custom_score)
 			  group by a2.sentence_id, a2.word_position');
 		DB::statement('ALTER TABLE `stats_temp` ADD INDEX(`annotation_id`)');
-		DB::insert('insert ignore into score_annotations select id, custom_score, ?, 0 from annotations where source_id in (2,3,5) on duplicate key update score_annotations.custom_score = annotations.custom_score',[$date]);
+		DB::insert('insert ignore into score_annotations select id, custom_score, ?, 0 from annotations where source_id in (2,3) on duplicate key update score_annotations.custom_score = annotations.custom_score',[$date]);
+		DB::update('update annotations set best = 0');
 		DB::update('update score_annotations set best = 0 where date = ?',[$date]);
 		DB::update('update score_annotations set best = 1 
 			WHERE date = ? and exists (select 1 from stats_temp where score_annotations.annotation_id=stats_temp.annotation_id)',[$date]);
+		DB::update('update annotations, score_annotations set annotations.best = 1 
+			WHERE score_annotations.date = ? and annotations.id = score_annotations.annotation_id and score_annotations.best = 1',[$date]);
 
     }
     public static function getConfidenceByUser(){
@@ -450,4 +481,5 @@ class Annotation extends Model
     	return DB::select($sql);
 
     }
+
 }

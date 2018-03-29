@@ -2,27 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Relation;
-use App\Models\Language;
+use Gwaps4nlp\Models\Language;
 use App\Models\Corpus;
-use App\Repositories\UserRepository;
+use Gwaps4nlp\Repositories\UserRepository;
 use App\Repositories\DuelRepository;
 use App\Repositories\LevelRepository;
-use App\Repositories\TrophyRepository;
+use Gwaps4nlp\Repositories\TrophyRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\ScoreRepository;
 use App\Repositories\EmailFrequencyRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\CorpusRepository;
 use App\Repositories\ChallengeRepository;
+use Gwaps4nlp\Repositories\RoleRepository;
 use App\Http\Requests\ChangeEmailRequest;
+use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
 use App\Models\Friend;
-use App\Models\News;
-use Response;
+use Gwaps4nlp\NewsManager\Models\News;
+use Gwaps4nlp\Models\Role;
+use Response, Auth;
 
 class UserController extends Controller
 {
@@ -39,6 +41,43 @@ class UserController extends Controller
     }
 
     /**
+     * Show the user's home.
+     *
+     * @param  Gwaps4nlp\Repositories\TrophyRepository $trophy
+     * @param  App\Repositories\ScoreRepository $score
+     * @param  App\Repositories\DuelRepository $duels
+     * @param  App\Repositories\AnnotationUserRepository $annotation_user
+     * @param  App\Repositories\EmailFrequencyRepository $email_frequencies
+     * @param  App\Repositories\ChallengeRepository $challenges
+     * @return Illuminate\Http\Response
+     */
+    public function getHome(LevelRepository $level,
+        TrophyRepository $trophy,
+        ScoreRepository $score,
+        DuelRepository $duels,
+        AnnotationUserRepository $annotation_user,
+        EmailFrequencyRepository $email_frequencies,
+        ChallengeRepository $challenges
+        )
+    {
+        $user=Auth::user();
+        $challenge = $challenges->getOngoing();
+        $leaders = $score->leaders(11,'points',$challenge);
+        $leaders_annotations = $score->leaders(11, 'number_annotations', $challenge);
+        $neighbors = $score->neighbors($user,'points',3,$challenge);
+        $neighbors_annotations = $score->neighbors($user,'number_annotations',3,$challenge);
+        $scores_user = $score->getByUser($user,'points',$challenge);
+        
+        $scores_annotation_user = $score->getByUser($user,'number_annotations',$challenge);
+
+        $language = Language::where('slug','=',app()->getLocale())->first();
+        $email_frequency = $email_frequencies->getAll();
+        $news = News::take(5)->where('language_id',$language->id)->orderBy('created_at','desc')->get();
+        
+        return view('front.user.home',compact('user','level','score','trophy','leaders','leaders_annotations','neighbors','neighbors_annotations','scores_user','scores_annotation_user','news','duels','email_frequency','challenge'));
+    }
+    
+    /**
      * Display a listing of the connected users.
      *
      * @return Illuminate\Http\Response
@@ -52,28 +91,25 @@ class UserController extends Controller
     /**
      * Show the detail of a user.
      *
-     * @param  int  $user_id
+     * @param  App\Models\User $user
      * @return Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show(User $user)
     {
-        $user = $this->users->getById($user_id);
         return view('front.user.show',compact('user'));
     }
     
     /**
      * Ask a friend.
      *
-     * @param  int  $user_id
+     * @param  App\Models\User $user
      * @return Illuminate\Http\Response
      */
-    public function getAskFriend($user_id)
+    public function getAskFriend(User $user)
     {
-
-        $friend = $this->users->getById($user_id);
-        if($friend->id==Auth::user()->id) return;
-        $new_friend = Friend::firstOrCreate(['user_id'=>Auth::user()->id,'friend_id'=>$friend->id]);
-        $response = trans('site.message-ask-friend', ['username' => $friend->username]);
+        if($user->id==Auth::user()->id) return;
+        $new_friend = Friend::firstOrCreate(['user_id'=>Auth::user()->id,'friend_id'=>$user->id]);
+        $response = trans('site.message-ask-friend', ['username' => $user->username]);
         return Response::json(['html'=>$response]);
     }
 
@@ -83,17 +119,15 @@ class UserController extends Controller
      * @param  int  $user_id
      * @return Illuminate\Http\Response
      */
-    public function getCancelFriend($user_id)
+    public function getCancelFriend(User $user)
     {
-
-        $friend = $this->users->getById($user_id);
-        $friend_relation = Friend::where(['user_id'=>Auth::user()->id,'friend_id'=>$friend->id])->first();
+        $friend_relation = Friend::where(['user_id'=>Auth::user()->id,'friend_id'=>$user->id])->first();
         if($friend_relation)
             $friend_relation->delete();
-        $friend_relation = Friend::where(['friend_id'=>Auth::user()->id,'user_id'=>$friend->id])->first();
-        if($friend_relation)        
+        $friend_relation = Friend::where(['friend_id'=>Auth::user()->id,'user_id'=>$user->id])->first();
+        if($friend_relation)  
             $friend_relation->delete();
-        return Response::json($friend);
+        return Response::json($user);
     }
     
     /**
@@ -102,15 +136,13 @@ class UserController extends Controller
      * @param  int  $user_id
      * @return Illuminate\Http\Response
      */
-    public function getAcceptFriend($user_id)
+    public function getAcceptFriend(User $user)
     {
-
-        $friend = $this->users->getById($user_id);
-        $friend_relation = Friend::where(['user_id'=>$friend->id,'friend_id'=>Auth::user()->id])->firstOrFail();
+        $friend_relation = Friend::where(['user_id'=>$user->id,'friend_id'=>Auth::user()->id])->firstOrFail();
         $friend_relation->accepted = 1;
         $friend_relation->save();
-        $new_friend = Friend::firstOrCreate(['user_id'=>Auth::user()->id,'friend_id'=>$friend->id,'accepted'=>1]);
-        return Response::json($friend);
+        $new_friend = Friend::firstOrCreate(['user_id'=>Auth::user()->id,'friend_id'=>$user->id,'accepted'=>1]);
+        return Response::json($user);
     } 
 
     /**
@@ -123,6 +155,19 @@ class UserController extends Controller
     {
         Auth::user()->email = $request->input('email');
         Auth::user()->email_frequency_id = $request->input('email_frequency_id');
+        Auth::user()->save();
+        return Response::json(Auth::user());
+    }
+
+    /**
+     * Update the password of the user.
+     *
+     * @param  App\Http\Requests\ChangePasswordRequest $request
+     * @return Illuminate\Http\Response
+     */
+    public function postChangePassword(ChangePasswordRequest $request)
+    {
+        Auth::user()->password = bcrypt($request->input('password'));
         Auth::user()->save();
         return Response::json(Auth::user());
     }
@@ -157,7 +202,7 @@ class UserController extends Controller
     {
 
         $relations = $relation_repo->getListPlayable();
-        $corpora = $corpuses->getListPreAnnotated();
+        $corpora = $corpuses->getListPlayable();
         $count_input = count($request->all());
         $params = Array('relation_id'=>null,'corpus_id'=>null,'sortby'=>'score','order'=>'desc');
         $relation = new Relation(['id'=>0]);
@@ -202,10 +247,11 @@ class UserController extends Controller
      *
      * @return Illuminate\Http\Response
      */
-    public function getIndexAdmin()
+    public function getIndexAdmin(RoleRepository $roles_repo)
     {
         $users = $this->users->getAll();
-        return view('back.user.index',compact('users'));
+        $roles = Role::get()->pluck('label', 'id');
+        return view('back.user.index',compact('users','roles'));
     }
 
     /**
@@ -217,41 +263,6 @@ class UserController extends Controller
     {
         $users = $this->users->getConnected();
         return view('front.user.connected',compact('users'));
-    }
-
-    /**
-     * Show the user's home.
-     *
-     * @param  App\Repositories\TrophyRepository $trophy
-     * @param  App\Repositories\ScoreRepository $score
-     * @param  App\Repositories\DuelRepository $duels
-     * @param  App\Repositories\AnnotationUserRepository $annotation_user
-     * @param  App\Repositories\EmailFrequencyRepository $email_frequencies
-     * @param  App\Repositories\EmailFrequencyRepository $challenges
-     * @return Illuminate\Http\Response
-     */
-    public function getHome(LevelRepository $level,
-        TrophyRepository $trophy,
-        ScoreRepository $score,
-        DuelRepository $duels,
-        AnnotationUserRepository $annotation_user,
-        EmailFrequencyRepository $email_frequencies,
-        ChallengeRepository $challenges
-        )
-    {
-        $user=Auth::user();
-        $challenge = $challenges->getOngoing();
-        $leaders = $score->leaders(11,$challenge);
-        $leaders_annotations = $annotation_user->leaders(11, $challenge);
-        $neighbors = $score->neighbors($user,3,$challenge);
-        $neighbors_annotations = $annotation_user->neighbors($user,3,$challenge);
-        $scores_user = $score->getByUser($user,$challenge);
-        $scores_annotation_user = $annotation_user->getByUser($user,$challenge);
-        $language = Language::where('slug','=',app()->getLocale())->first();
-        $email_frequency = $email_frequencies->getAll();
-        $news = News::take(5)->where('language_id',$language->id)->orderBy('created_at','desc')->get();
-        
-        return view('front.user.home',compact('user','level','score','trophy','leaders','leaders_annotations','neighbors','neighbors_annotations','scores_user','scores_annotation_user','news','duels','email_frequency','challenge'));
     }
 
 }

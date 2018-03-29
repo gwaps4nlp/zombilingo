@@ -14,7 +14,8 @@ return [
     */
 
     'default' => env('BROADCAST_DRIVER', 'redis'),
-    'url'     => "http://localhost:6001",
+    'url' => 'http://localhost:6001',
+
     /*
     |--------------------------------------------------------------------------
     | Broadcast Connections

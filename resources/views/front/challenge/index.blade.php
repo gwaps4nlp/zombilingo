@@ -25,8 +25,8 @@
 		@if(isset($challenge))
 			<h2>{{ $challenge->name }} du {{ $challenge->start_date->format('d/m/Y') }} au {{ $challenge->end_date->format('d/m/Y') }}</h2>
 			<table>
+			{{ $scores_challenge }}
 			@foreach ($scores_challenge as $user)
-				<?php print_r($user); ?>
 				@if($user->username == auth()->user()->username)
 					<div class="ligne row" id="placeUser">
 				@else

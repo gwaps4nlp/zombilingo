@@ -1,9 +1,13 @@
 var destination = '';
 var user_id=0;
 var position_help=0;
-
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 $(document).ready(function(){
-    
+
     if($('#onglet-duel').length>0){
         var height = ($('#onglet-duel').height()-5)+'px';
         $('#count_pending_duel').css('bottom',height);
@@ -18,33 +22,35 @@ $(document).ready(function(){
         var position_savant = $(this).offset();
         var offset = $('#helpRelation').offset();
         var scroll = $(document).scrollTop();
-        var diff = position.top+scroll-offset.top;
-        if(offset.top-scroll<0){
-            position_help=scroll
-            console.log ('[jeu.js] test'+offset.top-scroll);
+        var diff = position.top+scroll-offset.top+70;
+        if(offset.top-scroll<70){
+            position_help=scroll;
             $('#helpRelation').css({'top':diff,'position':'relative'});
         }
-        else if(position_help>0){
+        else if(position_help>70){
             $('#helpRelation').css({'top':'','bottom':0,'position':'absolute'});
             adjustPositionHelp();
         }
     });
+    $(document).on('scroll', function(e){
+        adjustPositionHelp();
+    });
 
     function adjustPositionHelp(){
-        var position = $('#helpRelation').position();
-        var position_savant = $(this).offset();
-        var offset = $('#helpRelation').offset();
-        var scroll = $(document).scrollTop();
-        var diff = position.top+scroll-offset.top;
-        if(offset.top-scroll<0){
-            position_help=scroll
-            console.log ('[jeu.js] test'+offset.top-scroll);
-            $('#helpRelation').css({'top':diff,'position':'relative'});
+        if($('#helpRelation').length>0){
+            var position = $('#helpRelation').position();
+            var position_savant = $("#savant").offset();
+            var offset = $('#helpRelation').offset();
+            var scroll = $(document).scrollTop();
+            var diff = position.top+scroll-offset.top;
+            if(scroll>70){
+                position_help=scroll;
+                $('#helpRelation').css({'top':diff,'position':'relative'});
+            }
         }
     }
-
+    /*
 	$(document).on('click', 'a.connected', function(e){
-    return true;
         if($('#connected').val()!=0){
 			return true;
         }
@@ -58,11 +64,12 @@ $(document).ready(function(){
             }
         });
     });
+    */
     $(document).on('submit', "#form-login" ,function( event ) {
         event.preventDefault();
         $.ajax({
             method : 'POST',
-            url : url('auth/login'),
+            url : url_site('auth/login'),
             data : $(this).serialize(),
             complete: function(e, xhr, settings){
                 if(e.status === 422){
@@ -98,10 +105,10 @@ $(document).ready(function(){
                     html+='<br/>est un de vos ennemis';
                 } else if(jQuery.inArray( user_id, pending_enemies ) > -1) {
                     html+='<br/><span>demande d\'ennemi en attente</span><br/><span class="link cancelEnemy">annuler la demande</span>';
-                    var url_action = url('user/cancel-friend/');
+                    var url_action = url_site('user/cancel-friend/');
                 } else if(jQuery.inArray( user_id, ask_enemies ) > -1) {
                     html+='<br/><span>t\'as demandé en ennemi</span><br/><span class="link acceptEnemy">accepter la demande</span>';
-                    var url_action = url('user/accept-friend/');
+                    var url_action = url_site('user/accept-friend/');
                 } else {
                     html+='<br/><span class="link askEnemy">ajouter à mes ennemis</span>';
                 }
@@ -122,7 +129,7 @@ $(document).ready(function(){
                 e.preventDefault();
                 $.ajax({
                     method : 'GET',
-                    url : url('user/ask-friend/') + user_id,
+                    url : url_site('user/ask-friend/') + user_id,
                     success : function(response){
                         $(e.currentTarget).html(response.html);
                         $(e.currentTarget).removeClass('link');
@@ -135,7 +142,7 @@ $(document).ready(function(){
                 e.preventDefault();
                 $.ajax({
                     method : 'GET',
-                    url : url('user/cancel-friend/') + user_id,
+                    url : url_site('user/cancel-friend/') + user_id,
                     success : function(response){
                         $(e.currentTarget).html("");
                         $(e.currentTarget).removeClass('link');
@@ -148,7 +155,7 @@ $(document).ready(function(){
                 e.preventDefault();
                 $.ajax({
                     method : 'GET',
-                    url : url('user/accept-friend/') + user_id,
+                    url : url_site('user/accept-friend/') + user_id,
                     success : function(response){
                         $(e.currentTarget).html('');
                         $(e.currentTarget).removeClass('link');
@@ -165,7 +172,7 @@ $(document).ready(function(){
        }
     );
  
-	$(document).on('click', '#register', function(e){
+	$(document).on('click', '#register42', function(e){
         if($('#connected').val()=='1')
 			return true;
 		e.preventDefault();
@@ -223,10 +230,11 @@ $(document).ready(function(){
         }	
     });
 
+
 });
 
 function modal(text){
-    var html ='<div class="modal fade" id="modalSimple" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button><div id="contentModal">'+text+'</div><div class="modal-footer"><button type="button" class="btn btn-lg btn-success" data-dismiss="modal">'+trans('site.close')+'</button></div></div></div></div></div>';
+    var html ='<div class="modal fade" id="modalSimple" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button><div id="contentModal">'+text+'</div><div class="modal-footer"><button type="button" class="btn btn-lg btn-success" data-dismiss="modal" id="close-modal">'+trans('site.close')+'</button></div></div></div></div></div>';
     if($('#modalSimple').length>0){
         $('#modalSimple').remove();
     }
@@ -235,56 +243,73 @@ function modal(text){
 }
 
 function newModal(){
-
-    var html ='<div class="modal fade" id="modalSimple" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button><div id="contentModal"></div><div class="modal-footer"><button type="button" class="btn btn-lg btn-success" data-dismiss="modal">'+trans('site.close')+'</button></div></div></div></div></div>';
+    var html ='<div class="modal fade" id="modalSimple" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button><div id="contentModal"></div><div class="modal-footer"><button type="button" class="btn btn-lg btn-success" data-dismiss="modal" id="close-modal">'+trans('site.close')+'</button></div></div></div></div></div>';
     if($('modalSimple').length>0){
         $('modalSimple').remove();
     }
     $('body').append(html);
-    $('#modalSimple').modal("show");
 }
-function newModalSimple(){
-
-    var html ='<div class="modal fade" id="modalSimple" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button><div id="contentModal"></div><div class="modal-footer"></div></div></div></div></div>';
+function newModalSimple(class_name){
+    class_name = class_name || "";
+    var html ='<div class="modal fade '+class_name+'" id="modalSimple" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-body"><button type="button" class="close" data-dismiss="modal">&times;</button><div id="contentModal"></div><div class="modal-footer" id="modalFooter"></div></div></div></div></div>';
     if($('modalSimple').length>0){
         $('modalSimple').remove();
     }
     $('body').append(html);
-    $('#modalSimple').modal("show");
+}
+
+function bonusObject(){
+    setTimeout(function(){$('#bonus-object').remove()}, 3000);
+    url = base_url + 'shop/objectWon';
+    $('#bonus-object').on('click', function(){
+
+        $.ajax({
+            url : url,
+            method : 'GET',
+            success : function(response){
+                $('#bonus-object').remove();
+                var url = base_url + "img/object/"+ response.image;
+                newModal();
+                $('#contentModal').html('<div class="text-center">Bien joué, tu as gagné l\'objet : ' + response.name + '<br/><img src="' + url + '" class="bonus-object" /></div>');
+                $('#modalSimple').modal('show');
+            }
+        });
+    });    
 }
 
 // ====================================================================================================
 function displaySentence(sentence, id_highlight, id_highlight2,_mode){
-    console.log ('[jeu.js] ENTER displaySentence');
-    var mots = sentence.split(' ');
+    var words = sentence.split(' ');
     var retour = '';
-    var mot;
+    var word;
     var id = 1;
     var nbQuote = 0;
     var regexp = /(_(?!\s))/g;
 
-    for(var i = 0 ; i < mots.length ; i++){
-        mot = mots[i];
-        mot = mot.replace(regexp , ' ');
+    for(var i = 0 ; i < words.length ; i++){
+        word = words[i];
+        word = word.replace(regexp , ' ');
         if(id == id_highlight || (id_highlight2 != undefined && id == id_highlight2)){
             var classe = 'highlight';
         }else{
             if(_mode=='special')
                 var classe = 'disabled-word';
+            else if(_mode=='upl')
+                var classe = 'upl-word';
             else
-                var classe = 'mot';
+                var classe = 'word';
         }
-        retour += '<span class="'+classe+'" word_position="' + id + '" id="word_index_'+ id +'">';
-        retour += mot;
+        retour += '<span class="'+classe+'" data-word-position="' + id + '" id="word_index_'+ id +'">';
+        retour += word;
         retour += '</span>';
-        if(i < mots.length - 1){
-            switch(mots[i + 1]){
+        if(i < words.length - 1){
+            switch(words[i + 1]){
                 case ',':
                     break;
                 case '.':
                     break;
                 case '"':
-                    if(nbQuote % 2 != 1){
+                    if(nbQuote % 2 == 0){
                         retour += ' ';
                     }
                     break;
@@ -293,46 +318,108 @@ function displaySentence(sentence, id_highlight, id_highlight2,_mode){
                 case ')':
                     break;
                 default:
-                    if(mot[mot.length - 1] != "'" && mot != '(' && mot != '"'){
+                    if(word[word.length - 1] == "'" ||  word == '('  || (word == '"' && nbQuote % 2 == 0 ) )
+                        retour+='';
+                    else {
                         retour += ' ';
                     }
                     break;
             }
+            if(word=='"') nbQuote++;
+        }
+        id++;
+    }
+    return retour;
+}
+// ====================================================================================================
+function displaySentenceUpl(sentence){
+    var words = sentence.split(/[\s_]/);
+    var retour = '';
+    var word;
+    var id = 1;
+    var nbQuote = 0;
+    var regexp = /(_(?!\s))/g;
+
+    for(var i = 0 ; i < words.length ; i++){
+
+        var compound_word = words[i].split('-');
+
+
+        for (var index_word=0;index_word<compound_word.length;index_word++){
+            var word = compound_word[index_word];
+            word = word.replace(regexp , ' ');
+            //Test trait d'union sur le premier word
+            // if(compound_word.length>1 && index_word<(compound_word.length-1)){
+            //     id++;
+            //     word+='-';
+            // }
+            if(index_word>0){
+                id++;
+                retour += '<span class="upl-word" data-word-position="' + id + '" id="word_index_'+ id +'">-</span>';                
+                id++;
+            }
+            retour += '<span class="upl-word" data-word-position="' + id + '" id="word_index_'+ id +'">'+word+'</span>';
+        }
+
+        if(i < words.length - 1){
+            switch(words[i + 1]){
+                case ',':
+                    break;
+                case '.':
+                    break;
+                case '"':
+                    if(nbQuote % 2 == 0){
+                        retour += ' ';
+                    }
+                    break;
+                case '-il':
+                    break;
+                case ')':
+                    break;
+                default:
+                    if(word[word.length - 1] == "'" ||  word == '('  || (word == '"' && nbQuote % 2 == 0 ) )
+                        retour+='';
+                    else {
+                        retour += '<span> </span> ';
+                    }
+                    break;
+            }
+            if(word=='"') nbQuote++;
         }
         id++;
     }
     return retour;
 }
 function displaySentenceStats(sentence, id_highlight, user_answer){
-    console.log ('[jeu.js] ENTER displaySentence');
-    var mots = sentence.split(' ');
+    console.log ('[jeu.js] ENTER displaySentenceStats');
+    var words = sentence.split(' ');
     var retour = '';
-    var mot;
+    var word;
     var id = 1;
     var nbQuote = 0;
     var regexp = /(_(?!\s))/g;
 
-    for(var i = 0 ; i < mots.length ; i++){
-        mot = mots[i];
-        mot = mot.replace(regexp , ' ');
+    for(var i = 0 ; i < words.length ; i++){
+        word = words[i];
+        word = word.replace(regexp , ' ');
         if(id == id_highlight){
             var classe = 'highlight';
         }else if(id==user_answer){
             var classe = 'user_answer';
         }else{
-            var classe = 'mot';
+            var classe = 'word';
         }
-        retour += '<span class="'+classe+'" word_position="' + id + '">';
-        retour += mot;
+        retour += '<span class="'+classe+'" data-word-position="' + id + '">';
+        retour += word;
         retour += '</span>';
-        if(i < mots.length - 1){
-            switch(mots[i + 1]){
+        if(i < words.length - 1){
+            switch(words[i + 1]){
                 case ',':
                     break;
                 case '.':
                     break;
                 case '"':
-                    if(nbQuote % 2 != 1){
+                    if(nbQuote % 2 == 0){
                         retour += ' ';
                     }
                     break;
@@ -341,11 +428,14 @@ function displaySentenceStats(sentence, id_highlight, user_answer){
                 case ')':
                     break;
                 default:
-                    if(mot[mot.length - 1] != "'" && mot != '(' && mot != '"'){
+                    if(word[word.length - 1] == "'" ||  word == '('  || (word == '"' && nbQuote % 2 == 0 ) )
+                        retour+='';
+                    else {
                         retour += ' ';
                     }
                     break;
             }
+            if(word=='"') nbQuote++;
         }
         id++;
     }
@@ -353,7 +443,7 @@ function displaySentenceStats(sentence, id_highlight, user_answer){
     return retour;
 }
 
-function url(path){
+function url_site(path){
     return base_url + path;
 }
 
@@ -385,6 +475,127 @@ function trans_choice(key,attributes){
     }
     return translation;
 }
+/* Gestion of threads of discussion */
+$(document).on('focus', '.message', function(){
+    $(this).closest("form.form-message").find(".submitMessage").removeAttr("disabled");
+});
+$('.message-button').click(showThread);
+$('#message-button').click(showThread);
 
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
+function showThread(event){
+    event.preventDefault();
+    console.log("show thread");
+    var entity_id = $(this).attr('data-id');
+    var entity_type = $(this).attr('data-type');
+    if(!$("#thread_"+entity_id).is(":visible")){
+        $("#thread_"+entity_id).load(url_site('discussion/thread')+"?entity_id="+entity_id+"&entity_type="+entity_type, function(responseTxt, statusTxt, xhr){
+            if(statusTxt == "success"){
+                $("#thread_"+entity_id).slideDown(200,function(){
+                    if($("#sentence").length>0){
+                        var target_offset = $("#thread_"+entity_id).offset();
+                        var target_top = target_offset.top-75;
+                        $('.parallax').animate({
+                            scrollTop: target_top
+                        }, 500);
+                    }                    
+                });
 
+            }
+            if(statusTxt == "error")
+                alert("Error: " + xhr.status + ": " + xhr.statusText);
+        });
+    } else {
+        $("#thread_"+entity_id).slideUp(200);
+    }
+}
+function followThread(){
+    var annotation_id = $(this).attr('data-id');
+    var $element = $(this);
+    $.ajax({
+        method : 'GET',
+        url : base_url + 'discussion/follow-thread',
+        data : {'id':annotation_id,'type':'annotation'},
+        complete: function(response){
+            $element.hide();
+            $('span.unfollow-thread-button[data-id='+annotation_id+']').show();
+        }
+    });
+}
+function unFollowThread(){
+    var annotation_id = $(this).attr('data-id');
+    var $element = $(this);
+    $.ajax({
+        method : 'GET',
+        url : base_url + 'discussion/un-follow-thread',
+        data : {'id':annotation_id,'type':'annotation'},
+        complete: function(response){
+            $element.hide();
+            $('span.follow-thread-button[data-id='+annotation_id+']').show();
+        }
+    });
+}
+
+$(document).on('click','.cancelReport', function(event){
+    event.preventDefault();
+    $(this).closest('.thread').slideUp();
+});
+$(document).on('click','.cancelAnswer', function(event){
+    event.preventDefault();
+    $(this).closest('.form-message').slideUp();
+});
+
+$(document).on('submit', ".form-message" ,function( event ) {
+    event.preventDefault();
+    var text = $.trim($(this).find("textarea").val());
+    if(text!=""){
+        var entity_id = $(this).attr('data-id');
+        $.ajax({
+            method : 'POST',
+            url : base_url + 'discussion/new',
+            data : $(this).serialize(),
+            complete: function(response){
+                $("#thread_"+entity_id).html(response.responseText);
+            }
+        });
+    } else {
+        alert("Veuillez saisir un message");
+    }   
+});
+$(document).on('click', ".delete-message" ,function( event ) {
+    event.preventDefault();
+    if(confirm('Are you sure ?')){
+        var message_id = $(this).attr('data-message-id');
+        var entity_id = $(this).attr('data-entity-id');
+        var entity_type = $(this).attr('data-type');
+        $.ajax({
+            method : 'GET',
+            url : base_url + 'discussion/delete?entity_id='+entity_id+'&message_id='+message_id+'&entity_type='+entity_type,
+            complete: function(response){
+                $("#thread_"+entity_id).html(response.responseText);
+            }
+        });
+    }
+});
+$(document).on('change', "#per-page" ,function( event ) {
+    event.preventDefault();
+    $('#discussions-selection').submit();
+});
+function scrollTo(id){
+    $('html, body').animate({
+        scrollTop: $("#"+id).offset().top
+    }, 0);    
+}
+function resizeIframe(obj) {
+    var new_height = obj.contentWindow.document.body.scrollHeight+200;
+    obj.style.height = new_height + 'px';
+    var arrFrames = parent.parent.document.getElementsByTagName("IFRAME");
+    for (var i = 0; i < arrFrames.length; i++) {
+        if (arrFrames[i].name != obj.name) {
+            resizeIframe(arrFrames[i]);
+        }
+    }        
+}

@@ -1,6 +1,7 @@
 <?php namespace App\Services;
 
 use Session;
+use App\Models\LogDB;
 
 class Statut  {
 
@@ -12,7 +13,6 @@ class Statut  {
 	 */
 	public function setLoginStatut($login)
 	{
-		session()->put('statut', $login->user->role->slug);
 		$login->user->connected = 1;
 		$login->user->session_id = Session::getId();
 		$login->user->save();
@@ -25,7 +25,6 @@ class Statut  {
 	 */
 	public function setVisitorStatut()
 	{
-		session()->put('statut', 'visitor');
 		if(auth()->check()){
 			auth()->user()->connected = 0;
 			auth()->user()->save();
@@ -39,15 +38,16 @@ class Statut  {
 	 */
 	public function setStatut()
 	{
-
-		if(!session()->has('statut')) 
-		{
-			session()->put('statut', auth()->check() ?  auth()->user()->role->slug : 'visitor');
-		}
 		if(auth()->check()){
 			auth()->user()->last_action_at = date('Y-m-d H:i:s');
 			auth()->user()->save();
 		}
+
+		LogDB::create([
+			'session_id' => Session::getId(),
+			'referer' => request()->headers->get('referer'),
+			'url' => request()->fullUrl(),
+		]);
 	}
 
 }

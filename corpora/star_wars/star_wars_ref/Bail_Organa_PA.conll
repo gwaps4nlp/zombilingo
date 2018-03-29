@@ -1,0 +1,690 @@
+# sentid: Bail_Organa_0_43
+# sentence-text: Bail Organa est un personnage de Star Wars.
+1	Bail	bail	N	NC	n=s|g=m|	3	mod	3	mod
+2	Organa	_	NPP	N	NPP	3	suj	3	suj
+3	est	être	V	V	n=s|t=P|p=3|	0	root	0	root
+4	un	un	D	DET	n=s|g=m|	5	det	5	det
+5	personnage	personnage	N	NC	n=s|g=m|	3	ats	3	ats
+6	de	de	P	P		5	dep	5	dep
+7	Star	Star	NPP	NPP	n=s|g=f|	6	obj.p	6	obj.p
+8	Wars	_	NPP	N	NPP	7	mod	7	mod
+9	.	.	PONCT	PONCT		8	ponct	8	ponct
+
+# sentid: Bail_Organa_44_279
+# sentence-text: Sénateur à Coruscant de la planète Alderaan, il apparaît dans Star Wars, épisode II : L'Attaque des clones et Star Wars, épisode III : La Revanche des Sith, et est un pionnier de la rébellion qui a été membre de la délégation des 2000.
+1	Sénateur	sénateur	N	NC	n=s|g=m|	10	mod	10	mod
+2	à	à	P	P		1	dep	1	dep
+3	Coruscant	_	N	N	NC	2	obj.p	2	obj.p
+4	de	de	P	P		1	dep	1	dep
+5	la	la	D	DET	n=s|g=f|	6	det	6	det
+6	planète	planète	N	NC	n=s|g=f|	4	obj.p	4	obj.p
+7	Alderaan	_	NPP	N	NPP	6	mod	6	mod
+8	,	,	PONCT	PONCT		7	ponct	7	ponct
+9	il	il	CL	CLS	n=s|g=m|p=3|	10	suj	10	suj
+10	apparaît	apparaître	V	V	n=s|t=P|p=3|	0	root	0	root
+11	dans	dans	P	P		10	mod	10	mod
+12	Star	Star	NPP	NPP	n=s|g=f|	11	obj.p	11	obj.p
+13	Wars	_	NPP	N	NPP	12	mod	12	mod
+14	,	,	PONCT	PONCT		13	ponct	13	ponct
+15	épisode	épisode	N	NC	n=s|g=m|	12	mod	12	mod
+16	II	_	NPP	N	NPP	15	mod	15	mod
+17	:	:	PONCT	PONCT		16	ponct	16	ponct
+18	L'	l'	D	DET	n=s|	19	det	19	det
+19	Attaque	_	NPP	N	NPP	10	mod	10	mod
+20	des	de	P+D	P+D	n=p|	19	dep	19	dep
+21	clones	clone	N	NC	n=p|g=m|	20	obj.p	20	obj.p
+22	et	et	C	CC		21	coord	21	coord
+23	Star	Star	NPP	NPP	n=s|g=f|	22	dep.coord	22	dep.coord
+24	Wars	_	NPP	N	NPP	23	mod	23	mod
+25	,	,	PONCT	PONCT		24	ponct	24	ponct
+26	épisode	épisode	N	NC	n=s|g=m|	23	mod	23	mod
+27	III	_	A	ADJ	_	26	mod	26	mod
+28	:	:	PONCT	PONCT		27	ponct	27	ponct
+29	La	la	D	DET	n=s|g=f|	30	det	30	det
+30	Revanche	_	NPP	N	NPP	10	mod	10	mod
+31	des	de	P+D	P+D	n=p|	30	dep	30	dep
+32	Sith	_	NPP	N	NPP	31	obj.p	31	obj.p
+33	,	,	PONCT	PONCT		32	ponct	32	ponct
+34	et	et	C	CC		10	coord	10	coord
+35	est	être	V	V	n=s|t=P|p=3|	34	dep.coord	34	dep.coord
+36	un	un	D	DET	n=s|g=m|	37	det	37	det
+37	pionnier	pionnier	N	NC	n=s|g=m|	35	ats	35	ats
+38	de	de	P	P		37	dep	37	dep
+39	la	la	D	DET	n=s|g=f|	40	det	40	det
+40	rébellion	rébellion	N	NC	n=s|g=f|	38	obj.p	38	obj.p
+41	qui	qui	PRO	PROREL	n=s|	0	_	0	_
+42	a	avoir	V	V	n=s|t=P|p=3|	0	_	0	_
+43	été	être	VPP	VPP	t=K|	0	_	0	_
+44	membre	membre	N	NC	n=s|g=m|	43	ats	43	ats
+45	de	de	P	P		44	dep	44	dep
+46	la	la	D	DET	n=s|g=f|	47	det	47	det
+47	délégation	délégation	N	NC	n=s|g=f|	45	obj.p	45	obj.p
+48	des	de	P+D	P+D	n=p|	47	dep	47	dep
+49	2000	2000	N	NC	s=card|n=s|	48	obj.p	48	obj.p
+50	.	.	PONCT	PONCT		49	ponct	49	ponct
+
+# sentid: Bail_Organa_280_510
+# sentence-text: Après l'Ordre 66, il vient en aide aux Jedi Yoda et Obi-Wan Kenobi et assiste avec eux à la naissance des jumeaux Luke Skywalker et celle qu'il va adopter avec sa femme : Leia Organa, qui le remplacera plus tard au Sénat impérial.
+1	Après	après	P	P		7	mod	7	mod
+2	l'	l'	D	DET	n=s|	3	det	3	det
+3	Ordre	_	N	N	NC	1	obj.p	1	obj.p
+4	66	66	N	N	NC	3	mod	3	mod
+5	,	,	PONCT	PONCT		4	ponct	4	ponct
+6	il	il	CL	CLS	n=s|g=m|p=3|	7	suj	7	suj
+7	vient	venir	V	V	n=s|t=P|p=3|	0	root	0	root
+8	en	en	P	P		7	mod	7	mod
+9	aide	aide	N	NC	n=s|	8	obj.p	8	obj.p
+10	aux	à	P+D	P+D	n=p|	7	a_obj	7	a_obj
+11	Jedi	_	NPP	N	NPP	10	obj.p	10	obj.p
+12	Yoda	_	NPP	N	NPP	11	mod	11	mod
+13	et	et	C	CC		11	coord	11	coord
+14	Obi-Wan	_	NPP	N	NPP	13	dep.coord	13	dep.coord
+15	Kenobi	_	NPP	N	NPP	14	mod	14	mod
+16	et	et	C	CC		7	coord	7	coord
+17	assiste	assister	V	V	n=s|t=PS|p=13|	16	dep.coord	16	dep.coord
+18	avec	avec	P	P		17	mod	17	mod
+19	eux	eux	PRO	PRO	n=p|g=m|p=3|	18	obj.p	18	obj.p
+20	à	à	P	P		17	mod	17	mod
+21	la	la	D	DET	n=s|g=f|	22	det	22	det
+22	naissance	naissance	N	NC	n=s|g=f|	20	obj.p	20	obj.p
+23	des	de	P+D	P+D	n=p|	22	dep	22	dep
+24	jumeaux	jumeau	N	NC	n=p|g=m|	23	obj.p	23	obj.p
+25	Luke	Luke	NPP	NPP	n=s|g=m|	24	mod	24	mod
+26	Skywalker	_	NPP	N	NPP	24	mod	24	mod
+27	et	et	C	CC		17	coord	17	coord
+28	celle	celle	PRO	PRO	n=s|g=f|	27	dep.coord	27	dep.coord
+29	qu'	que	PRO	PROREL		31	obj	31	obj
+30	il	il	CL	CLS	n=s|g=m|p=3|	31	suj	31	suj
+31	va	aller	V	V	n=s|t=P|p=3|	28	mod.rel	28	mod.rel
+32	adopter	adopter	VINF	VINF	t=W|	31	obj	31	obj
+33	avec	avec	P	P		32	mod	32	mod
+34	sa	sa	D	DET	n=s|g=f|p=3|poss=s|	35	det	35	det
+35	femme	femme	N	NC	n=s|g=f|	33	obj.p	33	obj.p
+36	:	:	PONCT	PONCT		35	ponct	35	ponct
+37	Leia	Leia	NPP	NPP	n=s|g=f|	35	mod	35	mod
+38	Organa	_	NPP	N	NPP	37	mod	37	mod
+39	,	,	PONCT	PONCT		38	ponct	38	ponct
+40	qui	qui	PRO	PROREL	n=s|	42	suj	42	suj
+41	le	le	CL	CLO	n=s|g=m|p=3|	42	obj	42	obj
+42	remplacera	remplacer	V	V	n=s|t=F|p=3|	35	mod.rel	35	mod.rel
+43	plus	plus	ADV	ADV		44	mod	44	mod
+44	tard	tard	ADV	ADV		42	mod	42	mod
+45	au	à	P+D	P+D	n=s|g=m|	42	a_obj	42	a_obj
+46	Sénat	_	N	N	NC	45	obj.p	45	obj.p
+47	impérial	impérial	A	ADJ	n=s|g=m|	46	mod	46	mod
+48	.	.	PONCT	PONCT		47	ponct	47	ponct
+
+# sentid: Bail_Organa_511_633
+# sentence-text: Grand défenseur de la démocratie, il essaie d'alerter l'opinion sur le danger que représente un dirigeant comme Palpatine.
+1	Grand	grand	A	ADJ	n=s|g=m|	2	mod	2	mod
+2	défenseur	défenseur	N	NC	n=s|g=m|	8	mod	8	mod
+3	de	de	P	P		2	dep	2	dep
+4	la	la	D	DET	n=s|g=f|	5	det	5	det
+5	démocratie	démocratie	N	NC	n=s|g=f|	3	obj.p	3	obj.p
+6	,	,	PONCT	PONCT		5	ponct	5	ponct
+7	il	il	CL	CLS	n=s|g=m|p=3|	8	suj	8	suj
+8	essaie	_	V	V	_	0	root	0	root
+9	d'	de	P	P		8	de_obj	8	de_obj
+10	alerter	alerter	VINF	VINF	t=W|	9	obj.p	9	obj.p
+11	l'	l'	D	DET	n=s|	12	det	12	det
+12	opinion	opinion	N	NC	n=s|g=f|	10	obj	10	obj
+13	sur	sur	P	P		10	mod	10	mod
+14	le	le	D	DET	n=s|g=m|	15	det	15	det
+15	danger	danger	N	NC	n=s|g=m|	13	obj.p	13	obj.p
+16	que	que	PRO	PROREL		17	obj	17	obj
+17	représente	représenter	V	V	n=s|t=PS|p=13|	15	mod.rel	15	mod.rel
+18	un	un	D	DET	n=s|g=m|	19	det	19	det
+19	dirigeant	dirigeant	N	NC	n=s|g=m|	17	suj	17	suj
+20	comme	comme	P	P		17	mod	17	mod
+21	Palpatine	_	NPP	N	NPP	20	obj.p	20	obj.p
+22	.	.	PONCT	PONCT		21	ponct	21	ponct
+
+# sentid: Bail_Organa_634_749
+# sentence-text: Voyant la démocratie mourir sous ses yeux, il fondera l'Alliance rebelle auprès de Starkiller à qui il doit la vie.
+1	Voyant	voir	VPR	VPR	t=G|	10	mod	10	mod
+2	la	la	D	DET	n=s|g=f|	3	det	3	det
+3	démocratie	démocratie	N	NC	n=s|g=f|	1	obj	1	obj
+4	mourir	_	VPP	VPP	_	3	mod	3	mod
+5	sous	sous	P	P		4	mod	4	mod
+6	ses	ses	D	DET	n=p|p=3|poss=s|	7	det	7	det
+7	yeux	oeil	N	NC	n=p|g=m|	5	obj.p	5	obj.p
+8	,	,	PONCT	PONCT		7	ponct	7	ponct
+9	il	il	CL	CLS	n=s|g=m|p=3|	10	suj	10	suj
+10	fondera	fonder	V	V	n=s|t=F|p=3|	0	root	0	root
+11	l'	l'	D	DET	n=s|	12	det	12	det
+12	Alliance	_	NPP	N	NPP	10	obj	10	obj
+13	rebelle	rebeller	V	V	n=s|t=PS|p=13|	10	mod	10	mod
+14	auprès_de	auprès_de	P	P		13	mod	13	mod
+15	Starkiller	_	NPP	N	NPP	14	obj.p	14	obj.p
+16	à	à	P	P		13	mod	13	mod
+17	qui	qui	PRO	PROREL	n=s|	16	obj.p	16	obj.p
+18	il	il	CL	CLS	n=s|g=m|p=3|	19	suj	19	suj
+19	doit	devoir	V	V	n=s|t=P|p=3|	16	mod.rel	16	mod.rel
+20	la	la	D	DET	n=s|g=f|	21	det	21	det
+21	vie	vie	N	NC	n=s|g=f|	19	obj	19	obj
+22	.	.	PONCT	PONCT		21	ponct	21	ponct
+
+# sentid: Bail_Organa_750_815
+# sentence-text: Il sera tué lors de la destruction d'Alderaan par l'Étoile Noire.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	3	suj	3	suj
+2	sera	être	V	V	n=s|t=F|p=3|	3	aux.pass	3	aux.pass
+3	tué	tuer	VPP	VPP	n=s|g=m|t=K|	0	root	0	root
+4	lors_de	lors_de	P	P		3	mod	3	mod
+5	la	la	D	DET	n=s|g=f|	6	det	6	det
+6	destruction	destruction	N	NC	n=s|g=f|	4	obj.p	4	obj.p
+7	d'	de	P	P		6	dep	6	dep
+8	Alderaan	_	NPP	N	NPP	7	obj.p	7	obj.p
+9	par	par	P	P		6	dep	6	dep
+10	l'	l'	D	DET	n=s|	11	det	11	det
+11	Étoile	_	N	N	NC	9	obj.p	9	obj.p
+12	Noire	_	NPP	N	NPP	11	mod	11	mod
+13	.	.	PONCT	PONCT		12	ponct	12	ponct
+
+# sentid: Bail_Organa_816_848
+# sentence-text: Bail Organa naquit sur Alderaan.
+1	Bail	bail	N	NC	n=s|g=m|	3	suj	3	suj
+2	Organa	_	NPP	N	NPP	1	mod	1	mod
+3	naquit	naître	V	V	n=s|t=J|p=3|	0	root	0	root
+4	sur	sur	P	P		3	mod	3	mod
+5	Alderaan	_	NPP	N	NPP	4	obj.p	4	obj.p
+6	.	.	PONCT	PONCT		5	ponct	5	ponct
+
+# sentid: Bail_Organa_849_958
+# sentence-text: Après un conflit qui fut réglé à l'aide du Maître Jedi Jorus C'baoth, il fut proclamé Vice-Roi de la planète.
+1	Après	après	P	P		19	mod	19	mod
+2	un	un	D	DET	n=s|g=m|	3	det	3	det
+3	conflit	conflit	N	NC	n=s|g=m|	1	obj.p	1	obj.p
+4	qui	qui	PRO	PROREL	n=s|	6	suj	6	suj
+5	fut	être	V	V	n=s|t=J|p=3|	6	aux.pass	6	aux.pass
+6	réglé	régler	VPP	VPP	n=s|g=m|t=K|	3	mod.rel	3	mod.rel
+7	à	à	P	P		6	a_obj	6	a_obj
+8	l'	l'	D	DET	n=s|	9	det	9	det
+9	aide	aide	N	NC	n=s|	7	obj.p	7	obj.p
+10	du	de	P+D	P+D	n=s|g=m|	9	dep	9	dep
+11	Maître	Maître	N	NC	n=s|g=m|	10	obj.p	10	obj.p
+12	Jedi	_	NPP	N	NPP	11	mod	11	mod
+13	Jorus	_	NPP	N	NPP	11	mod	11	mod
+14	C'	_	NPP	N	NPP	11	mod	11	mod
+15	baoth	_	NPP	N	NPP	11	mod	11	mod
+16	,	,	PONCT	PONCT		15	ponct	15	ponct
+17	il	il	CL	CLS	n=s|g=m|p=3|	19	suj	19	suj
+18	fut	être	V	V	n=s|t=J|p=3|	19	aux.pass	19	aux.pass
+19	proclamé	proclamer	VPP	VPP	n=s|g=m|t=K|	0	root	0	root
+20	Vice-Roi	_	N	N	NC	19	obj	19	obj
+21	de	de	P	P		20	dep	20	dep
+22	la	la	D	DET	n=s|g=f|	23	det	23	det
+23	planète	planète	N	NC	n=s|g=f|	21	obj.p	21	obj.p
+24	.	.	PONCT	PONCT		23	ponct	23	ponct
+
+# sentid: Bail_Organa_959_1042
+# sentence-text: Il prit également les fonctions de Sénateur en remplaçant Bail Antilles à ce poste.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	2	suj	2	suj
+2	prit	prendre	V	V	n=s|t=J|p=3|	0	root	0	root
+3	également	_	ADV	ADV	_	2	mod	2	mod
+4	les	les	D	DET	n=p|	5	det	5	det
+5	fonctions	fonction	N	NC	n=p|g=f|	2	obj	2	obj
+6	de	de	P	P		5	dep	5	dep
+7	Sénateur	_	NPP	N	NPP	6	obj.p	6	obj.p
+8	en	en	P	P		2	mod	2	mod
+9	remplaçant	remplacer	VPR	VPR	t=G|	8	obj.p	8	obj.p
+10	Bail	_	NPP	N	NPP	9	obj	9	obj
+11	Antilles	Antilles	NPP	NPP	n=p|g=f|	10	mod	10	mod
+12	à	à	P	P		9	mod	9	mod
+13	ce	ce	D	DET	n=s|g=m|	14	det	14	det
+14	poste	poste	N	NC	n=s|	12	obj.p	12	obj.p
+15	.	.	PONCT	PONCT		14	ponct	14	ponct
+
+# sentid: Bail_Organa_1043_1204
+# sentence-text: Ardent défenseur de la démocratie et de la République, il fit partie du Comité Loyaliste lors de la Crise Séparatiste et soutint le Chancelier Suprême Palpatine.
+1	Ardent	ardent	A	ADJ	n=s|g=m|	2	mod	2	mod
+2	défenseur	défenseur	N	NC	n=s|g=m|	12	suj	12	suj
+3	de	de	P	P		2	dep	2	dep
+4	la	la	D	DET	n=s|g=f|	5	det	5	det
+5	démocratie	démocratie	N	NC	n=s|g=f|	3	obj.p	3	obj.p
+6	et	et	C	CC		3	coord	3	coord
+7	de	de	P	P		6	dep.coord	6	dep.coord
+8	la	la	D	DET	n=s|g=f|	9	det	9	det
+9	République	_	N	N	NC	7	obj.p	7	obj.p
+10	,	,	PONCT	PONCT		9	ponct	9	ponct
+11	il	il	CL	CLS	n=s|g=m|p=3|	12	suj	12	suj
+12	fit	faire	V	V	n=s|t=J|p=3|	0	root	0	root
+13	partie	partie	N	NC	n=s|g=f|	12	obj	12	obj
+14	du	de	P+D	P+D	n=s|g=m|	13	dep	13	dep
+15	Comité	_	N	N	NC	14	obj.p	14	obj.p
+16	Loyaliste	_	NPP	N	NPP	15	mod	15	mod
+17	lors_de	lors_de	P	P		12	mod	12	mod
+18	la	la	D	DET	n=s|g=f|	19	det	19	det
+19	Crise	_	NPP	N	NPP	17	obj.p	17	obj.p
+20	Séparatiste	_	NPP	N	NPP	19	mod	19	mod
+21	et	et	C	CC		12	coord	12	coord
+22	soutint	soutenir	V	V	n=s|t=J|p=3|	21	dep.coord	21	dep.coord
+23	le	le	D	DET	n=s|g=m|	24	det	24	det
+24	Chancelier	_	NPP	N	NPP	22	obj	22	obj
+25	Suprême	_	NPP	N	NPP	24	mod	24	mod
+26	Palpatine	_	NPP	N	NPP	24	mod	24	mod
+27	.	.	PONCT	PONCT		26	ponct	26	ponct
+
+# sentid: Bail_Organa_1205_1341
+# sentence-text: Il soutint également la motion du Sénateur Binks afin d'attribuer les pleins pouvoirs au Chancelier à la veille de la Guerre des Clones.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	2	suj	2	suj
+2	soutint	soutenir	V	V	n=s|t=J|p=3|	0	root	0	root
+3	également	_	ADV	ADV	_	2	mod	2	mod
+4	la	la	D	DET	n=s|g=f|	5	det	5	det
+5	motion	motion	N	NC	n=s|g=f|	2	obj	2	obj
+6	du	de	P+D	P+D	n=s|g=m|	5	dep	5	dep
+7	Sénateur	_	N	N	NC	6	obj.p	6	obj.p
+8	Binks	_	NPP	N	NPP	7	mod	7	mod
+9	afin_d'	afin_de	P	P		2	mod	2	mod
+10	attribuer	attribuer	VINF	VINF	t=W|	9	obj.p	9	obj.p
+11	les	les	D	DET	n=p|	13	det	13	det
+12	pleins	plein	A	ADJ	n=p|g=m|	13	mod	13	mod
+13	pouvoirs	pouvoir	N	NC	n=p|g=m|	10	obj	10	obj
+14	au	à	P+D	P+D	n=s|g=m|	10	a_obj	10	a_obj
+15	Chancelier	_	NPP	N	NPP	14	obj.p	14	obj.p
+16	à	à	P	P		10	mod	10	mod
+17	la	la	D	DET	n=s|g=f|	18	det	18	det
+18	veille	veille	N	NC	n=s|g=f|	16	obj.p	16	obj.p
+19	de	de	P	P		18	dep	18	dep
+20	la	la	D	DET	n=s|g=f|	21	det	21	det
+21	Guerre	_	N	N	NC	19	obj.p	19	obj.p
+22	des	de	P+D	P+D	n=p|	21	dep	21	dep
+23	Clones	_	NPP	N	NPP	22	obj.p	22	obj.p
+24	.	.	PONCT	PONCT		23	ponct	23	ponct
+
+# sentid: Bail_Organa_1342_1577
+# sentence-text: Néanmoins, il se rendit compte durant le conflit et grâce à l'aide de l'ex-chancellier Finis Valorum, que Palpatine était beaucoup moins bienveillant qu'il voulait bien le montrer et que ses méthodes laissaient pour le moins à désirer.
+1	Néanmoins	néanmoins	ADV	ADV		5	mod	5	mod
+2	,	,	PONCT	PONCT		1	ponct	1	ponct
+3	il	il	CL	CLS	n=s|g=m|p=3|	5	suj	5	suj
+4	se	se	CL	CLR	n=p|p=3|	5	aff	5	aff
+5	rendit	rendre	V	V	n=s|t=J|p=3|	0	root	0	root
+6	compte	compte	N	NC	n=s|g=m|	5	obj	5	obj
+7	durant	durant	P	P		5	mod	5	mod
+8	le	le	D	DET	n=s|g=m|	9	det	9	det
+9	conflit	conflit	N	NC	n=s|g=m|	7	obj.p	7	obj.p
+10	et	et	C	CC		5	coord	5	coord
+11	grâce_à	grâce_à	P	P		10	dep.coord	10	dep.coord
+12	l'	l'	D	DET	n=s|	13	det	13	det
+13	aide	aide	N	NC	n=s|	11	obj.p	11	obj.p
+14	de	de	P	P		13	dep	13	dep
+15	l'	l'	D	DET	n=s|	16	det	16	det
+16	ex-chancellier	_	N	N	NC	14	obj.p	14	obj.p
+17	Finis	_	NPP	N	NPP	16	mod	16	mod
+18	Valorum	_	NPP	N	NPP	16	mod	16	mod
+19	,	,	PONCT	PONCT		18	ponct	18	ponct
+20	que	que	PRO	PROREL		22	obj	22	obj
+21	Palpatine	_	NPP	N	NPP	22	suj	22	suj
+22	était	être	V	V	n=s|t=II|p=3|	10	dep.coord	10	dep.coord
+23	beaucoup	beaucoup	ADV	ADV		24	mod	24	mod
+24	moins	moins	ADV	ADV		25	mod	25	mod
+25	bienveillant	bienveillant	A	ADJ	n=s|g=m|	22	ats	22	ats
+26	qu'	que	C	CS		25	dep	25	dep
+27	il	il	CL	CLS	n=s|g=m|p=3|	28	suj	28	suj
+28	voulait	vouloir	V	V	n=s|t=II|p=3|	26	obj.cpl	26	obj.cpl
+29	bien	bien	ADV	ADV		28	mod	28	mod
+30	le	le	CL	CLO	n=s|g=m|p=3|	31	obj	31	obj
+31	montrer	montrer	VINF	VINF	t=W|	28	obj	28	obj
+32	et	et	C	CC		26	coord	26	coord
+33	que	que	C	CS		32	dep.coord	32	dep.coord
+34	ses	ses	D	DET	n=p|p=3|poss=s|	35	det	35	det
+35	méthodes	méthode	N	NC	n=p|g=f|	36	suj	36	suj
+36	laissaient	laisser	V	V	n=p|t=II|p=3|	33	obj.cpl	33	obj.cpl
+37	pour	pour	P	P		36	mod	36	mod
+38	le	le	D	DET	n=s|g=m|	39	det	39	det
+39	moins	moins	ADV	ADV		37	obj.p	37	obj.p
+40	à	à	P	P		36	obj	36	obj
+41	désirer	désirer	VINF	VINF	t=W|	40	obj.p	40	obj.p
+42	.	.	PONCT	PONCT		41	ponct	41	ponct
+
+# sentid: Bail_Organa_1578_1852
+# sentence-text: Sa conviction fut renforcée lorsque Palpatine le "menaça gentiment" (selon Organa lui-même) et encore plus lorsque Valorum mourut lors de l'explosion d'un cargo permettant au Chancelier à la fois d'éliminer cette menace et de faire passer une loi pour renforcer la sécurité.
+1	Sa	sa	D	DET	n=s|g=f|p=3|poss=s|	2	det	2	det
+2	conviction	conviction	N	NC	n=s|g=f|	4	suj	4	suj
+3	fut	être	V	V	n=s|t=J|p=3|	4	aux.pass	4	aux.pass
+4	renforcée	renforcer	VPP	VPP	n=s|g=f|t=K|	0	root	0	root
+5	lorsque	lorsque	C	CS		4	mod	4	mod
+6	Palpatine	_	NPP	N	NPP	0	_	0	_
+7	le	le	D	DET	n=s|g=m|	9	det	9	det
+8	"	"	PONCT	PONCT		7	ponct	7	ponct
+9	menaça	_	N	N	NC	6	mod	6	mod
+10	gentiment	_	N	N	NC	9	mod	9	mod
+11	"	"	PONCT	PONCT		10	ponct	10	ponct
+12	(	(	PONCT	PONCT		10	ponct	10	ponct
+13	selon	selon	P	P		9	dep	9	dep
+14	Organa	_	NPP	N	NPP	13	obj.p	13	obj.p
+15	lui-même	lui-même	PRO	PRO	n=s|g=m|p=3|	14	mod	14	mod
+16	)	)	PONCT	PONCT		15	ponct	15	ponct
+17	et_encore	et_encore	C	CC		13	coord	13	coord
+18	plus	plus	ADV	ADV		17	mod	17	mod
+19	lorsque	lorsque	C	CS		17	dep.coord	17	dep.coord
+20	Valorum	_	NPP	N	NPP	21	suj	21	suj
+21	mourut	mourir	V	V	n=s|t=J|p=3|	19	obj.cpl	19	obj.cpl
+22	lors_de	lors_de	P	P		21	mod	21	mod
+23	l'	l'	D	DET	n=s|	24	det	24	det
+24	explosion	explosion	N	NC	n=s|g=f|	22	obj.p	22	obj.p
+25	d'	de	P	P		24	dep	24	dep
+26	un	un	D	DET	n=s|g=m|	27	det	27	det
+27	cargo	cargo	N	NC	n=s|g=m|	25	obj.p	25	obj.p
+28	permettant	permettre	VPR	VPR	t=G|	27	mod	27	mod
+29	au	à	P+D	P+D	n=s|g=m|	28	a_obj	28	a_obj
+30	Chancelier	_	NPP	N	NPP	29	obj.p	29	obj.p
+31	à_la_fois	à_la_fois	ADV	ADV		28	mod	28	mod
+32	d'	de	P	P		28	obj	28	obj
+33	éliminer	éliminer	VINF	VINF	t=W|	32	obj.p	32	obj.p
+34	cette	cette	D	DET	n=s|g=f|	35	det	35	det
+35	menace	menace	N	NC	n=s|g=f|	33	obj	33	obj
+36	et	et	C	CC		32	coord	32	coord
+37	de	de	P	P		36	dep.coord	36	dep.coord
+38	faire	faire	VINF	VINF	t=W|	39	aux.caus	39	aux.caus
+39	passer	passer	VINF	VINF	t=W|	37	obj.p	37	obj.p
+40	une	une	D	DET	n=s|g=f|	41	det	41	det
+41	loi	loi	N	NC	n=s|g=f|	39	obj	39	obj
+42	pour	pour	P	P		39	mod	39	mod
+43	renforcer	renforcer	VINF	VINF	t=W|	42	obj.p	42	obj.p
+44	la	la	D	DET	n=s|g=f|	45	det	45	det
+45	sécurité	sécurité	N	NC	n=s|g=f|	43	obj	43	obj
+46	.	.	PONCT	PONCT		45	ponct	45	ponct
+
+# sentid: Bail_Organa_1853_2038
+# sentence-text: Lors du conflit, Organa se rapprocha des Jedi et de certains Sénateurs comme Fang Zar, Padmé Amidala et surtout Mon Mothma, la Sénatrice de Chandrila, future dirigeante de la rébellion.
+1	Lors_du	lors_de	P+D	P+D	n=s|g=m|	6	mod	6	mod
+2	conflit	conflit	N	NC	n=s|g=m|	1	obj.p	1	obj.p
+3	,	,	PONCT	PONCT		2	ponct	2	ponct
+4	Organa	_	NPP	N	NPP	6	suj	6	suj
+5	se	se	CL	CLR	n=p|p=3|	6	aff	6	aff
+6	rapprocha	rapprocher	V	V	n=s|t=J|p=3|	0	root	0	root
+7	des	de	P+D	P+D	n=p|	6	de_obj	6	de_obj
+8	Jedi	_	NPP	N	NPP	7	obj.p	7	obj.p
+9	et	et	C	CC		7	coord	7	coord
+10	de	de	P	P		9	dep.coord	9	dep.coord
+11	certains	certain	D	DET	n=p|g=m|	12	det	12	det
+12	Sénateurs	_	N	N	NC	10	obj.p	10	obj.p
+13	comme	comme	P	P		7	dep	7	dep
+14	Fang	_	NPP	N	NPP	13	obj.p	13	obj.p
+15	Zar	_	NPP	N	NPP	14	mod	14	mod
+16	,	,	PONCT	PONCT		15	ponct	15	ponct
+17	Padmé	_	NPP	N	NPP	14	coord	14	coord
+18	Amidala	_	NPP	N	NPP	17	mod	17	mod
+19	et	et	C	CC		17	coord	17	coord
+20	surtout	surtout	ADV	ADV		19	mod	19	mod
+21	Mon	_	NPP	N	NPP	19	dep.coord	19	dep.coord
+22	Mothma	_	NPP	N	NPP	21	mod	21	mod
+23	,	,	PONCT	PONCT		22	ponct	22	ponct
+24	la	la	D	DET	n=s|g=f|	25	det	25	det
+25	Sénatrice	_	NPP	N	NPP	19	dep.coord	19	dep.coord
+26	de	de	P	P		25	dep	25	dep
+27	Chandrila	_	NPP	N	NPP	26	obj.p	26	obj.p
+28	,	,	PONCT	PONCT		27	ponct	27	ponct
+29	future	futur	A	ADJ	n=s|g=f|	30	mod	30	mod
+30	dirigeante	dirigeant	N	NC	n=s|g=f|	25	mod	25	mod
+31	de	de	P	P		30	dep	30	dep
+32	la	la	D	DET	n=s|g=f|	33	det	33	det
+33	rébellion	rébellion	N	NC	n=s|g=f|	31	obj.p	31	obj.p
+34	.	.	PONCT	PONCT		33	ponct	33	ponct
+
+# sentid: Bail_Organa_2039_2150
+# sentence-text: Bail Organa accueillit Anakin Skywalker et Obi-Wan Kenobi, les deux héros Jedi, après la Bataille de Coruscant.
+1	Bail	bail	N	NC	n=s|g=m|	3	mod	3	mod
+2	Organa	_	NPP	N	NPP	3	suj	3	suj
+3	accueillit	accueillir	V	V	n=s|t=J|p=3|	0	root	0	root
+4	Anakin	Anakin	NPP	NPP	n=s|g=m|	3	ats	3	ats
+5	Skywalker	_	NPP	N	NPP	4	mod	4	mod
+6	et	et	C	CC		4	coord	4	coord
+7	Obi-Wan	_	NPP	N	NPP	6	dep.coord	6	dep.coord
+8	Kenobi	_	NPP	N	NPP	7	mod	7	mod
+9	,	,	PONCT	PONCT		8	ponct	8	ponct
+10	les	les	D	DET	n=p|	12	det	12	det
+11	deux	deux	A	ADJ	s=card|n=p|	12	mod	12	mod
+12	héros	héros	N	NC	g=m|	3	mod	3	mod
+13	Jedi	_	NPP	N	NPP	12	mod	12	mod
+14	,	,	PONCT	PONCT		13	ponct	13	ponct
+15	après	après	P	P		12	dep	12	dep
+16	la	la	D	DET	n=s|g=f|	17	det	17	det
+17	Bataille	_	NPP	N	NPP	15	obj.p	15	obj.p
+18	de	de	P	P		17	dep	17	dep
+19	Coruscant	_	NPP	N	NPP	18	obj.p	18	obj.p
+20	.	.	PONCT	PONCT		19	ponct	19	ponct
+
+# sentid: Bail_Organa_2151_2356
+# sentence-text: Il se trouvait toujours sur Coruscant lorsque l'Ordre 66 fut donné et il se rendit au Temple Jedi alors que les clones de la 501e légion le prenaient d'assaut sous le commandement de Dark Vador et de Appo.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	3	suj	3	suj
+2	se	se	CL	CLR	n=p|p=3|	3	aff	3	aff
+3	trouvait	trouver	V	V	n=s|t=II|p=3|	0	root	0	root
+4	toujours	toujours	ADV	ADV		3	mod	3	mod
+5	sur	sur	P	P		3	p_obj.o	3	p_obj.o
+6	Coruscant	_	NPP	N	NPP	5	obj.p	5	obj.p
+7	lorsque	lorsque	C	CS		3	mod	3	mod
+8	l'	l'	D	DET	n=s|	9	det	9	det
+9	Ordre	_	N	N	NC	12	suj	12	suj
+10	66	66	A	ADJ	s=card|n=p|	9	mod	9	mod
+11	fut	être	V	V	n=s|t=J|p=3|	12	aux.pass	12	aux.pass
+12	donné	donner	VPP	VPP	n=s|g=m|t=K|	7	obj.cpl	7	obj.cpl
+13	et	et	C	CC		3	coord	3	coord
+14	il	il	CL	CLS	n=s|g=m|p=3|	16	suj	16	suj
+15	se	se	CL	CLR	n=p|p=3|	16	aff	16	aff
+16	rendit	rendre	V	V	n=s|t=J|p=3|	13	dep.coord	13	dep.coord
+17	au	à	P+D	P+D	n=s|g=m|	16	a_obj	16	a_obj
+18	Temple	Temple	NPP	NPP	n=s|	17	obj.p	17	obj.p
+19	Jedi	_	NPP	N	NPP	18	mod	18	mod
+20	alors_que	alors_que	C	CS		16	mod	16	mod
+21	les	les	D	DET	n=p|	22	det	22	det
+22	clones	clone	N	NC	n=p|g=m|	28	suj	28	suj
+23	de	de	P	P		22	dep	22	dep
+24	la	la	D	DET	n=s|g=f|	26	det	26	det
+25	501e	_	A	ADJ	_	26	mod	26	mod
+26	légion	légion	N	NC	n=s|g=f|	23	obj.p	23	obj.p
+27	le	le	CL	CLO	n=s|g=m|p=3|	28	obj	28	obj
+28	prenaient	prendre	V	V	n=p|t=II|p=3|	20	obj.cpl	20	obj.cpl
+29	d'	de	P	P		28	mod	28	mod
+30	assaut	assaut	N	NC	n=s|g=m|	29	obj.p	29	obj.p
+31	sous	sous	P	P		28	mod	28	mod
+32	le	le	D	DET	n=s|g=m|	33	det	33	det
+33	commandement	commandement	N	NC	n=s|g=m|	31	obj.p	31	obj.p
+34	de	de	P	P		33	dep	33	dep
+35	Dark	_	NPP	N	NPP	34	obj.p	34	obj.p
+36	Vador	_	NPP	N	NPP	35	mod	35	mod
+37	et	et	C	CC		34	coord	34	coord
+38	de	de	P	P		37	dep.coord	37	dep.coord
+39	Appo	_	NPP	N	NPP	38	obj.p	38	obj.p
+40	.	.	PONCT	PONCT		39	ponct	39	ponct
+
+# sentid: Bail_Organa_2357_2439
+# sentence-text: Il assista en direct au meurtre de Zett Jukassa et parvint à s'enfuir in extremis.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	2	suj	2	suj
+2	assista	assister	V	V	n=s|t=J|p=3|	0	root	0	root
+3	en_direct	_	ADV	ADV	_	2	mod	2	mod
+4	au	à	P+D	P+D	n=s|g=m|	2	a_obj	2	a_obj
+5	meurtre	meurtre	N	NC	n=s|g=m|	4	obj.p	4	obj.p
+6	de	de	P	P		5	dep	5	dep
+7	Zett	_	NPP	N	NPP	6	obj.p	6	obj.p
+8	Jukassa	_	NPP	N	NPP	7	mod	7	mod
+9	et	et	C	CC		2	coord	2	coord
+10	parvint	parvenir	V	V	n=s|t=J|p=3|	9	dep.coord	9	dep.coord
+11	à	à	P	P		10	a_obj	10	a_obj
+12	s'	se	CL	CLR	p=3|	13	aff	13	aff
+13	enfuir	enfuir	VINF	VINF	t=W|	11	obj.p	11	obj.p
+14	in_extremis	in_extremis	ADV	ADV		13	mod	13	mod
+15	.	.	PONCT	PONCT		14	ponct	14	ponct
+
+# sentid: Bail_Organa_2440_2497
+# sentence-text: Seul son statut de sénateur lui sauva la vie à ce moment.
+1	Seul	seul	A	ADJ	n=s|g=m|	3	mod	3	mod
+2	son	son	D	DET	n=s|g=m|p=3|poss=s|	3	det	3	det
+3	statut	statut	N	NC	n=s|g=m|	7	suj	7	suj
+4	de	de	P	P		3	dep	3	dep
+5	sénateur	sénateur	N	NC	n=s|g=m|	4	obj.p	4	obj.p
+6	lui	lui	CL	CLO	n=s|p=3|	7	a_obj	7	a_obj
+7	sauva	sauver	V	V	n=s|t=J|p=3|	0	root	0	root
+8	la	la	D	DET	n=s|g=f|	9	det	9	det
+9	vie	vie	N	NC	n=s|g=f|	7	obj	7	obj
+10	à	à	P	P		7	mod	7	mod
+11	ce	ce	D	DET	n=s|g=m|	12	det	12	det
+12	moment	moment	N	NC	n=s|g=m|	10	obj.p	10	obj.p
+13	.	.	PONCT	PONCT		12	ponct	12	ponct
+
+# sentid: Bail_Organa_2498_2656
+# sentence-text: Il décida alors de partir à la recherche d'éventuels survivants Jedi pour leur porter secours et parvint à réunir Obi-Wan Kenobi et Yoda à bord du Tantive IV.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	2	suj	2	suj
+2	décida	décider	V	V	n=s|t=J|p=3|	0	root	0	root
+3	alors	alors	ADV	ADV		2	mod	2	mod
+4	de	de	P	P		2	obj	2	obj
+5	partir	partir	VINF	VINF	t=W|	4	obj.p	4	obj.p
+6	à	à	P	P		5	a_obj	5	a_obj
+7	la	la	D	DET	n=s|g=f|	8	det	8	det
+8	recherche	recherche	N	NC	n=s|g=f|	6	obj.p	6	obj.p
+9	d'	de	P	P		8	dep	8	dep
+10	éventuels	éventuel	A	ADJ	n=p|g=m|	11	mod	11	mod
+11	survivants	survivant	N	NC	n=p|g=m|	9	obj.p	9	obj.p
+12	Jedi	_	NPP	N	NPP	11	mod	11	mod
+13	pour	pour	P	P		5	mod	5	mod
+14	leur	leur	CL	CLO	n=p|p=3|	15	a_obj	15	a_obj
+15	porter	porter	VINF	VINF	t=W|	13	obj.p	13	obj.p
+16	secours	secours	N	NC	g=m|	15	obj	15	obj
+17	et	et	C	CC		2	coord	2	coord
+18	parvint	parvenir	V	V	n=s|t=J|p=3|	17	dep.coord	17	dep.coord
+19	à	à	P	P		18	a_obj	18	a_obj
+20	réunir	réunir	VINF	VINF	t=W|	19	obj.p	19	obj.p
+21	Obi-Wan	_	NPP	N	NPP	20	obj	20	obj
+22	Kenobi	_	NPP	N	NPP	21	mod	21	mod
+23	et	et	C	CC		21	coord	21	coord
+24	Yoda	_	NPP	N	NPP	23	dep.coord	23	dep.coord
+25	à	à	P	P		20	mod	20	mod
+26	bord	bord	N	NC	n=s|g=m|	25	obj.p	25	obj.p
+27	du	de	P+D	P+D	n=s|g=m|	26	dep	26	dep
+28	Tantive	_	NPP	N	NPP	27	obj.p	27	obj.p
+29	IV	_	NPP	N	NPP	28	mod	28	mod
+30	.	.	PONCT	PONCT		29	ponct	29	ponct
+
+# sentid: Bail_Organa_2657_2835
+# sentence-text: Il fut alors convoqué au Sénat pour une session extraordinaire où Palpatine annonça la fin de la République et le début de l'Empire ainsi que l'extermination des "traîtres" Jedi.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	4	suj	4	suj
+2	fut	être	V	V	n=s|t=J|p=3|	4	aux.pass	4	aux.pass
+3	alors	alors	ADV	ADV		4	mod	4	mod
+4	convoqué	convoquer	VPP	VPP	n=s|g=m|t=K|	0	root	0	root
+5	au	à	P+D	P+D	n=s|g=m|	4	mod	4	mod
+6	Sénat	_	NPP	N	NPP	5	obj.p	5	obj.p
+7	pour	pour	P	P		4	mod	4	mod
+8	une	une	D	DET	n=s|g=f|	9	det	9	det
+9	session	session	N	NC	n=s|g=f|	7	obj.p	7	obj.p
+10	extraordinaire	extraordinaire	A	ADJ	n=s|	9	mod	9	mod
+11	où	où	PRO	PROREL		13	mod	13	mod
+12	Palpatine	_	NPP	N	NPP	13	suj	13	suj
+13	annonça	annoncer	V	V	n=s|t=J|p=3|	9	mod.rel	9	mod.rel
+14	la	la	D	DET	n=s|g=f|	15	det	15	det
+15	fin	fin	N	NC	n=s|	13	obj	13	obj
+16	de	de	P	P		15	dep	15	dep
+17	la	la	D	DET	n=s|g=f|	18	det	18	det
+18	République	_	N	N	NC	16	obj.p	16	obj.p
+19	et	et	C	CC		15	coord	15	coord
+20	le	le	D	DET	n=s|g=m|	21	det	21	det
+21	début	début	N	NC	n=s|g=m|	19	dep.coord	19	dep.coord
+22	de	de	P	P		21	dep	21	dep
+23	l'	l'	D	DET	n=s|	24	det	24	det
+24	Empire	_	NPP	N	NPP	22	obj.p	22	obj.p
+25	ainsi_que	ainsi_que	C	CC		21	coord	21	coord
+26	l'	l'	D	DET	n=s|	27	det	27	det
+27	extermination	extermination	N	NC	n=s|g=f|	25	dep.coord	25	dep.coord
+28	des	de	P+D	P+D	n=p|	27	dep	27	dep
+29	"	"	PONCT	PONCT		28	ponct	28	ponct
+30	traîtres	traître	N	NC	n=p|g=m|	28	obj.p	28	obj.p
+31	"	"	PONCT	PONCT		30	ponct	30	ponct
+32	Jedi	_	NPP	N	NPP	30	mod	30	mod
+33	.	.	PONCT	PONCT		32	ponct	32	ponct
+
+# sentid: Bail_Organa_2836_3001
+# sentence-text: Il récupéra Yoda à la fin de son duel contre Palpatine et ils partirent alors sur Polis Massa où Obi-Wan les rejoignit après son propre affrontement avec Dark Vador.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	2	suj	2	suj
+2	récupéra	récupérer	V	V	n=s|t=J|p=3|	0	root	0	root
+3	Yoda	_	NPP	N	NPP	2	obj	2	obj
+4	à	à	P	P		2	mod	2	mod
+5	la	la	D	DET	n=s|g=f|	6	det	6	det
+6	fin	fin	N	NC	n=s|	4	obj.p	4	obj.p
+7	de	de	P	P		6	dep	6	dep
+8	son	son	D	DET	n=s|g=m|p=3|poss=s|	9	det	9	det
+9	duel	duel	N	NC	n=s|g=m|	7	obj.p	7	obj.p
+10	contre	contre	P	P		2	mod	2	mod
+11	Palpatine	_	NPP	N	NPP	10	obj.p	10	obj.p
+12	et	et	C	CC		2	coord	2	coord
+13	ils	ils	CL	CLS	n=p|g=m|p=3|	14	suj	14	suj
+14	partirent	partir	V	V	n=p|t=J|p=3|	12	dep.coord	12	dep.coord
+15	alors	alors	ADV	ADV		14	mod	14	mod
+16	sur	sur	P	P		14	p_obj.o	14	p_obj.o
+17	Polis	_	NPP	N	NPP	16	obj.p	16	obj.p
+18	Massa	_	NPP	N	NPP	17	mod	17	mod
+19	où	où	PRO	PROREL		22	mod	22	mod
+20	Obi-Wan	_	NPP	N	NPP	22	suj	22	suj
+21	les	les	CL	CLO	n=p|p=3|	22	obj	22	obj
+22	rejoignit	rejoindre	V	V	n=s|t=J|p=3|	17	mod.rel	17	mod.rel
+23	après	après	P	P		22	mod	22	mod
+24	son	son	D	DET	n=s|g=m|p=3|poss=s|	26	det	26	det
+25	propre	propre	A	ADJ	n=s|	26	mod	26	mod
+26	affrontement	affrontement	N	NC	n=s|g=m|	23	obj.p	23	obj.p
+27	avec	avec	P	P		26	dep	26	dep
+28	Dark	_	NPP	N	NPP	27	obj.p	27	obj.p
+29	Vador	_	NPP	N	NPP	28	mod	28	mod
+30	.	.	PONCT	PONCT		29	ponct	29	ponct
+
+# sentid: Bail_Organa_3002_3230
+# sentence-text: Il décida, après l'accouchement et la mort de Padmé Amidala, d'adopter sa fille Leia qu'il ramena alors sur Alderaan auprès de sa femme, Breha, en faisant d'abord un arrêt sur Naboo afin de rendre le corps de Padmé à sa famille.
+1	Il	il	CL	CLS	n=s|g=m|p=3|	2	suj	2	suj
+2	décida	décider	V	V	n=s|t=J|p=3|	0	root	0	root
+3	,	,	PONCT	PONCT		2	ponct	2	ponct
+4	après	après	P	P		2	mod	2	mod
+5	l'	l'	D	DET	n=s|	6	det	6	det
+6	accouchement	accouchement	N	NC	n=s|g=m|	4	obj.p	4	obj.p
+7	et	et	C	CC		6	coord	6	coord
+8	la	la	D	DET	n=s|g=f|	9	det	9	det
+9	mort	mort	N	NC	n=s|g=f|	7	dep.coord	7	dep.coord
+10	de	de	P	P		9	dep	9	dep
+11	Padmé	_	NPP	N	NPP	10	obj.p	10	obj.p
+12	Amidala	_	NPP	N	NPP	11	mod	11	mod
+13	,	,	PONCT	PONCT		12	ponct	12	ponct
+14	d'	de	P	P		2	obj	2	obj
+15	adopter	adopter	VINF	VINF	t=W|	14	obj.p	14	obj.p
+16	sa	sa	D	DET	n=s|g=f|p=3|poss=s|	17	det	17	det
+17	fille	fille	N	NC	n=s|g=f|	15	obj	15	obj
+18	Leia	Leia	NPP	NPP	n=s|g=f|	17	mod	17	mod
+19	qu'	que	PRO	PROREL		21	obj	21	obj
+20	il	il	CL	CLS	n=s|g=m|p=3|	21	suj	21	suj
+21	ramena	ramener	V	V	n=s|t=J|p=3|	17	mod.rel	17	mod.rel
+22	alors	alors	ADV	ADV		21	mod	21	mod
+23	sur	sur	P	P		21	p_obj.o	21	p_obj.o
+24	Alderaan	_	NPP	N	NPP	23	obj.p	23	obj.p
+25	auprès_de	auprès_de	P	P		21	mod	21	mod
+26	sa	sa	D	DET	n=s|g=f|p=3|poss=s|	27	det	27	det
+27	femme	femme	N	NC	n=s|g=f|	25	obj.p	25	obj.p
+28	,	,	PONCT	PONCT		27	ponct	27	ponct
+29	Breha	_	NPP	N	NPP	27	mod	27	mod
+30	,	,	PONCT	PONCT		29	ponct	29	ponct
+31	en	en	P	P		21	mod	21	mod
+32	faisant	faire	VPR	VPR	t=G|	31	obj.p	31	obj.p
+33	d'abord	d'abord	ADV	ADV		32	mod	32	mod
+34	un	un	D	DET	n=s|g=m|	35	det	35	det
+35	arrêt	arrêt	N	NC	n=s|g=m|	32	obj	32	obj
+36	sur	sur	P	P		35	dep	35	dep
+37	Naboo	_	NPP	N	NPP	36	obj.p	36	obj.p
+38	afin_de	afin_de	P	P		32	mod	32	mod
+39	rendre	rendre	VINF	VINF	t=W|	38	obj.p	38	obj.p
+40	le	le	D	DET	n=s|g=m|	41	det	41	det
+41	corps	corps	N	NC	g=m|	39	obj	39	obj
+42	de	de	P	P		41	dep	41	dep
+43	Padmé	_	NPP	N	NPP	42	obj.p	42	obj.p
+44	à	à	P	P		39	a_obj	39	a_obj
+45	sa	sa	D	DET	n=s|g=f|p=3|poss=s|	46	det	46	det
+46	famille	famille	N	NC	n=s|g=f|	44	obj.p	44	obj.p
+47	.	.	PONCT	PONCT		46	ponct	46	ponct
+
+# sentid: Bail_Organa_3231_3279
+# sentence-text: Le rôle de Bail Organa est joué par Jimmy Smits.
+1	Le	le	D	DET	n=s|g=m|	2	det	2	det
+2	rôle	rôle	N	NC	n=s|g=m|	7	suj	7	suj
+3	de	de	P	P		2	dep	2	dep
+4	Bail	_	N	N	NC	3	obj.p	3	obj.p
+5	Organa	_	NPP	N	NPP	4	mod	4	mod
+6	est	être	V	V	n=s|t=P|p=3|	7	aux.pass	7	aux.pass
+7	joué	jouer	VPP	VPP	n=s|g=m|t=K|	0	root	0	root
+8	par	par	P	P		7	p_obj.o	7	p_obj.o
+9	Jimmy	Jimmy	NPP	NPP	n=s|g=m|	8	obj.p	8	obj.p
+10	Smits	_	NPP	N	NPP	9	mod	9	mod
+11	.	.	PONCT	PONCT		10	ponct	10	ponct
+

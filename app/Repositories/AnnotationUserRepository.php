@@ -8,8 +8,10 @@ use App\Models\AnnotationInProgress;
 use App\Models\Sentence;
 use App\Models\Tutorial;
 use App\Models\Stat;
-use App\Models\Source;
-use DB;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Repositories\BaseRepository;
+use App\Events\BroadCastNewAnnotation;
+use DB, Event;
 
 class AnnotationUserRepository extends BaseRepository
 {
@@ -21,7 +23,7 @@ class AnnotationUserRepository extends BaseRepository
 	 * @param  App\Models\Annotation $annotation
 	 * @param  App\Models\Tutorial $tutorial
 	 * @param  App\Models\Stat $stat
-	 * @param  App\Models\Source $source
+	 * @param  Gwaps4nlp\Models\Source $source
 	 * @return void
 	 */
 	public function __construct(
@@ -52,6 +54,7 @@ class AnnotationUserRepository extends BaseRepository
 	 */
 	public function save($user, $annotation, $user_response, $relation, $save=true)
 	{
+
 		if($annotation->relation->type=='trouverDependant'){
 			$governor_position = $annotation->focus;
 			$word_position = $user_response;
@@ -97,7 +100,6 @@ class AnnotationUserRepository extends BaseRepository
 		$relation_id=null,
 		$save=true)
 	{
-		
 
 		if($existing_annotation = Annotation::where(array(
 			'word_position'=>$word_position,
@@ -152,6 +154,105 @@ class AnnotationUserRepository extends BaseRepository
 		$this->model->source_id = (isset($annotation))? $annotation->source_id : $annotation_played->source_id;
 		if($save)
 			return $this->model->save();
+	}
+	
+	/**
+	 * Save an answer in training mode.
+	 *
+	 * @return void
+	 */
+	public function saveAnnotationTraining (
+		$user, 
+		$annotation,
+		$user_response, 
+		$relation_id=null,
+		$save=true)
+	{
+
+
+		$source_training_id = Source::getTraining()->id;
+		
+		if($annotation->relation->type=='trouverDependant'){
+			$governor_position = $annotation->focus;
+			$word_position = $user_response;
+		} else {
+			$governor_position = $user_response;
+			$word_position = $annotation->focus;
+		}
+
+		$user_annotation = $this->model->firstOrCreate(
+			array(
+				'annotation_id'=>$annotation->id,
+				'relation_id'=> $annotation->relation_id,
+				'sentence_id'=>$annotation->sentence_id,
+				'user_id'=>$user->id,
+				'source_id'=>$source_training_id,
+			)
+		);
+
+		$user_annotation->word_position = $word_position;
+		$user_annotation->governor_position = $governor_position;
+		$user_annotation->save();
+
+	}	
+	/**
+	 * Save an answer in training mode.
+	 *
+	 * @return void
+	 */
+	public function saveAnnotationExpert (
+		$user, 
+		$annotation_played,
+		$user_response, 
+		$relation_id,
+		$save=true)
+	{
+
+
+		$source_expert_id = Source::getExpert()->id;
+
+		if($annotation_played->relation->type=='trouverDependant'){
+			$governor_position = $annotation_played->focus;
+			$word_position = $user_response;
+		} else {
+			$governor_position = $user_response;
+			$word_position = $annotation_played->focus;
+		}
+
+		$annotation = Annotation::where(array(
+			'word_position'=>$word_position,
+			'governor_position'=>$governor_position,
+			'relation_id'=>$relation_id,
+			'sentence_id'=>$annotation_played->sentence_id
+			))->first();
+
+		if(!$annotation){
+			$annotation = Annotation::create(
+				array(
+					'word_position'=>$word_position,
+					'governor_position'=>$governor_position,					
+					'relation_id'=> $annotation_played->relation_id,
+					'sentence_id'=>$annotation_played->sentence_id,
+					'corpus_id'=>$annotation_played->corpus_id,
+					'source_id'=>$source_expert_id,
+				)
+			);
+		}
+
+		$user_annotation = $this->model->firstOrCreate(
+			array(
+				'annotation_id'=>$annotation_played->id,
+				'answer_id'=>$annotation->id,
+				'relation_id'=> $annotation->relation_id,
+				'sentence_id'=>$annotation->sentence_id,
+				'source_id'=>$source_expert_id,
+			)
+		);
+		$user_annotation->user_id = $user->id;
+		$user_annotation->word_position = $word_position;
+		$user_annotation->governor_position = $governor_position;
+		$user_annotation->save();
+
 	}
 
 	/**
@@ -227,6 +328,7 @@ class AnnotationUserRepository extends BaseRepository
 			}
 			
 		}
+		if($save)
 		return $this->model->save();
 
 	}
@@ -318,6 +420,33 @@ class AnnotationUserRepository extends BaseRepository
 	 * @return Array
 	 */
 	public function leadersByPeriode($periode=null, $challenge=null,$take=10)
+	{
+		$list = $this->model->join('users','users.id','=','annotation_users.user_id')
+			->join('annotations','annotations.id','=','annotation_users.annotation_id')
+			->select('username','users.id as user_id')
+			->selectRaw('count(*) as score')
+			->whereNull('users.deleted_at')
+			->groupBy('user_id') 
+			->orderBy('score','desc');
+			
+		if($challenge){
+			$corpora_ids = array_merge([$challenge->corpus_id], $challenge->corpus->subcorpora->pluck('id')->toArray());
+			$list = $list->whereIn('annotations.corpus_id', $corpora_ids)
+				->whereDate('annotation_users.created_at','>=',$challenge->start_date)
+				->whereDate('annotation_users.created_at','<=',$challenge->end_date);
+		}
+		
+		if($periode)
+			$list = $list->whereRaw("annotation_users.created_at>=DATE_SUB(NOW(), interval 1 $periode )");
+
+		return $list->paginate($take);
+	}	
+	/**
+	 * Return the leaders for a given period.
+	 *
+	 * @return Array
+	 */
+	public function leadersByPeriodeOld($periode=null, $challenge=null,$take=10)
 	{
 		$list = $this->model->join('users','users.id','=','annotation_users.user_id')
 			->join('annotations','annotations.id','=','annotation_users.annotation_id')
@@ -610,11 +739,30 @@ class AnnotationUserRepository extends BaseRepository
 	public function countByWeek($relation_id=null)
 	{
 		$list = $this->model
-			->selectRaw('YEARWEEK(created_at) as week')
+			->selectRaw('YEARWEEK(created_at) as period')
 			->selectRaw('count(*) as count')
 			->where('user_id','!=',0)
 			->groupBy(DB::Raw('YEARWEEK(created_at)'))
-			->orderBy('week','asc');
+			->orderBy('period','asc');
+
+		if($relation_id)
+			$list->where('relation_id','=',$relation_id);			
+			
+		return $list->get();
+	}
+	/**
+	 * 
+	 *
+	 * @return Annotation
+	 */
+	public function countByMonth($relation_id=null)
+	{
+		$list = $this->model
+			->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as period')
+			->selectRaw('count(*) as count')
+			->where('user_id','!=',0)
+			->groupBy(DB::Raw('DATE_FORMAT(created_at, "%Y-%m")'))
+			->orderBy('period','asc');
 
 		if($relation_id)
 			$list->where('relation_id','=',$relation_id);			
@@ -627,11 +775,11 @@ class AnnotationUserRepository extends BaseRepository
 	 *
 	 * @return int
 	 */
-	public function countByCorpus($corpus_id)
+	public function countByCorpus($corpus)
 	{
+		$corpora_ids = array_merge([$corpus->id], $corpus->subcorpora->pluck('id')->toArray());
 		$count = $this->model->join('annotations','annotations.id','=','annotation_users.annotation_id')->where('user_id','!=',0);
-		if($corpus_id)
-			$count->where('corpus_id','=',$corpus_id);
+		$count->whereIn('corpus_id',$corpora_ids);
 		return $count->count();
 	}
 

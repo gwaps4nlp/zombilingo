@@ -13,7 +13,7 @@ return [
 	'annotations' => 'Annotations',
 	'do-a-party-with' => 'Play the phenomenon',
 	'do-the-training-with' => 'Train on the phenomenon',
-	'next-sentence' => "Move on to the next sentence",
+	'next-sentence' => "Next sentence",
 	'no-more-attempt' => "You've made too many mistakes on this phenomenon. To play again with it, you'll have to retrain.",
 	'you-found-object' => "You've found :name in the heads you've eaten!",
 	'bad-answer' => "You selected :answer and you had to find :response",

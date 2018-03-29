@@ -51,7 +51,7 @@ class PageController extends Controller
     }
 
     /**
-     * Update a the description of a page.
+     * Update the description of a page.
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
@@ -70,7 +70,6 @@ class PageController extends Controller
 		$page->title=$request->title;
 		$page->meta_description=$request->meta_description;
 		$page->save();
-		Cache::forget($trophy->key);
         return $this->getIndex();
     }
 

@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\News;
 use App\Models\User;
 use App\Repositories\ScoreRepository;
 use App\Repositories\AnnotationUserRepository;

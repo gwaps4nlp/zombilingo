@@ -1,5 +1,5 @@
 <?php
-use App\Models\ConstantGame;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Services\Html\ModalBuilder as Modal;
 ?>
 <!DOCTYPE html>
@@ -27,7 +27,7 @@ use App\Services\Html\ModalBuilder as Modal;
 		</script>
 		{!! Html::script('js/jQuery.js') !!}
 		{!! Html::script('js/jQueryUI.js') !!}
-		{!! Html::script(route('asset',['asset'=>'js/master.js'])) !!}
+		{!! Html::script('js/master.js') !!}
 		{!! Html::script('js/bootstrap.min.js') !!}
 		{!! Html::script('js/jquery.cookie.js') !!}
 

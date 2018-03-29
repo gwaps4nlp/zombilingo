@@ -2,13 +2,10 @@
 
 @section('style')
 <style type="text/css">
-	.glyphicon-ban-circle.visible {
+	.fa-ban.visible {
 		color:red;
 	}
-	.glyphicon-minus-sign.visible {
-		color:red;
-	}
-	.glyphicon-ok-sign.visible {
+	.fa-check-circle.visible {
 		color:green;
 	}
 	.disabled {
@@ -18,7 +15,7 @@
 		font-weight: 900;
 		font-style: italic;
 	}
-	.glyphicon:empty{
+	.fa:empty{
 		cursor:pointer;
 		font-size:17px;
 	}
@@ -47,11 +44,11 @@
 			</td>			
 			<td>
 				@if($negative_annotation->visible)
-				<span class="glyphicon glyphicon-ok-sign visible" id="{{ $negative_annotation->id }}_1"></span>
-				<span class="glyphicon glyphicon-ban-circle disabled" id="{{ $negative_annotation->id }}_0"></span>
+				<i class="fa fa-check-circle visible" id="{{ $negative_annotation->id }}_1"></i>
+				<i class="fa fa-ban disabled" id="{{ $negative_annotation->id }}_0"></i>
 				@else
-				<span class="glyphicon glyphicon-ok-sign disabled" id="{{ $negative_annotation->id }}_1"></span>
-				<span class="glyphicon glyphicon-ban-circle visible" id="{{ $negative_annotation->id }}_0"></span>
+				<i class="fa fa-check-circle disabled" id="{{ $negative_annotation->id }}_1"></i>
+				<i class="fa fa-ban visible" id="{{ $negative_annotation->id }}_0"></i>
 				@endif
 			</td>
 		</tr>
@@ -84,7 +81,7 @@ $(document).ready(function(){
     	var sentence = displaySentence($(this).html(), $(this).attr('focus'));
         $(this).html(sentence);
     });
-    $('.glyphicon').on('click', function(){
+    $('.fa').on('click', function(){
     	
     	var params = $(this).attr('id').split("_");
         $.ajax({url: base_url + "negative-annotation/change-visibility", data: {

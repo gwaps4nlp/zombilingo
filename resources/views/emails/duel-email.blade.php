@@ -9,7 +9,7 @@
     @foreach($new_duels as $duel)
     <p style="color:#505050;font-size:15px;font-weight:normal;line-height:24px;margin:0">
         {{ $duel->challenger($user)->username }} vient de te défier en duel !<br/>
-        <a class="btn btn-success" href="{{ config('app.url') }}/duel/index?tab=in_progress">Jouer maintenant</a><br/>
+        <a class="btn btn-success" href="{{ config('app.url') }}/duel?tab=in_progress">Jouer maintenant</a><br/>
     </p>    
     @endforeach
     <br/>

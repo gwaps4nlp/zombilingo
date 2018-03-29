@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests\CorpusExportRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Relation;
 use App\Models\TutorialAnnotation;
@@ -17,16 +15,7 @@ use Response;
 
 class TutorialAnnotationController extends Controller
 {
-	/**
-     * Create a new TutorialAnnotationController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('admin');
-    }
-	
+
     /**
      * Show a listing of the tutorial items.
      *

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\NegativeAnnotation;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class NegativeAnnotationRepository extends BaseRepository
 {

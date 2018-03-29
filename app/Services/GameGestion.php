@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Gwaps4nlp\Game;
 use Illuminate\Http\Request;
 use App\Models\AnnotationInProgress;
 use App\Repositories\RelationRepository;
@@ -10,14 +11,20 @@ use App\Repositories\AnnotationUserRepository;
 use App\Repositories\ScoreRepository;
 use App\Repositories\ObjectRepository;
 use App\Repositories\CorpusRepository;
-use App\Models\Source;
-use App\Models\ConstantGame;
+use App\Repositories\ChallengeRepository;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Models\ConstantGame;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
 use App\Models\Object;
-use App\Exceptions\GameException;
+use App\Models\Corpus;
+use Gwaps4nlp\Exceptions\GameException;
 use Response, View, App;
+use App\Events\BroadCastNewAnnotation;
+use App\Events\ScoreUpdated;
+use Gwaps4nlp\GameGestionInterface;
+use Event, Auth;
 
 class GameGestion extends Game implements GameGestionInterface
 {
@@ -31,12 +38,12 @@ class GameGestion extends Game implements GameGestionInterface
 	public $effect;
 	
 	public $relation;
-	
+
 	public $mode = 'game';
 
 	protected $spell;
 
-	protected $fillable = ['turn', 'nb_turns', 'gain', 'type_gain', 'spell','in_progress','relation_id','current_relation_id','annotation_id','money_spent','money_earned','points_earned','effect','nb_successes','reference_again','next_level','corpus_id','trophies','bonuses','already_spell','already_played'];
+	protected $fillable = ['turn', 'nb_turns', 'gain', 'type_gain', 'spell','in_progress','relation_id','current_relation_id','annotation_id','money_spent','money_earned','points_earned','effect','nb_successes','reference_again','next_level','corpus_id','trophies','bonuses','already_spell','already_played','default_corpus_id','challenge_id'];
 
 	protected $visible = ['turn', 'nb_turns', 'gain', 'spell', 'user','annotation','loot','attempts','html','neighbors','trophy','bonus','next_level'];
 	
@@ -48,7 +55,8 @@ class GameGestion extends Game implements GameGestionInterface
     protected $appends = ['neighbors'];
 	
 	public function __construct(Request $request, 
-		AnnotationRepository $annotations, 
+		AnnotationRepository $annotations,
+		ChallengeRepository $challenges,
 		AnnotationUserRepository $annotation_users, 
 		ScoreRepository $scores, 
 		RelationRepository $relations,
@@ -60,32 +68,18 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->scores=$scores;
 		$this->relations_repo=$relations;
 		$this->annotations = $annotations;
+		$this->challenges = $challenges;
 		$this->annotation_users = $annotation_users;
 		$this->corpora = $corpora;
 		$this->annotation = null;
 		$this->html = null;
 		$this->loot = null;
-		$this->user = auth()->user();
 
-		if($this->relation_id){
-			$this->relation=Relation::findOrFail($this->relation_id);
-		}
-		if($this->corpus_id){
-			$this->corpus = $this->corpora->getById($this->corpus_id);
-			$this->annotations->setCorpus($this->corpus);
-			$this->relations_repo->setCorpus($this->corpus);
-		}
-		if($this->current_relation_id && $this->user){
-			$this->current_relation=$this->relations_repo->getByUser($this->user,$this->current_relation_id);
-			if($this->annotation_id){
-				$this->annotation=$this->annotations->get($this->annotation_id,$this->current_relation);
-			}
-		}
-
+		$this->user = Auth::user();
 	}
 	
-	public function begin($relation_id){
-        
+	public function begin(Request $request, $relation_id){
+        $this->loadSession($request);
 		$this->loadRelation($relation_id);
 
 		$this->set('annotation_id',null);
@@ -104,7 +98,13 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->set('next_level',0);
 		$this->set('mwe',0);
 		$this->set('already_spell',false);
+		$challenge=$this->challenges->getOngoing();
+		if($challenge && $challenge->corpus_id == $this->corpus_id)
+			$this->set('challenge_id',$challenge->id);
+		else
+			$this->set('challenge_id',null);
 		$this->set('nb_turns',ConstantGame::get("turns-".$this->mode));
+		$this->set('default_corpus_id',ConstantGame::get("default-corpus"));
 
 		if($inProgress = $this->getInProgressCurrentRelation()){
 			$this->set('annotation_id',$inProgress->annotation_id );
@@ -115,9 +115,9 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
 	public function loadRelation($relation_id){
-		$this->relation = $this->relations_repo->getByUser($this->user,$relation_id);
+		$this->relation = $this->relations_repo->getByUser(Auth::user(),$relation_id);
 		if(!in_array($this->relation->type,['trouverTete','trouverDependant']))
-			throw new GameException("1".trans('game.unknown-playing-mode'));
+			throw new GameException(trans('game.unknown-playing-mode'));
 		if( $this->relation->level_id > $this->user->level_id )
 			throw new GameException(trans('game.you-havent-the-required-level'));
 		if( $this->relation->tutorial < ConstantGame::get("turns-game") )
@@ -128,9 +128,33 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->set('current_relation_id',$this->relation->id);
 		$this->set('relation_id',$this->relation->id);
 	}
+
+	public function loadSession(Request $request){
+		parent::loadSession($request);
+
+		if($this->relation_id){
+			$this->relation=Relation::findOrFail($this->relation_id);
+		}
+
+		if($this->corpus_id){
+            $this->corpus = Corpus::find($this->corpus_id);
+            if($this->corpus){
+                $this->annotations->setCorpus($this->corpus);
+                $this->relations_repo->setCorpus($this->corpus);
+            }
+		}
+
+		if($this->current_relation_id && $this->user){
+			$this->current_relation=$this->relations_repo->getByUser($this->user,$this->current_relation_id);
+			if($this->annotation_id){
+				$this->annotation=$this->annotations->get($this->annotation_id,$this->current_relation);
+			}
+		}
+
+	}
 	
 	public function loadContent(){
-
+		
 		if($this->annotation_id){
 			$this->annotation=$this->annotations->get($this->annotation_id,$this->current_relation,$this->user);
 		}
@@ -138,8 +162,9 @@ class GameGestion extends Game implements GameGestionInterface
 		if(!$this->annotation){
 
 			if($this->reference_again || rand(0,100)>=$this->user->stat($this->current_relation->id)->percent){
+				
 				if(rand(0,100)<=ConstantGame::get("proba-negative-item-game"))
-					$this->annotation = $this->annotations->getRandomNegative($this->current_relation,$this->user);
+					$this->annotation = $this->annotations->getRandomNegativeReference($this->current_relation,$this->user);
 
 				if(!$this->annotation)
 					$this->annotation = $this->annotations->getRandomReference($this->current_relation,$this->user);
@@ -152,8 +177,6 @@ class GameGestion extends Game implements GameGestionInterface
 					$this->annotations->setCorpus(null);
 					$this->annotation = $this->annotations->getRandomReference($this->current_relation);
 				}
-
-
 
 			} else 
 				$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation,$this->user);
@@ -215,24 +238,25 @@ class GameGestion extends Game implements GameGestionInterface
 
 	}
 
-	public function jsonAnswer(){
-
+	public function jsonAnswer(Request $request){
+		$this->loadSession($request);
 		$this->processAnswer();
-
+		$nb_messages = ($this->annotation->discussion)? $this->annotation->discussion->messages()->count():0;
         $reponse = array('answer' => $this->request->input('word_position'),
-                 'expected_answers' => $this->annotation->expected_answers,
-                 'reference' => ($this->annotation->source_id==Source::getReference()->id)?1:0,
-                 'nb_turns' => $this->nb_turns,
-                 'nb_messages' => $this->annotation->messages()->count(),
-                 'turn' => $this->turn,
-                 'points_earned' => $this->points_earned,
-                 'gain' => $this->gain,
-                 'level_user' => $this->user->level->id,
-                 'image_level'=> $this->user->level->image,
-				 'loot'=> $this->loot,
-				 'trophy'=> $this->trophy,
-				 'bonus'=> $this->bonus,
-				 'errors'=> $this->errors
+                'expected_answers' => $this->annotation->expected_answers,
+                'reference' => ($this->annotation->source_id==Source::getReference()->id)?1:0,
+                'nb_turns' => $this->nb_turns,
+                'turn' => $this->turn,
+                'points_earned' => $this->points_earned,
+                'gain' => $this->gain,
+                'level_user' => $this->user->level->id,
+                'image_level'=> $this->user->level->image,
+				'loot'=> $this->loot,
+				'trophy'=> $this->trophy,
+				'bonus'=> $this->bonus,
+				'errors'=> $this->errors,
+				'nb_messages' => $nb_messages,
+				'annotation' => $this->annotation,
 				 );
 
         return Response::json($reponse);
@@ -265,7 +289,10 @@ class GameGestion extends Game implements GameGestionInterface
 	
 	public function getInProgress(){
 		
-		return AnnotationInProgress::where('user_id','=',$this->user->id)->get();
+		return AnnotationInProgress::join('corpuses','corpuses.id','=','annotation_in_progress.corpus_id')
+			->where('user_id','=',$this->user->id)
+			->where('corpuses.playable','=',1)
+			->get();
 		
 	}
 
@@ -374,8 +401,12 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
 	public function processAnswer(){
-        
+
 		$this->annotation_users->save($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation);
+		
+		$this->corpus->increment('number_answers',1);
+		if($this->corpus_id == $this->default_corpus_id)
+			Event::fire(new BroadCastNewAnnotation($this->corpus->number_answers));
 		
 		$score_multiplier = $this->annotation_users->score_multiplier;
 		
@@ -385,6 +416,8 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->gain*=$score_multiplier;
 
 		$this->gain = intval($this->gain);
+
+		Event::fire(new ScoreUpdated($this->user, $this->gain,1,$this->challenge_id));
 
 		if($this->annotation_users->error)
 			$this->set('reference_again',1);
@@ -420,7 +453,7 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
 	public function inventaire(){
-		return $this->user->inventaire()->get();
+		return Auth::user()->inventaire()->get();
 	}
 	
 	public function getNeighborsAttribute(){

@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\AnnotationRepository;
-use App\Repositories\UserRepository;
+use Gwaps4nlp\Repositories\UserRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\CorpusRepository;
 use App\Models\Corpus;
@@ -36,13 +36,13 @@ class AnnotationUserController extends Controller
      * @param  App\Repositories\UserRepository $user_repo     
      * @return Illuminate\Http\Response
      */
-    public function getIndexAdmin(Request $request, AnnotationRepository $annotations, RelationRepository $relation, CorpusRepository $corpuses, UserRepository $user_repo) 
+    public function getAdminIndex(Request $request, AnnotationRepository $annotations, RelationRepository $relation, CorpusRepository $corpuses, UserRepository $user_repo) 
     {
         $relations = $relation->getListPlayable();
         $corpora = $corpuses->getListPreAnnotated();
         $users = $user_repo->getList();
 
-        $params = Array('relation_id'=>null,'corpus_id'=>null,'user_id'=>null,'undecided'=>null,'sortby'=>'score','order'=>'desc');
+        $params = Array('relation_id'=>null,'corpus_id'=>null,'user_id'=>null,'undecided'=>null,'playable'=>null,'sortby'=>'score','order'=>'desc');
         
         if($request->has('undecided')&&$request->input('undecided')==1){
             $params['undecided']=1;

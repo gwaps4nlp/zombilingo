@@ -1,0 +1,74 @@
+#navbar-top {
+	border-bottom:1px solid black;
+	background-image: linear-gradient(rgb(255, 255, 255), rgba(252, 252, 252, 0.8));
+	background-color: rgba(255, 255, 255, 0.5);
+	min-height: 70px;
+}
+.navbar-toggler {
+	display: block!important;
+}
+
+.dropdown:hover > ul.dropdown-menu {
+    display: block;    
+}
+.dropdown-menu > li > a {
+	padding-left: 0.2rem;
+}
+
+ul.dropdown-menu > li > a {
+	display: block;
+}
+ul.dropdown-menu > li > a:hover {
+	color: #ffffff;
+	text-decoration: none;
+	background-color: #0e7f3c;
+}
+.topbar-right {
+	color: #0e7f3c;
+}
+.topbar-username {
+	float:left;
+	cursor: pointer;
+	padding-top:12px;
+	padding-bottom:4px;
+	min-width: 130px;
+}
+.rounded-avatar {
+    overflow:hidden;
+    -webkit-border-radius:20px;
+    -moz-border-radius:20px;
+    border-radius:20px;
+    width:40px;
+    height:40px;
+    float:left;
+    margin-top:-10px;
+    margin-right:8px;
+}
+.rounded-avatar img {
+    width:40px;
+    height:40px;
+}
+
+.rounded-btn {
+	line-height: 20px;
+	font-weight: 700;
+	display: block;
+	color: $rounded-btn-color !important;
+	margin: 0 2px;
+	font-size: 15px;
+	padding: 8px 15px !important;
+	border-bottom-left-radius: 18px;
+	border-bottom-right-radius: 18px;
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
+	background-color: $rounded-btn-bg-color !important;
+}
+li:hover > a.rounded-btn, a.rounded-btn:hover, a.rounded-btn:target, a.rounded-btn:active, li.active a.rounded-btn {
+	color: $rounded-btn-color-hover !important;
+	background-color: $rounded-btn-bg-color-hover !important;
+	text-decoration: none;
+}
+
+body {
+	padding-top: 70px;
+}

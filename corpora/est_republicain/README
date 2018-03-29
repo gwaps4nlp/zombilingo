@@ -1,0 +1,32 @@
+Full corpus:  Est Républicain (French Newspaper)
+Web:          http://www.cnrtl.fr/corpus/estrepublicain/
+Licence:      CC BY-NC-SA 2.0 FR [http://creativecommons.org/licenses/by-nc-sa/2.0/fr/]
+
+File:
+ - 2003-02-24.xml: one of the file in Annee2003.tgz available on the CNRTL website
+
+Production of article files:
+ - command: [../tools/ER-filter.py 2003-02-24]
+   produces 280 files "2003-02-24_xxxx.txt" with correponding to raw text of articles in 2003-02-24.xml
+
+Parsing prerequisite:
+ - compile run_talismane.ml [make -C ..tools]
+ - put the file "talismane-fr-1.8.5b-allDeps.jar" in "../tools" (or a link to the file)
+
+Parsing of one file "2003-02-24_xxxx.txt":
+ - command: [../tools/run_talismane 2003-02-24_xxxx]
+
+Parsing of all file (use make and do not parse if "2003-02-24_xxxx.conll" is more recent than "2003-02-24_xxxx.txt")
+ - [make]
+
+Parsing of all file on the cluster
+ - [oarsub -l nodes=1,walltime=1:00:00 "cd /data1/calligramme/zombilingo/corpora/est_republicain && make"]
+
+===========================================================================
+Files in the folder:
+ - 2003-02-24.xml: see above
+ - 2003-02-24_????.txt: articles in raw text
+ - 2003-02-24-T185b.conll: the preannotation obtained with the process above
+ - Makefile
+ - README
+ 

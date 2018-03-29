@@ -1,12 +1,14 @@
-var $blocJeu;
+var $blockGame;
 var inventaireAffiche = false;
 var special = false;
 var inGame = false;
 var idAnnotation = 0;
 var annotation_id = 0;
+var sentence_id = 0;
 var word_position = 0;
-var pourcent = 0;
+var progression = 0;
 var turn = 0;
+var spell = null;
 var essayer = false;
 var mode,relation_id,object_id;
 var pending_request=false;
@@ -19,25 +21,23 @@ $(document).ajaxError(function(jqXHR, textStatus, errorThrown) {
         alert(textStatus.responseJSON.error);
         window.location.href = base_url + 'auth/login';         
     }
-
 }); 
 
 $(document).ready(function(){
 
-    $blocJeu = $('#blocJeu');
-
-    $.ajaxSetup({
-        global:true,
-        data: {
-            user_token: $.cookie('user_cookie')
-        }
-    });
+    $blockGame = $('#block-game');
 
     $( window ).resize(function() {
-        resizeProgressBar();       
+        console.log("32");
+        resizeProgressBar();  
+        console.log("32");     
     });
 
-    $(document).on('touchend click', '.link-level', function(e){
+    $(document).on('click', '.link-level', function(e){
+
+        if($('modalEndGame').hasClass('in')){
+            $('modalEndGame').modal('hide');
+        }
         e.preventDefault();
         if(pending_request)
             return false;
@@ -68,14 +68,14 @@ $(document).ready(function(){
         ajaxLoadContent();
     });
 
-    $blocJeu.on('change', '#corpus_id', function(e){
+    $blockGame.on('change', '#corpus_id', function(e){
         e.preventDefault();
         $('#corpusChoice').submit();
     });
 
     // ====================================================================================================
     // Click sur un des boutons (mode "plusieurs alternatives")
-    $blocJeu.on('click', '.reponse', function(e){
+    $blockGame.on('click', '.reponse', function(e){
         $('.reponse').addClass('disabled-reponse').removeClass('reponse');
         console.log ('[jeu.js] CLICK->.reponse');
         $.ajax({
@@ -83,7 +83,7 @@ $(document).ready(function(){
             url : base_url + 'game/' + mode + '/answer',
             data : {
                 relation_id : $(this).attr('id_phenomene'),
-                sentence_id : $('#phrase').attr('sentence_id')
+                sentence_id : $('#sentence').attr('sentence_id')
             },
             success : function(response){
                 processAfterResponse(response);
@@ -92,13 +92,14 @@ $(document).ready(function(){
     });
 
     // ====================================================================================================
-    // Click sur un mot (mode "phenomène")
-    $blocJeu.on('click', '.mot', function(){
-        word_position = $(this).attr('word_position');
-        console.log ('[jeu.js] CLICK->.mot');
-        $('.mot').addClass('disabled-word').removeClass('mot');
+    // Click sur un word (mode "phenomène")
+    $blockGame.on('click', '.word', function(){
+        $(this).addClass('hover');
+        word_position = $(this).attr('data-word-position');
+        startLoader();    
+        $('.word').addClass('disabled-word').removeClass('word');
         if(special){
-            // en mode choix multiple, le click sur un mot ne fait rien
+            // en mode choix multiple, le click sur un word ne fait rien
             return;
         }
         $(this).addClass('solution');
@@ -106,9 +107,9 @@ $(document).ready(function(){
             method : 'GET',
             url : base_url + 'game/' + mode + '/answer',
             data : {
-                'mot' : $(this).text(),
-                'word_position' : $(this).attr('word_position'),
-                'sentence_id' : $('#phrase').attr('sentence_id')
+                'word' : $(this).text(),
+                'word_position' : $(this).attr('data-word-position'),
+                'sentence_id' : $('#sentence').attr('data-sentence-id')
             },
             success : function(response){
                 processAfterResponse(response);
@@ -120,18 +121,19 @@ $(document).ready(function(){
     // Click sur refuse
     // On réutilise le code de réponse pour mettre à jour la BDD
     // et pour passer à la suite du jeu.
-    $blocJeu.on('click', '#refuse', function(){
-        $('.mot').addClass('disabled-word').removeClass('mot');
+    $blockGame.on('click', '.refuse', function(){
+        $('.word').addClass('disabled-word').removeClass('word');
+        startLoader();
         if(mode=='special')
             var data = {
                 'relation_id' : id_relation_refused,
-                'sentence_id' : $('#phrase').attr('sentence_id')
+                'sentence_id' : $('#sentence').attr('sentence_id')
             };
         else 
             var data = {
-                'mot' : '__refuse__',
+                'word' : '__refuse__',
                 'word_position' : 99999,
-                'sentence_id' : $('#phrase').attr('sentence_id')
+                'sentence_id' : $('#sentence').attr('sentence_id')
             }
         $.ajax({
             method : 'GET',
@@ -149,13 +151,15 @@ $(document).ready(function(){
         incPiece(); 
     });
     
-    $(document).on('touchend click','#report-button', function(){
+    $(document).on('click','#report-button', function(){
         $("#form-report")[0].reset();
         $('#submitReport').attr("disabled","disabled");
-        $('#modalReport').modal("show"); 
-    });
-    
-    $(document).on('touchend click','.pending-duel', function(e){
+        $('body').append($('#modalReport'));
+        $('#modalReport').modal("show");
+        
+    }); 
+
+    $(document).on('click','.pending-duel', function(e){
         $('#submitJoinDuel').removeAttr("disabled");
         $('.help-block').remove();
         $('.form-group').removeClass('has-error');
@@ -163,22 +167,10 @@ $(document).ready(function(){
         $('#modalConfirmJoin').modal("show"); 
     });
     
-    $(document).on('touchend click','.duel-completed', function(e){
+    $(document).on('click','.duel-completed', function(e){
         newModalSimple();
         $('#contentModal').load(base_url+'duel/compare-results/'+$(this).attr("id_phenomene"));
-        $('modalSimple').modal('show');
-    });
-    
-    $(document).on('touchend click','#message-button', function(){
-       $("#modalMessage").load(url('message/thread')+"?annotation_id="+annotation_id, function(responseTxt, statusTxt, xhr){
-            if(statusTxt == "success")
-                $('#modalMessage').modal("show");
-            if(statusTxt == "error")
-                alert("Error: " + xhr.status + ": " + xhr.statusText);
-        }); 
-        // $("#form-message")[0].reset();
-        // $('#submitMessage').attr("disabled","disabled");
-        // $('#modalReport').modal("show"); 
+        $('#modalSimple').modal('show');
     });
 
     $(document).on('click', '.checkboxReport', function(){
@@ -190,25 +182,38 @@ $(document).ready(function(){
         else $('#submitReport').attr("disabled","disabled");
     });
     $(document).on('click', '#openNewDuel', function(event){
+        
         event.preventDefault();
         if($('#modalNewDuel').length==0)
             $.ajax({
                 url : base_url +'duel/modal-new',
                 success : function(response){
                     $('body').append(response);
-                    $('.modal').modal("hide");
+                    if($('#modalEndGame').hasClass('show')){
+                        $('#modalEndGame').modal("hide");
+                        $('#modalEndGame').on('hidden.bs.modal', function (e) {
+                          $('#modalNewDuel').modal("show");  
+                        })                        
+                    } else
+                        $('#modalNewDuel').modal("show");  
+                    
                     $("#submitNewDuel").removeAttr("disabled");
                     $('.help-block').remove();
                     $('.form-group').removeClass('has-error');
-                    $('#modalNewDuel').modal("show");                    
+                            
                 }
             });        
         else {
-            $('.modal').modal("hide");
             $("#submitNewDuel").removeAttr("disabled");
             $('.help-block').remove();
             $('.form-group').removeClass('has-error');
-            $('#modalNewDuel').modal("show");          
+            if($('#modalEndGame').hasClass('show')){
+                $('#modalEndGame').modal("hide");
+                $('#modalEndGame').on('hidden.bs.modal', function (e) {
+                  $('#modalNewDuel').modal("show");  
+                })                        
+            } else
+                $('#modalNewDuel').modal("show"); 
         }
 
     });
@@ -217,11 +222,6 @@ $(document).ready(function(){
         $('#free-report').prop("checked",true);
         $('#submitReport').removeAttr("disabled");
     });
-    $(document).on('focus', '#message', function(){
-        // $(this).next(".submitMessage").removeAttr("disabled");
-        $("#submitMessage").removeAttr("disabled");
-    });
-
 
     $(document).on('submit', "#form-report" ,function( event ) {
         event.preventDefault();
@@ -253,8 +253,8 @@ $(document).ready(function(){
             complete: function(e, xhr, settings){
                 if(e.status === 422){
                     $('.help-block').remove();
-                    $('.form-group').removeClass('has-error');                
-                    $.each(e.responseJSON,function(key,error){
+                    $('.form-group').removeClass('has-error');           
+                    $.each(e.responseJSON.errors,function(key,error){
                         var elm = $('#form-new-duel #'+key);
                         var parent = elm.parent('.form-group').get(0);
                         $(parent).addClass('has-error');
@@ -281,8 +281,8 @@ $(document).ready(function(){
             complete: function(e, xhr, settings){
                 if(e.status === 422){
                     $('.help-block').remove();
-                    $('.form-group').removeClass('has-error');                
-                    $.each(e.responseJSON,function(key,error){
+                    $('.form-group').removeClass('has-error');     
+                    $.each(e.responseJSON.errors,function(key,error){
                         var elm = $('#form-join-duel #'+key);
                         var parent = elm.parent('.form-group').get(0);
                         $(parent).addClass('has-error');
@@ -297,32 +297,16 @@ $(document).ready(function(){
             }
         });          
     });
-    $(document).on('submit', ".form-message" ,function( event ) {
-        event.preventDefault();
-        $.ajax({
-            method : 'POST',
-            url : base_url + 'message/new',
-            data : $(this).serialize(),
-            complete: function(e, xhr, settings){
-                if(e.status === 422){
 
-                 }else if(e.status === 200){
-                    $('#modalMessage').modal('hide');
-                    // $('#report-button').html('<span style="color:#298A08" class="glyphicon glyphicon-check"></span>&nbsp;'+e.responseJSON.html);
-                    // $('#report-button').attr('id','report-button-disabled');
-                }else{
-
-                }
-            }
-        });          
-    });
-
-    $blocJeu.on('click', '#phraseSuivante', function(){
-        console.log ('[jeu.js] CLICK->.#phraseSuivante');
+    $blockGame.on('click', '#next-sentence', function(){
+        console.log ('[jeu.js] CLICK->.#next-sentence');
+        $('.parallax').animate({
+            scrollTop: 0
+        }, 500);
         suivant();
     });
 
-    $blocJeu.on('click', '#signaler', function(){
+    $blockGame.on('click', '#signaler', function(){
         console.log ('[jeu.js] CLICK->.#signaler');
         $.ajax({
             url : base_url + 'jeu/signalerAnnotation',
@@ -336,8 +320,8 @@ $(document).ready(function(){
         });
     });
     // ====================================================================================================
-    $blocJeu.on('mouseover', '#menuObjet', function(){
-        console.log ('[jeu.js] MOUSEOVER->.#menuObjet');
+    $blockGame.on('mouseover', '#menuObject', function(){
+        console.log ('[jeu.js] MOUSEOVER->.#menuObject');
         $.ajax({
             method : 'GET',
             url : base_url + 'game/inventaire',
@@ -348,8 +332,8 @@ $(document).ready(function(){
     });
 
     // ====================================================================================================
-    $blocJeu.on('click', '#menuObjet', function(){
-        console.log ('[jeu.js] CLICK->.#menuObjet');
+    $blockGame.on('click', '#menuObject', function(){
+        console.log ('[jeu.js] CLICK->.#menuObject');
         $.ajax({
             method : 'GET',
             url : base_url + 'game/inventaire',
@@ -360,10 +344,10 @@ $(document).ready(function(){
     });
 
     // ====================================================================================================
-    $blocJeu.on('mouseover', '#phrase', function(){
-        console.log ('[jeu.js] MOUSEOVER->.#phrase');
-        $('#inventaire').css("visibility","hidden");
-        $('#menuObjet').css({
+    $blockGame.on('mouseover', '#sentence', function(){
+        console.log ('[jeu.js] MOUSEOVER->.#sentence');
+        $('#inventory').css("visibility","hidden");
+        $('#menuObject').css({
             'background-color' : 'inherit'
         });
     });
@@ -371,8 +355,8 @@ $(document).ready(function(){
     e.preventDefault();
   });
     // ====================================================================================================
-    $blocJeu.on('click', '.buy', function(){
-        object_id = $(this).attr('object_id');
+    $blockGame.on('click', '.buy', function(){
+        object_id = $(this).attr('data-object-id');
         $.ajax({
             url : base_url + 'game/buyObject/' + object_id,
             success : processInventaire
@@ -380,11 +364,11 @@ $(document).ready(function(){
     });
 
     // ====================================================================================================
-    $blocJeu.on('click', '.objet', function(){
+    $blockGame.on('click', '.object', function(){
         console.log ('[jeu.js] CLICK->.object');
         $.ajax({
             method : 'GET',
-            url : base_url + 'shop/' + mode + '/useObject/'+$(this).attr('object_id'),
+            url : base_url + 'shop/' + mode + '/useObject/'+$(this).attr('data-object-id'),
             success : function(response){
                 processInventaire(response);
             }
@@ -392,7 +376,7 @@ $(document).ready(function(){
     });
 
     // ====================================================================================================
-    $('#blocJeu').on('click', '.mwe', function(){
+    $blockGame.on('click', '.mwe', function(){
         $('.mwe').addClass('disabled-mwe').removeClass('mwe');
         $.ajax({
             url : base_url + 'game/' + mode + '/answer',
@@ -405,13 +389,41 @@ $(document).ready(function(){
     }); 
 
     // ====================================================================================================
-    $blocJeu.on('click', '#repondre', function(){
-        console.log ('[jeu.js] CLICK->.#repondre');
-        alert($blocJeu.find('select[name=phenomene]').find('option:selected').val());
-    });     
+
+    $(document).on('click', '#compare_results', function(){
+         $('.game-element').css({'visibility':'hidden'});
+        $('#content').html('');
+        $('#infos').remove();
+        $('#block-profil').html('');
+        $('#block-profil').attr('class','col-2');
+        $('#block-profil').append($('#block-replay'));
+        $('#content').append($('#results'));
+        $('#results').show();
+        $('.parallax').animate({
+            scrollTop: 0
+        }, 500);
+        embedBratVisualizations();
+        $('.follow-thread-button').click(followThread);
+        $('.unfollow-thread-button').click(unFollowThread);
+        $('.message-button').click(showThread);
+    });
 });
     // ====================================================================================================
-    
+    function startLoader(){
+        if($('#loader').length>0){
+            $('#loader-container').show();
+            $('#loader').show();
+        }
+        else
+            $('#sentence').append('<div id="loader-container"><div id="loader"></div></div>');
+    }
+    function hideLoader(){
+        $('#loader').hide();
+    } 
+    function stopLoader(){
+        $('#loader-container').remove();
+    } 
+
     function checkHelpObjectAsSeen(object_id){
         $.ajax({
             url : base_url + 'object/checkHelpAsSeen/' + object_id
@@ -422,11 +434,10 @@ $(document).ready(function(){
         setTimeout(function(){ suivant() }, time);
     }
 
-    // ====================================================================================================
     function suivant(){
         console.log ('[jeu.js] ENTER suivant');
         if(suivant){
-            $('#menuObjet').show();
+            $('#menuObject').show();
             $('.reponse').each(function(){
                 $(this).css({
                     color : '#4a1710'
@@ -440,10 +451,10 @@ $(document).ready(function(){
                 $('.loot').remove();
                 if(response != ''){
                     $('#resultat').html('');
-                    $('#message-objet').html('');
+                    $('#message-object').html('');
                     processResponse(response);
                 }else{
-                    $('#phraseSuivante').attr('disabled', 'disabled');
+                    $('#next-sentence').attr('disabled', 'disabled');
                 }
             }
         });
@@ -454,6 +465,13 @@ $(document).ready(function(){
         mode=_mode;
         relation_id=_relation;
         inGame=true;
+        if(typeof(tour) !== 'undefined' && mode=='training'){
+            tour.init();
+            tour.start();
+        } else if(typeof(tourA) !== 'undefined' && mode=='game'){
+            tourA.init();
+            tourA.start();
+        }
         ajaxLoadContent();
     }
 
@@ -464,7 +482,7 @@ $(document).ready(function(){
             url : base_url +'game/'+ mode + '/begin/0',
             dataType : 'json',
             success : function(json){
-                $blocJeu.html(json.html);
+                $blockGame.html(json.html);
                 loadContentMwe(json);
             }
         })
@@ -473,6 +491,7 @@ $(document).ready(function(){
     function ajaxLoadContent(){
         
         $('body').attr('style', "cursor: url('" +base_url +'img/curseur.png'+"'), pointer; ");
+        $('#coccinelle').hide();
         pending_request = true;
         $.ajax({
             method : 'GET',
@@ -484,9 +503,22 @@ $(document).ready(function(){
 
     function loadContent(json){
         console.log ('[jeu.js] CLICK->.phenomene SUB.1');
-        $('#blocJeu').removeClass('center-duel');
-        $blocJeu.html(json.html);
+        $blockGame.removeClass('center-duel');
+        if(mode=='duel' || mode=='demo') {
+            $('.container-site').addClass('container-game').removeClass('container-site');
+        }
+
+        if($('#sentence').length==0){
+            $('.parallax').animate({
+                scrollTop: 0
+            }, 500);            
+        }
+        $blockGame.html(json.html);
         resizeProgressBar();
+        $('.refuse').popover({
+            trigger: 'hover'
+        });
+
         $.ajax({
             method : 'GET',
             url : base_url + 'game/' + mode + '/jsonContent',
@@ -520,7 +552,7 @@ $(document).ready(function(){
             dataType : 'json',
             success : function(json){
                     if(json.html){
-                        $blocJeu.html(json.html);
+                        $blockGame.html(json.html);
                     } else {
                          $('#mwe_content').html(json.mwe.content);
                          $('#mwe_id').html(json.mwe.id);
@@ -531,21 +563,41 @@ $(document).ready(function(){
         });
     }
     
+    function updateProgression(turn,nb_turns){
+        progression = Math.round( turn / nb_turns * 100 );
+
+        $('#progress-container').css({height: 0.98*parseInt($('#progressBar').height(),10)+'px',lineHeight: $('#progressBar').height()+'px'});
+        $('#progress').css({height: $('#progressBar').height()+'px',lineHeight: 0.92*parseInt($('#progressBar').height(),10)+'px'});
+        $('#progress').text(progression + '%');
+        $('#phaseBar').css({
+            width : progression/100*$('#progressBar').width() + 'px'
+        });        
+    }
+
     // ====================================================================================================
     function processResponse(json){
 
+        $('#thread').remove();
+
+        if(json.score){
+            $('.score').html(json.score);
+        }  
+        
+        updateProgression(json['turn'], json['nb_turns']);
+
         if(json.html){
-            //$('#blocJeu').html(json.html);
+            hideLoader();
             $("#containerModal").html(json.html);
             if($("#modalNextLevel").length>0){
                 if($("#img_level").length>0)
-                    $("#img_level").attr('src',url('/img/level/')+'level-'+json.user.level.id+'.gif');
+                    $("#img_level").attr('src',url_site('/img/level/')+'level-'+json.user.level.id+'.gif');
                 $("#modalNextLevel").modal("show");
             } else {
                 $('#modalEndGame').modal("show");
                 incCerveaux();
                 incPiece();     
             }
+            return true;
         }
         // en cas d'erreur
         if(json.href){
@@ -562,16 +614,16 @@ $(document).ready(function(){
         }
 
         if(json.mode != 'demo'){
-            $('#refuse').show();
+            $('.refuse').show();
         }
-        
+     
         if(json.mode != undefined && json.mode == 'special'){
             special = true;
         }else{
             special = false;
         }
 
-        $('#nom_phenomene').text(json.description);
+        $('#label-phenomenon').text(json.description);
 
         var afficherClassement = true;
         if(json.user){
@@ -583,43 +635,35 @@ $(document).ready(function(){
             var score_html="";
             if (json.user.level.id == 7) {
                 score_html += '<img src="'+base_url+'img/cerveau_plein.png"/>'+trans('game.max-level')+'<br />';
-                
-            }else{
+            } else{
                 var score_user = json.user.score;
                 var score_next_level = json.user.next_level.required_score;
                 var score_level = json.user.level.required_score;
                 var progress_score = 100*(score_user-score_level)/(score_next_level-score_level);
                 var score = json.user.score.formatScore() + " / " + json.user.next_level.required_score.formatScore();
-    score_html += '<div class="progress" style="margin-bottom:10px;"><div style="padding-left:5px;height:20px;line-height:20px;color:#888;position:absolute;font-size:0.9vw;">'+score+'</div><div class="progress-bar progress-bar-success" role="progressbar" style="background-color:#75211F;width:'+progress_score+'%"></div><div class="progress-bar progress-bar-danger" role="progressbar" style="color:#000;background-color:#fff;width:'+(100-progress_score)+'%"></div></div>';
+                score_html += '<div class="progress" style="margin-bottom:10px;"><div style="padding-left:5px;height:20px;line-height:17px;color:#888;position:absolute;">'+score+'</div><div class="progress-bar progress-bar-success" role="progressbar" style="background-color:#75211F;width:'+progress_score+'%"></div><div class="progress-bar progress-bar-danger" role="progressbar" style="color:#000;background-color:#fff;width:'+(100-progress_score)+'%"></div></div>';
             }
+            $('.score').html(json.user.score.formatScore());
 
             if(json.user.money != undefined){
-                score_html += '<img src="'+base_url+'img/piece.png"/><span id="argent" style="color:#4a1710;">' + json.user.money.formatScore() + '</span>';
+                $('.money').html(json.user.money.formatScore());
+                score_html += '<img src="'+base_url+'img/piece.png"/><span id="argent" class="money" style="color:#4a1710;">' + json.user.money.formatScore() + '</span>';
             }
 
             score_html += '<br/>';
             $('#progress_score').html(score_html);
         }
-        var turns = '';
-        var i;
 
-        pourcent = json['turn'] / json['nb_turns'] * 100;
+        // var i;
 
-        pourcent = Math.round(pourcent*100)/100;
-        $('#progressContainer').css({height: 0.98*parseInt($('#progressBar').height(),10)+'px',lineHeight: $('#progressBar').height()+'px'});
-        $('#progress').css({height: $('#progressBar').height()+'px',lineHeight: 0.92*parseInt($('#progressBar').height(),10)+'px'});
-        $('#progress').text(pourcent + '%');
-        $('#phaseBar').css({
-            width : pourcent/100*$('#progressBar').width() + 'px'
-        });
         if(json.annotation){
             if(!json.annotation.sentence){
-                $('#blocJeu').html('<h1 class="text-center">'+trans('game.no-more-sentences')+'</h1>');
+                $blockGame.html('<h1 class="text-center">'+trans('game.no-more-sentences')+'</h1>');
             }else{
                 if(json.annotation.governor_position && json.annotation.word_position){
-                    $('#phrase').html(displaySentence(json.annotation.sentence.content, json.annotation.governor_position, json.annotation.word_position, mode));
-                }else{
-                    $('#phrase').html(displaySentence(json.annotation.sentence.content, json.annotation.focus, null, mode));
+                    $('#sentence').html(displaySentence(json.annotation.sentence.content, json.annotation.governor_position, json.annotation.word_position, mode));
+                } else{
+                    $('#sentence').html(displaySentence(json.annotation.sentence.content, json.annotation.focus, null, mode));
                 }
             }
             if(json.annotation.explanation){
@@ -651,32 +695,27 @@ $(document).ready(function(){
             if(afficherClassement){
                 $('#infos').html(scores);
             }
-            $('#phrase').css('font-size', '2em');
-
-            //$('#phrase').attr('sentence_id', json['sentence_id']);
-
-            // ajout de l'indentifiant caché de la phrase en bas à gauche
-            $('#sentence_id').html(json.annotation.sentence.sentid);
             annotation_id = json.annotation.id;
+
         }
+        spell = json.spell;
         if(json.spell == 'vanish'){
-            $('#phrase').prop('disabled', true);
-            $('.mot').prop('disabled', true);
-            $('#phrase span.mot').animate({
+            $('#sentence').prop('disabled', true);
+            $('.word').prop('disabled', true);
+            $('#sentence span.word').animate({
                 'opacity' : '0'
             }, 6000);
-            $('#phrase span.highlight').animate({
+            $('#sentence span.highlight').animate({
                 'opacity' : '0'
             }, 6000);
             showHelp('glasses');
-        }else if(json.spell == 'shrink'){
-            $('#phrase').prop('disabled', true);
-            $('.mot').prop('disabled', true);
-            $('#phrase').animate({
+        } else if(json.spell == 'shrink'){
+            $('#sentence').prop('disabled', true);
+            $('.word').prop('disabled', true);
+            $('#sentence').animate({
                 'font-size' : '1px'
             }, 6000);
             showHelp('telescope');
-
         }
 
         if(mode!='training'){
@@ -685,13 +724,14 @@ $(document).ready(function(){
 
         if(mode=='special'){
             $('.disabled-reponse').addClass('reponse').removeClass('disabled-reponse');
-            $('.mot').each(function(){
+            $('.word').each(function(){
                 if(!$(this).hasClass('highlight')){
                     $(this).addClass('special');
                 }
             });
             $('.reponse').css('color', 'black');
         }
+
         turn++;
     }
 
@@ -767,9 +807,9 @@ $(document).ready(function(){
                 $.each(response.inventaire,function(index,object){
                     if(object.slug==slug && object.help_seen==0){
                         if(slug=='telescope'){
-                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase rapetisse, utilise la longue-vue <img src="'+base_url+'img/objet/thumbs/longue_vue.png" style="width:50px"/> qui est dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');      
+                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase rapetisse, utilise la longue-vue <img src="'+base_url+'img/object/thumbs/longue_vue.png" style="width:50px"/> qui est dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');      
                         } else if(slug=='glasses'){
-                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase disparaît, utilise les lunettes <img src="'+base_url+'img/objet/thumbs/lunettes.png" style="width:50px"/> qui sont dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');                        
+                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase disparaît, utilise les lunettes <img src="'+base_url+'img/object/thumbs/lunettes.png" style="width:50px"/> qui sont dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');                        
                         }
                         $('.help_object').fadeIn();
                         checkHelpObjectAsSeen(object.id);
@@ -777,6 +817,14 @@ $(document).ready(function(){
                 });
             }
         });
+    }
+
+    function colorizeWordsSentence(words, color, sentence_id){
+        sentence_id = sentence_id || null;
+        var container_sentence_id = (sentence_id)?'#sentence_'+sentence_id : "#sentence";
+        for(var i=0;i<words.length;i++){
+            $(container_sentence_id+' #word_index_'+words[i]).css({'color':color});
+        }
     }
 
     function processAfterResponse(json){
@@ -792,172 +840,181 @@ $(document).ready(function(){
             window.location.href = json.href;
         }
 
-            var time = 0;
-            var addPasser = false;
-            if(json.gain != undefined && $("#points_earned").length>0)
-                $("#points_earned").html(json.gain);
-            if((json.reference&&json.errors)||mode=='training'||mode=='demo'){
-                if(jQuery.inArray( json.answer, json.expected_answers ) < 0){
-                    if(json.mode=='special')
-                        var attribute = '.disabled-reponse[id_phenomene';
-                    else
-                        var attribute = '.disabled-word[word_position';
-                    if(json.answer=='99999'){
-                        var answer_user = img_croix_os;
-                    } else {
-                        var reponse = $(attribute+'=' + json.answer + ']');
-                        reponse.addClass('not_solution');
-                        var answer_user ='<span class="not_solution">' + reponse.text() + '</span>';
+        var time = 0;
+        var addPasser = false;
+        if(json.gain != undefined && $("#points_earned").length>0)
+            $("#points_earned").html(json.gain);
+        if((json.reference&&json.errors)||mode=='training'||mode=='demo'){
+            if(jQuery.inArray( json.answer, json.expected_answers ) < 0){
+                hideLoader();
+                if(json.mode=='special')
+                    var attribute = '.disabled-reponse[id_phenomene';
+                else
+                    var attribute = '.disabled-word[data-word-position';
+                if(json.answer=='99999'){
+                    var answer_user = img_croix_os;
+                } else {
+                    var reponse = $(attribute+'=' + json.answer + ']');
+                    reponse.removeClass('hover').addClass('not_solution');
+                    var answer_user ='<span class="not_solution">' + reponse.text() + '</span>';
+                }
+                var right = [];
+                $.each(json.expected_answers,function(index,expected_answer){
+                    if(expected_answer=="99999")
+                        right.push(img_croix_os);
+                    else {
+                        var juste = $(attribute+'=' + expected_answer + ']');
+                        juste.addClass('solution');
+                        right.push('<span class="solution">' + juste.text() + '</span>');
                     }
-                    var right = [];
-                    $.each(json.expected_answers,function(index,expected_answer){
-                        if(expected_answer=="99999")
-                            right.push(img_croix_os);
-                        else {
-                            var juste = $(attribute+'=' + expected_answer + ']');
-                            juste.addClass('solution');
-                            right.push('<span class="solution">' + juste.text() + '</span>');
-                        }
-                    });
-                    var resultat = '<h2>'+trans('game.bad-answer',{'answer':answer_user,'response':right.join( trans('game.or') )})+'</h2>';
-                    // if(json.explication)
-                        // resultat+='<br/>('+json.explication+')';
-                    $('#resultat').html(resultat);
-                    $('#message-objet').html('');
-                    $('#menuObjet').hide();
-                    $('#refuse').hide();
-                    if (json.errors == 3) {
-                        $('#resultat').append('<h2>'+trans('game.no-more-attempt')+'</h2>');
-                    }else if (json.errors != 3 && json.errors) {
-                        var remaining_trials = 3-json.errors;
-                        $('#resultat').append('<h2>'+ trans_choice('game.remaining-trials',{'remaining_trials':remaining_trials})+'</h2>');
+                });
+                var resultat = '<h4>'+trans('game.bad-answer',{'answer':answer_user,'response':right.join( trans('game.or') )})+'</h4>';
+                // if(json.explication)
+                    // resultat+='<br/>('+json.explication+')';
+                $('#resultat').html(resultat);
+                $('#message-object').html('');
+                $('#menuObject').hide();
+                $('.refuse').hide();
+                if (json.errors == 3) {
+                    $('#resultat').append('<h4>'+trans('game.no-more-attempt')+'</h4>');
+                } else if (json.errors != 3 && json.errors) {
+                    var remaining_trials = 3-json.errors;
+                    $('#resultat').append('<h4>'+ trans_choice('game.remaining-trials',{'remaining_trials':remaining_trials})+'</h4>');
+                }
+                if(mode!='demo'){
+
+                    var button = $('<button id="message-button" data-id="'+json.annotation.id+'" data-type="App\\Models\\Annotation" style="position:relative;" class="btn btn-small btn-faded btn-outline btn-green message-button">Discuter de la réponse <span class="badge">'+json.nb_messages+'</button>');
+                    // $('#resultat').append('<div><span style="position:relative;"><span id="report-button" style="position:relative;" class="margin-right btn btn-small btn-faded btn-outline btn-green"><span style="color:#B43104" class="glyphicon glyphicon-warning-sign"></span>&nbsp;Je ne suis pas d\'accord</span></div>');
+                    $('#resultat').append(button);
+                    $('#bottom').after('<div class="row" id="thread" style="position:relative;top:60px;"><div class="col-12 col-lg-10 mx-lg-auto"><span style="display:none;" class="thread" id="thread_'+json.annotation.id+'"></span></div></div>');
+                    button.click(showThread);
+                    // $('#resultat').append('<div><span style="margin-right:20px;position:relative;"><span id="message-button" data-id="'+json.annotation.id+'" data-type="Annotation" style="position:relative;" class="btn btn-small btn-faded btn-outline btn-green message-button">Discuter de la réponse <span class="badge">'+json.nb_messages+'</span></span></div>');
+                    
+                }
+                if (json.errors == 3) {
+                    $('#resultat').append('<a class="link btn btn-small btn-green" href="'+ base_url + 'game'+'"  id="retourMenu" title="'+ trans('game.back-menu')+'">'+trans('game.back-menu')+'</a>');
+                }else {
+                    $('#resultat').append('<button class="link btn btn-small btn-green" id="next-sentence" title="'+trans('game.next-sentence')+'">'+trans('game.next-sentence')+'</button>');
+                }
+
+                $('#sentence').append('<div id="erreur"></div>');
+                $('#erreur').fadeOut(800, function(){
+                    $('#erreur').remove();
+                });
+            }else{
+                suivant();
+            }
+        }else{
+            if(jQuery.inArray( json.answer, json.expected_answers ) >= 0){
+    
+                $('#sentence').finish();
+                $('#sentence .word').finish();
+                $('#sentence').css({
+                    'font-size': '1.7em',
+                    'opacity' : '1'
+                });
+                
+                if(json.loot && json.loot.id){
+                    $('#resultat').html('<h3>' + trans('game.you-found-object',{'name':json.loot.name})+'</h3>');
+                    $blockGame.append('<div class="loot"><img src="'+base_url+'img/object/' + json.loot.image + '" /></div>');
+                    time += 1600;
+                }
+
+                if(!addPasser){
+                    if(time == 0){
+                        suivant();
+                    }else{
+                        delay(time);
                     }
-                    if(mode!='demo'){
-                        $('#resultat').append('<div><span style="position:relative;"><span id="report-button" style="position:relative;" class="margin-right btn btn-small btn-faded btn-outline btn-green"><span style="color:#B43104" class="glyphicon glyphicon-warning-sign"></span>&nbsp;Je ne suis pas d\'accord</span></div>');
-                        //$('#resultat').append('<div><span style="margin-right:20px;position:relative;"><span id="message-button" style="position:relative;" class="btn btn-small btn-faded btn-outline btn-green">Discuter de la réponse <span class="badge">'+json.nb_messages+'</span></span></div>');
-                    }
-                    if (json.errors == 3) {
-                         $('#resultat').append('<a href="'+ base_url + 'game'+'"  id="retourMenu" title="'+ trans('game.back-menu')+'">'+trans('game.back-menu')+'</a>');
-                    }else {
-                        $('#resultat').append('<a href="#phrase" class="" id="phraseSuivante" title="'+trans('game.next-sentence')+'">'+trans('game.next-sentence')+'</a>');
-                    }
-                   
-                    $('#phrase').append('<div id="erreur"></div>');
+                }else{
+                    $('#resultat').append('<br/><a class="link" id="next-sentence" title="'+trans('game.next-sentence')+'">'+trans('game.next-sentence')+'</a>');
+                }
+            }else{
+                if(json.guest != undefined){
+                    var reponse = $('.word[word_position=' + json.word_position + ']');
+                    reponse.addClass('not_solution');
+                    var juste = $('.word[word_position=' + json.expected_answer + ']');
+                    juste.addClass('solution');
+                    $('#resultat').html('<h4>' + trans('game.bad-answer',{'answer':'<span class="not_solution">' + reponse.text() + '</span>','response':'<span class="solution">' + juste.text() + '</span>'})+'</h4>');
+                    $('#resultat').append('<a class="link" id="next-sentence" title="'+trans('game.next-sentence')+'">'+trans('game.next-sentence')+'</a>');
+                    $('#sentence').append('<div id="erreur"></div>');
                     $('#erreur').fadeOut(800, function(){
                         $('#erreur').remove();
                     });
                 }else{
                     suivant();
                 }
-            }else{
-                if(jQuery.inArray( json.answer, json.expected_answers ) >= 0){
-  
-                    $('#phrase').finish();
-                    $('#phrase .mot').finish();
-                    $('#phrase').css({
-                        'font-size': '2em',
-                        'opacity' : '1'
-                    });
-                    
-                    if(json.loot && json.loot.id){
-                        $('#resultat').html('<h3>' + trans('game.you-found-object',{'name':json.loot.name})+'</h3>');
-                        $('#blocJeu').append('<div class="loot"><img src="'+base_url+'img/objet/' + json.loot.image + '" /></div>');
-                        time += 1600;
-                    }
-
-                    if(!addPasser){
-                        if(time == 0){
-                            suivant();
-                        }else{
-                            delay(time);
-                        }
-                    }else{
-                        $('#resultat').append('<br/><a href="#phrase" id="phraseSuivante" title="'+trans('game.next-sentence')+'">'+trans('game.next-sentence')+'</a>');
-                    }
-                }else{
-                    if(json.guest != undefined){
-                        var reponse = $('.mot[word_position=' + json.word_position + ']');
-                        reponse.addClass('not_solution');
-                        var juste = $('.mot[word_position=' + json.expected_answer + ']');
-                        juste.addClass('solution');
-                        $('#resultat').html('<h2>' + trans('game.bad-answer',{'answer':'<span class="not_solution">' + reponse.text() + '</span>','response':'<span class="solution">' + juste.text() + '</span>'})+'</h2>');
-                        $('#resultat').append('<a href="#phrase" id="phraseSuivante" title="'+trans('game.next-sentence')+'">'+trans('game.next-sentence')+'</a>');
-                        $('#phrase').append('<div id="erreur"></div>');
-                        $('#erreur').fadeOut(800, function(){
-                            $('#erreur').remove();
-                        });
-                    }else{
-                        suivant();
-                    }
-                }
             }
-            $('.mot').each(function(){
-                $(this).removeClass('mot');
-            });
+        }
+        $('.word').each(function(){
+            $(this).removeClass('word');
+        });
 
     }
 
     // ====================================================================================================
     function processInventaireShop(json){
-        $('#money').html(json.money);
+        if(json.money){
+            $('.money').html(json.money.formatScore());
+        }
         if(json.message)
-            $( "span.error[object_id|='"+object_id+"']" ).html(json.message);
+            $( "span.error[data-object-id|='"+object_id+"']" ).html(json.message);
         $.each(json.inventaire,function(index,object){
-            $( "span.owned[object_id|='"+object.id+"']" ).html(object.quantity);
+            $( "span.owned[data-object-id|='"+object.id+"']" ).html(object.quantity);
         });
     }
 
     function resizeProgressBar(){
-        $('#progressContainer').css({height: 0.98*parseInt($('#progressBar').height(),10)+'px',lineHeight: $('#progressBar').height()+'px'});
-        $('#progress').css({height: $('#progressBar').height()+'px',lineHeight: 0.92*parseInt($('#progressBar').height(),10)+'px'}); 
+        $('#progress-container').css({height: 0.98*parseInt($('#progressBar').height(),10)+'px',lineHeight: $('#progressBar').height()+'px'});
+        $('#progress').css({height: $('#progressBar').height()+'px',lineHeight: 0.92*parseInt($('#progressBar').height(),10)+'px'});
         $('#phaseBar').css({
-            width : pourcent/100*$('#progressBar').width() + 'px'
-        }); 
+            width : progression/100*$('#progressBar').width() + 'px'
+        });
     }
 
     function processInventaire(json){
-        $('#message-objet').show();
+        $('#message-object').show();
         if(!inGame) {
             processInventaireShop(json);
             return;
         }
         console.log ('[jeu.js] ENTER processInventaire');
         if(json.money){
-            $('#argent').html(json.money);
+            $('.money').html(json.money.formatScore());
         }
             
-        var $inventaire = $('#inventaire');
+        var $inventaire = $('#inventory');
         
             if(json.inventaire == 0){
-                $inventaire.html('Pas d\'objets');
+                $inventaire.html('Pas d\'objet');
             }else{
                 var inventaire = json.inventaire;
                 var htmlInventaire = '';
-                var objet;
+                var object;
                 for(i in inventaire){
-                    objet = inventaire[i];
-                    htmlInventaire += '<div class="contentObjet">';
-                    htmlInventaire += '<div class="objet tool" object_id="' + objet.id + '">';
-                    htmlInventaire += '<span class="tip">' + objet.description + '</span>';
-                    htmlInventaire += '<img src="'+base_url+'img/objet/thumbs/'+ objet.image + '" /><span class="nombre">' + objet.quantity + '</span><br />';
+                    object = inventaire[i];
+                    htmlInventaire += '<div class="contentObject">';
+                    htmlInventaire += '<div class="object tool" id="use-object-'+object.id+'" data-object-id="' + object.id + '">';
+                    htmlInventaire += '<span class="tip">' + object.description + '</span>';
+                    htmlInventaire += '<img src="'+base_url+'img/object/thumbs/'+ object.image + '" /><span class="nombre">' + object.quantity + '</span><br />';
                     htmlInventaire += '</div>';
-                    htmlInventaire += '<img src="'+base_url+'img/piece.png"/>' + objet.price_ingame + '<br />';
-                    htmlInventaire += '<a class="btn btn-success buy" object_id="'+objet.id+'">'+trans('game.buy')+'</a>';
+                    htmlInventaire += '<img src="'+base_url+'img/piece.png"/>' + object.price_ingame + '<br />';
+                    htmlInventaire += '<button class="btn btn-success buy"  id="btn-buy-object-'+object.id+'" data-object-id="'+object.id+'">'+trans('game.buy')+'</button>';
                     htmlInventaire += '</div>';
-                }
+                }   
                 if(json.reappear_sentence){
                     $('.help_object').fadeOut();
-                    $('#phrase .mot').finish();
-                    $('#phrase .highlight').finish();
-                    $('#phrase .mot').css({
+                    $('#sentence .word').finish();
+                    $('#sentence .highlight').finish();
+                    $('#sentence .word').css({
                         'opacity' : '100',
                     });
-                    $('#phrase .highlight').css({
+                    $('#sentence .highlight').css({
                         'opacity' : '100',
                     });
-                    $('.mot').prop('disabled', false);
-                    $('#phrase').prop('disabled', false);
-                    $('#phrase .highlight').css({
+                    $('.word').prop('disabled', false);
+                    $('#sentence').prop('disabled', false);
+                    $('#sentence .highlight').css({
                         'color' : '#0e7f3c'
                     });
                 }
@@ -965,14 +1022,11 @@ $(document).ready(function(){
                     $('#resultat img').attr('src', base_url + 'img/piece.png');
                 }
                 if(json.increase_sentence){
-                $('.help_object').fadeOut();
-                    //$('#phrase .mot').css({
-                    //    'cursor' : 'wait',
-                    //});//on empêche le joueur de cliquer
-                    $('.mot').prop('disabled', false);
-                    $('#phrase').prop('disabled', false);
-                    $('#phrase').finish().css({
-                        'font-size' : '2em'
+                    $('.help_object').fadeOut();
+                    $('.word').prop('disabled', false);
+                    $('#sentence').prop('disabled', false);
+                    $('#sentence').finish().css({
+                        'font-size' : '1.7em'
                     }, 6000);
 
                 }
@@ -980,7 +1034,7 @@ $(document).ready(function(){
                     $('#gain').html(json.gain);
                 }
                 if(json.message != undefined){
-                    $('#message-objet').html(json.message);
+                    $('#message-object').html(json.message);
                 }
 
                 $inventaire.html(htmlInventaire);
@@ -989,7 +1043,7 @@ $(document).ready(function(){
             inventaireAffiche = true;
 
 
-        $('#menuObjet').css({
+        $('#menuObject').css({
             'background-color' : '#9bc5aa'
         });
     } 

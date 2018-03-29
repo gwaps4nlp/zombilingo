@@ -1,0 +1,108 @@
+<p>
+Bienvenue, explorateur ! Je suis le professeur Indianaperrier, aventurier de mon état. Lors d’une de mes récentes expéditions au coeur des pyramides, j’ai rencontré d’étranges phénomènes, et j’aurais bien besoin de ton aide pour en dévoiler tous leurs mystères.
+</p>
+<p>
+Si dans la partie classique de Zombilingo tu dois trouver des phénomènes bien précis, ici, ils pourront avoir des têtes bien différentes : nous cherchons des expressions multi-mots !
+</p>
+<p>
+Ce sont des expressions composées de plusieurs “mots” mais qui peuvent être plus ou moins figées. Pense à des fragments tels que président de la République, cordon bleu ou encore nager dans le bonheur. Comme tu peux le voir, certaines de ces expressions n’ont pas le sens des mots qui les composent, il y a donc différents degrés de figement (comme il peut y avoir des momies plus ou moins anciennes).
+</p>
+<p>
+Ah ! Je dois partir pour le moment. Tu sais... l’aventure, tout ça. Mais je t’en prie, commence donc sans moi, je te rejoindrai au plus vite pour te donner plus d’indications.
+</p>
+
+<p>
+	Ce premier test est très utile, alors ne l’oublie jamais, comme ta serviette.
+</p>
+<p>
+	Il faut regarder les différents mots qui composent l’expression et voir :
+	<ol>
+	<li>si leurs sens correspondent à ce qu’il désignent à priori,</li>
+	<li>si ils peuvent être remplacés par un synonyme sans modifier le sens de l’expression.</li>
+	</ol>
+</p>
+<p>
+<u>Exemple :</u>
+</p>
+<p>
+	<em>Martine est un vrai cordon bleu.</em><br/>
+	<ol>
+	    <li>cordon bleu → n’est pas un cordon.</li>
+	    <li>Martine est une vraie ficelle bleue. → le sens n’est plus le même</li>
+	</ol>
+	<strong>Ici, cordon bleu est une expression multi-mots</strong>.
+</p>
+
+<p>
+	<em>Déroule le cordon bleu.</em><br/>
+	<ol>
+	    <li>cordon bleu → est un cordon</li>
+	    <li>Déroule la ficelle bleue → sens équivalent</li>
+	</ol>
+	<strong>Ici, cordon bleu N’est PAS une expression multi-mots</strong>, attention aux pièges !
+</p>
+
+<p>
+Petite précision avant ce deuxième test : chaque test que tu valides permet d’identifier des expressions multi-mots, mais ils ne doivent pas TOUS correspondre pour que tu considères qu’il s’agisse d’une expression multi-mots : un seul test suffit, mais plusieurs tests peuvent fonctionner.
+</p>
+<p>
+Ici, il faut vérifier si la séquence contient un mot qui ne peut exister de manière isolée. Dans ce cas il s’agit d’une expression multi-mots.
+</p>
+<p>
+<u>Exemple :</u> à l’<u>instar</u> de, <u>parce</u> que, <u>tandis</u> que, etc.
+</p>
+
+<p>
+Il est possible que nos expressions n’acceptent pas d’insertions de modifieurs (tels que très, grand, beaucoup, etc.)
+</p>
+
+<p>
+<u>Exemples :</u>
+</p>
+<ul>
+	<li>- <em>une étoile filante</em></li>
+	<li>- <em>*une étoile très/beaucoup filante</em> → pas acceptable, étoile filante est donc une expression multi-mots.</li>
+	<br/>
+	<li>- <em>à l’issue de</em></li>
+	<li>- <em>*à l’inattendue issue de</em> → pas grammatical, à l’issue de est une expression multi-mots.</li>
+</ul>
+
+<p>
+Ce test va se concentrer sur les traits morphosyntaxiques (tels que le temps, le genre, le nombre, etc.) particuliers de nos expressions.
+</p>
+<p>
+<u>Exemples :</u>
+</p>
+<ul>
+	<li>- <em>perdre les pédales</em></li>
+	<li>- <em>*perdre la pédale</em> → on ne peut pas changer en nombre cette expression, elle est donc figée.</li>
+	<br/>
+	<li>- <em>Cet indien est un peau rouge.</em></li>
+	<li>- <em>*Cet indien est une peau rouge.</em> → l’expression peau rouge est de genre masculin bien que peau soit un terme féminin.</li>
+</ul>   
+        
+<p>
+Ici, il va falloir trouver des choses qui n’existent pas : c’est le test du déterminant zéro. Dans certaines de nos expressions basées sur des verbes, il se peut qu’aucun déterminant ne soit utilisé après les verbes.
+</p>
+<p>
+<u>Exemple :</u>
+</p>
+<ul>
+	<li>- <em>l’agent a fait feu sur le vandale présumé</em></li>
+	<li>- <em>*l’agent a fait un feu</em></li>
+</ul>  
+<p>
+Cependant il est possible qu’une construction avec déterminant puisse exister.
+</p>
+<p>
+<u>Exemple :</u>
+</p>
+<ul>
+	<li>- <em>avoir faim</em></li>
+	<li>- <em>avoir une faim de loup</em> → il faut donc vérifier si le déterminant zéro peut être supprimé en modifiant légèrement l’expression, auquel cas on pourra l’annoter en tant qu’expression multi-mots.</li>
+</ul>
+        
+
+         
+        
+

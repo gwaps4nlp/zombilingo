@@ -3,7 +3,7 @@
 use App\Models\Relation;
 use App\Models\Sentence;
 use App\Models\Annotation;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
 use App\Models\Parser;
 use App\Models\CatPos;
 use App\Repositories\SentenceRepository;
@@ -287,7 +287,7 @@ public $sentences_done;
         $i = 1.5;
 
         //On initalise la difficulté
-        $difficulte = 1;
+        $difficulte = 0;
 
         //On compte le nombre d'annotation
         $nbAnnotations = count($this->annotations);
@@ -298,7 +298,7 @@ public $sentences_done;
             //On initialise le nombre d'arcs traversant
             $nbTravers = 0;
 
-            //On toutes les annotations
+            //On parcourt toutes les annotations
             foreach ($this->annotations as $annotation){
 
                 //Si ce n'est pas le root
@@ -306,10 +306,12 @@ public $sentences_done;
                     //Si on a un arc qui traverse
                     if( ($annotation['word_position'] < $i && $annotation['governor_position'] > $i ) 
                         || ($annotation['word_position'] > $i && $annotation['governor_position'] < $i) ){
-                        $nbTravers++;
+                        $relation = Relation::find($annotation['relation_id']);
+                        $nbTravers+=$relation->coefficient;
                     }
                 }
             }
+
             //Si le nombre dépasse la difficulté
             if($nbTravers > $difficulte){
                 //On change la difficulté

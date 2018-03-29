@@ -1,0 +1,66 @@
+// Bootstrap overrides
+//
+// Copy variables from `_variables.scss` to this file to override default values
+// without modifying source files.
+
+$green: #0e7f3c;
+
+$card-spacer-y:					0rem;
+$card-spacer-x:					0rem;
+$font-size-base: 1rem;
+$font-size-lg:   1.25rem;
+
+$link-color:					#4a1710;
+$body-color:					#ffffff;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 676px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+);
+
+$link-hover-color : 			#5a2720; 
+
+$container-max-widths: (
+  sm: 767px,
+  md: 991px,
+  lg: 1199px,
+  xl: 1300px
+);
+
+$btn-padding-x-lg:				1.5rem;
+$btn-padding-y-lg:				.5rem;
+
+// $tooltip-color:               #75211f;
+// $tooltip-bg:                  #9bc5aa;
+
+$modal-content-bg:				#9BC5AA;
+$modal-content-border-width:	9px;
+$modal-content-border-color:	#0E7F3C;
+$modal-inner-padding:			6px;
+
+$dropdown-padding-y: 0.2rem;
+$dropdown-margin-top:  -2px;
+$dropdown-border-color: $green;
+
+$card-bg: #9BC5AA;
+$card-spacer-x: 1.25rem;
+
+$bg-color: #0e7f3c;
+
+$bg-sentence : #9bc5aa;
+
+$bg-image:	"background-home.png";
+
+$rounded-btn-color:	#0e7f3c;
+$rounded-btn-bg-color:	white;
+$rounded-btn-color-hover:	white;
+$rounded-btn-bg-color-hover:	#0e7f3c;
+
+$image-path      : "/img";
+$font-path: "/fonts";
+
+@import "node_modules/bootstrap/scss/bootstrap";
+

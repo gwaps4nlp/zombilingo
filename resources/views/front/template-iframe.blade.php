@@ -36,8 +36,7 @@
         }
       }
     </script>
-        {!! Html::script('js/jQuery.js') !!}
-        <script src="{{ asset(elixir("js/app.js")) }}"></script>    
+        <script src="{{ asset(mix("build/js/app.js")) }}"></script>    
     </head>
     <body class="{{ App::environment('local')?'test':'' }}">
 		@yield('main')

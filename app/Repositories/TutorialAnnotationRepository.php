@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\TutorialAnnotation;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class TutorialAnnotationRepository extends BaseRepository
 {

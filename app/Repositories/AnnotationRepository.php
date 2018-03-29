@@ -4,7 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Annotation;
 use App\Models\AnnotationUser;
-use App\Models\Source;
+use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Repositories\BaseRepository;
 use App\Models\Relation;
 use App\Repositories\ChallengeRepository;
 use DB;
@@ -43,6 +44,19 @@ class AnnotationRepository extends BaseRepository
 	}
 
 	/**
+	 * Get a random reference annotation
+	 *
+	 * @param  App\Models\Relation $relation 
+	 * @param  App\Models\User $user
+	 * @return App\Models\Annotation
+	 */
+	public function getRandomNegativeReference(Relation $relation, $user=null)
+	{
+		$source = Source::where('slug','reference')->first();
+		return $this->getRandom($relation, $user, $source, null, true);
+	}
+
+	/**
 	 * Get a random pre-annotated annotation
 	 *
 	 * @param  App\Models\Relation $relation
@@ -60,11 +74,11 @@ class AnnotationRepository extends BaseRepository
 	 *
 	 * @param  App\Models\Relation $relation
 	 * @param  App\Models\User|null $user
-	 * @param  App\Models\Source $source
+	 * @param  Gwaps4nlp\Models\Source $source
 	 * @param  int|null $id
 	 * @return App\Models\Annotation
 	 */
-	public function getRandom(Relation $relation, $user=null, $source, $id = null)
+	public function getRandom(Relation $relation, $user=null, $source, $id = null, $negative = false )
 	{
 		$query=$this->model->select('annotations.*')
 			->where('annotations.relation_id','=',$relation->id)->where('playable','=',1)
@@ -72,22 +86,28 @@ class AnnotationRepository extends BaseRepository
 		if($user)
 		$query	->leftJoin('annotation_users',function($join) use ($user,$relation) {
 				$join->on('annotations.sentence_id','=','annotation_users.sentence_id')
+					->on('annotations.id','=','annotation_users.annotation_id')
 					->on('annotations.relation_id','=','annotation_users.relation_id')
 					->on('annotation_users.user_id','=',DB::raw($user->id));
-					if($relation->type=='trouverTete')
-						$join->on('annotations.word_position','=','annotation_users.word_position');
-					else 
-						$join->on('annotations.governor_position','=','annotation_users.governor_position');
 				})
 				->whereRaw('annotation_users.id is null');
+		
+		if($negative){
+			$query->where(function ($query) {
+                $query->where('annotations.word_position', '=', 99999)
+                      ->orWhere('annotations.governor_position', '=', 99999);
+            });
+		} else {
+			$query->where('annotations.word_position', '!=', 99999)->where('annotations.governor_position', '!=', 99999);
+		}
 
 		if(isset($this->corpus) && $source->id!=1){
-			if(!empty($this->corpus->evaluation_corpora->pluck('id')->toArray())){
-				$corpora_ids = array_merge([$this->corpus->id],$this->corpus->evaluation_corpora->pluck('id')->toArray(),$this->corpus->subcorpora->pluck('id')->toArray());
+			// if(!empty($this->corpus->evaluation_corpora->pluck('id')->toArray())){
+				$corpora_ids = array_merge([$this->corpus->id],$this->corpus->subcorpora->pluck('id')->toArray());
 				$query->whereIn('annotations.corpus_id', $corpora_ids);
-			} else 
-				$query->where('annotations.corpus_id', '=', $this->corpus->id);
-			$query->whereIn('annotations.source_id', [Source::getPreAnnotated()->id,Source::getPreAnnotatedForEvaluation()->id]);
+			// } else 
+			// 	$query->where('annotations.corpus_id', '=', $this->corpus->id);
+			$query->whereIn('annotations.source_id', [Source::getPreAnnotated()->id]);
 		}
 		elseif(isset($this->corpus) && $source->id==1 && is_array($this->corpus->bound_corpora->pluck('id')->toArray())){
 			if(!empty($this->corpus->bound_corpora->pluck('id')->toArray())){
@@ -153,7 +173,7 @@ class AnnotationRepository extends BaseRepository
 	 * @param  App\Models\Relation $relation
 	 * @param  array $not_in
 	 * @param  App\Models\User $user	 
-	 * @param  App\Models\Source $source	 
+	 * @param  Gwaps4nlp\Models\Source $source	 
 	 * @param  int $corpus_id	 
 	 * @return App\Models\Annotation
 	 */
@@ -216,7 +236,7 @@ class AnnotationRepository extends BaseRepository
 					->where('annotations.sentence_id','=',$annotation->sentence_id)
 					->where('annotations.source_id','=',$annotation->source_id)
 					->where('annotations.word_position','=',$annotation->word_position);			
-				$expected_answers = $query->lists('annotations.governor_position');				
+				$expected_answers = $query->pluck('annotations.governor_position');				
 			}
 			elseif($annotation->relation->type=='trouverDependant'){
 				$annotation->relation_type="trouverDependant";
@@ -226,7 +246,7 @@ class AnnotationRepository extends BaseRepository
 						->where('annotations.sentence_id','=',$annotation->sentence_id)
 						->where('annotations.source_id','=',$annotation->source_id)
 						->where('annotations.governor_position','=',$annotation->governor_position);
-				$expected_answers = $query->lists('annotations.word_position');						
+				$expected_answers = $query->pluck('annotations.word_position');						
 			}
 		    foreach($expected_answers as $key=>$expected_answer)
 				$expected_answers[$key] = strval($expected_answer);
@@ -269,7 +289,7 @@ class AnnotationRepository extends BaseRepository
 					->where('annotations.sentence_id','=',$annotation->sentence_id)
 					->where('annotations.source_id','=',$annotation->source_id)
 					->where('annotations.word_position','=',$annotation->word_position);			
-				$expected_answers = $query->lists('annotations.governor_position');				
+				$expected_answers = $query->pluck('annotations.governor_position');				
 			}
 			elseif($annotation->relation->type=='trouverDependant'){
 				$annotation->relation_type="trouverDependant";
@@ -279,7 +299,7 @@ class AnnotationRepository extends BaseRepository
 						->where('annotations.sentence_id','=',$annotation->sentence_id)
 						->where('annotations.source_id','=',$annotation->source_id)
 						->where('annotations.governor_position','=',$annotation->governor_position);
-				$expected_answers = $query->lists('annotations.word_position');						
+				$expected_answers = $query->pluck('annotations.word_position');						
 			}
 		    foreach($expected_answers as $key=>$expected_answer)
 				$expected_answers[$key] = strval($expected_answer);
@@ -550,14 +570,14 @@ class AnnotationRepository extends BaseRepository
 					->where('annotations.sentence_id','=',$annotation->sentence_id)
 					->where('annotations.source_id','=',$annotation->source_id)
 					->where('annotations.word_position','=',$annotation->word_position);			
-				$expected_answers = $query->lists('annotations.governor_position');
+				$expected_answers = $query->pluck('annotations.governor_position');
 			} elseif($relation->type=='trouverDependant'){
 				$query=$this->model
 						->where('annotations.relation_id','=',$relation->id)
 						->where('annotations.sentence_id','=',$annotation->sentence_id)
 						->where('annotations.source_id','=',$annotation->source_id)
 						->where('annotations.governor_position','=',$annotation->governor_position);				
-				$expected_answers = $query->lists('annotations.word_position');
+				$expected_answers = $query->pluck('annotations.word_position');
 			}
 		    foreach($expected_answers as $key=>$expected_answer)
 				$expected_answers[$key] = strval($expected_answer);

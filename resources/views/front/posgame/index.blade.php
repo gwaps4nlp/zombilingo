@@ -4,9 +4,9 @@
 <?php
 $ids = [];
 ?>
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="row">
-    <div class="col-md-10 col-md-offset-1 center" id="blocJeu">
+    <div class="col-md-10 col-md-offset-1 center" id="block-game"> -->
 
         <div class="row">
 
@@ -74,10 +74,14 @@ $ids = [];
                         </td>
 
                         <!--ANNOTATION CELL-->
-                        <td class="cell" id="cell_{{ $annotation->id }}" style="text-align: left;padding-left: 0px; width:35%; padding-top:15px;word-wrap:break-word;">
+                        <td class="cell" id="cell_{{ $annotation->id }}">
                             <ul class="nav nav-tabs" name="tab_{{ $annotation->id }}">
-                                <li class="active"><a href="#vs_{{ $annotation->id }}" data-toggle="tab">Versus</a></li>
-                                <li><a href="#tab_other_{{ $annotation->id }}" data-toggle="tab">Ni l'un ni l'autre !</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#vs_{{ $annotation->id }}" data-toggle="tab" role="tab">Versus</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#tab_other_{{ $annotation->id }}" data-toggle="tab" role="tab">Ni l'un ni l'autre !</a>
+                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="vs_{{ $annotation->id }}">
@@ -132,7 +136,7 @@ $ids = [];
                                 <!--<label><input type="radio" style="display : none" value="0" name="answer[{{ $annotation->id }}]" />-->
                                     <br/>
                                 </div>
-                                <div class="tab-pane" id="tab_other_{{ $annotation->id }}">
+                                <div class="tab-pane tab-other" id="tab_other_{{ $annotation->id }}">
                                     <div class="text-center" style="margin-top:15px">
                                         <!--                                        <button type="button" class="btn btn_unk btn-primary" name="unk_{{ $annotation->id }}" id="unk_{{ $annotation->id }}" 
                                                                                         value="UNK_0">
@@ -155,7 +159,7 @@ value="UNK_0"/>-->
                             </div>
                         </td>
                         <td valign="bottom" id="checked_{{ $annotation->id }}" style="text-align:center; visibility:hidden">
-                            <i class="glyphicon glyphicon-ok" style="color: lightgreen;font-size:1.5em;"></i>
+                            <i class="fa fa-check-circle" style="color: lightgreen;font-size:1.5em;"></i>
                             <div id="checked_txt_{{ $annotation->id }}"></div>
                         </td>
                         </tbody>
@@ -192,15 +196,26 @@ value="UNK_0"/>-->
 
         </div>
         <div id="response-div" style="display : none"></div>
-
+<!-- 
 
 
     </div>
-</div>
+</div> -->
 @stop
 
 @section('css')
 <style type="text/css">
+    .cell {
+        vertical-align: top;
+        text-align: left;
+        padding-left: 0px;
+        width:35%;
+        padding-top:15px;
+        word-wrap:break-word;        
+    }
+    .tab-other {
+        min-height: 96px;
+    }
     .main-button {
         font-size: 1.2em;
         /*        width: 155px;*/
@@ -658,7 +673,7 @@ value="UNK_0"/>-->
 
         $.ajax({
             method: 'POST',
-            url: url('pos-game/index'),
+            url: base_url + 'pos-game/index',
             data: $(this).serialize(),
             complete: function (response) {
 

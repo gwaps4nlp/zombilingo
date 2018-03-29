@@ -67,7 +67,6 @@ class Duel extends Model
 	{
 		return $this->belongsTo('App\Models\Relation');
 	}
-	
 	/**
 	 * One to One relation
 	 *

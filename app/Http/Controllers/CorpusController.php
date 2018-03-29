@@ -6,9 +6,13 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\CorpusExportRequest;
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
-use App\Repositories\LicenseRepository;
+use Gwaps4nlp\Repositories\UserRepository;
+use Gwaps4nlp\Repositories\LicenseRepository;
+use Gwaps4nlp\Repositories\LanguageRepository;
 use App\Repositories\AnnotationRepository;
+use App\Repositories\CorpusRepository;
+use App\Repositories\RelationRepository;
+use App\Repositories\SentenceRepository;
 use App\Services\ConllParser;
 use App\Services\ConllExporter;
 use App\Services\Talismane;
@@ -19,22 +23,21 @@ use App\Http\Requests\CorpusRequest;
 use App\Http\Requests\ExportCorpusRequest;
 use App\Http\Requests\CorpusFileRequest;
 use App\Http\Requests\CorpusCreateRequest;
-use App\Repositories\LanguageRepository;
-use App\Repositories\CorpusRepository;
-use App\Repositories\RelationRepository;
+
 use App\Models\ExportedCorpus;
 use App\Models\Annotation;
+use App\Models\AnnotationUser;
 use App\Models\Parser;
 use App\Models\StatsParser;
 use App\Models\Relation;
 use App\Models\Corpus;
 use App\Models\CatPos;
-use Storage, Response;
+use Storage, Response, DB;
 
 use Illuminate\Http\RedirectResponse;
 use App\Jobs\ParseCorpus;
 use App\Jobs\ExportCorpus;
-use Event, Queue;
+use Event, Queue, Config, App;
 
 use App\Services\SeleniumServer;
 use App\Jobs\Selenium;
@@ -63,9 +66,8 @@ class CorpusController extends Controller
      * @param  int $id the id of the corpus 
      * @return Illuminate\Http\Response
      */
-    public function getShow($id)
+    public function getShow(Corpus $corpus)
     {
-        $corpus = $this->corpus->getById($id);
         return view('back.corpus.show',compact('corpus'));
     }
     
@@ -85,34 +87,32 @@ class CorpusController extends Controller
     /**
      * Show a form to edit a corpus.
      *
-     * @param  int $id the id of the corpus to edit     
+     * @param  Corpus $corpus the corpus to edit     
      * @return Illuminate\Http\Response
      */
-    public function getEdit($id)
+    public function getEdit(Corpus $corpus)
     {
-        $corpus = $this->corpus->getById($id);
         $languages = $this->language->getList();
         $licenses = $this->license->getList();  
         $reference_corpora = $this->corpus->getListReference();
         $evaluation_corpora = $this->corpus->getListEvaluation();
         $preannotated_corpora = $this->corpus->getListPreAnnotated(); 
         return view('back.corpus.edit',compact('corpus','languages','licenses','reference_corpora','evaluation_corpora','preannotated_corpora'));
-    } 
+    }
     
     /**
      * Save the update of a corpus.
      *
-     * @param  int $id the id of the corpus to save
+     * @param  Corpus $corpus the corpus to save
      * @param  App\Http\Requests\CorpusCreateRequest $request
      * @return Illuminate\Http\Response
      */
-    public function postEdit($id, CorpusCreateRequest $request)
+    public function postEdit(Corpus $corpus, CorpusCreateRequest $request)
     {
-        $corpus = $this->corpus->getById($id);
         $corpus->update($request->all());
         $this->attachCorpora($corpus,$request);
         return $this->getIndex();
-    }   
+    }
 
     /**
      * Show the form to create a new corpus.
@@ -204,9 +204,12 @@ class CorpusController extends Controller
      */
     public function getImportFromUrl(Request $request)
     {
+        $melt = new Talismane();
+        $melt->getVersion();
         $sentences='';
         $corpora = $this->corpus->getList();
-        return view('back.corpus.import-url',compact('corpora','sentences'));
+        $sentence_splitters = Config::get('parser.sentence-splitter');
+        return view('back.corpus.import-url',compact('corpora','sentences','sentence_splitters'));
     }
     
     /**
@@ -249,7 +252,7 @@ class CorpusController extends Controller
                     $text = preg_replace('#</?'.$tag.'[^>]*>#is', '', $text);
                 }
 
-            }
+            }   
         }
 
         $content = $dom->getElementById('bodyContent');
@@ -261,8 +264,8 @@ class CorpusController extends Controller
         $sentences = $this->cleanText($sentences);
 
         Storage::disk('local')->put('original-text.txt', $sentences);
-
-        return view('back.corpus.import-url',compact('sentences','url'));
+        $sentence_splitters = Config::get('parser.sentence-splitter');
+        return view('back.corpus.import-url',compact('sentences','url','sentence_splitters'));
     }
 
     /**
@@ -294,9 +297,12 @@ class CorpusController extends Controller
 
         $text = $request->input('raw-text');
         $url = $request->input('url');
-        $parser = new Talismane();
+        $sentence_splitter = $request->input('sentence_splitter');
+        App::bind('App\Services\ParserInterface', Config::get('parser.'.$sentence_splitter.'.service'));
+        $parser = App::make('App\Services\ParserInterface');
         $sentences_splitted = $parser->splitSentences($text);
-        return view('back.corpus.sentences-splitted',compact('sentences_splitted','url','parser'));
+        $parsers = Config::get('parser.parser');
+        return view('back.corpus.sentences-splitted',compact('sentences_splitted','url','parser','parsers'));
     }
 
     /**
@@ -341,6 +347,8 @@ class CorpusController extends Controller
     public function postParse(Request $request){
         $talismane = new Talismane($request->input('sentence_filter'));
         $grew = new Grew($request->input('sentence_filter'));
+        $grew->files = [];
+        $grew->commands = [];
         if($request->hasFile('conll')){
             $result = $talismane->parseFromConll($request->file('conll')->getRealPath());
             $result_grew = $grew->parseFromConll($request->file('conll')->getRealPath());
@@ -351,8 +359,10 @@ class CorpusController extends Controller
             $text_id = $request->input('url')."_".date("Ymd");
             $result = $talismane->parse($text,$text_id);
             $result_grew = $grew->parse($text,$text_id);
+            // $result_grew = "";
             $array_conll_talismane = $this->ConllToArray($result);
-            $array_conll_grew = $this->ConllToArray($result_grew);            
+            $array_conll_grew = $this->ConllToArray($result_grew);
+            // $array_conll_grew = [];
         }
 
         $corpora = $this->corpus->getList();
@@ -373,6 +383,7 @@ class CorpusController extends Controller
         $start = new \Carbon\Carbon($start_date);
         $end = new \Carbon\Carbon($end_date);
         $days = $start->diff($end)->days;
+
         for($i = 0; $i <= $days; $i++)
         {
             $date = '';
@@ -390,7 +401,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function getCompare(Request $request){
 
         if($request->has('date'))
@@ -398,21 +409,35 @@ class CorpusController extends Controller
         else
             $date = \Carbon\Carbon::now()->subDay()->format('Y-m-d');
 
-        $corpus = $this->corpus->getById(14);
-        $corpora = $this->corpus->getList();
-        $stats_parser = StatsParser::getStats($date);
-        $stats_parser_total = StatsParser::getStatsTotal($date);
-        $stats_parser_except_root = StatsParser::getStatsTotal($date, false, ['root']);
-        $stats_parser_playable = StatsParser::getStatsTotal($date, true);
+
+        $corpora_list = $this->corpus->getListEvaluation();
+        $corpora = $this->corpus->getEvaluation();
+
+        if($request->has('corpus_id'))
+            $corpus_evaluation = $this->corpus->getById($request->input('corpus_id'));
+        else
+            $corpus_evaluation = $this->corpus->getById($corpora->last()->id);
+
+        $corpus_evaluated = $corpus_evaluation->evaluated_corpus()->first()->id;
+
+        $stats_parser = StatsParser::getStats($corpus_evaluation, $date);
+        if($stats_parser->isEmpty()){
+            $date = StatsParser::select('date')->where('corpus_control',$corpus_evaluation->id)->orderBy('date','desc')->first()->date;
+            $stats_parser = StatsParser::getStats($corpus_evaluation, $date);
+        }
+        $stats_parser_tot = StatsParser::getStatsTotal($corpus_evaluation, $date, false);
+        $stats_parser_total = StatsParser::getStatsTotal($corpus_evaluation, $date, false, ['ponct']);
+        $stats_parser_except_root = StatsParser::getStatsTotal($corpus_evaluation, $date, false, ['ponct','root']);
+        $stats_parser_playable = StatsParser::getStatsTotal($corpus_evaluation, $date, true);
         $rate_correct_answers["trouverTete"] = StatsParser::getRateCorrectAnswers("trouverTete");
         $rate_correct_answers["trouverDependant"] = StatsParser::getRateCorrectAnswers("trouverDependant");
         $rate_correct_answers_incorrect_relation["trouverTete"] = StatsParser::getRateCorrectAnswersIncorrectRelation("trouverTete");
         $rate_correct_answers_incorrect_relation["trouverDependant"] = StatsParser::getRateCorrectAnswersIncorrectRelation("trouverDependant");
 
-        $parser_id = ($request->input('parser_id'))?$request->input('parser_id'):'best';
-        $stats_relation = StatsParser::getStatsRelationByRelation($parser_id);
-        $scores_by_parser = StatsParser::getScores();
-        $stats_by_relation = [];        
+        $parser_id = ($request->has('parser_id'))?$request->input('parser_id'):'game';
+        $stats_relation = StatsParser::getStatsRelationByRelation($corpus_evaluation->id, $parser_id);
+        $scores_by_parser = StatsParser::getScores($corpus_evaluation);
+        $stats_by_relation = [];
         $scores = [];
         $data_gnuplot = "Parser\t";
 
@@ -439,7 +464,7 @@ class CorpusController extends Controller
         foreach($stats_parser as $stat){
             if(!isset($parsers[$stat->parser_id])){
                 $parsers[$stat->parser_id] = $stat->parser_name;
-                $parsers_name[] = '"'.$stat->parser_name.'"';            
+                $parsers_name[] = '"'.$stat->parser_name.'"';
             }
             if(!isset($relations[$stat->relation_name])){
                 $relations[$stat->relation_name] = $stat->relation_id;
@@ -453,15 +478,15 @@ class CorpusController extends Controller
         foreach($stats as $relation_name=>$stat){
             $data_gnuplot .= '"'.str_replace("_","\\\\_",$relation_name)."\"\t";
             $data_relation = [];
-            foreach($parsers as $parser_id=>$parser){
-                $data_relation[]=$stat[$parser_id]->fscore;
+            foreach($parsers as $_parser_id=>$parser){
+                $data_relation[]=$stat[$_parser_id]->fscore;
             }
             $data_gnuplot .= join($data_relation,"\t")."\n";
         }
         Storage::put('fscore.dat', $data_gnuplot);
         $command = config('gnuplot.binary')." -e \"output='".public_path('img')."/test.svg';datafile='".storage_path('app')."/fscore.dat'\" ".storage_path('gnuplot')."/fscore.gnu";
         exec($command,$output,$retour);
-        return view('back.corpus.compare',compact('parser_id','corpora','corpus','stats','parsers','relations','a_relations','stats_by_relation','scores','request','relations_confusion_matrix','rate_correct_answers','rate_correct_answers_incorrect_relation','stats_parser_total','stats_parser_except_root','stats_parser_playable','date'));     
+        return view('back.corpus.compare',compact('parser_id','corpora','corpora_list','corpus_evaluation','stats','parsers','relations','a_relations','stats_by_relation','scores','request','relations_confusion_matrix','rate_correct_answers','rate_correct_answers_incorrect_relation','stats_parser_tot','stats_parser_total','stats_parser_except_root','stats_parser_playable','date'));
 
     }
 
@@ -661,10 +686,10 @@ class CorpusController extends Controller
         if(!$mode) $mode = 'insert';
 
         $parser = new ConllParser($corpus,$filePath,$sentence_filter,$mode);
-        // $parser->parse();
-        $job = (new ParseCorpus($parser));
+        $parser->parse();
+        // $job = (new ParseCorpus($parser));
 
-        $this->dispatch($job);
+        // $this->dispatch($job);
 
         return view('back.corpus.post-import',compact('corpus'));
         // return new RedirectResponse(url('/corpus/post-import'));
@@ -684,9 +709,9 @@ class CorpusController extends Controller
         foreach($request->input("files") as $file){
             $filePath = storage_path()."/app/".$file;
             $parser = new ConllParser($corpus,$filePath);
-            // $parser->parse();
-            $job = (new ParseCorpus($parser));
-            $this->dispatch($job);
+            $parser->parse();
+            // $job = (new ParseCorpus($parser));
+            // $this->dispatch($job);
         }
         return view('back.corpus.post-save-parse',compact('corpus'));
     }
@@ -747,7 +772,7 @@ class CorpusController extends Controller
     public function getExport()
     {
         $corpora = $this->corpus->getList();
-        $exported_corpuses = ExportedCorpus::whereNotNull('corpus_id')->orderBy('created_at','desc')->get();
+        $exported_corpuses = ExportedCorpus::whereNotNull('corpus_id')->orderBy('created_at','desc')->paginate();
         return view('back.corpus.export',compact('corpora','corpus_id','exported_corpuses'));
     }
 
@@ -789,11 +814,60 @@ class CorpusController extends Controller
         Annotation::computeScore($request->input('score_init'),$request->input('weight_level'),$request->input('weight_confidence'));
 
         $parser = new ConllExporter($corpus,Auth::user(),$request->input('type_export'));
-        // $parser -> export();
         $job = (new ExportCorpus($parser));
 
         $this->dispatch($job);
         return new RedirectResponse(url('/corpus/post-export'));
+    }
+
+    /**
+     * Compute the complexity of all the sentences of the database
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function getComputeComplexity(SentenceRepository $sentences_repo, CorpusRepository $corpus_repo)
+    {
+
+        $corpora = $corpus_repo->getAll();
+        
+        
+        foreach($corpora as $corpus){
+            if($corpus->id!=43)
+                continue;
+            $i = 0;
+            $sentences = $corpus->sentences;
+
+            $parsers = DB::table('parsers')->whereExists(function ($query) use ($corpus){
+                $query->select(DB::raw(1))
+                      ->from('annotations')
+                      ->join('annotation_parser','annotation_id','=','annotations.id')
+                      ->whereRaw('annotation_parser.parser_id = parsers.id')
+                      ->whereRaw('annotations.corpus_id ='.$corpus->id);
+            })->get();
+        
+            foreach($sentences as $sentence){
+
+                $complexity = 0;
+                if(count($parsers)>0){
+                    echo "parsers<br/>";
+                    foreach($parsers as $parser){
+                        echo $parser->id."<br/>";
+                        $complexity_parser = $sentence->getComplexity($parser->id);
+                        if($complexity_parser > $complexity)
+                            $complexity = $complexity_parser;
+                     
+                    }
+                } else {
+                    $complexity = $sentence->getComplexity();
+                }
+                echo $sentence->id." : ".$complexity."<br/>";
+                $sentence->complexity = $complexity;
+                $sentence->save();
+
+            }
+        }
+
+        return view('back.test.test');
     }
 
     /**
@@ -806,6 +880,63 @@ class CorpusController extends Controller
     {
         $this->corpus->destroy($request->input('id'));
         return $this->getIndex();
+    }
+
+    /**
+     * Split Annotations
+     *
+     * @param App\Http\Requests\CorpusRequest $request
+     * @return Illuminate\Http\Response
+     */
+    public function getSplitAnnotations()
+    {
+        $annotations = Annotation::where('word','LIKE','%\_%')->take(2)->get();
+        $relation_dep_cpd = Relation::where('slug','dep_cpd')->first();
+        foreach($annotations as $original_annotation){
+            $word_splitted = explode('_' , $original_annotation->word);
+            $shift = count($word_splitted)-1;
+            $this->shiftRight($original_annotation->sentence, $original_annotation->word_position, $shift);
+            $parsers = $original_annotation->parsers;
+
+            foreach($word_splitted as $index => $word){
+                echo $index."=>".$word;
+                if($index==0){
+                    $original_annotation->word = $word;
+                    $original_annotation->save();
+                } else {
+                    $new_annotation = Annotation::firstOrCreate([
+                        'corpus_id' => $original_annotation->corpus_id,
+                        'sentence_id' => $original_annotation->sentence->id,
+                        'relation_id' => $relation_dep_cpd->id,
+                        'word' => $word,
+                        'word_position' => $original_annotation->word_position + $index,
+                        'governor_position' => $original_annotation->word_position,
+                        'playable' => 0,
+                    ]);
+                    foreach($original_annotation->parsers as $parser){
+                        $new_annotation->parsers()->save($parser);
+                        echo $parser->name."<br/>";
+                    }               
+                }
+            }
+            echo $original_annotation->word."<br/>";
+            echo $original_annotation->sentence->content."<br/>";
+        }
+
+        return view('back.test.test');
+    }
+    /**
+     * Split Annotations
+     *
+     * @param App\Http\Requests\CorpusRequest $request
+     * @return Illuminate\Http\Response
+     */
+    private function shiftRight($sentence, $index, $shift)
+    {
+        Annotation::where('sentence_id', '=', $sentence->id)->where('word_position','>',$index)->update(['word_position' => DB::raw("word_position + $shift") ]);
+        Annotation::where('sentence_id', '=', $sentence->id)->where('governor_position','>',$index)->update(['governor_position' => DB::raw("governor_position + $shift") ]);
+        AnnotationUser::where('sentence_id', '=', $sentence->id)->where('word_position','>',$index)->update(['word_position' => DB::raw("word_position + $shift") ]);
+        AnnotationUser::where('sentence_id', '=', $sentence->id)->where('governor_position','>',$index)->update(['governor_position' => DB::raw("governor_position + $shift") ]);
     }
 
 }

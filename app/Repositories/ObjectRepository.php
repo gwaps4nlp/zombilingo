@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Object;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class ObjectRepository extends BaseRepository
 {

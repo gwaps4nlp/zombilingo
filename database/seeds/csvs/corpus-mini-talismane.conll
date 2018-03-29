@@ -1,0 +1,41 @@
+# sentid: https://fr.wikipedia.org/wiki/Star_Wars_20170912_1443_1624
+# sentence-text: En accord avec les lois du genre space opera, l'action se déroule "il y a bien longtemps, dans une galaxie lointaine" et se fonde sur la lutte entre les chevaliers Jedi et les Sith.
+# parser: talismane-4.0.3 + frenchLanguagePack-4.0.0
+1	En	en	P	P		14	mod	14	mod
+2	accord	accord	N	NC	n=s|g=m	1	obj.p	1	obj.p
+3	avec	avec	P	P		2	dep	2	dep
+4	les	les	D	DET	n=p	5	det	5	det
+5	lois	loi	N	NC	n=p|g=f	3	obj.p	3	obj.p
+6	du	de	P+D	P+D	n=s|g=m	5	dep	5	dep
+7	genre	genre	N	NC	n=s|g=m	6	obj.p	6	obj.p
+8	space	_	A	ADJ		7	mod	7	mod
+9	opera	_	ADV	ADV		14	mod	14	mod
+10	,	,	PONCT	PONCT		9	ponct	9	ponct
+11	l'	le	D	DET	n=s	12	det	12	det
+12	action	action	N	NC	n=s|g=f	14	suj	14	suj
+13	se	se	CL	CLR	n=p,s|p=3	14	aff	14	aff
+14	déroule	dérouler	V	V	n=s|t=P,S|p=1,3	0	root	0	root
+15	"	"	PONCT	PONCT		14	ponct	14	ponct
+16	il_y_a	il_y_a	P	P		14	mod	14	mod
+17	bien	bien	ADV	ADV		18	mod	18	mod
+18	longtemps	longtemps	ADV	ADV		16	mod	16	mod
+19	,	,	PONCT	PONCT		18	ponct	18	ponct
+20	dans	dans	P	P		14	mod	14	mod
+21	une	une	D	DET	n=s|g=f	22	det	22	det
+22	galaxie	galaxie	N	NC	n=s|g=f	20	obj.p	20	obj.p
+23	lointaine	lointain	A	ADJ	n=s|g=f	22	mod	22	mod
+24	"	"	PONCT	PONCT		23	ponct	23	ponct
+25	et	et	C	CC		14	coord	14	coord
+26	se	se	CL	CLR	n=p,s|p=3	27	aff	27	aff
+27	fonde	fondre	V	VS	n=s|t=S|p=1,3	25	dep.coord	25	dep.coord
+28	sur	sur	P	P		27	mod	27	mod
+29	la	la	D	DET	n=s|g=f	30	det	30	det
+30	lutte	lutte	N	NC	n=s|g=f	28	obj.p	28	obj.p
+31	entre	entre	P	P		30	dep	30	dep
+32	les	les	D	DET	n=p	33	det	33	det
+33	chevaliers	chevalier	N	NC	n=p|g=m	31	obj.p	31	obj.p
+34	Jedi	_	N	NPP		33	mod	33	mod
+35	et	et	C	CC		33	coord	33	coord
+36	les	les	D	DET	n=p	37	det	37	det
+37	Sith	_	N	NPP		35	dep.coord	35	dep.coord
+38	.	.	PONCT	PONCT		37	ponct	37	ponct

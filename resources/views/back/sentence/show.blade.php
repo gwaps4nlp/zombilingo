@@ -1,4 +1,4 @@
-@extends('back.template')
+	@extends('back.template')
 
 @section('content')
 
@@ -13,26 +13,26 @@
 	<tr>
 		<th>index</th>
 		<th>word</th>
-		<th>gov_word</th>
-		<th>rel</th>	
-		<th>score</th>
 		<th>lemma</th>
 		<th>cat</th>
 		<th>pos</th>
-		<th>gov</th>
 		<th>feat</th>
+		<th>gov</th>		
+		<th>gov_word</th>
+		<th>rel</th>	
+		<th>score</th>
 		<th>parser</th>
 	</tr>
 </thead>
 <?php 
-$columns = array('word_position','word','governor_word','relation_name','score','lemma','category_id','pos_id','governor_position','features');
+$columns = array('word_position','word','lemma','category','pos','features','governor_position','governor_word','relation_name','score');
 ?>
 @foreach($annotations as $annotation)
 
 <tr class="<?php echo ($annotation->isUser())?'user':''?>">
 	@foreach($columns as $column)
 		
-	<td>
+	<td data-field="{{ $column }}" data-field="{{ $column }}" data-value="{{ $annotation->$column }}">
 		@if($column=='governor_word')
 			@foreach($annotations->where('word_position', $annotation->governor_position)->slice(0,1) as $gov)
 				{{ $gov->word }}

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Level;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class LevelRepository extends BaseRepository
 {

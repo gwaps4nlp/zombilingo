@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Challenge;
+use Gwaps4nlp\Repositories\BaseRepository;
 
 class ChallengeRepository extends BaseRepository
 {
@@ -36,7 +37,7 @@ class ChallengeRepository extends BaseRepository
 	 */
 	public function getList()
 	{
-		return $this->model->lists('name','id');
+		return $this->model->pluck('name','id');
 	}
 
 	/**

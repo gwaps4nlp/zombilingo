@@ -10,24 +10,6 @@ use App\Http\Controllers\Controller;
 
 class AssetController extends Controller
 {
-
-    /**
-     * Send an asset.
-     *
-     * @param  Illuminate\Http\Request $request
-     * @return Illuminate\Http\Response
-     */
-    public function get(Request $request)
-    {
-        if(!preg_match('/^js/',$request->input('asset')))
-            return "";
-		$response = Response::make(View::make(str_replace('.','-',$request->input('asset')))->render(), '200');
-
-		$response->header('Content-Type', "application/javascript");
-
-		return $response;
-
-    }
 	
     /**
      * Send a conll file.

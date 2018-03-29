@@ -18,6 +18,17 @@ class Challenge extends Model
 	public function corpus()
 	{
 		return $this->belongsTo('App\Models\Corpus');
+	}
+
+	/**
+	 * belongsTo relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\belongsTo
+	 */
+	public function count_annotations_produced()
+	{
+		$annotations_done = \App\Models\AnnotationUser::countByCorpus($this->corpus);
+		return $annotations_done;
 	}    
 
 }

@@ -25,11 +25,11 @@
 		<td>{{ $challenge->end_date }}</td>
 
 		<td>
-		<a href="{{ url('challenge/edit',['id'=>$challenge->id]) }}" style="margin-left:20px;"><span title="edit" class="glyphicon glyphicon-edit"></span></a>
+		<a href="{{ url('challenge/edit',['id'=>$challenge->id]) }}" style="margin-left:20px;"><i title="edit" class="fa fa-edit"></i></a>
 		{!! Form::open(['url' => 'challenge/delete', 'method' => 'post', 'role' => 'form','style'=>'display:inline']) !!}
 		<input type="hidden" name="id" value="{{ $challenge->id }}" />
 		<button type="submit" title="delete" class="btn btn-link" onclick="return confirm('Etes-vous sûr de vouloir supprimer ce challenge ?')">
-			<span class="glyphicon glyphicon-trash"></span>
+			<i class="fa fa-trash"></i>
 		</button>
 		{!! Form::close() !!}
 

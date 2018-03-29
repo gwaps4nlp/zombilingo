@@ -9,6 +9,6 @@ Trouve le complément (du verbe, de l'adjectif ou de l'adverbe) introduit par <e
   </ul>
 Parfois c'est un <em>que</em> qui peut être l'object indirect recherché (il est alors équivalent à <em>de ce que</em>) :
   <ul>
-	<li>&nbsp;•&nbsp;<span class=highlight>informez</span> votre dentiste <span class=solution>que</span> vous allez être traîter par Aclasta.</li>
+	<li>&nbsp;•&nbsp;<span class=highlight>informez</span> votre dentiste <span class=solution>que</span> vous allez être traîté par Aclasta.</li>
   </ul>
 </em>

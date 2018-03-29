@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ChangeLocale;
 use App\Repositories\ScoreRepository;
-use App\Repositories\UserRepository;
+use Gwaps4nlp\Repositories\UserRepository;
 use App\Repositories\ExportedCorpusRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\ChallengeRepository;
 use Illuminate\Support\Facades\Request;
+use App\Models\LogDB;
+use Session;
 
 class HomeController extends Controller
 {
@@ -41,12 +43,17 @@ class HomeController extends Controller
 		)
 	{
 		$challenge = $challenges->getOngoing();
-		$scores = $score->leaders(10,$challenge);
-		$scores_annotations = $annotation_user->leaders(10,$challenge);
+		$scores = $score->leaders(10,'points',$challenge);
+		$scores_annotations = $score->leaders(10,'number_annotations',$challenge);
 		$numberUsers = $user->count();
 		$numberConnectedUsers = $user->countConnected();
 		$connectedUsers = $user->getConnected();
 		$lastRegisteredUser = $user->getLastRegistered();
+		LogDB::create([
+			'session_id' => Session::getId(),
+			'referer' => request()->headers->get('referer'),
+			'url' => request()->fullUrl(),
+		]);
 		return view('front.home',compact('scores','challenge','numberUsers','numberConnectedUsers','lastRegisteredUser','connectedUsers','scores_annotations'));
 	}
 

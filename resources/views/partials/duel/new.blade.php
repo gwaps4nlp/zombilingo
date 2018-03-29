@@ -1,20 +1,20 @@
-<h1>{{ trans('game.new-duel') }}</h1>
+<h2 class="text-center">{{ trans('game.new-duel') }}</h2>
 {!! Form::open(['url' => 'duel/new', 'id' => 'form-new-duel', 'method' => 'post', 'role' => 'form']) !!}
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-8 offset-2">
 		{!! Form::control('selection', 0, 'relation_id', $errors, "1-".trans('game.choice-phenomenon'),$relations,null,"Phénomène au hasard") !!}
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-8 offset-2">
 		{!! Form::control('selection', 0, 'challenger_id', $errors, "2-".trans('game.choice-opponent')."*",$enemies,null,"Duel ouvert") !!}
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-8 offset-2">
 		<?php
 		$nb_turns = array( '10'=>10,'20'=>20,'50'=>50,'100'=>100);
 		?>
@@ -23,10 +23,10 @@
 </div>
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-8 offset-2 text-center">
 		<div class="form-group" style="margin-top:25px;">
-			<a class="btn btn-danger btn-lg" href="{{ url('duel') }}">{{ trans('site.cancel') }}</a>
 			<input type="submit" id="submitNewDuel" value="{{ trans('game.begin-the-duel') }}" class="btn btn-success btn-lg" />
+			<a class="btn btn-danger" href="{{ url('duel') }}">{{ trans('site.cancel') }}</a>
 		</div>
 	</div>
 </div>

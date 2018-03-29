@@ -36,6 +36,11 @@ class SourceTableSeeder extends Seeder
             'id' => 5,
             'slug' => 'evaluation',
             'description' => 'Pre-annotated corpus for evaluation'
+        ]); 
+        Source::create([
+            'id' => 6,
+            'slug' => 'training',
+            'description' => 'annotations produites par un joueur lors sèquences d entrainement'
         ]);        
     }
   

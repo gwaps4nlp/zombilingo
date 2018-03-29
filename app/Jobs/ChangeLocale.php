@@ -3,9 +3,8 @@
 namespace App\Jobs;
 
 use App\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class ChangeLocale extends Job implements SelfHandling
+class ChangeLocale extends Job
 {
     /**
      * Execute the job.
@@ -14,6 +13,6 @@ class ChangeLocale extends Job implements SelfHandling
      */
     public function handle()
     {
-        session()->set('locale', session('locale') == 'fr' ? 'en' : 'fr');
+        session()->put('locale', session('locale') == 'fr' ? 'en' : 'fr');
     }
 }

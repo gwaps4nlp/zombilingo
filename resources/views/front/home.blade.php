@@ -8,33 +8,44 @@ if($challenge){
 @extends('front.template-home')
 
 @section('main')
+<div class="container-fluid">
 <div class="row text-center" id="header_new">
-    <div class="col-md-9 col-md-offset-1" id="blocLogo" title="{{ trans('site.home') }}">
+
+    <div class="col-2 mt-5 text-center">
+        <a href="https://lingoboingo.org/" style="padding-left:70px;" target="_blank">
+<img src="{{ asset('img/logo_LingoBoingo.png') }}" data-toggle="tooltip" data-placement="bottom" title="ZombiLingo est présent sur le portail LingoBoingo.org où tu peux trouver d'autres jeux sur la langue" style="width:100%" />
+            </a>   
+    </div> 
+    <div class="col-8" id="container-logo" title="{{ trans('site.home') }}">
         <a href="{!! url('') !!}">
-            {!! Html::image('img/logo-home-force.png','ZombiLingo',['style'=>'width:70%']) !!}   
+            {!! Html::image('img/logo-home.png','ZombiLingo',['style'=>'width:80%']) !!}   
         </a>
     </div>
+    
     @if($challenge)
         @if($challenge->type_score=="duel")
             <a href="{{ url('duel') }}?corpus_id={{ $challenge->corpus_id }}">
         @else
-            <a href="{{ url('game') }}?corpus_id={{ $challenge->corpus_id }}">
+            <a href="{{ url('game') }}?corpus_id={{ $challenge->corpus_id }}" style="z-index:2">
         @endif    
-            <span style="line-height:0.9em;position:absolute;top:0%;right:15%;width:15%;text-align:center;color:#4A1710;cursor:pointer" id="blocChallenge">
-                <div id="tipChallenge" style="line-height:1.42857">
+            <span style="line-height:0.9em;position:absolute;top:2%;right:15%;width:15%;text-align:center;color:#4A1710;cursor:pointer" id="blocChallenge">
+                <div id="tipChallenge" style="line-height:1.42857;display:none;">
                     {!! $challenge->description !!}
                 </div>
+
                 <span style="margin-top:58%;font-size:0.7vw;" onblur="$('tipChallenge').show();">
-                    {!! Html::image($challenge->image,'Challenge Foot',array('id'=>'logo-challenge', 'style'=>'height:200px;')) !!}<br/>
-                    <span style="position:relative;left:25px;line-height:1em;">Challenge "{!! $challenge->name !!}"<br/>du {{ $challenge_starts_at->format('d/m') }} au {{ $challenge_ends_at->format('d/m') }}.</span><br/>
+                    <!-- {!! Html::image($challenge->image,'Challenge '.$challenge->name ,array('id'=>'logo-challenge', 'style'=>'height:200px;')) !!}<br/> -->
+                    <ul id="countdown-pad"></ul><br/>
+                    <span style="position:relative;line-height:1em;">Challenge "{!! $challenge->name !!}"<br/>du {{ $challenge_starts_at->format('d/m') }} au {{ $challenge_ends_at->format('d/m') }}.</span><br/>
                 </span>
             </span>
+            <input type="hidden" value="{{ $challenge->corpus->number_answers }}" id="number_annotations" />
         </a>
     @endif
     @if(Auth::check())
-        <div class="col-md-1" id="blocDeconnection">
-            <a href="{!! url('auth/logout') !!}">
-                <div id="deconnection" title="{{ trans('site.quit') }}"></div>
+        <div class="col-1" id="blocDeconnection42">
+            <a href="{!! route('logout') !!}">
+                {!! Html::image('img/deco.png',trans('site.quit'),array('style'=>'height:120%;width:120%;max-height:87px;max-width:105px;min-width:58px;min-height:48px;')) !!}       
             </a>
             <a href="{!! url('user/home') !!}">
                 <span id='username-info'>
@@ -44,68 +55,97 @@ if($challenge){
         </div>
     @endif
 </div>
-<div class="row text-center">
-    <div class="col-md-10 col-sm-12 col-md-offset-1 colored"  id="homepage">
-        <div class="row">
-            <div class="col-md-3 col-sm-3">
-                <div id="panel">
-                    {!! Html::image('img/text-home.png','',['id'=>'explication-text']) !!}
-                    <a style="position:absolute;margin-top:119%;top:0;left:56%;width:25%;" href="{{ url('informations') }}">{!! Html::image('img/fiole-home.png','',['id'=>'explication-text']) !!}</a>
-                    <p style="position:absolute;margin-top:41%;top:0;padding-right:16%;width:91%;">
-                    {{ trans('home.intro-game-1') }}
-                    </p>
-                    <p style="position:absolute;margin-top:66%;top:0;padding-right:30%;width:99%;padding-left:9%;color:#128547">
-                    {{ trans('home.intro-game-2') }}
-                    </p>
-                    <p style="position:absolute;margin-top:97%;top:0;padding-right:30%;width:99%;padding-left:9%;">
-                    {{ trans('home.intro-game-3') }}
-                    </p>
+<div id="homepage" class="row">
+            <div class="col-12 col-md-3 col-sm-3">
+                <div id="container-panel">
+                    {!! Html::image('img/text-home.png','',['id'=>'background-panel']) !!}
+                    <a id ="link-informations" alt="informations" title="informations" style="" href="{!! route('informations') !!}">
+                        {!! Html::image('img/fiole-home.png','informations') !!}
+                    </a>
+                    <div id="panel">
+                        <div>
+                        {{ trans('home.intro-game-1') }}
+                        </div>
+                        <div style="color:#128547">
+                        {{ trans('home.intro-game-2') }}
+                        </div>
+                        <div style="">
+                        {{ trans('home.intro-game-3') }}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-6" id="menu-home">
+            <div class="col-12 col-md-6 col-sm-6" id="menu-home">
+                <div id="container-menu-home">
+                <div class="row">
+                <div class="col-6 col-md-6 col-sm-6 link-home" id="link-game">
+                <a href="{!! route('game') !!}" class="connected" id="link_game">
+                    {!! Html::image('img/tombstone-play.png','',['id'=>'menu-play']) !!}
+                    <div class="container-link">                
+                        <div id="text-play" class="text-menu">
+                            <div>
+                                {{ trans('site.play') }}
+                            </div>
+                        </div>
+                        <div id="explication-play" style="flex:1;" class="explication">
+                            {{ trans('home.intro-play-1') }}<br/>{{ trans('home.intro-play-2') }}
+                        </div>
+                    </div>
+                </a>
+                </div>                
+                <div class="col-6 col-md-6 col-sm-6 link-home" id="link-demo">
                 @if(Auth::check())
                     <a href="{!! url('user/home') !!}" class="connected">
                         {!! Html::image('img/tombstone-demo.png','',['id'=>'menu-demo']) !!}
-                        <div id="text-demo" class="text-menu">{{ Auth::user()->username }}</div>
-                        <div id="explication-demo" class="explication">
-                            Retrouve ici tes statistiques, et compare ton score avec celui de tes amis !
+                        <div class="container-link"> 
+                            <div id="text-demo" class="text-menu">
+                                <div>
+                                    {{ Auth::user()->username }}
+                                </div>
+                            </div>
+                            <div id="explication-demo" class="explication">
+                                {{ trans('home.intro-account') }}
+                            </div>
                         </div>
                     </a>
                 @else
                     <a href="{!! route('demo') !!}">
                         {!! Html::image('img/tombstone-demo.png','',['id'=>'menu-demo']) !!}
-                        <div id="text-demo" class="text-menu">Essayer</div>
-                        <div id="explication-demo" class="explication">
-                            Cette version limitée va te rendre accro ! Mais tu ne pourras pas sauvegarder !
+                        <div class="container-link"> 
+                            <div id="text-demo" class="text-menu">
+                                <div>
+                                    {{ trans('site.try') }}
+                                </div>
+                            </div>
+                            <div id="explication-demo" class="explication">
+                                {{ trans('home.intro-demo') }}
+                            </div>
                         </div>
                     </a>
                 @endif
-                <a href="{!! route('game') !!}" class="connected" id="link_game">
-                    {!! Html::image('img/tombstone-play.png','',['id'=>'menu-play']) !!}
-                    <div id="text-play" class="text-menu">Jouer</div>
-                    <div id="explication-play" class="explication">
-                        Pas de limite pour toi !<br/>Tu accèdes à toutes les options, bonus cachés !
-                    </div>
-                </a>
+                </div>
+                </div>
             </div> 
-            <div class="col-md-3 col-sm-3">
-                <div id="leader-board">
-                     {!! Html::image('img/leader-board-large.png','') !!}
+            </div> 
+            <div class="col-3 col-3 col-md-3 col-sm-3">
+                <div id="container-leader-board">
+                     {!! Html::image('img/leader-board-homepage.png','',['style'=>'width:100%']) !!}
+                    <div id="leader-board">
                     <div id="periode-board">
                         @if($challenge)
                             <div id="challenge" class="periode-choice focus">{{ trans('home.challenge') }}</div>
                             <input type="hidden" id="periode" value="challenge" />
                             @if($challenge->type_score=="annotations")
-                                <div id="toggleScore" class="score-choice annotations">annotations</div>
+                                <div id="toggleScore" class="score-choice annotations">{{ trans('game.annotations') }}</div>
                                 <input type="hidden" id="type_score" value="annotations" />
                             @else
-                                <div id="toggleScore" class="score-choice points">points</div>
+                                <div id="toggleScore" class="score-choice points">{{ trans('game.points') }}</div>
                                 <input type="hidden" id="type_score" value="points" />
                             @endif
                         @else
                             <div id="week" class="periode-choice focus">{{ trans('home.week') }}</div>
                             <input type="hidden" id="periode" value="week" />
-                            <div id="toggleScore" class="score-choice points">points</div>
+                            <div id="toggleScore" class="score-choice points">{{ trans('game.points') }}</div>
                             <input type="hidden" id="type_score" value="points" />
                         @endif
                             <div id="month" class="periode-choice">{{ trans('home.month') }}</div>
@@ -145,10 +185,11 @@ if($challenge){
                     ?>
                     </div>                                          
                 </div>
+                </div>
                 
             </div>
         </div>
-        <div id="footer" style="padding-top:59px;color:#3C1715;">
+        <div id="footer">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1 col-sm-12 text-center">
                     {{ trans_choice('home.number-registered', $numberUsers) }},
@@ -168,31 +209,30 @@ if($challenge){
                     @endif
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-2 col-sm-2 col-md-offset-2 col-sm-offset-2 text-center" style="background-color:white; padding-top: 20px; padding-bottom: 20px;">
-                    <a href="http://www.paris-sorbonne.fr/" target="_blank">{!! Html::image('img/logo_sorbonne.png','') !!}</a>
+            <div class="row" style="justify-content: center;">
+                <div style="background-color:white; padding: 20px 5px;margin-top: 16px;margin-right:10px;">
+                    <a href="http://www.paris-sorbonne.fr/" target="_blank">{!! Html::image('img/logo_sorbonne_new.png','logo Sorbonne', ['style'=>'height:70px']) !!}</a>
                 </div>
-                <div class="col-md-2 col-sm-2 text-center" style="background-color:white; padding-top: 20px; padding-bottom: 20px;">
-                    <a href="http://www.loria.fr/" target="_blank">{!! Html::image('img/logo_loria.png','') !!}</a>
+                <div style="background-color:white; padding: 20px 5px;">
+                    <a href="http://www.loria.fr/" target="_blank">{!! Html::image('img/logo_loria.png','logo Loria') !!}</a>
                 </div>
-                <div class="col-md-2 col-sm-2 text-center" style="background-color:white; padding-top: 20px; padding-bottom: 20px;">
-                    <a href="http://www.inria.fr/" target="_blank">{!! Html::image('img/logo_inria.png','') !!}</a>
+                <div style="background-color:white; padding: 20px 5px;">
+                    <a href="http://www.inria.fr/" target="_blank">{!! Html::image('img/logo_inria.png','logo Inria') !!}</a>
                 </div>
-                <div class="col-md-2 col-sm-2 text-center" style="background-color:white; padding-top: 20px; padding-bottom: 20px;" >
+                <div style="background-color:white; padding: 20px 5px;" >
                     <a href="http://www.culturecommunication.gouv.fr/Politiques-ministerielles/Langue-francaise-et-langues-de-France" target="_blank">{!! Html::image('img/logo_MCC.png','') !!}</a>
                 </div>
             </div>
         </div>
-    </div>
 </div>
 @stop
 
 @section('css')
 <style>
 @if($challenge)
-.week, .month, .total {
-    display: none;
-}
+    .week, .month, .total {
+        display: none;
+    }
     @if($challenge->type_score=="annotations")
         .rank-points {
             display: none;
@@ -203,9 +243,9 @@ if($challenge){
         }
     @endif
 @else
-.challenge, .month, .total, .rank-annotations {
-    display: none;
-}
+    .challenge, .month, .total, .rank-annotations {
+        display: none;
+    }
 @endif    
 </style>
 @stop

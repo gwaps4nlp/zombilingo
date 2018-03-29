@@ -11,28 +11,27 @@ class Grew extends Parser {
 		$this->binary = Config::get('parser.grew.binary');
 		$this->grs_file = Config::get('parser.grew.grs-file');
 		$this->version = Config::get('parser.grew.version');
-		$this->sentence_filter = $sentence_filter;		
+		$this->sentence_filter = $sentence_filter;
 	}
 
 
 	/**
-	 * 
-	 * 
-	 * @param  
+	 *
+	 *
+	 * @param
 	 * @return void
 	 */
 	public function parse($text,$text_id)
 	{
-		
 		$melt = new Melt();
 		$melt->posTag($text);
 		$this->commands['pos-tag'] = $melt->command;
 		$this->files['pos-tag'] = $melt->output_file;
-        
+
         $input_file = storage_path()."/app/{$melt->output_file}";
         $output_file = storage_path()."/app/{$melt->md5}-grew.conll";
 
-    	$command = "{$this->binary} -det -grs {$this->grs_file} -seq full -i {$input_file} -f {$output_file}";
+    	$command = "{$this->binary} transform -grs {$this->grs_file}  -i {$input_file} -o {$output_file}";
     	exec($command,$output,$retour);
     	$this->commands['parse'] = $command;
         $conll = Storage::disk('local')->get("{$melt->md5}-grew.conll");
@@ -44,9 +43,9 @@ class Grew extends Parser {
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param  
+	 *
+	 *
+	 * @param
 	 * @return void
 	 */
 	public function parseFromConll($filename)
@@ -64,7 +63,7 @@ class Grew extends Parser {
         $output_file = storage_path()."/app/{$melt->md5}-grew.conll";
 
 		if(!Storage::has("{$melt->md5}-grew.conll")){
-        	$command = "{$this->binary} -det -grs {$this->grs_file} -seq full -i {$input_file} -f {$output_file}";
+        	$command = "{$this->binary} transform -grs {$this->grs_file} -i {$input_file} -o {$output_file}";
         	exec($command,$output,$retour);
 	        $conll = Storage::disk('local')->get("{$melt->md5}-grew.conll");
 	        $conll = $this->addSentIds($conll);
@@ -76,9 +75,9 @@ class Grew extends Parser {
 
 
 	/**
-	 * 
-	 * 
-	 * @param  
+	 *
+	 *
+	 * @param
 	 * @return void
 	 */
 	public function preParse($filename,$temp_filename)
@@ -104,13 +103,13 @@ class Grew extends Parser {
 			            if($this->sentence_filter=='1mod4'){
 			                if($id%4==1){
 								$addToFile = true;
-								$this->sentIds[] = $matches['sentid'];			                	
+								$this->sentIds[] = $matches['sentid'];
 			                }
 			            }
 			            elseif($this->sentence_filter=='3mod4'){
 			                if($id%4==3){
 								$addToFile = true;
-								$this->sentIds[] = $matches['sentid'];	
+								$this->sentIds[] = $matches['sentid'];
 			                }
 			            } else {
 							$addToFile = true;
@@ -128,83 +127,50 @@ class Grew extends Parser {
 				$addToFile = false;
 			}
 	    }
-	    
+
 		fclose($fp);
 	    fclose($file);
 	    return $result;
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param  
+	 *
+	 *
+	 * @param
 	 * @return void
 	 */
 	public function tokenize($text)
 	{
-
-        $md5 = md5($text);
-        $file = Storage::disk('local')->put("$md5.txt", $text);
-        
-        $input_file = storage_path()."/app/$md5.txt";
-        $output_file = storage_path()."/app/$md5-tokenized.txt";
-
-        if(!Storage::disk('local')->has("$md5-tokenized.txt")){
-	        $command = "java -Xmx1G -jar {$this->binary} languagePack={$this->language_pack} command=analyse module=tokenise inFile=$input_file outFile=$output_file";
-	        exec($command,$output,$retour);
-    	}
-
-        $result = Storage::disk('local')->get("$md5-tokenized.txt");
-        $sentences="";
-        foreach(explode("\n",$result) as $ligne){
-            if($ligne)
-                $sentences .= " ".explode(" ",$ligne)[1];
-            else        
-                $sentences .="\n";
-        }
-        Storage::disk('local')->put("$md5-tokenized-inline.txt", $sentences);
-        $this->output_file = "$md5-tokenized-inline.txt";
-        return $result;
+        throw new \Exception('Not implemented');
 	}
 	/**
-	 * 
-	 * 
-	 * @param  
+	 *
+	 *
+	 * @param
 	 * @return void
 	 */
 	public function posTag($text)
 	{
-
-        $md5 = md5($text);
-        Storage::disk('local')->put("$md5-splitted.txt", $text);
-        
-        $input_file = storage_path()."/app/$md5-splitted.txt";
-        $output_file = storage_path()."/app/$md5-postag-talismane.txt";
-
-        if(!Storage::disk('local')->has("$md5-postag-talismane.txt")){
-	        $command = "java -Xmx1G -jar {$this->binary} languagePack={$this->language_pack} command=analyse startModule=tokenise endModule=postag inFile=$input_file outFile=$output_file";
-	        exec($command,$output,$retour);
-    	}
-
-        $result = Storage::disk('local')->get("$md5-postag-talismane.txt");
-
-        return $result;
+		throw new \Exception('Not implemented');
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param  
+	 *
+	 *
+	 * @param
 	 * @return void
 	 */
 	public function getVersion()
 	{
-
+       	$command = "{$this->binary} -version";
+    	exec($command,$output,$retour);
+    	echo $output[0];
+        return $output[0];
 	}
 
 	/**
-	 * 
-	 * 
+	 *
+	 *
 	 * @return void
 	 */
 	public function postParse()

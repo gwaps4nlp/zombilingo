@@ -1,0 +1,24 @@
+html {
+    position: relative;
+    min-height: 100%;
+  }
+
+.huge {
+    font-size: 40px;
+}
+
+body > #app > .container, {
+    /*margin-top: 100px;*/
+    margin-bottom: 100px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+body > #app > .container-fluid {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+.col-form-label {
+    font-weight: 700;
+}

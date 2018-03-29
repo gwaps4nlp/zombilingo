@@ -24,7 +24,7 @@ class TrophyTableSeeder extends Seeder
             'image' => 'as_annotation.png'
         ]);
         Trophy::create([
-            'id'    => 2,            
+            'id'    => 2,       
             'name' => 'Bon élève',
             'slug' => 'trophy-good-student',
             'key' => 'training',            

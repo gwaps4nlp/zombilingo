@@ -1,0 +1,1 @@
+{"version":3,"sources":["back.scss"],"names":[],"mappings":"AAAA;EACC,wBAAwB;EACxB,aAAa;CACb","file":"back.css","sourcesContent":[".container-admin {\n\tbackground-color: white;\n\tcolor: black;\t\n}"]}

@@ -1,0 +1,13 @@
+Files:
+ - ER-filter.py: a Python script to extract plain text article from xml files (requires library BeautifulSoup)
+ - add_sentid.py: add sentid in the conll format.
+   command [add_sentid.py basename] requires basename.txt basename.sent, basename.seq  and produces basename.conll
+ - tal2seq.sed: sed script to modify talismane labels to sequoia labels
+
+Parsing prerequisite:
+ - compile run_talismane.ml [make]
+ - put the file "talismane-fr-1.8.5b-allDeps.jar" (or a link to the file)
+
+Parsing of one file "basename.txt":
+ - command: [run_talismane basename]
+

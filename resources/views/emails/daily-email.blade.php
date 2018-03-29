@@ -24,31 +24,47 @@ switch ($email->type) {
         break;
 }
 ?>
-
+    @if(false)
     <h1 style="font-size:18px;font-weight:500;color:#505050;line-height:24px;margin:0 0 15px 0">
         Salut <strong>{{ $user->username }}</strong>,&nbsp;c'est l'heure de jouer avec <span>ZombiLingo</span> !
     </h1>
-    @if(date('Y-m-d')=='2016-10-17')
-        <h2 style="font-size:18px;font-weight:700;color:#505050;line-height:24px;margin:15px 0 2px 0">
-            Résultat du challenge "Attrapez-les toutes" du 16/09 au 09/10 :
+    @endif
+    @if(date('Y-m-d')=='2016-12-01')
+        <h2 style="font-size:18px;font-weight:600;color:#505050;line-height:24px;margin:15px 0 2px 0">
+            Résultat du challenge ADN du 14/11 au 30/11 :
         </h2>
-        
+        <br/>
         <p style="color:#505050;font-size:16px;font-weight:normal;line-height:24px;margin:0">
-            Félicitations à Chouchou (1er avec 1677662 points et 2505 annotations), Methos31 (2e avec 1505025 points et 2330 annotations) et Lycos (3e avec 353647 points et 996 annotations).
-        </p>
-        <p style="color:#888;font-size:15px;font-weight:normal;line-height:24px;margin:0">
             <?php
-                $score = $scores->getByUserAndCorpus($user,17);
+                $score = $scores->getByUserAndChallenge($user,$challenge);
             ?>
             @if(!$score)
                 Tu n'as pas participé.
             @else
                 <strong>Bravo, tu as terminé {{ $score->rank }}e</strong> avec {{ Html::formatScore($score->score) }} points.
-                <strong>Merci pour ta participation</strong>.
             @endif
+
+        </p>  <br/>      
+        <p style="color:#505050;font-size:16px;font-weight:normal;line-height:24px;margin:0">
+            54 joueurs ont participé au challenge et <strong>26 583 annotations</strong> ont été produites. <strong>Merci à tous pour votre participation !</strong><br/>
+            Nous vous en dirons bientôt plus sur la qualité des annotations, en attendant, vous pouvez aller voir les résultats de ZombiLingo jusqu'à présent dans cet article (en anglais) :<br/>
+            <a href="https://hal.inria.fr/hal-01378980">https://hal.inria.fr/hal-01378980</a>
+        </p>
+        <br/>
+        <p style="color:#505050;font-size:16px;font-weight:normal;line-height:24px;margin:0">
+            Félicitations aux 3 joueurs sur le podium :<br/>
+            <strong>1er Chouchou</strong> (2 388 234 points et 3 000 annotations),<br/>
+            <strong>2e  Elisemarion</strong> (2 217 431 points et 2 409 annotations) et<br/>
+            <strong>3e  Methos31</strong> (2 046 980 points et 2 678 annotations).
+        </p>
+        <br/>
         <?php
-            $leaders_challenge = $scores->leadersChallenge(17,15);
+            $leaders_challenge = $scores->leadersByChallenge($challenge,15);
         ?>
+    <h2 style="font-size:18px;font-weight:700;color:#505050;line-height:24px;margin:15px 0 2px 0">
+        Classement final du challenge :
+    </h2>        
+        <p>
         <table style="width:100%;padding-bottom:20px" border="0" cellpadding="0" cellspacing="0">
             <tr><th style="text-align:left;">Position</th><th style="text-align:left;">Pseudo</th><th style="text-align:right">Points</th></tr>
         <?php $rank=1; ?>     
@@ -114,7 +130,7 @@ switch ($email->type) {
     </table>
     </p>
     <h2 style="font-size:16px;font-weight:700;color:#888;line-height:24px;margin:2px 0 2px 0">
-    Classement de tes ennemis
+    Classement de tes ennemis :
     </h2>
     <p style="color:#888;font-size:15px;font-weight:normal;line-height:24px;margin:0">
     @if(count($enemies))
@@ -153,7 +169,7 @@ switch ($email->type) {
     @endif
 
     <h2 style="font-size:18px;font-weight:700;color:#505050;line-height:24px;margin:15px 0 2px 0">
-        Classement général
+        Classement général :
     </h2>
 
     <p style="color:#888;font-size:15px;font-weight:normal;line-height:24px;margin:0">
