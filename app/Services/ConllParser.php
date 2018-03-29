@@ -194,11 +194,11 @@ public $sentences_done;
                                 
                             }
                         }
-                        else {
-                            // The annotation already exists => non-playable (the 2 parsers are agree)
-                            $annotation->playable = 0;
-                            $annotation->save();
-                        }
+                        // else {
+                        //     // The annotation already exists => non-playable (the 2 parsers are agree)
+                        //     $annotation->playable = 0;
+                        //     $annotation->save();
+                        // }
 
                         // if the annotation exists, we add the features and lemma if they are different from the existent
                         if(!$annotation->lemma){
