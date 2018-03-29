@@ -28,9 +28,6 @@ if($challenge){
 						<li>
 							<a href="{!! url('duel') !!}">Mode duel</a>
 						</li>
-						<li>
-							<a href="{!! url('game/upl') !!}">Rigor Mortis</a>
-						</li>
 					</ul>
 				</li>
 				@if(!Auth::check())
