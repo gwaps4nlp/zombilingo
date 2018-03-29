@@ -30,7 +30,7 @@ ul.nav > li > ul > li > a {
           <li>{!! link_to('corpus/import',trans('back/index.import')) !!}</li>
           <li>{!! link_to('corpus/export',trans('back/index.export')) !!}</li>
           <li>{!! link_to('corpus/export-mwe',trans('back/index.export-mwe')) !!}</li>
-          <li>{!! link_to('corpus/import-from-url','Import from url (test)') !!}</li>
+          <li>{!! link_to('corpus/import-from-url','Import url or text') !!}</li>
           <li>{!! link_to('annotation-user/index','Statistiques') !!}</li>
           <li>{!! link_to('corpus/compare','Statistiques par parser') !!}</li>
           <li>{!! link_to('corpus/diff-by-relation','Diff by relation') !!}</li>
@@ -48,7 +48,6 @@ ul.nav > li > ul > li > a {
           <li>{!! link_to('mini-game/index','Jeux langue française') !!}</li>
         </ul>
       </li>    
-      <li>{!! link_to('upl/admin-index','UPL') !!}</li>
       <li>{!! link_to('annotator/index','Annotateur') !!}</li>
       <li>{!! link_to('faq/admin-index','FAQ') !!}</li>
       <li>{!! link_to('message/admin-index','Forum') !!}</li>
