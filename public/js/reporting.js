@@ -1,9 +1,4 @@
 $('document').ready(function(){
-	$.ajaxSetup({
-        data: {
-            user_token: $.cookie('user_cookie')
-        }
-    });
 	
 	$( "#select-user" ).on('change', function(){
         $( "#select-user" ).parent('form').submit();

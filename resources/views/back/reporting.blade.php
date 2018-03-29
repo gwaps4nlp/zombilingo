@@ -31,7 +31,6 @@
 @section('scripts')
     {!! Html::script('js/reporting.js') !!}
     {!! Html::script('js/highcharts.js') !!}
-    {!! Html::script('js/jquery.cookie.js') !!}
 <script type="text/javascript">
 	var annByUsers = {!! $annotationsByUser !!};
 	var annotationsByPeriod = {!! $annotations !!};
