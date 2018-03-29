@@ -7,6 +7,10 @@
         {!! Html::style('css/back/css/bootstrap.css') !!}
      
 		@yield('css')
+
+    </head>
+    <body class="{{ App::environment('local')?'test':'' }}">
+		@yield('main')
     <script>
       function resizeIframe(obj) {
         obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
@@ -36,11 +40,7 @@
         }
       }
     </script>
-        <script src="{{ asset(mix("build/js/app.js")) }}"></script>    
-    </head>
-    <body class="{{ App::environment('local')?'test':'' }}">
-		@yield('main')
-
+        <script src="{{ asset(mix("build/js/app.js")) }}" />
 		@yield('scripts')
     </body>
 </html>
