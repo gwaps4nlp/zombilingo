@@ -181,7 +181,7 @@ public $sentences_done;
                         }
                     } else {
                         $annotation = Annotation::where($annotation_min)->first();
-                        if(!$annotation->count()==0) {
+                        if(!$annotation) {
                             $annotation = Annotation::create($annot);
                             $annotation->playable = 1;
                             $annotation->save();
