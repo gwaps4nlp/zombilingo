@@ -58,12 +58,19 @@ if($challenge){
 			</ul>
 		</div>
 		@if($challenge)
-			<div class="d-none d-md-block align-self-center m-auto {{ Request::is('faq')?'active':'' }}" id="block-counter">
+			<div class="ml-auto">
+				<div>
+					<a class="nav-link {{ Request::is('/')?'active':'' }}" href="{!! asset('') !!}"><img style="width:30px;" src="{{ asset('img/logo_interstices.png') }}" /></a>
+				</div>
+			</div>	
+			<div class="d-md-block align-self-center mr-auto" id="block-counter">
+				
 					<input type="hidden" value="{{ $challenge->corpus->number_answers }}" id="number_annotations" />
 				@if($challenge->type_score=="duel")
 					<a href="{{ url('duel') }}?corpus_id={{ $challenge->corpus_id }}">
 				@else
 					<a href="{{ url('game') }}?corpus_id={{ $challenge->corpus_id }}" data-offset="0 0" data-toggle="tooltip" data-placement="bottom" title="{{ 'Challenge "'.$challenge->name .'" du '. $challenge_starts_at->format('d/m').' au '.$challenge_ends_at->format('d/m') }}">
+
 				@endif
 					<ul id="countdown-pad"></ul>
 				</a>
