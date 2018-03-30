@@ -49,8 +49,6 @@ class ExportCorpus extends Command
         $corpora = Corpus::where('exportable',1)->get();
 
         foreach($corpora as $corpus){
-            if($corpus->id!=12)
-                continue;
             if(count($corpus->subcorpora)){
                 $nb_sentences = 0;
                 $files = [];

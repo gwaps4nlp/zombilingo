@@ -47,6 +47,16 @@ class Corpus extends Gwaps4nlpCorpus
 	{
 	  return $this->hasManyThrough('App\Models\Annotation','App\Models\Sentence');
 	}	
+	
+	/**
+	 * One to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function sentences()
+	{
+	  return $this->hasMany('App\Models\Sentence')->whereIn('corpus_id', array_merge([$this->id],$this->subcorpora->pluck('id')->toArray()));
+	}
 
 	/**
 	 * 
