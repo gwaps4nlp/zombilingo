@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ScoreRepository;
 use App\Repositories\ChallengeRepository;
-use App\Repositories\LanguageRepository;
+use Gwaps4nlp\Repositories\LanguageRepository;
 use App\Repositories\CorpusRepository;
 use App\Models\User;
 use App\Models\Challenge;
