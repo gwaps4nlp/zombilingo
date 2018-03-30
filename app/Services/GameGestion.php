@@ -179,11 +179,11 @@ class GameGestion extends Game implements GameGestionInterface
 				}
 
 			} else {
-				if(!$this->corpus->is_playable){
-					$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation);	
-				} else {
+				// if(!$this->corpus->is_playable){
+				// 	$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation);	
+				// } else {
 					$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation,$this->user);
-				}
+				// }
 			}
         }
 			
