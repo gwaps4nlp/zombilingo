@@ -25,7 +25,7 @@ use Gwaps4nlp\Models\ConstantGame;
 		</script>
         
         <script src="{{ asset('js/socket.io.js') }}"></script>
-        <script src="{{ asset(mix("build/js/app.js")) }}"></script>
+        <script src="{{ asset(mix("build/js/all.js")) }}"></script>
 
 
 		@yield('scripts')
