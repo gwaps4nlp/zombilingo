@@ -28,7 +28,7 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
         <script>
             @include('js.data-js')
         </script>
-        <script src="{{ asset('js/socket.io.js') }}"></script>
+        {{-- <script src="{{ asset('js/socket.io.js') }}"></script> --}}
         <script src="{{ asset(mix("build/js/all.js")) }}"></script>
 
         @yield('scripts')
