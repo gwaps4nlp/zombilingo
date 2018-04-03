@@ -9,19 +9,19 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
         <meta charset="utf-8" />
         <meta name="author" content="Loria et U. Paris-Sorbonne" />
         <meta name="description" content="@yield('description')" />
-        <meta name="csrf-token" content="{{ csrf_token() }}">        
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>@yield('title') - Zombilingo</title>
         <link rel="shortcut icon" type="image/x-icon" href="{!! asset('img/favicon.ico') !!}" />
 
         {!! Html::style(mix("build/css/app.css")) !!}
-        
+
         @yield('css')
 
     </head>
     <body class="{{ App::environment('local')?'test':'' }}">
 
         @include('front.navbar')
-        
+
         @yield('container')
 
         <div id="containerModal"></div>
@@ -33,23 +33,6 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
 
         @yield('scripts')
 
-        <?php
-
-            if(Auth::check()){
-                //Coccinelle
-                if(rand(0,100) < ConstantGame::get('proba-bat') && time() > Auth::user()->last_mwe+ConstantGame::get('time-mwe')){
-                    echo '<a href="'.url('game/mwe/begin/1').'">'. HTML::image('img/coccinelle.png', 'rigor mortis', ['id'=>"coccinelle"]) . '</a>';
-                    session()->put('mwe.enabled',1);
-                    echo HTML::script('js/coccinelle.js');
-                }else{
-                    if(rand(0,100) < ConstantGame::get('proba-meat')){
-                        echo HTML::image('img/viande.png', 'Vous avez gagné un objet !', ['id'=>"bonus-object"]);
-                        session()->put('object_won',1);
-                        echo "<script>bonusObject();</script>";
-                    }
-                }
-            }
-        ?>
         <input type="hidden" id="connected" value="{{ (Auth::check())?Auth::user()->id:'0' }}" />
         <?php
         $new_log = Session::has('inputs.new_log');
@@ -58,14 +41,14 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
             $modal = App::make('App\Services\Html\ModalBuilder');
             $duels = App::make('App\Repositories\DuelRepository');
             $news = App::make('Gwaps4nlp\NewsManager\Repositories\NewsRepository');
-            
+
             $count_duel_completed = $duels->countCompletedNotSeen(Auth::user());
             $count_duel_in_progress_not_seen = $duels->countInProgressNotSeen(Auth::user());
             $count_duel_in_progress = $duels->countInProgress(Auth::user());
             $count_news_not_seen = $news->countNotSeen(Auth::user());
             $count_duel_available = $duels->countPendingAvailable(Auth::user());
             $news_not_seen = $news->getNotSeen(Auth::user());
-            
+
             $friend_requests = Auth::user()->getAskFriendRequests();
             $open_modal = $count_duel_in_progress_not_seen||$count_duel_completed||$count_news_not_seen||count($friend_requests)||$count_duel_available;
 

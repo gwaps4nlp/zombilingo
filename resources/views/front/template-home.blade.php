@@ -12,7 +12,7 @@ use Gwaps4nlp\Models\ConstantGame;
 
         <!-- CSS principal -->
         {!! Html::style( mix('build/css/app.css')) !!}
-		
+
 		@yield('css')
 
     </head>
@@ -23,30 +23,13 @@ use Gwaps4nlp\Models\ConstantGame;
 		<script>
             @include('js.data-js')
 		</script>
-        
+
         <script src="{{ asset('js/socket.io.js') }}"></script>
         <script src="{{ asset(mix("build/js/all.js")) }}"></script>
 
 
 		@yield('scripts')
 
-        <?php
-
-            if(Auth::check()){
-                //Coccinelle
-                if(rand(0,100) < ConstantGame::get('proba-bat') && time() > Auth::user()->last_mwe+ConstantGame::get('time-mwe')){
-                    echo '<a href="'.url('game/mwe/begin/1').'">'. HTML::image('img/coccinelle.png', 'rigor mortis', ['id'=>"coccinelle"]) . '</a>';
-                    session()->put('mwe.enabled',1);
-                    echo HTML::script('js/coccinelle.js');
-                }else{
-                    if(rand(0,100) < ConstantGame::get('proba-meat')){
-                        echo HTML::image('img/viande.png', trans('game.you-won-an-object'), ['id'=>"bonus-object"]);
-                        session()->put('object_won',1);
-						echo "<script>bonusObject();</script>";
-                    }
-                }
-            }
-        ?>
         <input type="hidden" id="connected" value="{{ (Auth::check())?Auth::user()->id:'0' }}" />
     </body>
 </html>
