@@ -10,7 +10,7 @@ use App\Models\Message;
 use App\Models\DeletionReason;
 use App\Models\Discussion;
 use App\Models\AnnotationUser;
-use Zombilingo\FaqManager\Models\QuestionAnswer;
+use Gwaps4nlp\FaqManager\Models\QuestionAnswer;
 use App\Events\MessagePosted;
 use Illuminate\Http\Request;
 use Event, Auth, DB;
@@ -118,7 +118,7 @@ class DiscussionController extends Controller
         $user = Auth::user();
         if($request->input('entity_type')=="App\Models\Annotation")
             $entity = $annotations->get($request->input('entity_id'));
-        elseif($request->input('entity_type')=="Zombilingo\FaqManager\Models\QuestionAnswer")
+        elseif($request->input('entity_type')=="Gwaps4nlp\FaqManager\Models\QuestionAnswer")
             $entity = QuestionAnswer::findOrFail($request->input('entity_id'));
         else
             abort(404);
