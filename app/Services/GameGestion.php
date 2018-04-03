@@ -179,11 +179,11 @@ class GameGestion extends Game implements GameGestionInterface
 				}
 
 			} else {
-				if(!$this->corpus->is_playable){
-					$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation);	
-				} else {
+				// if(!$this->corpus->is_playable){
+				// 	$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation);	
+				// } else {
 					$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation,$this->user);
-				}
+				// }
 			}
         }
 			
@@ -337,7 +337,8 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
     public function addGain(){
-    	if($this->errors || !$this->corpus->is_playable) return;
+    	if($this->errors) return;
+    	// if($this->errors || !$this->corpus->is_playable) return;
 		$this->user->increment('money',ConstantGame::get("gain-sentence"));
 		$this->increment('money_earned',ConstantGame::get("gain-sentence"));
 		$this->user->increment('score',ConstantGame::get("gain-sentence"));
@@ -406,7 +407,7 @@ class GameGestion extends Game implements GameGestionInterface
 	}
 	
 	public function processAnswer(){
-		if($this->corpus->is_playable){
+		// if($this->corpus->is_playable){
 			$this->annotation_users->save($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation);
 			
 			$this->corpus->increment('number_answers',1);
@@ -438,7 +439,7 @@ class GameGestion extends Game implements GameGestionInterface
 				$inProgress->annotation_id=null;
 				$inProgress->save();
 			}
-		}
+		// }
 		$this->addGain();
 		$this->addLoot();
 
