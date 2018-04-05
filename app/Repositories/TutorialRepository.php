@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Tutorial;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 
 class TutorialRepository extends BaseRepository
 {

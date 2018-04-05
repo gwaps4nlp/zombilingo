@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ChangeLocale;
 use App\Repositories\ScoreRepository;
-use Gwaps4nlp\Repositories\UserRepository;
+use Gwaps4nlp\Core\Repositories\UserRepository;
 use App\Repositories\ExportedCorpusRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\ChallengeRepository;

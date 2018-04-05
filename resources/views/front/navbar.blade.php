@@ -47,10 +47,10 @@ if($challenge){
 						</ul>					
 					</li>
 					@if(Auth::user()->isAdmin())
-					<li class="d-none d-xl-block nav-item {{ Request::is('admin')?'active':'' }}">
-						<a class="nav-link rounded-btn" href="{!! url('admin') !!}">{{ trans('site.admin') }}</a>
-					</li>	
-				@endif
+						<li class="d-none d-xl-block nav-item {{ Request::is('admin')?'active':'' }}">
+							<a class="nav-link rounded-btn" href="{!! url('admin') !!}">{{ trans('site.admin') }}</a>
+						</li>	
+					@endif
 				<li class="d-none d-md-block nav-item {{ Request::is('faq')?'active':'' }}">
 					<a class="nav-link rounded-btn" href="{!! url('faq') !!}">{{ trans('site.faq') }}</a>
 				</li>		

@@ -8,8 +8,8 @@ use App\Models\AnnotationInProgress;
 use App\Models\Sentence;
 use App\Models\Tutorial;
 use App\Models\Stat;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use App\Events\BroadCastNewAnnotation;
 use DB, Event;
 
@@ -23,7 +23,7 @@ class AnnotationUserRepository extends BaseRepository
 	 * @param  App\Models\Annotation $annotation
 	 * @param  App\Models\Tutorial $tutorial
 	 * @param  App\Models\Stat $stat
-	 * @param  Gwaps4nlp\Models\Source $source
+	 * @param  Gwaps4nlp\Core\Models\Source $source
 	 * @return void
 	 */
 	public function __construct(

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReportRequest;
-use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\Report;
 use App\Models\User;
 use App\Models\Role;

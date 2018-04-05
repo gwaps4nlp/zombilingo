@@ -5,25 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Relation;
-use Gwaps4nlp\Models\Language;
+use Gwaps4nlp\Core\Models\Language;
 use App\Models\Corpus;
-use Gwaps4nlp\Repositories\UserRepository;
+use Gwaps4nlp\Core\Repositories\UserRepository;
 use App\Repositories\DuelRepository;
 use App\Repositories\LevelRepository;
-use Gwaps4nlp\Repositories\TrophyRepository;
+use Gwaps4nlp\Core\Repositories\TrophyRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\ScoreRepository;
 use App\Repositories\EmailFrequencyRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\CorpusRepository;
 use App\Repositories\ChallengeRepository;
-use Gwaps4nlp\Repositories\RoleRepository;
+use Gwaps4nlp\Core\Repositories\RoleRepository;
 use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
 use App\Models\Friend;
 use Gwaps4nlp\NewsManager\Models\News;
-use Gwaps4nlp\Models\Role;
+use Gwaps4nlp\Core\Models\Role;
 use Response, Auth;
 
 class UserController extends Controller
@@ -43,7 +43,7 @@ class UserController extends Controller
     /**
      * Show the user's home.
      *
-     * @param  Gwaps4nlp\Repositories\TrophyRepository $trophy
+     * @param  Gwaps4nlp\Core\Repositories\TrophyRepository $trophy
      * @param  App\Repositories\ScoreRepository $score
      * @param  App\Repositories\DuelRepository $duels
      * @param  App\Repositories\AnnotationUserRepository $annotation_user

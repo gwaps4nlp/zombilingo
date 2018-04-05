@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Repositories\RelationRepository;
 use App\Repositories\CorpusRepository;
 use App\Models\Corpus;
-use Gwaps4nlp\Models\ConstantGame;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\Source;
 use Illuminate\Http\Request;
-use Gwaps4nlp\GameController as Gwaps4nlpGameController;
+use Gwaps4nlp\Core\GameController as Gwaps4nlpGameController;
 use Illuminate\Http\Response;
 use View;
 

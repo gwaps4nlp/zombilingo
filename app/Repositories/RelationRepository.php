@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Relation;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use DB;
 use Config;
 
@@ -16,7 +16,7 @@ class RelationRepository extends BaseRepository
 	 * Create a new RelationRepository instance.
 	 *
 	 * @param  App\Models\Relation $relation
-	 * @param  Gwaps4nlp\Models\Source $source
+	 * @param  Gwaps4nlp\Core\Models\Source $source
 	 * @return void
 	 */
 	public function __construct(

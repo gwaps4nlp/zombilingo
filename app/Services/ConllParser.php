@@ -3,7 +3,7 @@
 use App\Models\Relation;
 use App\Models\Sentence;
 use App\Models\Annotation;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 use App\Models\Parser;
 use App\Models\CatPos;
 use App\Repositories\SentenceRepository;

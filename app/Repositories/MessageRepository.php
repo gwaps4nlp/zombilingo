@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Message;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use DB;
 
 class MessageRepository extends BaseRepository

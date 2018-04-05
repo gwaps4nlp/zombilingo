@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use Gwaps4nlp\Game;
+use Gwaps4nlp\Core\Game;
 use Illuminate\Http\Request;
 use App\Models\AnnotationInProgress;
 use App\Repositories\RelationRepository;
@@ -12,18 +12,18 @@ use App\Repositories\ScoreRepository;
 use App\Repositories\ObjectRepository;
 use App\Repositories\CorpusRepository;
 use App\Repositories\ChallengeRepository;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
 use App\Models\Object;
 use App\Models\Corpus;
-use Gwaps4nlp\Exceptions\GameException;
+use Gwaps4nlp\Core\Exceptions\GameException;
 use Response, View, App;
 use App\Events\BroadCastNewAnnotation;
 use App\Events\ScoreUpdated;
-use Gwaps4nlp\GameGestionInterface;
+use Gwaps4nlp\Core\GameGestionInterface;
 use Event, Auth;
 
 class GameGestion extends Game implements GameGestionInterface

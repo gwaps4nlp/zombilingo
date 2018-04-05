@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Sentence;
 use App\Models\User;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use DB;
 
 class SentenceRepository extends BaseRepository
@@ -54,7 +54,7 @@ class SentenceRepository extends BaseRepository
 	 *
 	 * @param \App\Models\Relation $relation
 	 * @param \App\Models\User $user
-	 * @param \Gwaps4nlp\Models\Source $source
+	 * @param \Gwaps4nlp\Core\Models\Source $source
 	 * @return App\Models\Sentence
 	 */
 	public function getRandom($relation, $user, $source)

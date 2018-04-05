@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Corpus;
 use App\Models\Parser;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 use App\Models\Relation;
 use DB;
 

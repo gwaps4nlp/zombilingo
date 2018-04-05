@@ -157,8 +157,8 @@ return [
         // 'Sofa\Eloquence\ServiceProvider',
         Chumper\Zipper\ZipperServiceProvider::class,
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
-        Gwaps4nlp\FaqManager\FaqServiceProvider::class,
-        Gwaps4nlp\NewsManager\NewsServiceProvider::class,
+        // Gwaps4nlp\FaqManager\FaqServiceProvider::class,
+        // Gwaps4nlp\NewsManager\NewsServiceProvider::class,
         // Gwaps4nlp\GameServiceProvider::class,
         // Gwaps4nlp\CoreServiceProvider::class,
 

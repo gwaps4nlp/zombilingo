@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Gwaps4nlp\Repositories\UserRepository;
+use Gwaps4nlp\Core\Repositories\UserRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\LevelRepository;

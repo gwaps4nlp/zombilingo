@@ -118,7 +118,7 @@ class DiscussionController extends Controller
         $user = Auth::user();
         if($request->input('entity_type')=="App\Models\Annotation")
             $entity = $annotations->get($request->input('entity_id'));
-        elseif($request->input('entity_type')=="Gwaps4nlp\FaqManager\Models\QuestionAnswer")
+        elseif($request->input('entity_type')=="Gwaps4nlp\Core\FaqManager\Models\QuestionAnswer")
             $entity = QuestionAnswer::findOrFail($request->input('entity_id'));
         else
             abort(404);

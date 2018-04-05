@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Repositories\ObjectRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,7 +25,7 @@ class ObjectController extends Controller
 
         $this->middleware('auth');
         $this->middleware('ajax', ['except' => ['index']]);
-        $this->game = App::make('Gwaps4nlp\GameGestionInterface');
+        $this->game = App::make('Gwaps4nlp\Core\GameGestionInterface');
 
     }
 

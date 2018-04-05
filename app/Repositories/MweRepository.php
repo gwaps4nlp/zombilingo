@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Mwe;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use DB;
 
 class MweRepository extends BaseRepository 

@@ -3,8 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Corpus;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use App\Models\Annotation;
 use DB;
 use Config;

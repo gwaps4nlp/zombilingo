@@ -27,13 +27,13 @@ if($challenge){
             <a href="{{ url('duel') }}?corpus_id={{ $challenge->corpus_id }}">
         @else
             <a href="{{ url('game') }}?corpus_id={{ $challenge->corpus_id }}" style="z-index:2">
-        @endif    
+        @endif
             <span style="line-height:0.9em;position:absolute;top:2%;right:15%;width:15%;text-align:center;color:#4A1710;cursor:pointer" id="blocChallenge">
                 <div id="tipChallenge" style="line-height:1.42857;display:none;">
                     {!! $challenge->description !!}
                 </div>
 
-                <span style="margin-top:58%;font-size:0.7vw;" onblur="$('tipChallenge').show();">
+                <span style="margin-top:58%;font-size:0.7vw;" onblur="$('#tipChallenge').show();">
                     <!-- {!! Html::image($challenge->image,'Challenge '.$challenge->name ,array('id'=>'logo-challenge', 'style'=>'height:200px;')) !!}<br/> -->
                     <ul id="countdown-pad"></ul><br/>
                     <span style="position:relative;line-height:1em;">Challenge "{!! $challenge->name !!}"<br/>du {{ $challenge_starts_at->format('d/m') }} au {{ $challenge_ends_at->format('d/m') }}.</span><br/>

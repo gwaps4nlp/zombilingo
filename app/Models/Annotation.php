@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Relation;
 use App\Models\Statistic;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 use DB;
 
 class Annotation extends Model
@@ -44,7 +44,7 @@ class Annotation extends Model
 	 */
 	public function source()
 	{
-		return $this->belongsTo('Gwaps4nlp\Models\Source');
+		return $this->belongsTo('Gwaps4nlp\Core\Models\Source');
 	}
 
 	/**

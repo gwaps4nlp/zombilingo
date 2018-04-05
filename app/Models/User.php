@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Gwaps4nlp\Models\User as Gwaps4nlpUser;
+use Gwaps4nlp\Core\Models\User as Gwaps4nlpUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -62,7 +62,7 @@ class User extends Gwaps4nlpUser
 	 */
 	public function bonuses()
 	{
-		return $this->belongsToMany('Gwaps4nlp\Models\Bonus');
+		return $this->belongsToMany('Gwaps4nlp\Core\Models\Bonus');
 	}
 	
 	/**
@@ -123,7 +123,7 @@ class User extends Gwaps4nlpUser
 	 */
 	public function trophies()
 	{
-		return $this->belongsToMany('Gwaps4nlp\Models\Trophy');
+		return $this->belongsToMany('Gwaps4nlp\Core\Models\Trophy');
 	}
 
 	/**

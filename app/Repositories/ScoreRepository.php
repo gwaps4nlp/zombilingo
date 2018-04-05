@@ -8,7 +8,7 @@ use App\Models\Challenge;
 use App\Models\ScoreChallenge;
 use App\Models\ScoreMonth;
 use App\Models\ScoreWeek;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use DB;
 
 class ScoreRepository extends BaseRepository

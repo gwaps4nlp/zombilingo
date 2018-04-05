@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use Gwaps4nlp\Game;
+use Gwaps4nlp\Core\Game;
 use Illuminate\Http\Request;
-use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\AnnotationInProgress;
 use App\Repositories\AnnotationRepository;
 use App\Repositories\AnnotationUserRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\TutorialRepository;
-use Gwaps4nlp\Exceptions\GameException;
+use Gwaps4nlp\Core\Exceptions\GameException;
 use Response, View;
 
 class TrainingGestion extends Game 

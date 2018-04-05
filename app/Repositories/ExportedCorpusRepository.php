@@ -5,8 +5,8 @@ namespace App\Repositories;
 use App\Models\Corpus;
 use App\Models\ExportedCorpus;
 use App\Models\User;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 
 class ExportedCorpusRepository extends BaseRepository
 {

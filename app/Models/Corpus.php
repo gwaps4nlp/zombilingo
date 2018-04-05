@@ -4,11 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Models\Corpus as Gwaps4nlpCorpus;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Models\Corpus as Gwaps4nlpCorpus;
 
 class Corpus extends Gwaps4nlpCorpus
 {
+
+	/**
+	 * One to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\BelongsToMany
+	 */
+	public function subcorpora()
+	{
+	  return $this->belongsToMany('App\Models\Corpus','corpus_subcorpus','corpus_id','subcorpus_id');
+	}
+
 	/**
 	 * One to Many relation
 	 *

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-use Gwaps4nlp\GameGestionInterface as Game;
+use Gwaps4nlp\Core\GameGestionInterface as Game;
 
 class AfterMiddleware
 {
@@ -12,7 +12,7 @@ class AfterMiddleware
     /**
      * Create a new AfterMiddleware instance.
      *
-     * @param  Gwaps4nlp\GameGestionInterface $game
+     * @param  Gwaps4nlp\Core\GameGestionInterface $game
      * @return void
      */
     public function __construct(Game $game)

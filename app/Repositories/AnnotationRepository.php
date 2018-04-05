@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use App\Models\Annotation;
 use App\Models\AnnotationUser;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use App\Models\Relation;
 use App\Repositories\ChallengeRepository;
 use DB;
@@ -74,7 +74,7 @@ class AnnotationRepository extends BaseRepository
 	 *
 	 * @param  App\Models\Relation $relation
 	 * @param  App\Models\User|null $user
-	 * @param  Gwaps4nlp\Models\Source $source
+	 * @param  Gwaps4nlp\Core\Models\Source $source
 	 * @param  int|null $id
 	 * @return App\Models\Annotation
 	 */
@@ -173,7 +173,7 @@ class AnnotationRepository extends BaseRepository
 	 * @param  App\Models\Relation $relation
 	 * @param  array $not_in
 	 * @param  App\Models\User $user	 
-	 * @param  Gwaps4nlp\Models\Source $source	 
+	 * @param  Gwaps4nlp\Core\Models\Source $source	 
 	 * @param  int $corpus_id	 
 	 * @return App\Models\Annotation
 	 */

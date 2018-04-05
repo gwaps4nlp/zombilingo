@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\AnnotationRepository;
-use Gwaps4nlp\Repositories\UserRepository;
+use Gwaps4nlp\Core\Repositories\UserRepository;
 use App\Repositories\RelationRepository;
 use App\Repositories\CorpusRepository;
 use App\Models\Corpus;

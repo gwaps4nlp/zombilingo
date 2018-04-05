@@ -4,11 +4,11 @@ namespace App\Services;
 
 
 use Illuminate\Http\Request;
-use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\AnnotationInProgress;
 
 use App\Exceptions\GameException;
-use Gwaps4nlp\Game;
+use Gwaps4nlp\Core\Game;
 use App\Repositories\MweRepository;
 use Response, View;
 

@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use Gwaps4nlp\Models\ConstantGame;
-use Gwaps4nlp\Game;
-use Gwaps4nlp\Models\Source;
-use Gwaps4nlp\GameGestionInterface;
+use Gwaps4nlp\Core\Models\ConstantGame;
+use Gwaps4nlp\Core\Game;
+use Gwaps4nlp\Core\Models\Source;
+use Gwaps4nlp\Core\GameGestionInterface;
 use App\Models\AnnotationInProgress;
 use App\Repositories\RelationRepository;
 use App\Repositories\AnnotationRepository;

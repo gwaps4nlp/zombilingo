@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Repositories\RelationRepository;
 use App\Repositories\DuelRepository;
-use Gwaps4nlp\Repositories\UserRepository;
+use Gwaps4nlp\Core\Repositories\UserRepository;
 use App\Repositories\AnnotationRepository;
 use App\Repositories\ChallengeRepository;
-use Gwaps4nlp\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\Corpus;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 use App\Models\Challenge;
 use App\Models\Duel;
 use App\Http\Requests\DuelCreateRequest;
 use App\Http\Requests\DuelJoinRequest;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Gwaps4nlp\Core\GameController as Gwaps4nlpGameController;
 use Response, View, App, Auth, DB;
 
-class DuelController extends GameController
+class DuelController extends Gwaps4nlpGameController
 {
 
     /**

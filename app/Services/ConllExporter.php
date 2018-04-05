@@ -5,7 +5,7 @@ use App\Models\Sentence;
 use App\Models\Annotation;
 use App\Models\Corpus;
 use App\Models\User;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 use App\Models\ExportedCorpus;
 use App\Repositories\SentenceRepository;
 use App\Events\BroadCastExport;

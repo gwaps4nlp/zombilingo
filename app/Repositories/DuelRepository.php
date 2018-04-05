@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Duel;
 use App\Models\DuelUser;
-use Gwaps4nlp\Repositories\BaseRepository;
+use Gwaps4nlp\Core\Repositories\BaseRepository;
 use DB;
 
 class DuelRepository extends BaseRepository

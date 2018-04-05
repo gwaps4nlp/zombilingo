@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Corpus;
 use App\Models\Annotation;
-use Gwaps4nlp\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 use App\Models\ExportedCorpus;
 use App\Services\ConllExporter;
 use App\Services\MweExporter;
