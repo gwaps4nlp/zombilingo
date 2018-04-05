@@ -212,7 +212,6 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Form'      => Collective\Html\FormFacade::class,
         'Html'      => Collective\Html\HtmlFacade::class,
-        'Debugbar'  => Barryvdh\Debugbar\Facade::class,  
         'Zipper'    => 'Chumper\Zipper\Zipper',
         'Image' => Intervention\Image\Facades\Image::class,
         'Parser' => App\Services\Facades\Parser::class,
