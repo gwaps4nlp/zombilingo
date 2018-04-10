@@ -69,9 +69,9 @@ class Corpus extends Gwaps4nlpCorpus
 	  return $this->annotations()->join('annotation_users','annotations.id','=','annotation_users.annotation_id');
 	}
 
-	public function players()
+	public function count_players()
 	{
-	  return $this->annotations_users()->groupby('user_id');
+	  return $this->annotations_users()->select(DB::raw('count(DISTINCT user_id) as count'))->first()->count;
 	}
 
 	/**

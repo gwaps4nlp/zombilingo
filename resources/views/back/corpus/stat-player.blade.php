@@ -30,7 +30,7 @@
 		{{ $number_annotations }}
 		</td>
 		<td>
-		<?php	$number_players = $corpus->players()->count(); ?>
+		<?php	$number_players = $corpus->count_players(); ?>
 		{{ $number_players }}
 		</td>
 
