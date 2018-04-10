@@ -68,6 +68,15 @@ class Corpus extends Gwaps4nlpCorpus
 	{
 	  return $this->annotations()->join('annotation_users','annotations.id','=','annotation_users.annotation_id');
 	}
+	/**
+	 * One to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 */
+	public function annotations_users_at_date($date)
+	{
+	  return $this->annotations_users()->where('annotation_users.created_at','<=',$date);
+	}
 
 	public function count_players()
 	{
