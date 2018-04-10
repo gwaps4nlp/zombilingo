@@ -3,6 +3,10 @@
 
 @section('content')
 	<h1>Number of annotations and of players by corpus</h1>
+	<form>
+		<input type="date" name="date" value="{{ $date??'' }}" />
+		<input type="submit" value="validate" class="btn btn-success" />
+	</form>
 	<table class="table table-striped">
 
 	<thead>
@@ -26,11 +30,23 @@
 		<td>{{ $corpus->language->label }}</td>
 		<td><span data-toggle="tooltip" data-placement="auto left" title="{{ $corpus->license->label }}" class="license">{!! Html::image('img/'.$corpus->license->image) !!}</span></td>
 		<td>
-		<?php	$number_annotations = $corpus->annotations_users()->count(); ?>
+		<?php
+		if($date){
+			$number_annotations = $corpus->annotations_users_at_date($date)->count();
+		} else {
+			$number_annotations = $corpus->annotations_users()->count();
+	  }
+		?>
 		{{ $number_annotations }}
 		</td>
 		<td>
-		<?php	$number_players = $corpus->count_players(); ?>
+		<?php
+		if($date){
+			$number_players = $corpus->count_players_at_date($date);
+		} else {
+			$number_players = $corpus->count_players();
+	  }
+		?>
 		{{ $number_players }}
 		</td>
 
