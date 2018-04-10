@@ -1,9 +1,9 @@
 <?php
 
 return [
-    
+
     'env' => env('APP_ENV', 'local'),
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'url' => 'http://127.0.0.1:9515',
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -151,7 +151,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Services\Html\HtmlServiceProvider::class,        
+        App\Services\Html\HtmlServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         // 'Sofa\Eloquence\ServiceProvider',
         Chumper\Zipper\ZipperServiceProvider::class,
@@ -215,7 +215,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Parser' => App\Services\Facades\Parser::class,
 
-       // 'Game'      => App\Services\GameFacade::class,        
+       // 'Game'      => App\Services\GameFacade::class,
 
     ],
 

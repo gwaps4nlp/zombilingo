@@ -83,6 +83,7 @@ Route::group(array('before' => 'admin'), function ()
 	Route::get('corpus/edit/{corpus}', 'CorpusController@getEdit');
 	Route::post('corpus/edit/{corpus}', 'CorpusController@postEdit');
 	Route::get('corpus/index', 'CorpusController@getIndex');
+	Route::get('corpus/stat-player', 'CorpusController@getStatPlayer');
 	Route::get('corpus/delete', 'CorpusController@getDelete');
 	Route::post('corpus/delete', 'CorpusController@postDelete');
 	Route::get('corpus/import', 'CorpusController@getImport');
@@ -168,7 +169,7 @@ Route::group(array('before' => 'admin'), function ()
 	Route::post('sentence/index', 'SentenceController@postIndex');
 	Route::get('sentence/search', 'SentenceController@getSearch');
 	Route::get('sentence/graph/{sentence}', 'SentenceController@getGraph');
-	Route::get('sentence/{sentence}', 'SentenceController@show');	
+	Route::get('sentence/{sentence}', 'SentenceController@show');
 });
 
 //TutorialAnnotationController

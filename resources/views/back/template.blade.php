@@ -34,6 +34,7 @@ ul.nav > li > ul > li > a {
           <li>{!! link_to('annotation-user/index','Statistiques') !!}</li>
           <li>{!! link_to('corpus/compare','Statistiques par parser') !!}</li>
           <li>{!! link_to('corpus/diff-by-relation','Diff by relation') !!}</li>
+          <li>{!! link_to('corpus/stat-player','Statistics about players') !!}</li>
         </ul>
       </li>
       <li class="dropdown">
@@ -47,7 +48,7 @@ ul.nav > li > ul > li > a {
           <li>{!! link_to('admin/mwe',trans('back/index.play-rigor-mortis')) !!}</li>
           <li>{!! link_to('mini-game/index','Jeux langue française') !!}</li>
         </ul>
-      </li>    
+      </li>
       <li>{!! link_to('annotator/index','Annotateur') !!}</li>
       <li>{!! link_to('faq/admin-index','FAQ') !!}</li>
       <li>{!! link_to('message/admin-index','Forum') !!}</li>

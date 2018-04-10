@@ -48,7 +48,7 @@ class Corpus extends Gwaps4nlpCorpus
 	{
 	  return $this->belongsToMany('App\Models\Corpus','preannotated_evaluation_corpus','evaluation_corpus_id','corpus_id');
 	}
-	
+
 	/**
 	 * One to Many relation
 	 *
@@ -56,9 +56,24 @@ class Corpus extends Gwaps4nlpCorpus
 	 */
 	public function annotations()
 	{
-	  return $this->hasManyThrough('App\Models\Annotation','App\Models\Sentence');
-	}	
-	
+	  return Annotation::whereIn('corpus_id', array_merge([$this->id],$this->subcorpora->pluck('id')->toArray()));
+	}
+
+	/**
+	 * One to Many relation
+	 *
+	 * @return Illuminate\Database\Eloquent\Relations\HasManyThrough
+	 */
+	public function annotations_users()
+	{
+	  return $this->annotations()->join('annotation_users','annotations.id','=','annotation_users.annotation_id');
+	}
+
+	public function players()
+	{
+	  return $this->annotations_users()->groupby('user_id');
+	}
+
 	/**
 	 * One to Many relation
 	 *
@@ -70,7 +85,7 @@ class Corpus extends Gwaps4nlpCorpus
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @return boolean
 	 */
@@ -80,7 +95,7 @@ class Corpus extends Gwaps4nlpCorpus
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @return boolean
 	 */
@@ -90,7 +105,7 @@ class Corpus extends Gwaps4nlpCorpus
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @return boolean
 	 */
@@ -100,7 +115,7 @@ class Corpus extends Gwaps4nlpCorpus
 	}
 
 	/**
-	 * 
+	 *
 	 *
 	 * @return boolean
 	 */
