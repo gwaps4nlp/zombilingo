@@ -47,9 +47,9 @@ class CorpusController extends Controller
     /**
      * Create a new CorpusController instance.
      *
-     * @param  App\Repositories\CorpusRepository $corpus 
+     * @param  App\Repositories\CorpusRepository $corpus
      * @param  App\Repositories\LanguageRepository $language
-     * @param  App\Repositories\LicenseRepository $license     
+     * @param  App\Repositories\LicenseRepository $license
      * @return void
      */
     public function __construct(CorpusRepository $corpus, LanguageRepository $language, LicenseRepository $license)
@@ -59,18 +59,18 @@ class CorpusController extends Controller
         $this->language = $language;
         $this->license = $license;
     }
-    
+
     /**
      * Show the detail of a given corpus.
      *
-     * @param  int $id the id of the corpus 
+     * @param  int $id the id of the corpus
      * @return Illuminate\Http\Response
      */
     public function getShow(Corpus $corpus)
     {
         return view('back.corpus.show',compact('corpus'));
     }
-    
+
     /**
      * Show a listing of the corpora.
      *
@@ -82,24 +82,38 @@ class CorpusController extends Controller
         $languages = $this->language->getList();
         $licenses = $this->license->getList();
         return view('back.corpus.index',compact('corpora','languages','licenses'));
-    } 
+    }
+
+    /**
+     * Show a listing of the corpora with stat about players.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function getStatPlayer()
+    {
+        $corpora = $this->corpus->getAll();
+        $languages = $this->language->getList();
+        $licenses = $this->license->getList();
+        return view('back.corpus.stat-player',compact('corpora','languages','licenses'));
+    }
+
 
     /**
      * Show a form to edit a corpus.
      *
-     * @param  Corpus $corpus the corpus to edit     
+     * @param  Corpus $corpus the corpus to edit
      * @return Illuminate\Http\Response
      */
     public function getEdit(Corpus $corpus)
     {
         $languages = $this->language->getList();
-        $licenses = $this->license->getList();  
+        $licenses = $this->license->getList();
         $reference_corpora = $this->corpus->getListReference();
         $evaluation_corpora = $this->corpus->getListEvaluation();
-        $preannotated_corpora = $this->corpus->getListPreAnnotated(); 
+        $preannotated_corpora = $this->corpus->getListPreAnnotated();
         return view('back.corpus.edit',compact('corpus','languages','licenses','reference_corpora','evaluation_corpora','preannotated_corpora'));
     }
-    
+
     /**
      * Save the update of a corpus.
      *
@@ -126,14 +140,14 @@ class CorpusController extends Controller
         $licenses = $this->license->getList();
         $reference_corpora = $this->corpus->getListReference();
         $evaluation_corpora = $this->corpus->getListEvaluation();
-        $preannotated_corpora = $this->corpus->getListPreAnnotated(); 
+        $preannotated_corpora = $this->corpus->getListPreAnnotated();
         return view('back.corpus.create',compact('corpora','languages','licenses','reference_corpora','evaluation_corpora','preannotated_corpora'));
     }
-    
+
     /**
      * Create a new corpus
      *
-     * @param  App\Http\Requests\CorpusCreateRequest $request     
+     * @param  App\Http\Requests\CorpusCreateRequest $request
      * @return Illuminate\Http\Response
      */
     public function postCreate(CorpusCreateRequest $request)
@@ -146,14 +160,14 @@ class CorpusController extends Controller
     /**
      * Attach corpora to an another
      *
-     * @param  App\Models\Corpus $corpus     
-     * @param  App\Http\Requests\CorpusCreateRequest $request     
+     * @param  App\Models\Corpus $corpus
+     * @param  App\Http\Requests\CorpusCreateRequest $request
      * @return Illuminate\Http\Response
-     */    
+     */
     private function attachCorpora(Corpus $corpus, CorpusCreateRequest $request){
         $corpus->bound_corpora()->detach();
-        $corpus->evaluation_corpora()->detach();    
-        $corpus->subcorpora()->detach();    
+        $corpus->evaluation_corpora()->detach();
+        $corpus->subcorpora()->detach();
         if($corpus->isPreAnnotated()){
             if(is_array($request->input('reference_corpus')))
             foreach($request->input('reference_corpus') as $corpus_id){
@@ -176,7 +190,7 @@ class CorpusController extends Controller
     /**
      * Delete a corpus.
      *
-     * @param  App\Http\Requests\CorpusRequest $request   
+     * @param  App\Http\Requests\CorpusRequest $request
      * @return Illuminate\Http\Response
      */
     public function getDelete(CorpusRequest $request)
@@ -199,7 +213,7 @@ class CorpusController extends Controller
     /**
      * Display a form to import a corpus from a wikiepdia's page or from a raw text.
      *
-     * @param  Illuminate\Http\Request $request     
+     * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
      */
     public function getImportFromUrl(Request $request)
@@ -211,11 +225,11 @@ class CorpusController extends Controller
         $sentence_splitters = Config::get('parser.sentence-splitter');
         return view('back.corpus.import-url',compact('corpora','sentences','sentence_splitters'));
     }
-    
+
     /**
      * Import a text from wikipedia and clean it.
      *
-     * @param  Illuminate\Http\Request $request     
+     * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
      */
     public function postImportFromUrl(Request $request)
@@ -231,7 +245,7 @@ class CorpusController extends Controller
         $url = $request->input('url');
 
         $url = str_replace("'","%27",$url);
-        
+
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL,$url);
@@ -252,7 +266,7 @@ class CorpusController extends Controller
                     $text = preg_replace('#</?'.$tag.'[^>]*>#is', '', $text);
                 }
 
-            }   
+            }
         }
 
         $content = $dom->getElementById('bodyContent');
@@ -282,7 +296,7 @@ class CorpusController extends Controller
         $tab = ['/’/','/—/','/«\xC2\xA0/','/\xC2\xA0»/','/« /','/ »/','/«/','/»/'];
         $tabr = ['\'','-','"','"','"','"','"','"'];
         $text=preg_replace($tab,$tabr,$text);
-   
+
         $text=preg_replace('/\{\{(.+)\}\}/','',$text);
         return $text;
     }
@@ -292,7 +306,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */    
+     */
     public function postSentencesSplitter(Request $request){
 
         $text = $request->input('raw-text');
@@ -310,7 +324,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */  
+     */
     public function postTokeniser(Request $request){
 
         $text = $request->input('text');
@@ -324,11 +338,11 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function postPosTagger(Request $request){
 
         $text = $request->input('text');
-        
+
         $talismane = new Talismane();
         $melt = new Melt();
 
@@ -343,7 +357,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function postParse(Request $request){
         $talismane = new Talismane($request->input('sentence_filter'));
         $grew = new Grew($request->input('sentence_filter'));
@@ -375,7 +389,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function getComputeStatsByDate(Request $request){
 
         $start_date = $request->input('start_date');
@@ -503,12 +517,12 @@ class CorpusController extends Controller
         return view('back.corpus.compare-conll',compact('corpus','annotations'));
 
     }
-    
+
     /**
-     * Show a graph of the confidence of users versus the number of annotations produced 
+     * Show a graph of the confidence of users versus the number of annotations produced
      *
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function getConfidenceByUser(){
 
         $confidence_by_user = Annotation::getConfidenceByUser();
@@ -519,9 +533,9 @@ class CorpusController extends Controller
     /**
      * Show a graph of the evolution of f-score versus relation
      *
-     * @param  App\Repositories\RelationRepository $relations  
+     * @param  App\Repositories\RelationRepository $relations
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function getEvolutionScores(RelationRepository $relations){
 
         foreach($relations->getListPlayable() as $relation_id=>$name){
@@ -536,7 +550,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function getDiffByPos(Request $request){
 
         if(!$request->has("parser1")){
@@ -544,9 +558,9 @@ class CorpusController extends Controller
             $parser2 = 1;
         } else {
             $parser1 = $request->input("parser1");
-            $parser2 = $request->input("parser2");        
+            $parser2 = $request->input("parser2");
         }
-    
+
         $corpora = $this->corpus->getListEvaluation();
         $default_corpus = $this->corpus->getById(16);
         $differences_by_pos = StatsParser::getDiffByPos(16, $parser1, $parser2);
@@ -585,7 +599,7 @@ class CorpusController extends Controller
      *
      * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
-     */ 
+     */
     public function getDiffByRelation(Request $request){
 
         if(!$request->has("parser1")){
@@ -593,9 +607,9 @@ class CorpusController extends Controller
             $parser2 = 1;
         } else {
             $parser1 = $request->input("parser1");
-            $parser2 = $request->input("parser2");        
+            $parser2 = $request->input("parser2");
         }
-        
+
         $corpora_parsers = $this->corpus->getListParsers();
 
         $corpora = $this->corpus->getListEvaluation()->union($this->corpus->getListPreAnnotated());
@@ -631,7 +645,7 @@ class CorpusController extends Controller
      *
      * @param  string $conll
      * @return array
-     */ 
+     */
     private function ConllToArray($conll){
         $_columns_10 = array('word_position','word','lemma','category_id','pos_id','features','governor_position','relation_id','projective_governor_position','projective_relation_id');
         $lines = explode("\n",$conll);
@@ -646,17 +660,17 @@ class CorpusController extends Controller
                 $line = array_combine($_columns_10,$line);
                 $word_position = $line['word_position'];
                 $line['relation_id'] = preg_replace($tab,$tabr,$line['relation_id']);
-                $result[$index_sentence][$word_position] = $line; 
+                $result[$index_sentence][$word_position] = $line;
             } else {
                 if(isset($result[$index_sentence]) && empty($result[$index_sentence])){
 
                 } else {
                     $index_sentence++;
-                    $result[$index_sentence]=array();                    
+                    $result[$index_sentence]=array();
                 }
             }
         }
-        
+
         if(empty($result[$index_sentence])) unset($result[$index_sentence]);
 
         return $result;
@@ -665,7 +679,7 @@ class CorpusController extends Controller
     /**
      * Launch the process to import a corpus file.
      *
-     * @param  Illuminate\Http\Request $request     
+     * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
      */
     public function postImport(Request $request)
@@ -675,7 +689,7 @@ class CorpusController extends Controller
 
         $destinationPath= storage_path()."/import/";
         $fileName=$corpus->name.'.conll';
-        
+
         $request->file('corpus_file')->move($destinationPath,$fileName);
         $filePath = $destinationPath.$fileName;
 
@@ -698,7 +712,7 @@ class CorpusController extends Controller
     /**
      * Save a parsing.
      *
-     * @param  Illuminate\Http\Request $request     
+     * @param  Illuminate\Http\Request $request
      * @return Illuminate\Http\Response
      */
     public function postSaveParse(Request $request)
@@ -751,7 +765,7 @@ class CorpusController extends Controller
 
         return view('back.corpus.post-export',compact('exports_pending','exported_corpuses'));
     }
-    
+
     /**
      * Show the form to export a corpus file .
      *
@@ -761,7 +775,7 @@ class CorpusController extends Controller
     {
         $headers=['Content-Type'=> "text/css"];
         $response = Response::download(storage_path('app/'.$request->file), $request->file, $headers);
-        return $response;        
+        return $response;
     }
 
     /**
@@ -794,7 +808,7 @@ class CorpusController extends Controller
      * @return Illuminate\Http\Response
      */
     public function postExportMwe()
-    {   
+    {
         $parser = new MweExporter(Auth::user());
         $parser->export();
         $exported_corpuses = ExportedCorpus::where('type','mwe')->orderBy('created_at','desc')->get();
@@ -810,7 +824,7 @@ class CorpusController extends Controller
     public function postExport(ExportCorpusRequest $request)
     {
         $corpus = $this->corpus->getById($request->input('corpus_id'));
-        
+
         Annotation::computeScore($request->input('score_init'),$request->input('weight_level'),$request->input('weight_confidence'));
 
         $parser = new ConllExporter($corpus,Auth::user(),$request->input('type_export'));
@@ -829,8 +843,8 @@ class CorpusController extends Controller
     {
 
         $corpora = $corpus_repo->getAll();
-        
-        
+
+
         foreach($corpora as $corpus){
             if($corpus->id!=43)
                 continue;
@@ -844,7 +858,7 @@ class CorpusController extends Controller
                       ->whereRaw('annotation_parser.parser_id = parsers.id')
                       ->whereRaw('annotations.corpus_id ='.$corpus->id);
             })->get();
-        
+
             foreach($sentences as $sentence){
 
                 $complexity = 0;
@@ -855,7 +869,7 @@ class CorpusController extends Controller
                         $complexity_parser = $sentence->getComplexity($parser->id);
                         if($complexity_parser > $complexity)
                             $complexity = $complexity_parser;
-                     
+
                     }
                 } else {
                     $complexity = $sentence->getComplexity();
@@ -916,7 +930,7 @@ class CorpusController extends Controller
                     foreach($original_annotation->parsers as $parser){
                         $new_annotation->parsers()->save($parser);
                         echo $parser->name."<br/>";
-                    }               
+                    }
                 }
             }
             echo $original_annotation->word."<br/>";
