@@ -152,7 +152,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Services\Html\HtmlServiceProvider::class,        
-        
+        Barryvdh\Debugbar\ServiceProvider::class,
         // 'Sofa\Eloquence\ServiceProvider',
         Chumper\Zipper\ZipperServiceProvider::class,
         Barryvdh\TranslationManager\ManagerServiceProvider::class,
