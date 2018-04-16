@@ -10,19 +10,22 @@
         @endif
         </h1> 
         <div class="row" id="entete">
-		<div class="col-md-6 offset-md-3">
+		<div class="col-md-9 offset-md-2">
 			{!! Form::open(['url' => 'user/players', 'method' => 'get', 'role' => 'form']) !!}
 			<div class="row">
-			{!! Form::control('selection', 5, 'corpus_id', $errors, '',$corpora,null,trans('game.all-corpora'),$params['corpus_id']) !!}
-			{!! Form::control('selection', 5, 'relation_id', $errors, '',$relations,null,trans('game.all-phenomena'),$params['relation_id']) !!}
-			<div class="col-2">
+			{!! Form::control('selection', 3, 'corpus_id', $errors, '',$corpora,null,trans('game.all-corpora'),$params['corpus_id']) !!}
+			{!! Form::control('selection', 3, 'challenge_id', $errors, '',$challenges,null,trans('game.all-challenges'),$params['challenge_id']) !!}
+			{!! Form::control('selection', 3, 'relation_id', $errors, '',$relations,null,trans('game.all-phenomena'),$params['relation_id']) !!}
+			<div class="col-1">
 			<button type="submit" class="btn btn-success">Filtrer</button>
 			</div>
 			</div>
 			<div class="row">
-			{!! Form::control('text', 10, 'username', $errors, '', '','','Trouver un joueur : pseudonyme') !!}
+			<div class="col-2"></div>
+			{!! Form::control('text', 4, 'username', $errors, '', '','','Trouver un joueur : pseudonyme') !!}
+
 			<div class="col-2">
-			<button type="submit" class="btn btn-success">Chercher</button>
+				<button type="submit" class="btn btn-success">Chercher</button>
 			</div>
 			</div>
 			{!! Form::close() !!}	

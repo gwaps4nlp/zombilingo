@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Challenge;
+use DB;
 use Gwaps4nlp\Core\Repositories\BaseRepository;
 
 class ChallengeRepository extends BaseRepository
@@ -38,6 +39,20 @@ class ChallengeRepository extends BaseRepository
 	public function getList()
 	{
 		return $this->model->pluck('name','id');
+	}
+
+	/**
+	 * retrieve the list of challenges
+	 *
+	 * @return Illuminate\Support\Collection [name => id]
+	 */
+	public function getListWithScore()
+	{
+		return $this->model->whereExists(function ($query) {
+                $query->select(DB::raw(1))
+                      ->from('score_challenges')
+                      ->whereRaw('score_challenges.challenge_id = challenges.id');
+            })->pluck('name','id');
 	}
 
 	/**

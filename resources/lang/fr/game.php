@@ -51,6 +51,7 @@ return [
 	'overall-ranking' => 'Classement général',
 	'all-phenomena' => 'Tous les phénomènes',
 	'all-corpora' => 'Tous les corpus',
+	'all-challenges' => 'Tous les challenges',
 	'no-player-phenomenon' => 'Aucun joueur sur ce phénomène',
 	'explication-1' => "Avant de pouvoir manger de vraies têtes, il va falloir te former ! Si tu es assez bon, tu pourras enfin dévorer comme un vrai zombie et d'autres relations seront disponibles. Mais attention à l'indigestion si tu ne manges pas les bonnes têtes, le professeur veille !",
 	'explication-2' => "Utilise les objets pour te sortir de situations pénibles et pour gagner plus de cerveaux : la dernière phrase de chaque série rapporte plus profites-en !",
