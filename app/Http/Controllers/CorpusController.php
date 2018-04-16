@@ -89,12 +89,17 @@ class CorpusController extends Controller
      *
      * @return Illuminate\Http\Response
      */
-    public function getStatPlayer()
+    public function getStatPlayer(Request $request)
     {
+        if($request->has('date')){
+          $date = $request->input('date');
+        } else {
+          $date = null;
+        }
         $corpora = $this->corpus->getAll();
         $languages = $this->language->getList();
         $licenses = $this->license->getList();
-        return view('back.corpus.stat-player',compact('corpora','languages','licenses'));
+        return view('back.corpus.stat-player',compact('corpora','languages','licenses','date'));
     }
 
 

@@ -83,6 +83,16 @@ class Corpus extends Gwaps4nlpCorpus
 	  return $this->annotations_users()->select(DB::raw('count(DISTINCT user_id) as count'))->first()->count;
 	}
 
+	public function count_players_at_date($date)
+	{
+	  return $this
+			->annotations_users()
+			->where('annotation_users.created_at','<=',$date)
+			->select(DB::raw('count(DISTINCT user_id) as count'))
+			->first()
+			->count;
+	}
+
 	/**
 	 * One to Many relation
 	 *
