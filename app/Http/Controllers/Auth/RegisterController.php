@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Auth\Events\Registered;
+use App\Repositories\EmailFrequencyRepository;
+use App\Http\Requests\FrequencyEmailRequest;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -53,7 +56,7 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
-        
+
         $user->level_id = 1;
         $user->save();
         if($request->session()->has('demo.points_earned')){
@@ -98,4 +101,24 @@ class RegisterController extends Controller
         $user->roles()->attach(Role::getUser()->id);
         return $user;
     }
+
+
+
+    public function getUnsubscribe(Request $request,EmailFrequencyRepository $email_frequencies){
+        $email_frequency = $email_frequencies->getAll();
+        return view('auth.unsubscribe',['email'=>$request->input('email'),'email_frequency'=>$email_frequency]);
+    }
+
+	public function postUnsubscribe(FrequencyEmailRequest $request,EmailFrequencyRepository $email_frequencies){
+
+        $email_frequency = $email_frequencies->getAll();
+        $user = User::where('email', '=', $request->input('email'))->first();
+        if($user){
+            $user->email_frequency_id = $request->input('email_frequency_id');
+            $user->save();
+        }
+        Session::flash('message', 'Ta demande a bien été prise en compte.');
+		return view('auth.unsubscribe',['email'=>'','email_frequency'=>$email_frequency]);
+	}
+
 }
