@@ -22,7 +22,7 @@
 
 	<tbody>
 	@foreach ($corpora as $corpus)
-		@if($corpus->playable==1)
+		@if($corpus->playable==1 or $corpus->id==14) <!-- display foot (14) even if not playable -->
 		<tr>
 
 		<td style="text-align:left;"><a href="{{ url('corpus/edit',['id'=>$corpus->id]) }}">{{ $corpus->name }}</a></td>
