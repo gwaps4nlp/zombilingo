@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Trophy;
+use Gwaps4nlp\Core\Models\Trophy;
 
 class TrophyTableSeeder extends Seeder
 {

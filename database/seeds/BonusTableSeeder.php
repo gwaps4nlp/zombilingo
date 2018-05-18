@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Bonus;
+use Gwaps4nlp\Core\Models\Bonus;
 
 class BonusTableSeeder extends Seeder
 {

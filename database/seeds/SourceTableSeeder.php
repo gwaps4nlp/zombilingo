@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\Source;
+use Gwaps4nlp\Core\Models\Source;
 
 class SourceTableSeeder extends Seeder
 {

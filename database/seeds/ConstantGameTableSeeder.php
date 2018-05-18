@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Models\ConstantGame;
+use Gwaps4nlp\Core\Models\ConstantGame;
 
 class ConstantGameTableSeeder extends Seeder
 {

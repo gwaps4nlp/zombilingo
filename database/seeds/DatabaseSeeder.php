@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
-use Gwaps4nlp\Models\Role, Gwaps4nlp\Models\Language;
+use Gwaps4nlp\Core\Models\Role, Gwaps4nlp\Core\Models\Language;
 use App\Models\Object, App\Models\Level;
 class DatabaseSeeder extends Seeder
 {

@@ -3,8 +3,8 @@
 use Illuminate\Database\Seeder;
 use App\Models\Corpus;
 use App\Models\User;
-use App\Models\Role;
-use App\Models\Source;
+use Gwaps4nlp\Core\Models\Role;
+use Gwaps4nlp\Core\Models\Source;
 use App\Services\ConllParser;
 
 class CorpusTableSeeder extends Seeder
@@ -29,8 +29,7 @@ class CorpusTableSeeder extends Seeder
             'username' => 'admin',
             'email' => 'admin@admin.fr',
             'password' => bcrypt('admin'),
-            'remember_token' => str_random(10),
-            'role_id' => $role_admin->id
+            'remember_token' => str_random(10) 
         ]);
 
         $corpus_reference = Corpus::create([
