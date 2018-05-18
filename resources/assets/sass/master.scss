@@ -285,13 +285,14 @@ a:hover #count_pending_duel {
 	}
 	#link-informations {
 	    position:absolute;
-	    margin-top:63%;
+	    margin-top:112%;
 	    top:0;
-	    left:63%;
+	    left:59%;
 	    width:30%;
+	    z-index:10;
 	}
 	#link-informations > img {
-	    width: 100%;
+	    width: 80%;
 	}
 	#container-leader-board {
 	    width:98%;
