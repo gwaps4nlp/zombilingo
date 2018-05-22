@@ -13,6 +13,7 @@
 	<tr>
 		<th style="text-align:left;">Name</th>
 		<th>Language</th>
+		<th>Starting date</th>
 		<th>License</th>
 		<th>Annotations</th>
 		<th>Different players</th>
@@ -28,6 +29,7 @@
 		<td style="text-align:left;"><a href="{{ url('corpus/edit',['id'=>$corpus->id]) }}">{{ $corpus->name }}</a></td>
 
 		<td>{{ $corpus->language->label }}</td>
+		<td>{{ $corpus->created_at }}</td>
 		<td><span data-toggle="tooltip" data-placement="auto left" title="{{ $corpus->license->label }}" class="license">{!! Html::image('img/'.$corpus->license->image) !!}</span></td>
 		<td>
 		<?php
