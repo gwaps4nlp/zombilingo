@@ -36,7 +36,15 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
         <input type="hidden" id="connected" value="{{ (Auth::check())?Auth::user()->id:'0' }}" />
         <?php
         $new_log = Session::has('inputs.new_log');
-
+        if (Auth::check()) {
+            $questuser= App::make('App\Repositories\QuestUserRepository');
+            $trophyuser=App::make('Gwaps4nlp\Core\Repositories\TrophyUserRepository');
+            $test=$trophyuser->trophyCreated(Auth::user());
+            $questuser_not_created=$questuser->notCreated(Auth::user());
+            if ($questuser_not_created){
+                $questuser->giveQuest(Auth::user());
+            }
+        }
         if($new_log){
             $modal = App::make('App\Services\Html\ModalBuilder');
             $duels = App::make('App\Repositories\DuelRepository');
@@ -46,18 +54,34 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
             $count_duel_in_progress_not_seen = $duels->countInProgressNotSeen(Auth::user());
             $count_duel_in_progress = $duels->countInProgress(Auth::user());
             $count_news_not_seen = $news->countNotSeen(Auth::user());
+
             $count_duel_available = $duels->countPendingAvailable(Auth::user());
             $news_not_seen = $news->getNotSeen(Auth::user());
 
             $friend_requests = Auth::user()->getAskFriendRequests();
-            $open_modal = $count_duel_in_progress_not_seen||$count_duel_completed||$count_news_not_seen||count($friend_requests)||$count_duel_available;
+            $open_modal = $count_duel_in_progress_not_seen||$count_duel_completed||$count_news_not_seen||count($friend_requests)||$count_duel_available||$questuser_not_created;
 
             if($open_modal){
                 $html = '';
-                if($new_log)
-                    $html .= '<h2>Salut '.Auth::user()->username.' !</h2>';
+                $html .= '<h2>Salut '.Auth::user()->username.' !</h2>';
+                if ($questuser_not_created){
+                    $progress = (100*$questuser->getQuestScore($user))/$questuser->getRequiredValue($user);
+                    $progress2 = 100-$progress;
+                    $description = $questuser->getQuestDescription($user);
+                    $key = $questuser->returnKey($user);
+                    $html .= '<div class="description"><br/>'.$description.' '.$key.'
+    <br/>   
+</div>
+<div class="progress">   
+    <div class="progress-bar progress-bar-success" role="progressbar" style="background-color:#75211f;width:{{ $progress }}%">
+        '.$progress.'%
+    </div>
+    <div class="progress-bar progress-bar-danger" id="progress-bars" role="progressbar" style="color:#000;background-color:#fff;width:'.$progress2.'%">
+  </div>
+</div>';
 
                 if($new_log) {
+                    }
                     if($count_news_not_seen){
                         $html .= '<h3>Il y a du nouveau sur ZombiLingo</h3>';
                         $html .= '<div style="text-align:left;">';
@@ -93,8 +117,8 @@ $challenges_repo = App::make('App\Repositories\ChallengeRepository');
                     if($count_duel_available)
                         $html .= trans_choice('game.new-duels-pending',$count_duel_available, ['number_duels' => $count_duel_available]).'<br/><a class="btn btn-success" href="'.route('duel').'?tab=available" id="see_available_duels">'.trans('game.see-now').'</a><br/>';
                 }
-                $html.='</div>';
                 echo $modal->modal($html,'modalLogin');
+
 
                 echo "<script>
                         $('#modalLogin').modal('show');

@@ -58,8 +58,11 @@
 				        {{ trans('game.explication-3')}}<br/>
 		            </div>
 		        </div>
+		        <div class="quest">
+		        	@include('partials.game.quest')
+		        </div>
 		    </div>			
-		</div>
+		</div>	
 		<div style="clear: both;"></div>
 		<br/>  
 

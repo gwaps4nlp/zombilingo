@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Gwaps4nlp\Core\Repositories\UserRepository;
@@ -75,6 +76,12 @@ class AdminController extends Controller
         $annotationsByRelation = $annotations_user->countByRelation($request->input('user_id'));
         $daysOfActivityByUser = $annotations_user->countDaysOfActivityByUser();
         return view('back.reporting',compact('request','relations','users','annotationsByUser','annotations','daysOfActivityByUser','registrations','annotationsByRelation','label_period'));
+    }
+
+    public function givenewquest(){
+        $questuser=App::make('App\Repositories\QuestUserRepository');
+        $questuser->givequest(Auth::user());
+        return view('back.index');
     }
 
 }

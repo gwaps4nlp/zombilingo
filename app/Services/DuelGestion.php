@@ -135,7 +135,11 @@ class DuelGestion extends Game implements GameGestionInterface
 				 'bonus'=> $this->bonus,
 				 'errors'=> $this->errors
 				 );
-
+        $questuser= App::make('App\Repositories\QuestUserRepository');
+        $questslug=$questuser->getQuestSlug($this->user);
+        if(strpos($questslug,'duel')!==FALSE){
+            $test=$questuser->updateScore($this->user);
+        }
         return Response::json($reponse);
 
 	}

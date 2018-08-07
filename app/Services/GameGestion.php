@@ -14,6 +14,7 @@ use App\Repositories\CorpusRepository;
 use App\Repositories\ChallengeRepository;
 use Gwaps4nlp\Core\Models\Source;
 use Gwaps4nlp\Core\Models\ConstantGame;
+use Gwaps4nlp\Core\Repositories\TrophyUserRepository;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
@@ -236,7 +237,7 @@ class GameGestion extends Game implements GameGestionInterface
 
 			$this->user->increment('number_objects');
 
-			$this->checkTrophy('number_objects', $this->user->number_objects);
+			//$this->checkTrophy('number_objects', $this->user->number_objects);
 
 			$this->loot = $object;
 		}	
@@ -264,11 +265,24 @@ class GameGestion extends Game implements GameGestionInterface
 				'annotation' => $this->annotation,
 				 );
 
+        $questuser= App::make('App\Repositories\QuestUserRepository');
+        $questslug=$questuser->getQuestSlug($this->user);
+        if(strpos($questslug,'annot')!==FALSE){
+            $test=$questuser->updateScore($this->user);
+        }
+        $questuser->updateWeekQuestTrophy($this->user);
+       	$challenge=$this->challenges->getOngoing();
+				if($challenge && $challenge->corpus_id == $this->corpus_id){
+		      $trophyuser= App::make('Gwaps4nlp\Core\Repositories\TrophyUserRepository');
+      		$trophyuser->updateTrophy($user,5);
+				}
+
         return Response::json($reponse);
 
 	}
 
 	public function inProgress(){
+		
 		
 		$inProgress = AnnotationInProgress::firstOrCreate(array('user_id'=>$this->user->id,'relation_id'=>$this->relation_id,'corpus_id'=>$this->corpus_id));		
 		
@@ -383,22 +397,33 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->deleteInProgress();
 
 		if($this->current_relation->todo == 0){
-			$this->checkTrophy($this->corpus->name, $this->user->perfect);
+				//$this->checkTrophy($this->corpus->name, $this->user->perfect);
 		}
 
 		$this->user->increment('won');
-		$this->checkTrophy('won', $this->user->won);
+		//$this->checkTrophy('won', $this->user->won);
 		
 		if($this->nb_successes==$this->nb_turns)
 			$this->user->increment('perfect');
 		
-		$this->checkTrophy('perfect', $this->user->perfect);
+		//$this->checkTrophy('perfect', $this->user->perfect);
 		
 		$this->relation = $this->relations_repo->getByUser($this->user,$this->relation_id);
 		
 		if(rand(0,100)<=ConstantGame::get("proba-mwe")){
 			$this->mwe=1;
 			session()->put('mwe.enabled',1);
+		}
+
+		$questuser= App::make('App\Repositories\QuestUserRepository');
+	  $questslug=$questuser->getQuestSlug($this->user);
+	  if(strpos($questslug,'game')!==FALSE){
+	      $test=$questuser->updateScore($this->user);
+	  }
+		$questkey=$questuser->getKey($this->user);
+		$questkey=$questuser->getPhenoId($questkey);
+		if($questkey==$this->relation_id){
+    	$test=$questuser->updateScore($this->user);
 		}
 		
 		$this->set('annotation_id',0);
@@ -444,6 +469,7 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->addLoot();
 
 		$this->incrementTurn();
+
 
 		$this->set('annotation_id',null);
 		$this->set('spell',null);

@@ -135,7 +135,13 @@ if($mode=="admin-game"){
     </div>
 </div>
 
+
 @endif
+<div class="row justify-content-around">
+    <div class="col-4">
+      @include('partials.game.quest')
+    </div>
+</div>
 </div>
 
 <div class="modal " id="modalMessage" data-backdrop="static" role="dialog">

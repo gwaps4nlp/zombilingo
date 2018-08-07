@@ -6,11 +6,13 @@ use App\Repositories\RelationRepository;
 use App\Repositories\CorpusRepository;
 use App\Models\Corpus;
 use Gwaps4nlp\Core\Models\ConstantGame;
+use App\Repositories\QuestUser;
 use Gwaps4nlp\Core\Models\Source;
 use Illuminate\Http\Request;
 use Gwaps4nlp\Core\GameController as Gwaps4nlpGameController;
 use Illuminate\Http\Response;
 use View;
+use App;
 
 class GameController extends Gwaps4nlpGameController
 {
@@ -65,12 +67,13 @@ class GameController extends Gwaps4nlpGameController
         $this->game->set('corpus_id',$corpus->id);
         $relation->setCorpus($corpus);
 		$relations = $relation->getByUser($user);
+        $questuser=App::make('App\Repositories\QuestUserRepository');
         if($user->isAdmin()){
 		  $corpora = Corpus::where('source_id','=',Source::getPreannotated()->id)->pluck('name','id');
         } else {
             $corpora = Corpus::where('source_id','=',Source::getPreannotated()->id)->where('playable',1)->pluck('name','id');
         }
-		return view('front.game.index',compact('user','relations','corpora'))->with('game',$this->game);
+		return view('front.game.index',compact('user','relations','corpora','questuser'))->with('game',$this->game);
 	}
 	
 	/**
@@ -93,7 +96,7 @@ class GameController extends Gwaps4nlpGameController
      */
     public function begin(Request $request, $mode, $relation_id)
     {
-
+        $user = auth()->user();
         if($request->has('corpus_id') && (Auth::user()->isAdmin() || Auth::user()->level_id >= 2)){
             $corpus = Corpus::findOrFail($request->input('corpus_id'));
             if($corpus->source_id!=Source::getPreAnnotated()->id)
@@ -106,10 +109,10 @@ class GameController extends Gwaps4nlpGameController
         $this->game->begin($request, $relation_id);
         if($this->game->request->ajax())
             return response()->json(array(
-                'html' => View::make('partials.'.$this->game->mode.'.container',['game'=>$this->game])->render()
+                'html' => View::make('partials.'.$this->game->mode.'.container',['game'=>$this->game,'questuser'=>App::make('App\Repositories\QuestUserRepository'),'user'=>$user])->render()
                 ));
         else
-            return view('front.game.container',['game'=>$this->game]);
+            return view('front.game.container',['game'=>$this->game,'questuser'=>App::make('App\Repositories\QuestUserRepository'),'user'=>$user]);
     }
 	
 }

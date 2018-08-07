@@ -17,6 +17,7 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('auth/unsubscribe', 'Auth\RegisterController@getUnsubscribe');
 Route::post('auth/unsubscribe', 'Auth\RegisterController@postUnsubscribe');
+Route::get('newquest', 'AdminController@givenewquest');
 
 
 Route::pattern('id', '[0-9]+');

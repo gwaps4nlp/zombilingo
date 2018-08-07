@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Relation;
+use App\Repositories\FloorRepository;
 use Gwaps4nlp\Core\Models\Language;
 use App\Models\Corpus;
 use Gwaps4nlp\Core\Repositories\UserRepository;
@@ -58,24 +60,23 @@ class UserController extends Controller
         DuelRepository $duels,
         AnnotationUserRepository $annotation_user,
         EmailFrequencyRepository $email_frequencies,
-        ChallengeRepository $challenges
+        ChallengeRepository $challenges,
+        FloorRepository $checkpoint
         )
     {
         $user=Auth::user();
+        $trophyuser= App::make('Gwaps4nlp\Core\Repositories\TrophyUserRepository');
         $challenge = $challenges->getOngoing();
         $leaders = $score->leaders(11,'points',$challenge);
         $leaders_annotations = $score->leaders(11, 'number_annotations', $challenge);
         $neighbors = $score->neighbors($user,'points',3,$challenge);
         $neighbors_annotations = $score->neighbors($user,'number_annotations',3,$challenge);
         $scores_user = $score->getByUser($user,'points',$challenge);
-        
         $scores_annotation_user = $score->getByUser($user,'number_annotations',$challenge);
-
         $language = Language::where('slug','=',app()->getLocale())->first();
         $email_frequency = $email_frequencies->getAll();
         $news = News::take(5)->where('language_id',$language->id)->orderBy('created_at','desc')->get();
-        
-        return view('front.user.home',compact('user','level','score','trophy','leaders','leaders_annotations','neighbors','neighbors_annotations','scores_user','scores_annotation_user','news','duels','email_frequency','challenge'));
+        return view('front.user.home',compact('user','level','score','trophy','leaders','leaders_annotations','neighbors','neighbors_annotations','scores_user','scores_annotation_user','news','duels','trophyid','email_frequency','challenge','trophyuser'));
     }
     
     /**

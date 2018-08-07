@@ -1,3 +1,4 @@
+
 @extends('front.template')
 
 @section('main')
@@ -39,9 +40,7 @@
 							@foreach ($trophy->getAll() as $key => $_trophy)
 							    <span class="trophee">
 							    @if($user->hasTrophy($_trophy))
-							        {!! Html::image('img/trophee/'.$_trophy->image,$_trophy->name.' : '.$_trophy->description) !!}	
-							    @elseif($_trophy->is_secret)
-						            {!! Html::image('img/trophee/secret.png','Trophée secret') !!}
+							        {!! Html::image('img/trophee/'.$trophyuser->getImage($user,$_trophy->id)).'Niveau '.$trophyuser->getActualFloor($user,$_trophy->id).' : ' .$trophyuser->getScore($user,$_trophy->id). ' ' .$_trophy->description.$_trophy->image.'<br/>'!!}	
 							    @endif
 							    </span>
 							@endforeach					

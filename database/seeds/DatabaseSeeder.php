@@ -136,6 +136,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CatPosTableSeeder::class);
         // $this->call(PosGameTableSeeder::class);
         $this->call(CatPosPosGameTableSeeder::class);
+        $this->call(FloorsTableSeeder::class);
+        $this->call(QuestTableSeeder::class);
 
         Model::reguard();
     }
