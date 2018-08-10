@@ -1,4 +1,4 @@
-﻿/* http://keith-wood.name/svg.html
+/* http://keith-wood.name/svg.html
    SVG plotting extension for jQuery v1.5.0.
    Written by Keith Wood (kbwood{at}iinet.com.au) December 2008.
    Available under the MIT (http://keith-wood.name/licence.html) license. 
