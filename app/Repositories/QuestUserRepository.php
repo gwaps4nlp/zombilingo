@@ -337,6 +337,10 @@ class QuestUserRepository extends BaseRepository
     }
     if(($scores==$user->id)&&($this->trophyNotUpdated($user))){
       $this->updateTrophy($user,4);
+      $lastupdate=DB::table('trophy_user')
+        ->where('trophy_id','=',4)
+        ->where('user_id','=',$user->id)
+        ->update(['updated_at'=>DB::raw('now()')]) ; 
       }
   }
 
@@ -345,7 +349,7 @@ class QuestUserRepository extends BaseRepository
       ->where('trophy_id','=',4)
       ->where('user_id','=',$user->id)
       ->value('updated_at');
-    return !(DATE($lastupdate)==DATE('Y-m-d'));  
+    return (date('Y-m-d',strtotime($lastupdate))!=date('Y-m-d'));  
   }
 
   public function getKey($user){

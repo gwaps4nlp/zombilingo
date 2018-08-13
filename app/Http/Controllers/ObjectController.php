@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Repositories\ObjectRepository;
+use App\Repositories\QuestUserRepository;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Response, App, Auth;
@@ -197,6 +198,11 @@ class ObjectController extends Controller
 			Auth::user()->objects()->save($object, ['quantity'=>1]);
 		
 		$this->game->decrementMoney($price);
+    $questuser= App::make('App\Repositories\QuestUserRepository');
+    $questslug=$questuser->getQuestSlug(Auth::user());
+    if(strpos($questslug,'obj')!==FALSE){
+      $test=$questuser->updateScore(Auth::user());
+    }
 
     
 		return $this->inventaire(['money'=>Auth::user()->money,"spell"=>$this->game->get('spell')]);

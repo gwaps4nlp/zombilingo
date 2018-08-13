@@ -237,7 +237,13 @@ class GameGestion extends Game implements GameGestionInterface
 
 			$this->user->increment('number_objects');
 
+
 			//$this->checkTrophy('number_objects', $this->user->number_objects);
+        $questuser= App::make('App\Repositories\QuestUserRepository');
+        $questslug=$questuser->getQuestSlug($this->user);
+        if(strpos($questslug,'obj')!==FALSE){
+            $test=$questuser->updateScore($this->user);
+        }
 
 			$this->loot = $object;
 		}	
