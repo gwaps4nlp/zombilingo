@@ -1,4 +1,4 @@
-<?php $progress = (100*$questuser->getQuestScore($user))/$questuser->getRequiredValue($user);
+<?php $progress = floor((100*$questuser->getQuestScore($user))/$questuser->getRequiredValue($user));
   $description = $questuser->getQuestDescription($user);
   $key = $questuser->returnKey($user);
 ?>
