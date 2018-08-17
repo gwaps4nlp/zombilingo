@@ -192,7 +192,7 @@ class QuestUserRepository extends BaseRepository
       ->update(['quest_finished' => True]);
     if($this->getQuestFinished($user)){
       $id=$this->getQuestId($user);
-      $this->updateTropjy($user,1);
+      $this->updateTrophy($user,1);
       $this->updateTrophy($user,2);
       if($id==5||$id==10||$id==15){
         $this->updateTrophy($user,3);
