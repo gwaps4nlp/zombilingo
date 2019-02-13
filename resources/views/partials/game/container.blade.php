@@ -122,7 +122,7 @@ if($mode=="admin-game"){
 <div class="row game-element pl-3 element-game-bottom" style="">
     <div id="inventory">
         <div class="contentObject">
-            <div class="object tool" object_id="2">
+            <div class="object tool" article_id="2">
                 <span class="tip"></span>
                 {!! Html::image('img/object/thumbs/main_midas.png','object') !!}
                 <span class="nombre"></span>
@@ -130,7 +130,7 @@ if($mode=="admin-game"){
             </div>
             {!! Html::image('img/piece.png','object') !!}
             <br />
-            <a class="btn btn-success buy" object_id="2"></a>
+            <a class="btn btn-success buy" article_id="2"></a>
         </div>
     </div>
 </div>

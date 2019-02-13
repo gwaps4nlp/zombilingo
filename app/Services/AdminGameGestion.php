@@ -14,24 +14,24 @@ use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
-use App\Models\Object;
+use App\Models\Article;
 use App\Models\AnnotationUser;
 use App\Exceptions\GameException;
 use Response, View, App;
 
 class AdminGameGestion extends GameGestion implements GameGestionInterface
 {
-	
+
 	public $relation_id;
-	
+
 	public $annotation_id;
 
 	public $type_gain = 'points';
 
 	public $effect;
-	
+
 	public $relation;
-	
+
 	public $mode = 'admin-game';
 
 	protected $spell;
@@ -39,7 +39,7 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 	protected $fillable = ['turn', 'mode', 'user_playing', 'save_mode', 'user_id', 'nb_turns', 'gain', 'type_gain', 'spell','in_progress','relation_id','current_relation_id','annotation_id','money_spent','money_earned','points_earned','effect','nb_successes','reference_again'];
 
 	protected $visible = ['turn', 'expert', 'nb_turns', 'gain', 'spell', 'user','annotation','loot','attempts','html','neighbors','trophy','bonus'];
-	
+
 	/**
      * The accessors to append to the model's array form.
      *
@@ -51,10 +51,10 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 
         $this->loadSession($request);
 		$this->loadRelation($relation_id);
-		
+
 		if(!$this->request->ajax() && $this->request->has('annotation_id')){
 			$this->set('annotation_id',$this->request->input('annotation_id'));
-		}		
+		}
 		if(!$this->request->ajax()){
 			if($this->request->has('save-mode')){
 				$this->set('save_mode',$this->request->input('save-mode'));
@@ -65,7 +65,7 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 			} else {
 				$this->set('save_mode',null);
 			}
-		}		
+		}
 
 		$this->set('turn',0);
 		$this->set('points_earned',0);
@@ -81,7 +81,7 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 		$this->relation = $this->relations_repo->getByUser($this->user,$relation_id);
 		if(!in_array($this->relation->type,['trouverTete','trouverDependant']))
 			throw new GameException("Mode de jeu inconnu");
-			
+
 		$this->set('current_relation_id',$this->relation->id);
 		$this->set('relation_id',$this->relation->id);
 	}
@@ -101,10 +101,10 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 				// $this->annotation = $this->annotations->get(167601,$this->relation);
 				$this->annotation = $this->annotations->getRandomPreAnnotated($this->current_relation,$this->user);
         }
-			
+
 		$this->set('reference_again',0);
-		
-        if(!$this->annotation){	
+
+        if(!$this->annotation){
         	$this->set('html',View::make('partials.game.no-sentences')->render());
         } else {
 			$this->set('annotation_id',$this->annotation->id);
@@ -112,7 +112,7 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
     	}
 
 	}
-	
+
     protected function computeGain(){
 
         $difficulty = $this->annotation->sentence->difficulty;
@@ -128,15 +128,15 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 	}
 
 	public function getInProgressCurrentRelation(){
-		
+
 		return null;
-		
+
 	}
-	
+
     public function addGain(){
 
     }
-	
+
 	public function end(){
 
 	}
@@ -144,23 +144,23 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 	public function isOver(){
 		return false;
 	}
-	
+
 	public function processAnswer(){
-        
+
         if($this->save_mode == 'expert'){
-			$this->annotation_users->saveAnnotationExpert($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation);        	
-        }        
+			$this->annotation_users->saveAnnotationExpert($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation);
+        }
         elseif($this->save_mode == 'user'){
         	// Delete the previous annotation of the user
         	AnnotationUser::where('user_id',$this->user_playing->id)->where('annotation_id',$this->annotation->id)->delete();
         	// Save the modified annotation
-			$this->annotation_users->save($this->user_playing, $this->annotation, $this->request->input('word_position'),$this->current_relation);        	
+			$this->annotation_users->save($this->user_playing, $this->annotation, $this->request->input('word_position'),$this->current_relation);
 
         } else {
 			$this->annotation_users->save($this->user, $this->annotation, $this->request->input('word_position'),$this->current_relation, false);
-			
+
 			$score_multiplier = $this->annotation_users->score_multiplier;
-			
+
 			if($score_multiplier==1)
 				$this->increment('nb_successes');
 
@@ -173,5 +173,5 @@ class AdminGameGestion extends GameGestion implements GameGestionInterface
 		}
 	}
 
-	
+
 }

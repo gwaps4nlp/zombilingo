@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Object extends Model
+class Article extends Model
 {
     public function scopeOfType($query,$type){
     	return $query->where('slug', $type)->first();
@@ -17,5 +17,5 @@ class Object extends Model
 	public function users()
 	{
 		return $this->belongsToMany('App\Models\User', 'users');
-	}	
+	}
 }

@@ -9,14 +9,14 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Response, App, Auth;
 
-class ObjectController extends Controller
+class ArticleController extends Controller
 {
-	
+
 
     protected $game;
 
     /**
-     * Create a new ObjectController instance.
+     * Create a new ArticleController instance.
      *
      * @return void
      */
@@ -31,7 +31,7 @@ class ObjectController extends Controller
 
     /**
      * Show the shop of objects
-     *  
+     *
      * @return Illuminate\Http\Response
      */
     public function index(Request $request){
@@ -42,7 +42,7 @@ class ObjectController extends Controller
 
     /**
      * Return the inventory of a player in JSON
-     *  
+     *
      * @return Illuminate\Http\Response
      */
     public function inventaire($response=array()){
@@ -51,21 +51,21 @@ class ObjectController extends Controller
 
     /**
      * Check the help on a object as seen
-     * 
-     * @param int $id the identifier of the object to check 
+     *
+     * @param int $id the identifier of the object to check
      * @return void
-     */    
+     */
     public function checkHelpAsSeen($id){
-        Auth::user()->objects()->updateExistingPivot($id, ['help_seen'=>1]);
+        Auth::user()->articles()->updateExistingPivot($id, ['help_seen'=>1]);
     }
 
     /**
      * Use an object
-     * 
-     * @param string $mode the mode of the current game 
-     * @param int $id the identifier of the object used 
+     *
+     * @param string $mode the mode of the current game
+     * @param int $id the identifier of the object used
      * @return lluminate\Http\Response
-     */    
+     */
     public function useObject(Request $request, $mode, $id){
 
         //Current effect
@@ -78,12 +78,12 @@ class ObjectController extends Controller
 
         if(!$object){
             $response['message'] = trans('shop.error-unknown-object');
-            return $this->inventaire($response);            
+            return $this->inventaire($response);
         }
-		
+
         if(!$object->quantity){
             $response['message'] = trans('shop.error-not-in-inventory');
-            return $this->inventaire($response);         
+            return $this->inventaire($response);
         }
 
         //If the object is glasses
@@ -113,9 +113,9 @@ class ObjectController extends Controller
             $response['increase_sentence'] = 1;
             $response['message'] = trans('shop.use-telescope');
         }elseif($object->id == 4){
-            
+
             if ($effet != 0) {
-                    
+
                 //On regarde si l'extracteur n'est pas actif
                 if($effet == 4){
                      $response['message'] = trans('shop.error-extractor-already-active');
@@ -127,7 +127,7 @@ class ObjectController extends Controller
                     return $this->inventaire($response);
                 }
             }else{
-               
+
                 $this->game->set('effect', $object->id);
 
             }
@@ -135,7 +135,7 @@ class ObjectController extends Controller
             $gain = $this->game->gain;
 
             $gain *= ConstantGame::get('multiplier-extractor');
-            
+
             $this->game->set('gain',$gain);
 
             $response['gain'] = $gain;
@@ -152,80 +152,80 @@ class ObjectController extends Controller
                $response['message'] = trans('shop.error-extractor-already-active');
                 return $this->inventaire($response);
             }
-            
+
             $this->game->set('effect', $object->id);
-            
+
             $this->game->set('type_gain','money');
             $response['message'] = trans('shop.points-to-money');
             $response['midas'] = 1;
         }
 
-        $this->game->user->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity-1]);
-    
+        $this->game->user->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity-1]);
+
 		return $this->inventaire($response);
     }
 
     /**
      * Buy an object
-     * 
-     * @param int $id the identifier of the object bought 
+     *
+     * @param int $id the identifier of the object bought
      * @return lluminate\Http\Response
-     */    
+     */
     public function buyObject(Request $request, $id){
 
         $this->game->loadSession($request);
         $response = array();
 
         $object = Auth::user()->inventaire()->find($id);
-		
+
         if(!$object){
             $response['message'] = trans('shop.error-unknown-object');
-            return $this->inventaire($response);            
+            return $this->inventaire($response);
         }
 		if($this->game->isInProgress())
 			$price = $object->price_ingame;
 		else
 			$price = $object->price;
-		
+
         if($price > $this->game->user->money){
             $response['message'] = trans('shop.not-enough-money');
-            return $this->inventaire($response);         
+            return $this->inventaire($response);
         }
-		if($object->object_user_id)
-			Auth::user()->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+		if($object->article_user_id)
+			Auth::user()->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
 		else
-			Auth::user()->objects()->save($object, ['quantity'=>1]);
-		
+			Auth::user()->articles()->save($object, ['quantity'=>1]);
+
 		$this->game->decrementMoney($price);
 
-    
+
 		return $this->inventaire(['money'=>Auth::user()->money,"spell"=>$this->game->get('spell')]);
-		
+
     }
 
     /**
      * Won an object
-     * 
+     *
      * @return lluminate\Http\Response
-     */   
+     */
     public function objectWon(){
-		
-		$object_id = ObjectRepository::getRandomId();
-	
+
+		$article_id = ObjectRepository::getRandomId();
+
 		if(!session()->has('object_won') || !session()->get('object_won'))
 			throw new NotFoundHttpException("");
-		
+
 		session()->put('object_won',0);
-		
-        $object = Auth::user()->inventaire()->find($object_id);
-		
-		if($object->object_user_id)
-			Auth::user()->objects()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+
+        $object = Auth::user()->inventaire()->find($article_id);
+
+		if($object->article_user_id)
+			Auth::user()->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
 		else
-			Auth::user()->objects()->save($object, ['quantity'=>1]);
-    
+			Auth::user()->articles()->save($object, ['quantity'=>1]);
+
 		return Response::json($object);
-		
+
     }
-	
+
 }

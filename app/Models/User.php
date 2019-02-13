@@ -18,7 +18,7 @@ class User extends Gwaps4nlpUser
      * @var array
      */
 	protected $visible = ['id', 'username', 'score', 'money','level','next_level','email_frequency_id'];
-	
+
 	/**
      * The accessors to append to the model's array form.
      *
@@ -34,7 +34,7 @@ class User extends Gwaps4nlpUser
 	{
 		return $this->hasMany('App\Models\Friend');
 	}
-	
+
 	/**
 	 * One to One relation
 	 *
@@ -64,16 +64,16 @@ class User extends Gwaps4nlpUser
 	{
 		return $this->belongsToMany('Gwaps4nlp\Core\Models\Bonus');
 	}
-	
+
 	/**
 	 * Many to Many relation
 	 *
 	 * @return Illuminate\Database\Eloquent\Relations\belongToMany
 	 */
-	public function objects()
+	public function articles()
 	{
-		return $this->belongsToMany('App\Models\Object');
-	}	
+		return $this->belongsToMany('App\Models\Article');
+	}
 	/**
 	 * Many to Many relation
 	 *
@@ -82,7 +82,7 @@ class User extends Gwaps4nlpUser
 	public function messages()
 	{
 		return $this->belongsToMany('App\Models\Message');
-	}	
+	}
 	/**
 	 * Many to Many relation
 	 *
@@ -106,16 +106,16 @@ class User extends Gwaps4nlpUser
 	public function inventaire()
 	{
 		$user_id = $this->id;
-		return Object::leftJoin('object_user',function($join) use ($user_id) {
-				$join->on('object_user.object_id','=','objects.id')
-					->on('object_user.user_id','=',DB::raw($user_id));
+		return Article::leftJoin('article_user',function($join) use ($user_id) {
+				$join->on('article_user.article_id','=','articles.id')
+					->on('article_user.user_id','=',DB::raw($user_id));
 					})
 					->join('constant_games','key','=',DB::raw('"multiplier-price-ingame"'))
-					->select('objects.*','user_id','object_user.id as object_user_id','seen','help_seen')
+					->select('articles.*','user_id','article_user.id as article_user_id','seen','help_seen')
 					->addSelect(DB::raw('ifnull(price*value,0) as price_ingame'))
 					->addSelect(DB::raw('ifnull(quantity,0) as quantity'));
 	}
-				
+
 	/**
 	 * Many to Many relation
 	 *
@@ -215,12 +215,12 @@ class User extends Gwaps4nlpUser
 	{
 		return $this->role->slug != 'user' && $this->role->slug == 'admin';
 	}
-	
+
 	public function hasTrophy($trophy)
 	{
 		return $this->trophies->contains('id', $trophy->id);
 	}
-	
+
 	public function hasFriend($user)
 	{
 		return $this->friends->contains('friend_id', $user->id);
@@ -239,7 +239,7 @@ class User extends Gwaps4nlpUser
 				->whereRaw('discussion_user.discussion_id=discussions.id')
 				->count()>0);
 	}
-	
+
 	public function getAcceptedFriends()
 	{
 		return $this->friends()->where('accepted', 1)->with('friend')->get();
@@ -254,12 +254,12 @@ class User extends Gwaps4nlpUser
 	public function getPendingFriendRequests()
 	{
 		return $this->friends()->where('accepted', 0)->get();
-	}	
+	}
 
 	public function getAskFriendRequests()
 	{
 		return Friend::where('accepted', 0)->where('friend_id',$this->id)->get();
-	}	
+	}
 
 	public function getListAcceptedFriends()
 	{
@@ -267,7 +267,7 @@ class User extends Gwaps4nlpUser
 		{
 			return intval($id);
 		});
-	}	
+	}
 
 	public function getListPendingFriendRequests()
 	{
@@ -275,7 +275,7 @@ class User extends Gwaps4nlpUser
 		{
 			return intval($id);
 		});
-	}	
+	}
 
 	public function getListAskFriendRequests()
 	{

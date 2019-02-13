@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Gwaps4nlp\Core\Models\Role, Gwaps4nlp\Core\Models\Language;
-use App\Models\Object, App\Models\Level;
+use App\Models\Article, App\Models\Level;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Model::unguard();
-        
+
         Role::create([
             'label' => 'User',
             'slug' => 'user'
@@ -40,23 +40,23 @@ class DatabaseSeeder extends Seeder
             'slug' => 'en'
         ]);
 
-        Object::create([
+        Article::create([
             'name' => 'Main de Midas',
             'slug' => 'midas',
             'price' => 100,
             'description' => 'Transforme les cerveaux gagnés en or.',
             'image' => 'main_midas.png'
         ]);
-        
-        Object::create([
+
+        Article::create([
             'name' => 'Lunettes',
             'slug' => 'glasses',
             'price' => 10,
             'description' => 'Permet de revoir les phrases effacées.',
             'image' => 'lunettes.png'
         ]);
-        
-        Object::create([
+
+        Article::create([
             'name' => 'Extracteur',
             'slug' => 'extractor',
             'price' => 200,
@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'extracteur.png'
         ]);
 
-        Object::create([
+        Article::create([
             'name' => 'Longue vue',
             'slug' => 'telescope',
             'price' => 10,
@@ -127,7 +127,7 @@ class DatabaseSeeder extends Seeder
             'image' => 'z7.png',
             'required_score' => '1045000'
         ]);
-        
+
         $this->call(RelationTableSeeder::class);
         $this->call(SourceTableSeeder::class);
         $this->call(BonusTableSeeder::class);

@@ -12,27 +12,27 @@ class CreateObjectUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('object_user', function (Blueprint $table) {
+        Schema::create('article_user', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('object_id')->unsigned();
+            $table->integer('article_id')->unsigned();
             $table->mediumInteger('quantity')->unsigned()->default(0);
             $table->boolean('help_seen')->default(0);
             $table->boolean('seen')->default(0);
             $table->timestamps();
         });
 
-        Schema::table('object_user', function(Blueprint $table) {
+        Schema::table('article_user', function(Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users')
                         ->onDelete('restrict')
                         ->onUpdate('restrict');
         });
 
-        Schema::table('object_user', function(Blueprint $table) {
-            $table->foreign('object_id')->references('id')->on('objects')
+        Schema::table('article_user', function(Blueprint $table) {
+            $table->foreign('article_id')->references('id')->on('articles')
                         ->onDelete('restrict')
                         ->onUpdate('restrict');
-        });        
+        });
     }
 
     /**
@@ -42,6 +42,6 @@ class CreateObjectUserTable extends Migration
      */
     public function down()
     {
-        Schema::drop('object_user');
+        Schema::drop('article_user');
     }
 }

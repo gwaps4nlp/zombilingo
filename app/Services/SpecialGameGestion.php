@@ -15,25 +15,25 @@ use Gwaps4nlp\Core\Models\ConstantGame;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
-use App\Models\Object;
+use App\Models\Article;
 use App\Exceptions\GameException;
 use Response, View, App;
 
-class SpecialGameGestion extends GameGestion 
+class SpecialGameGestion extends GameGestion
 {
-	
+
 	public $relation_id;
-	
+
 	public $relation_special_id;
-	
+
 	public $annotation_id;
 
 	public $type_gain = 'points';
 
 	public $effect;
-	
+
 	public $relation;
-	
+
 	public $mode = 'special';
 
 	protected $spell;
@@ -41,37 +41,37 @@ class SpecialGameGestion extends GameGestion
 	protected $fillable = ['turn', 'nb_turns', 'gain', 'type_gain', 'spell','in_progress','current_relation_id','relation_id','annotation_id','money_spent','money_earned','points_earned','effect','nb_successes','relations','corpus_id','trophies','bonuses'];
 
 	protected $visible = ['turn', 'nb_turns', 'gain', 'spell', 'user','annotation','loot','attempts','html','neighbors','trophy','bonus'];
-	
+
 	/**
      * The accessors to append to the model's array form.
      *
      * @var array
      */
     protected $appends = ['neighbors'];
-	
-	public function __construct(Request $request, 
+
+	public function __construct(Request $request,
 		AnnotationRepository $annotations,
-		AnnotationUserRepository $annotation_users, 
-		ScoreRepository $scores, 
+		AnnotationUserRepository $annotation_users,
+		ScoreRepository $scores,
 		RelationRepository $relations,
 		CorpusRepository $corpora){
 
 		$this->request = $request;
-		
+
 		if($this->request->hasSession()) {
 			if($this->request->session()->has("game.corpus_id")){
 				$this->set("corpus_id", $this->request->session()->get("game.corpus_id"));
 			} else {
 				$this->set("corpus_id", ConstantGame::get('default-corpus'));
-			}		
+			}
 		}
 
 		parent::__construct($request,$annotations,$annotation_users,$scores,$relations,$corpora);
 
 	}
-	
+
 	/**
-	 * set relation 
+	 * set relation
 	 *
 	 * @param integer $relation_id
 	 *
@@ -83,26 +83,26 @@ class SpecialGameGestion extends GameGestion
 	 */
 	public function loadRelation($relation_id){
 		$this->relation = $this->relations_repo->getById($relation_id);
-		
+
 		if($this->relation->type!='special')
 			throw new GameException("Mode de jeu inconnu");
-		
+
 		$relations_slug = explode('/',$this->relation->slug);
 		$relations=[];
 		foreach($relations_slug as $relation_slug){
-			
+
 			$relation = $this->relations_repo->getByUser($this->user, null, $relation_slug);
-			
+
 			if( $relation->tutorial < ConstantGame::get("turns-training") )
 				throw new GameException("Tu dois faire la formation");
 
 			$relations[]=$relation;
 		}
-		
+
 		$this->set('relation_id',$this->relation->id);
 		$this->set('relations',$relations);
 	}
-	
+
 	public function loadContent(){
 
 		if($this->annotation_id&&$this->current_relation){
@@ -122,7 +122,7 @@ class SpecialGameGestion extends GameGestion
         }
 
         if(!$this->annotation){
-        	$this->deleteInProgress();	
+        	$this->deleteInProgress();
         	$this->set('html',View::make('partials.game.no-sentences')->render());
         }
         else {
@@ -132,7 +132,7 @@ class SpecialGameGestion extends GameGestion
 	        $this->inProgress();
 	        $this->annotation->addVisible(array('word_position','governor_position'));
     	}
-		
+
 	}
 
 	public function jsonAnswer(){
@@ -158,7 +158,7 @@ class SpecialGameGestion extends GameGestion
         return Response::json($reponse);
 
 	}
-	
+
 	public function addSpell(){
 
 	}
@@ -168,35 +168,35 @@ class SpecialGameGestion extends GameGestion
 	}
 
 	public function processAnswer(){
-        
+
 		$this->annotation_users->saveByRelation($this->user, $this->annotation, $this->request->input('relation_id'));
-		
+
 		$score_multiplier = $this->annotation_users->score_multiplier;
-		
+
 		if($score_multiplier==1)
 			$this->increment('nb_successes');
 
 		$this->gain*=$score_multiplier;
-		
+
 		$this->set('errors',$this->annotation_users->error);
 
 		$this->addGain();
 		$this->addLoot();
 
 		$this->incrementTurn();
-		
-		
+
+
 		if($this->in_progress && $inProgress = AnnotationInProgress::where('user_id','=',$this->user->id)
 			->where('relation_id','=',$this->relation_id)->first()
 		){
 			$inProgress->annotation_id=null;
 			$inProgress->save();
 		}
-		
+
 		$this->set('annotation_id',null);
 		$this->set('spell',null);
 		$this->set('effect',0);
-		
+
 	}
 
 }

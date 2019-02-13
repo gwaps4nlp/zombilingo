@@ -10,7 +10,7 @@ var progression = 0;
 var turn = 0;
 var spell = null;
 var essayer = false;
-var mode,relation_id,object_id;
+var mode,relation_id,article_id;
 var pending_request=false;
 
 $(document).ajaxError(function(jqXHR, textStatus, errorThrown) {
@@ -356,9 +356,9 @@ $(document).ready(function(){
   });
     // ====================================================================================================
     $blockGame.on('click', '.buy', function(){
-        object_id = $(this).attr('data-object-id');
+        article_id = $(this).attr('data-object-id');
         $.ajax({
-            url : base_url + 'game/buyObject/' + object_id,
+            url : base_url + 'game/buyObject/' + article_id,
             success : processInventaire
         });
     });
@@ -424,9 +424,9 @@ $(document).ready(function(){
         $('#loader-container').remove();
     } 
 
-    function checkHelpObjectAsSeen(object_id){
+    function checkHelpObjectAsSeen(article_id){
         $.ajax({
-            url : base_url + 'object/checkHelpAsSeen/' + object_id
+            url : base_url + 'object/checkHelpAsSeen/' + article_id
         });
     }
 
@@ -958,7 +958,7 @@ $(document).ready(function(){
             $('.money').html(json.money.formatScore());
         }
         if(json.message)
-            $( "span.error[data-object-id|='"+object_id+"']" ).html(json.message);
+            $( "span.error[data-object-id|='"+article_id+"']" ).html(json.message);
         $.each(json.inventaire,function(index,object){
             $( "span.owned[data-object-id|='"+object.id+"']" ).html(object.quantity);
         });

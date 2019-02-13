@@ -70,9 +70,9 @@
 @section('scripts')
 <script>
     $(document).on('click', '.buy', function(){
-        object_id = $(this).attr('data-object-id');
+        article_id = $(this).attr('data-object-id');
         $.ajax({
-            url : base_url + 'game/buyObject/' + object_id,
+            url : base_url + 'game/buyObject/' + article_id,
             success : processInventaire
         });
     });

@@ -28,7 +28,7 @@ class HtmlBuilder extends \Collective\Html\HtmlBuilder {
 	 *
 	 * @return void
 	 */
-	public function modalObjectWon($object_id){
+	public function modalObjectWon($article_id){
 		return view('partial.object.object-won');
 	}	
 	/**

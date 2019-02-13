@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Object;
+use App\Models\Article;
 use Gwaps4nlp\Core\Repositories\BaseRepository;
 
 class ObjectRepository extends BaseRepository
@@ -11,17 +11,17 @@ class ObjectRepository extends BaseRepository
 	/**
 	 * Create a new ObjectRepository instance.
 	 *
-	 * @param  App\Models\Object $Object
+	 * @param  App\Models\Article $object
 	 * @return void
 	 */
 	public function __construct(
-		Object $object)
+		Article $object)
 	{
 		$this->model = $object;
 	}
 
 	/**
-	 * Retrieve all objects 
+	 * Retrieve all objects
 	 *
 	 * @return Collection of Objects
 	 */
@@ -36,9 +36,9 @@ class ObjectRepository extends BaseRepository
 	 */
 	public static function getRandomId()
 	{
-		$count = Object::count();
+		$count = Article::count();
 		$rang = rand(0,$count-1);
-		return Object::skip($rang)->take(1)->first()->id;
+		return Article::skip($rang)->take(1)->first()->id;
 	}
 
 }

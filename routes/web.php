@@ -239,13 +239,13 @@ Route::get('game/{mode}/begin/{id}', [
 Route::get('game/{mode}/answer', [
 	'uses' => 'GameController@answer'
 ]);
-//ObjectController
-Route::get('game/inventaire', 'ObjectController@inventaire');
-Route::get('shop', 'ObjectController@index');
-Route::get('game/buyObject/{id}', 'ObjectController@buyObject');
-Route::get('object/checkHelpAsSeen/{id}', 'ObjectController@checkHelpAsSeen');
-Route::get('shop/objectWon', 'ObjectController@objectWon');
-Route::get('shop/{mode}/useObject/{id}', 'ObjectController@useObject');
+//ArticleController
+Route::get('game/inventaire', 'ArticleController@inventaire');
+Route::get('shop', 'ArticleController@index');
+Route::get('game/buyObject/{id}', 'ArticleController@buyObject');
+Route::get('object/checkHelpAsSeen/{id}', 'ArticleController@checkHelpAsSeen');
+Route::get('shop/objectWon', 'ArticleController@objectWon');
+Route::get('shop/{mode}/useObject/{id}', 'ArticleController@useObject');
 
 Route::group(array('before' => 'admin'), function ()
 {
