@@ -227,18 +227,18 @@ class GameGestion extends Game implements GameGestionInterface
 
 			$article_id = ObjectRepository::getRandomId();
 
-			$object = $this->user->inventaire()->find($article_id);
+			$article = $this->user->inventaire()->find($article_id);
 
-			if($object->article_user_id)
-				$this->user->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+			if($article->article_user_id)
+				$this->user->articles()->updateExistingPivot($article->id, ['quantity'=>$article->quantity+1]);
 			else
-				$this->user->articles()->save($object, ['quantity'=>1]);
+				$this->user->articles()->save($article, ['quantity'=>1]);
 
 			$this->user->increment('number_objects');
 
 			$this->checkTrophy('number_objects', $this->user->number_objects);
 
-			$this->loot = $object;
+			$this->loot = $article;
 		}
 
 	}

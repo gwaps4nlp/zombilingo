@@ -74,20 +74,20 @@ class ArticleController extends Controller
 
         $response = array();
 
-        $object = Auth::user()->inventaire()->find($id);
+        $article = Auth::user()->inventaire()->find($id);
 
-        if(!$object){
+        if(!$article){
             $response['message'] = trans('shop.error-unknown-object');
             return $this->inventaire($response);
         }
 
-        if(!$object->quantity){
+        if(!$article->quantity){
             $response['message'] = trans('shop.error-not-in-inventory');
             return $this->inventaire($response);
         }
 
         //If the object is glasses
-        if($object->id == 3){
+        if($article->id == 3){
             //Si la phrase n'a pas disparue
             if(!$this->game->hasSpell('vanish')){
                 //On réaffiche l'inventaire
@@ -99,7 +99,7 @@ class ArticleController extends Controller
             //On changera l'affichage sur le client
             $response['reappear_sentence'] = 1;
             $response['message'] = trans('shop.use-glasses');
-        }elseif($object->id == 5){
+        }elseif($article->id == 5){
 
             //Si la phrase n'a pas rapetissée
             if(!$this->game->hasSpell('shrink')){
@@ -112,7 +112,7 @@ class ArticleController extends Controller
 
             $response['increase_sentence'] = 1;
             $response['message'] = trans('shop.use-telescope');
-        }elseif($object->id == 4){
+        }elseif($article->id == 4){
 
             if ($effet != 0) {
 
@@ -128,7 +128,7 @@ class ArticleController extends Controller
                 }
             }else{
 
-                $this->game->set('effect', $object->id);
+                $this->game->set('effect', $article->id);
 
             }
 
@@ -140,7 +140,7 @@ class ArticleController extends Controller
 
             $response['gain'] = $gain;
             $response['message'] = trans('shop.won-more-points');
-        }elseif($object->id == 2){
+        }elseif($article->id == 2){
 
 			//On regarde si la main de midas n'est pas active
             if($effet == 2){
@@ -153,14 +153,14 @@ class ArticleController extends Controller
                 return $this->inventaire($response);
             }
 
-            $this->game->set('effect', $object->id);
+            $this->game->set('effect', $article->id);
 
             $this->game->set('type_gain','money');
             $response['message'] = trans('shop.points-to-money');
             $response['midas'] = 1;
         }
 
-        $this->game->user->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity-1]);
+        $this->game->user->articles()->updateExistingPivot($article->id, ['quantity'=>$article->quantity-1]);
 
 		return $this->inventaire($response);
     }
@@ -176,25 +176,25 @@ class ArticleController extends Controller
         $this->game->loadSession($request);
         $response = array();
 
-        $object = Auth::user()->inventaire()->find($id);
+        $article = Auth::user()->inventaire()->find($id);
 
-        if(!$object){
+        if(!$article){
             $response['message'] = trans('shop.error-unknown-object');
             return $this->inventaire($response);
         }
 		if($this->game->isInProgress())
-			$price = $object->price_ingame;
+			$price = $article->price_ingame;
 		else
-			$price = $object->price;
+			$price = $article->price;
 
         if($price > $this->game->user->money){
             $response['message'] = trans('shop.not-enough-money');
             return $this->inventaire($response);
         }
-		if($object->article_user_id)
-			Auth::user()->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+		if($article->article_user_id)
+			Auth::user()->articles()->updateExistingPivot($article->id, ['quantity'=>$article->quantity+1]);
 		else
-			Auth::user()->articles()->save($object, ['quantity'=>1]);
+			Auth::user()->articles()->save($article, ['quantity'=>1]);
 
 		$this->game->decrementMoney($price);
 
@@ -217,14 +217,14 @@ class ArticleController extends Controller
 
 		session()->put('object_won',0);
 
-        $object = Auth::user()->inventaire()->find($article_id);
+        $article = Auth::user()->inventaire()->find($article_id);
 
-		if($object->article_user_id)
-			Auth::user()->articles()->updateExistingPivot($object->id, ['quantity'=>$object->quantity+1]);
+		if($article->article_user_id)
+			Auth::user()->articles()->updateExistingPivot($article->id, ['quantity'=>$article->quantity+1]);
 		else
-			Auth::user()->articles()->save($object, ['quantity'=>1]);
+			Auth::user()->articles()->save($article, ['quantity'=>1]);
 
-		return Response::json($object);
+		return Response::json($article);
 
     }
 

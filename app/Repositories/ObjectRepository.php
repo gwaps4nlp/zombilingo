@@ -9,28 +9,28 @@ class ObjectRepository extends BaseRepository
 {
 
 	/**
-	 * Create a new ObjectRepository instance.
+	 * Create a new ArticleRepository instance.
 	 *
-	 * @param  App\Models\Article $object
+	 * @param  App\Models\Article $article
 	 * @return void
 	 */
 	public function __construct(
-		Article $object)
+		Article $article)
 	{
-		$this->model = $object;
+		$this->model = $article;
 	}
 
 	/**
-	 * Retrieve all objects
+	 * Retrieve all articles
 	 *
-	 * @return Collection of Objects
+	 * @return Collection of Articles
 	 */
 	public function getAll()
 	{
 		return $this->model->get();
 	}
 	/**
-	 * Get a ramdom id of object
+	 * Get a ramdom id of article
 	 *
 	 * @return int
 	 */
