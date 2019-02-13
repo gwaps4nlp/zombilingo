@@ -32,7 +32,7 @@ class GameController extends Gwaps4nlpGameController
 		else
 			$this->middleware('auth');
     }
-	
+
 	/**
 	 * Show the index of the game by level
 	 *
@@ -72,7 +72,7 @@ class GameController extends Gwaps4nlpGameController
         }
 		return view('front.game.index',compact('user','relations','corpora'))->with('game',$this->game);
 	}
-	
+
 	/**
 	 * Display the index of the demo game
 	 *
@@ -94,7 +94,7 @@ class GameController extends Gwaps4nlpGameController
     public function begin(Request $request, $mode, $relation_id)
     {
 
-        if($request->has('corpus_id') && (Auth::user()->isAdmin() || Auth::user()->level_id >= 2)){
+        if($request->has('corpus_id') && (auth()->user()->isAdmin() || auth()->user()->level_id >= 2)){
             $corpus = Corpus::findOrFail($request->input('corpus_id'));
             if($corpus->source_id!=Source::getPreAnnotated()->id)
                 throw new GameException('Unknown corpus');
@@ -111,5 +111,5 @@ class GameController extends Gwaps4nlpGameController
         else
             return view('front.game.container',['game'=>$this->game]);
     }
-	
+
 }
