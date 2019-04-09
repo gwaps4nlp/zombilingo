@@ -13,6 +13,7 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/build/js')
    .sass('resources/assets/sass/app.scss', 'public/build/css')
+   .sass('resources/assets/sass/zlud.scss', 'public/build/css')
    .version();
 mix.scripts([
     'public/build/js/app.js',
@@ -25,7 +26,7 @@ mix.scripts([
     "public/js/brat/client/src/util.js",
     "public/js/brat/client/lib/webfont.js",
     "public/js/brat/client/src/dispatcher.js",
-    "public/js/brat/client/src/url_monitor.js",        
+    "public/js/brat/client/src/url_monitor.js",
     "public/js/brat/client/src/visualizer.js",
     'public/js/visualization.js',
 ], 'public/build/js/all.js').version();

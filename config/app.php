@@ -219,4 +219,7 @@ return [
 
     ],
 
+  'name' => env('APP_NAME', 'zombilingo'),
+
+
 ];
