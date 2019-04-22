@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Relation;
 
-class RelationTableSeeder extends Seeder
+class SequoiaRelationTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -295,5 +295,5 @@ class RelationTableSeeder extends Seeder
             'level_id' => 10
         ]);
     }
-  
+
 }

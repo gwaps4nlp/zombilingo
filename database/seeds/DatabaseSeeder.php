@@ -128,7 +128,6 @@ class DatabaseSeeder extends Seeder
             'required_score' => '1045000'
         ]);
 
-        $this->call(RelationTableSeeder::class);
         $this->call(SourceTableSeeder::class);
         $this->call(BonusTableSeeder::class);
         $this->call(TrophyTableSeeder::class);
