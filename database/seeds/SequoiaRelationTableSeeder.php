@@ -295,5 +295,4 @@ class SequoiaRelationTableSeeder extends Seeder
             'level_id' => 10
         ]);
     }
-
 }
