@@ -65,14 +65,13 @@ class UdRelationTableSeeder extends Seeder
         ]);
 
         Relation::create([
-            'slug' => 'conj',
+            'slug' => 'conj:coord',
             'name' => 'Conjonction',
             'description' => 'Il faut le retrouver la tête de la relation, en recherchant le premier item lexical coordonné.',
-            'help_file' => 'conj',
+            'help_file' => 'conj_coord',
             'type' => 'trouverTête',
             'level_id' => 10
         ]);
-
         Relation::create([
             'slug' => 'cc',
             'name' => 'Conjonction de coordination',
@@ -81,5 +80,72 @@ class UdRelationTableSeeder extends Seeder
             'type' => 'trouverTête',
             'level_id' => 10
         ]);
+
+        Relation::create([
+            'slug' => 'not-exists',
+            'name' => "Relation inexistante",
+            'description' => '',
+            'help_file' => '',
+            'type' => 'nonJouable',
+            'level_id' => 10
+        ]);
+
+        $other_relations = array(
+          "acl",
+          "advcl",
+          "advcl:cleft",
+          "advcl:periph",
+          "advmod",
+          "advmod:periph",
+          "amod",
+          "appos:conj",
+          "appos:nmod",
+          "aux:caus",
+          "case",
+          "ccomp",
+          "compound",
+          "conj:dicto",
+          "cop",
+          "csubj",
+          "csubj:pass",
+          "dep",
+          "dep:iobj",
+          "dep:obj",
+          "det",
+          "discourse",
+          "expl",
+          "fixed",
+          "flat",
+          "iobj",
+          "mark",
+          "nmod",
+          "nsubj:caus",
+          "nsubj:expl",
+          "nsubj:pass",
+          "nummod",
+          "obl:comp",
+          "obl:mod",
+          "obl:periph",
+          "orphan",
+          "parataxis:discourse",
+          "parataxis:insert",
+          "parataxis:obj",
+          "parataxis:parenth",
+          "punct",
+          "root",
+          "vocative",
+          "xcomp",
+        );
+
+        foreach ($other_relations as $relation) {
+                  Relation::create([
+                      'slug' => $relation,
+                      'name' => $relation,
+                      'description' => '',
+                      'help_file' => '',
+                      'type' => 'nonJouable',
+                      'level_id' => 10
+                  ]);
+        }
     }
 }
