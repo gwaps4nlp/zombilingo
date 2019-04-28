@@ -121,7 +121,7 @@ class ConllParser extends CsvParser {
   }
 
   public function parseBlankLine($line=array("")){
-    preg_match('/#\s?sentid:\s?(?<sentid>\S+)/', $line[0], $matches);
+    preg_match('/#\s?sent_?id\s?(:|=)\s?(?<sentid>\S+)/', $line[0], $matches);
     if (isset($matches['sentid'])) {
       $this->sentid = trim($matches['sentid']);
       if ($this->sentence_filter=='1mod4') {
