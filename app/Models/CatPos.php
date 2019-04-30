@@ -42,6 +42,6 @@ class CatPos extends Model
 		} else {
 			return 'UNK';
 		}
-	});
+	}
 
 }
