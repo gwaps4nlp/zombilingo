@@ -12,6 +12,8 @@ class CatPos extends Model
 	 *
 	 * @return Illuminate\Database\Eloquent\Relations\belongToMany
 	 */
+	public $timestamps = false;
+
 	public function pos_games()
 	{
 		return $this->belongsToMany('App\Models\PosGame');
@@ -24,26 +26,22 @@ class CatPos extends Model
 
 	public static function getIdBySlug($slug)
 	{
-		return Cache::rememberForever($slug, function() use ($slug) {
-			$cat_pos = CatPos::select('id')->where('slug','=',$slug)->first();
-			if($cat_pos){
-				return $cat_pos->id;
-			} else {
-				return CatPos::select('id')->where('slug','=','UNK')->first()->id;
-			}
-		});
+		$cat_pos = CatPos::select('id')->where('slug','=',$slug)->first();
+		if($cat_pos){
+			return $cat_pos->id;
+		} else {
+			return CatPos::select('id')->where('slug','=','UNK')->first()->id;
+		}
 	}
 
 	public static function getSlugById($id)
 	{
-		return Cache::rememberForever('catpos'.$id, function() use ($id) {
-			$cat_pos = CatPos::select('slug')->where('id','=',$id)->first();
-			if($cat_pos){
-				return str_replace('_pos','',$cat_pos->slug);
-			} else {
-				return 'UNK';
-			}
-		});
-	}
+		$cat_pos = CatPos::select('slug')->where('id','=',$id)->first();
+		if($cat_pos){
+			return str_replace('_pos','',$cat_pos->slug);
+		} else {
+			return 'UNK';
+		}
+	});
 
 }

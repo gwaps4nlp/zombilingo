@@ -2,7 +2,7 @@
 
 use Flynsarmy\CsvSeeder\CsvSeeder;
 
-class CatPosTableSeeder extends CsvSeeder {
+class SequoiaCatPosTableSeeder extends CsvSeeder {
 
     public function __construct()
     {
@@ -26,10 +26,10 @@ class CatPosTableSeeder extends CsvSeeder {
         DB::update("update `annotations` set `category_id`='A', pos_id='ADJ' where category_id = 'ADJ'");
         DB::update("update `annotations` set `category_id`='PRO', pos_id='PROWH' where category_id = 'PROWH'");
         DB::update("update `annotations` set `category_id`='N', pos_id='NPP' where category_id = 'NPP'");
-      
-        DB::update('update annotations, cat_pos set annotations.category_id=cat_pos.id where cat_pos.slug=annotations.category_id and cat_pos.parent_id=0');        
+
+        DB::update('update annotations, cat_pos set annotations.category_id=cat_pos.id where cat_pos.slug=annotations.category_id and cat_pos.parent_id=0');
         DB::update('update annotations, cat_pos set annotations.pos_id=cat_pos.id where replace(cat_pos.slug,"_pos","") =annotations.pos_id and cat_pos.parent_id!=0');
-        
-     
+
+
     }
 }

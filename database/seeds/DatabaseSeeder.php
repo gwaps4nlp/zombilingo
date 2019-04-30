@@ -132,7 +132,6 @@ class DatabaseSeeder extends Seeder
         $this->call(BonusTableSeeder::class);
         $this->call(TrophyTableSeeder::class);
         $this->call(ConstantGameTableSeeder::class);
-        $this->call(CatPosTableSeeder::class);
         // $this->call(PosGameTableSeeder::class);
         $this->call(CatPosPosGameTableSeeder::class);
 
