@@ -29,6 +29,7 @@ class UdCatPosTableSeeder extends Seeder
         CatPos::create(['slug' => 'SYM', 'parent_id' => '0']);
         CatPos::create(['slug' => 'VERB', 'parent_id' => '0']);
         CatPos::create(['slug' => 'X', 'parent_id' => '0']);
+        CatPos::create(['slug' => 'UNK', 'parent_id' => '0']);
     }
 }
 
