@@ -33,7 +33,7 @@ class Relation extends Model
 
 	public static function getIdBySlug($slug){
 		try {
-			return Cache::rememberForever($slug, function() use ($slug) {
+			return Cache::rememberForever(Config::get('app.name').'-'.$slug, function() use ($slug) {
 				$relation = parent::select('id')->where('slug','=',$slug)->first();
 				if($relation){
 					return $relation->id;
@@ -53,7 +53,7 @@ class Relation extends Model
 
 	public static function getById($id){
 		try {
-			return Cache::rememberForever('relation_'.$id, function() use ($id) {
+			return Cache::rememberForever(Config::get('app.name').'-'.'relation_'.$id, function() use ($id) {
 				$relation = parent::where('id','=',$id)->first();
 				if($relation){
 					return $relation;
