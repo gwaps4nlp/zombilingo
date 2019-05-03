@@ -123,6 +123,7 @@ class UdRelationTableSeeder extends Seeder
           "nsubj:expl",
           "nsubj:pass",
           "nummod",
+          "obl",
           "obl:comp",
           "obl:mod",
           "obl:periph",
@@ -147,5 +148,14 @@ class UdRelationTableSeeder extends Seeder
                       'level_id' => 10
                   ]);
         }
+        Relation::create([
+            'slug' => 'UNK',
+            'name' => 'Unknown  ',
+            'description' => '',
+            'help_file' => '',
+            'type' => 'nonJouable',
+            'level_id' => 10
+        ]);
+
     }
 }
