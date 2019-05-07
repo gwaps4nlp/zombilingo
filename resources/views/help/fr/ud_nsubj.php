@@ -21,7 +21,7 @@
 
 <em>
   <ul>
-    <li><span class="sentence">enfin toute ma <span class=solution>famille</span> est <span class=highlight>portugaise</span> de la société.
+    <li><span class="sentence">enfin toute ma <span class=solution>famille</span> est <span class=highlight>portugaise</span>.
   </ul>
 </em>
 
