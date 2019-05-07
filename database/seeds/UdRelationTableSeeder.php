@@ -16,7 +16,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'nsubj',
             'name' => 'Sujet',
             'description' => 'Il faut retrouver le nom qui est modifié par l’argument principal de l’énoncé.',
-            'help_file' => 'nsubj',
+            'help_file' => 'ud_nsubj',
             'type' => 'trouverDependant',
             'level_id' => 1
         ]);
@@ -24,7 +24,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'obj',
             'name' => 'Complément direct',
             'description' => 'Trouve le complément (objet direct) du verbe indiqué&#8239;!',
-            'help_file' => 'obj',
+            'help_file' => 'ud_obj',
             'type' => 'trouverDependant',
             'level_id' => 3
         ]);
@@ -32,7 +32,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'dislocated',
             'name' => 'Sujet/Objet préposé/postposé',
             'description' => 'Il faut le retrouver l’élément qui ajoute une information au référent dont il est question et qui apparaît comme superflu',
-            'help_file' => 'dislocated',
+            'help_file' => 'ud_dislocated',
             'type' => 'trouverDependant',
             'level_id' => 2
         ]);
@@ -41,7 +41,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'acl:relcl',
             'name' => 'Modifieur de proposition relative',
             'description' => 'Le nom/pronom/nom propre est modifié par le verbe dans la proposition relative qui le suit. Il faut le retrouver.',
-            'help_file' => 'acl_relcl',
+            'help_file' => 'ud_acl_relcl',
             'type' => 'trouverTête',
             'level_id' => 10
         ]);
@@ -50,7 +50,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'aux',
             'name' => 'Auxiliaire',
             'description' => 'Trouve l\'auxiliaire ##',
-            'help_file' => 'aux',
+            'help_file' => 'ud_aux',
             'type' => 'trouverDependant',
             'level_id' => 1
         ]);
@@ -59,7 +59,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'aux:pass',
             'name' => 'Auxiliaire à la voix passive',
             'description' => 'Trouve l\'auxiliaire de la voix passive',
-            'help_file' => 'aux_pass',
+            'help_file' => 'ud_aux_pass',
             'type' => 'trouverDependant',
             'level_id' => 4
         ]);
@@ -68,7 +68,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'conj:coord',
             'name' => 'Conjonction',
             'description' => 'Il faut le retrouver la tête de la relation, en recherchant le premier item lexical coordonné.',
-            'help_file' => 'conj_coord',
+            'help_file' => 'ud_conj_coord',
             'type' => 'trouverTête',
             'level_id' => 10
         ]);
@@ -76,7 +76,7 @@ class UdRelationTableSeeder extends Seeder
             'slug' => 'cc',
             'name' => 'Conjonction de coordination',
             'description' => 'Il faut retrouver la tête de la relation de conjonction de coordination celle qui arrive après le marqueur de coordination (mais, ou, et, donc, or, ni, car)',
-            'help_file' => 'cc',
+            'help_file' => 'ud_cc',
             'type' => 'trouverTête',
             'level_id' => 10
         ]);
