@@ -13,15 +13,21 @@ if($challenge){
 
     <div class="col-2 mt-5 text-center">
         <a href="https://lingoboingo.org/" style="padding-left:70px;" target="_blank">
-<img src="{{ asset('img/logo_LingoBoingo.png') }}" data-toggle="tooltip" data-placement="bottom" title="ZombiLingo est présent sur le portail LingoBoingo.org où tu peux trouver d'autres jeux sur la langue" style="width:100%" />
-            </a>   
-    </div> 
-    <div class="col-8" id="container-logo" title="{{ trans('site.home') }}">
-        <a href="{!! url('') !!}">
-            {!! Html::image('img/logo-home.png','ZombiLingo',['style'=>'width:80%']) !!}   
+          <img
+            src="{{ asset('img/lingo_logo_mobile.png') }}"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="ZombiLingo est présent sur le portail LingoBoingo.org où tu peux trouver d'autres jeux sur la langue"
+            style="width:100%"
+          />
         </a>
     </div>
-    
+    <div class="col-8" id="container-logo" title="{{ trans('site.home') }}">
+        <a href="{!! url('') !!}">
+            {!! Html::image('img/logo-home.png','ZombiLingo',['style'=>'width:80%']) !!}
+        </a>
+    </div>
+
     @if($challenge)
         @if($challenge->type_score=="duel")
             <a href="{{ url('duel') }}?corpus_id={{ $challenge->corpus_id }}">
@@ -45,7 +51,7 @@ if($challenge){
     @if(Auth::check())
         <div class="col-1" id="blocDeconnection42">
             <a href="{!! route('logout') !!}">
-                {!! Html::image('img/deco.png',trans('site.quit'),array('style'=>'height:120%;width:120%;max-height:87px;max-width:105px;min-width:58px;min-height:48px;')) !!}       
+                {!! Html::image('img/deco.png',trans('site.quit'),array('style'=>'height:120%;width:120%;max-height:87px;max-width:105px;min-width:58px;min-height:48px;')) !!}
             </a>
             <a href="{!! url('user/home') !!}">
                 <span id='username-info'>
@@ -81,7 +87,7 @@ if($challenge){
                 <div class="col-6 col-md-6 col-sm-6 link-home" id="link-game">
                 <a href="{!! route('game') !!}" class="connected" id="link_game">
                     {!! Html::image('img/tombstone-play.png','',['id'=>'menu-play']) !!}
-                    <div class="container-link">                
+                    <div class="container-link">
                         <div id="text-play" class="text-menu">
                             <div>
                                 {{ trans('site.play') }}
@@ -92,12 +98,12 @@ if($challenge){
                         </div>
                     </div>
                 </a>
-                </div>                
+                </div>
                 <div class="col-6 col-md-6 col-sm-6 link-home" id="link-demo">
                 @if(Auth::check())
                     <a href="{!! url('user/home') !!}" class="connected">
                         {!! Html::image('img/tombstone-demo.png','',['id'=>'menu-demo']) !!}
-                        <div class="container-link"> 
+                        <div class="container-link">
                             <div id="text-demo" class="text-menu">
                                 <div>
                                     {{ Auth::user()->username }}
@@ -111,7 +117,7 @@ if($challenge){
                 @else
                     <a href="{!! route('demo') !!}">
                         {!! Html::image('img/tombstone-demo.png','',['id'=>'menu-demo']) !!}
-                        <div class="container-link"> 
+                        <div class="container-link">
                             <div id="text-demo" class="text-menu">
                                 <div>
                                     {{ trans('site.try') }}
@@ -125,8 +131,8 @@ if($challenge){
                 @endif
                 </div>
                 </div>
-            </div> 
-            </div> 
+            </div>
+            </div>
             <div class="col-3 col-3 col-md-3 col-sm-3">
                 <div id="container-leader-board">
                      {!! Html::image('img/leader-board-homepage.png','',['style'=>'width:100%']) !!}
@@ -150,43 +156,43 @@ if($challenge){
                         @endif
                             <div id="month" class="periode-choice">{{ trans('home.month') }}</div>
                             <div id="total" class="periode-choice">{{ trans('home.total') }}</div>
-                            		
+
                     </div>
                     <div id="leaders-1-2">
                     <?php
  						foreach(array_keys($scores) as $ranking_periode){
-                        $rank = 1;                          
+                        $rank = 1;
                             foreach ($scores[$ranking_periode]->splice(0,2) as $ranking) {
                                 echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
                                 $rank++;
                             }
-						$rank = 1;							
+						$rank = 1;
                             foreach ($scores_annotations[$ranking_periode]->splice(0,2) as $ranking) {
     		                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
     							$rank++;
     						}
 						}
                     ?>
-                    </div>  
+                    </div>
                     <div id="leaders-3-4-5">
                     <?php
  						foreach(array_keys($scores) as $ranking_periode){
-                        $rank = 3;              
+                        $rank = 3;
                             foreach ($scores[$ranking_periode]->splice(0,3) as $ranking) {
                                 echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
                                 $rank++;
                             }
-						$rank = 3;				
+						$rank = 3;
                             foreach ($scores_annotations[$ranking_periode]->splice(0,3) as $ranking) {
     		                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
     							$rank++;
     						}
 						}
                     ?>
-                    </div>                                          
+                    </div>
                 </div>
                 </div>
-                
+
             </div>
         </div>
         <div id="footer">
@@ -196,7 +202,7 @@ if($challenge){
                     @if($lastRegisteredUser)
                     {{ trans('home.last-registered', ['name' => $lastRegisteredUser->username]) }},
                     @endif
-                    
+
                     @if($numberConnectedUsers > 0)
                         {!! link_to('user/connected',trans_choice('home.number-connected', $numberConnectedUsers),['style'=>'text-decoration:underline;']) !!}.
                         <span id="connected_users" style="display:inline-block;width:150px;text-align:left;">
@@ -246,7 +252,7 @@ if($challenge){
     .challenge, .month, .total, .rank-annotations {
         display: none;
     }
-@endif    
+@endif
 </style>
 @stop
 
@@ -271,7 +277,7 @@ if($challenge){
                 });
             }
             );
-        
+
     }
     function next(){
         if(index>=connected_users.length) index=0;
