@@ -1,4 +1,5 @@
 <?php
+$app_name = Config::get('app.name');
 if(!isset($challenges_repo))
   $challenges_repo = App::make('App\Repositories\ChallengeRepository');
 $challenge=$challenges_repo->getOngoing();
@@ -10,7 +11,11 @@ if($challenge){
 <div id="navbar-top" class="bg-light fixed-top pt-0 pb-0">
   <nav class="container navbar navbar-expand-sm navbar-light">
     <a class="navbar-brand"  href="{!! url('') !!}">
-    {!! Html::image('img/logo.png','logo',array('id'=>'zombi-logo','style'=>'height:36px;')) !!}
+    @if($app_name == 'zombiludik')
+      {!! Html::image('img/logo_zlud.png','logo',array('id'=>'zombi-logo','style'=>'height:40px;')) !!}
+    @else
+      {!! Html::image('img/logo.png','logo',array('id'=>'zombi-logo','style'=>'height:36px;')) !!}
+    @endif
     </a>
     <div id="">
       <ul class="navbar-nav">
