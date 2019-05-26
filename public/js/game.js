@@ -19,9 +19,9 @@ $(document).ajaxError(function(jqXHR, textStatus, errorThrown) {
         modal(textStatus.responseJSON.error);
     if(textStatus.status==401){
         alert(textStatus.responseJSON.error);
-        window.location.href = base_url + 'auth/login';         
+        window.location.href = base_url + 'auth/login';
     }
-}); 
+});
 
 $(document).ready(function(){
 
@@ -29,8 +29,8 @@ $(document).ready(function(){
 
     $( window ).resize(function() {
         console.log("32");
-        resizeProgressBar();  
-        console.log("32");     
+        resizeProgressBar();
+        console.log("32");
     });
 
     $(document).on('click', '.link-level', function(e){
@@ -55,12 +55,12 @@ $(document).ready(function(){
         }
 
         guest = false;
-        
-        
+
+
         if($(this).attr('action')==undefined)
             return false;
-        
-        mode = $(this).attr('action');    
+
+        mode = $(this).attr('action');
         inGame = true;
         relation_id = $(this).attr('id_phenomene');
         turn=0;
@@ -96,7 +96,7 @@ $(document).ready(function(){
     $blockGame.on('click', '.word', function(){
         $(this).addClass('hover');
         word_position = $(this).attr('data-word-position');
-        startLoader();    
+        startLoader();
         $('.word').addClass('disabled-word').removeClass('word');
         if(special){
             // en mode choix multiple, le click sur un word ne fait rien
@@ -129,7 +129,7 @@ $(document).ready(function(){
                 'relation_id' : id_relation_refused,
                 'sentence_id' : $('#sentence').attr('sentence_id')
             };
-        else 
+        else
             var data = {
                 'word' : '__refuse__',
                 'word_position' : 99999,
@@ -143,30 +143,30 @@ $(document).ready(function(){
                 processAfterResponse(response);
             }
         });
-    }); 
-    
+    });
+
     $(document).on('click', '.closeNextLevel', function(){
         $('#modalEndGame').modal("show");
         incCerveaux();
-        incPiece(); 
+        incPiece();
     });
-    
+
     $(document).on('click','#report-button', function(){
         $("#form-report")[0].reset();
         $('#submitReport').attr("disabled","disabled");
         $('body').append($('#modalReport'));
         $('#modalReport').modal("show");
-        
-    }); 
+
+    });
 
     $(document).on('click','.pending-duel', function(e){
         $('#submitJoinDuel').removeAttr("disabled");
         $('.help-block').remove();
         $('.form-group').removeClass('has-error');
         $('#modalConfirmJoin').find('form').attr('action', $(this).data('href'));
-        $('#modalConfirmJoin').modal("show"); 
+        $('#modalConfirmJoin').modal("show");
     });
-    
+
     $(document).on('click','.duel-completed', function(e){
         newModalSimple();
         $('#contentModal').load(base_url+'duel/compare-results/'+$(this).attr("id_phenomene"));
@@ -182,7 +182,7 @@ $(document).ready(function(){
         else $('#submitReport').attr("disabled","disabled");
     });
     $(document).on('click', '#openNewDuel', function(event){
-        
+
         event.preventDefault();
         if($('#modalNewDuel').length==0)
             $.ajax({
@@ -192,17 +192,17 @@ $(document).ready(function(){
                     if($('#modalEndGame').hasClass('show')){
                         $('#modalEndGame').modal("hide");
                         $('#modalEndGame').on('hidden.bs.modal', function (e) {
-                          $('#modalNewDuel').modal("show");  
-                        })                        
+                          $('#modalNewDuel').modal("show");
+                        })
                     } else
-                        $('#modalNewDuel').modal("show");  
-                    
+                        $('#modalNewDuel').modal("show");
+
                     $("#submitNewDuel").removeAttr("disabled");
                     $('.help-block').remove();
                     $('.form-group').removeClass('has-error');
-                            
+
                 }
-            });        
+            });
         else {
             $("#submitNewDuel").removeAttr("disabled");
             $('.help-block').remove();
@@ -210,10 +210,10 @@ $(document).ready(function(){
             if($('#modalEndGame').hasClass('show')){
                 $('#modalEndGame').modal("hide");
                 $('#modalEndGame').on('hidden.bs.modal', function (e) {
-                  $('#modalNewDuel').modal("show");  
-                })                        
+                  $('#modalNewDuel').modal("show");
+                })
             } else
-                $('#modalNewDuel').modal("show"); 
+                $('#modalNewDuel').modal("show");
         }
 
     });
@@ -240,7 +240,7 @@ $(document).ready(function(){
 
                 }
             }
-        });          
+        });
     });
 
     $(document).on('submit', "#form-new-duel" ,function( event ) {
@@ -253,12 +253,12 @@ $(document).ready(function(){
             complete: function(e, xhr, settings){
                 if(e.status === 422){
                     $('.help-block').remove();
-                    $('.form-group').removeClass('has-error');           
+                    $('.form-group').removeClass('has-error');
                     $.each(e.responseJSON.errors,function(key,error){
                         var elm = $('#form-new-duel #'+key);
                         var parent = elm.parent('.form-group').get(0);
                         $(parent).addClass('has-error');
-                        elm.after('<small class="help-block">'+error+'</small>');                        
+                        elm.after('<small class="help-block">'+error+'</small>');
                     });
                     $("#submitNewDuel").removeAttr("disabled");
                  }else if(e.status === 200){
@@ -269,7 +269,7 @@ $(document).ready(function(){
 
                 }
             }
-        });          
+        });
     });
     $(document).on('submit', "#form-join-duel" ,function( event ) {
         event.preventDefault();
@@ -281,12 +281,12 @@ $(document).ready(function(){
             complete: function(e, xhr, settings){
                 if(e.status === 422){
                     $('.help-block').remove();
-                    $('.form-group').removeClass('has-error');     
+                    $('.form-group').removeClass('has-error');
                     $.each(e.responseJSON.errors,function(key,error){
                         var elm = $('#form-join-duel #'+key);
                         var parent = elm.parent('.form-group').get(0);
                         $(parent).addClass('has-error');
-                        elm.after('<small class="help-block">'+error+'</small>');                        
+                        elm.after('<small class="help-block">'+error+'</small>');
                     });
                     $("#submitJoinDuel").removeAttr("disabled");
                  }else if(e.status === 200){
@@ -295,7 +295,7 @@ $(document).ready(function(){
 
                 }
             }
-        });          
+        });
     });
 
     $blockGame.on('click', '#next-sentence', function(){
@@ -386,7 +386,7 @@ $(document).ready(function(){
             },
             success : loadContentMwe
         });
-    }); 
+    });
 
     // ====================================================================================================
 
@@ -419,10 +419,10 @@ $(document).ready(function(){
     }
     function hideLoader(){
         $('#loader').hide();
-    } 
+    }
     function stopLoader(){
         $('#loader-container').remove();
-    } 
+    }
 
     function checkHelpObjectAsSeen(article_id){
         $.ajax({
@@ -489,7 +489,7 @@ $(document).ready(function(){
     }
 
     function ajaxLoadContent(){
-        
+
         $('body').attr('style', "cursor: url('" +base_url +'img/curseur.png'+"'), pointer; ");
         $('#coccinelle').hide();
         pending_request = true;
@@ -511,7 +511,7 @@ $(document).ready(function(){
         if($('#sentence').length==0){
             $('.parallax').animate({
                 scrollTop: 0
-            }, 500);            
+            }, 500);
         }
         $blockGame.html(json.html);
         resizeProgressBar();
@@ -530,7 +530,7 @@ $(document).ready(function(){
                     resizeProgressBar();
                     if (mode == 'training' && typeof tour != 'undefined') {
                             tour.start();
-                    }else if (mode == 'demo' && typeof tour != 'undefined' ) {    
+                    }else if (mode == 'demo' && typeof tour != 'undefined' ) {
                             tour.start();
                     }else if(mode == 'game' && typeof tourA != 'undefined'){
                             tourA.start();
@@ -545,7 +545,7 @@ $(document).ready(function(){
             var href=window.location.href;
             window.location.href = href;
             return;
-        }   
+        }
         $.ajax({
             method : 'GET',
             url : base_url + 'game/' + mode + '/jsonContent',
@@ -558,11 +558,11 @@ $(document).ready(function(){
                          $('#mwe_id').html(json.mwe.id);
                     }
                     $('.disabled-mwe').addClass('mwe').removeClass('disabled-mwe');
-                    
-            },  
+
+            },
         });
     }
-    
+
     function updateProgression(turn,nb_turns){
         progression = Math.round( turn / nb_turns * 100 );
 
@@ -571,7 +571,7 @@ $(document).ready(function(){
         $('#progress').text(progression + '%');
         $('#phaseBar').css({
             width : progression/100*$('#progressBar').width() + 'px'
-        });        
+        });
     }
 
     // ====================================================================================================
@@ -581,8 +581,8 @@ $(document).ready(function(){
 
         if(json.score){
             $('.score').html(json.score);
-        }  
-        
+        }
+
         updateProgression(json['turn'], json['nb_turns']);
 
         if(json.html){
@@ -595,7 +595,7 @@ $(document).ready(function(){
             } else {
                 $('#modalEndGame').modal("show");
                 incCerveaux();
-                incPiece();     
+                incPiece();
             }
             return true;
         }
@@ -616,7 +616,7 @@ $(document).ready(function(){
         if(json.mode != 'demo'){
             $('.refuse').show();
         }
-     
+
         if(json.mode != undefined && json.mode == 'special'){
             special = true;
         }else{
@@ -628,7 +628,7 @@ $(document).ready(function(){
         var afficherClassement = true;
         if(json.user){
             var profil = '<div style="text-align:left;"><img src="'+base_url+'img/level/thumbs/' + json.user.level.image + '"><br />';
-            
+
             //Progression
             profil += 'niveau '+json.user.level.id+'</div>';
             $('#profil').html(profil);
@@ -751,7 +751,7 @@ $(document).ready(function(){
                 var new_value = value+100;
             }
             $totalCerveaux[0].innerHTML = new_value.formatScore();
-            $totalCerveaux.attr("value",new_value);             
+            $totalCerveaux.attr("value",new_value);
             $('#totalCerveaux').append('<img class="volatile" src="'+base_url+'img/cerveau_plein.png" />');
             var rand = Math.floor(Math.random() * 300 - 150);
             $('.volatile').each(function(){
@@ -773,7 +773,7 @@ $(document).ready(function(){
         var $totalPiece = $('#totalPiece span');
         var goal = parseInt($totalPiece.attr('goal'),10);
         var value  = parseInt($totalPiece.attr('value'),10);
-        var diff = goal-value ; 
+        var diff = goal-value ;
         if( diff > 0){
             if(diff < 10){
                 var new_value = value+1;
@@ -783,7 +783,7 @@ $(document).ready(function(){
                 var new_value = value+100;
             }
             $totalPiece[0].innerHTML = new_value.formatScore();
-            $totalPiece.attr("value",new_value);  
+            $totalPiece.attr("value",new_value);
             $('#totalPiece').append('<img class="volatile" src="'+base_url+'img/piece.png" />');
             var rand = Math.floor(Math.random() * 300 - 150);
             $('.volatile').each(function(){
@@ -807,9 +807,9 @@ $(document).ready(function(){
                 $.each(response.inventaire,function(index,object){
                     if(object.slug==slug && object.help_seen==0){
                         if(slug=='telescope'){
-                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase rapetisse, utilise la longue-vue <img src="'+base_url+'img/object/thumbs/longue_vue.png" style="width:50px"/> qui est dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');      
+                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase rapetisse, utilise la longue-vue <img src="'+base_url+'img/object/thumbs/longue_vue.png" style="width:50px"/> qui est dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');
                         } else if(slug=='glasses'){
-                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase disparaît, utilise les lunettes <img src="'+base_url+'img/object/thumbs/lunettes.png" style="width:50px"/> qui sont dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');                        
+                $('.aideTip').after('<div class="help_object" style="display:none;">Quand la phrase disparaît, utilise les lunettes <img src="'+base_url+'img/object/thumbs/lunettes.png" style="width:50px"/> qui sont dans ton sac <img src="'+base_url+'img/sac.png" style="width:50px"/> pour la faire réapparaître.<span id="arrow_border"></span><span id="arrow_inner"></span></div>');
                         }
                         $('.help_object').fadeIn();
                         checkHelpObjectAsSeen(object.id);
@@ -889,7 +889,7 @@ $(document).ready(function(){
                     $('#bottom').after('<div class="row" id="thread" style="position:relative;top:60px;"><div class="col-12 col-lg-10 mx-lg-auto"><span style="display:none;" class="thread" id="thread_'+json.annotation.id+'"></span></div></div>');
                     button.click(showThread);
                     // $('#resultat').append('<div><span style="margin-right:20px;position:relative;"><span id="message-button" data-id="'+json.annotation.id+'" data-type="Annotation" style="position:relative;" class="btn btn-small btn-faded btn-outline btn-green message-button">Discuter de la réponse <span class="badge">'+json.nb_messages+'</span></span></div>');
-                    
+
                 }
                 if (json.errors == 3) {
                     $('#resultat').append('<a class="link btn btn-small btn-green" href="'+ base_url + 'game'+'"  id="retourMenu" title="'+ trans('game.back-menu')+'">'+trans('game.back-menu')+'</a>');
@@ -906,14 +906,14 @@ $(document).ready(function(){
             }
         }else{
             if(jQuery.inArray( json.answer, json.expected_answers ) >= 0){
-    
+
                 $('#sentence').finish();
                 $('#sentence .word').finish();
                 $('#sentence').css({
                     'font-size': '1.7em',
                     'opacity' : '1'
                 });
-                
+
                 if(json.loot && json.loot.id){
                     $('#resultat').html('<h3>' + trans('game.you-found-object',{'name':json.loot.name})+'</h3>');
                     $blockGame.append('<div class="loot"><img src="'+base_url+'img/object/' + json.loot.image + '" /></div>');
@@ -982,9 +982,9 @@ $(document).ready(function(){
         if(json.money){
             $('.money').html(json.money.formatScore());
         }
-            
+
         var $inventaire = $('#inventory');
-        
+
             if(json.inventaire == 0){
                 $inventaire.html('Pas d\'objet');
             }else{
@@ -1001,7 +1001,7 @@ $(document).ready(function(){
                     htmlInventaire += '<img src="'+base_url+'img/piece.png"/>' + object.price_ingame + '<br />';
                     htmlInventaire += '<button class="btn btn-success buy"  id="btn-buy-object-'+object.id+'" data-object-id="'+object.id+'">'+trans('game.buy')+'</button>';
                     htmlInventaire += '</div>';
-                }   
+                }
                 if(json.reappear_sentence){
                     $('.help_object').fadeOut();
                     $('#sentence .word').finish();
@@ -1046,5 +1046,5 @@ $(document).ready(function(){
         $('#menuObject').css({
             'background-color' : '#9bc5aa'
         });
-    } 
+    }
 
