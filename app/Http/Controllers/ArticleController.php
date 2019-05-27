@@ -86,8 +86,8 @@ class ArticleController extends Controller
             return $this->inventaire($response);
         }
 
-        //If the object is glasses
-        if($article->id == 3){
+        // if the object is glasses
+        if($article->slug == 'glasses'){
             //Si la phrase n'a pas disparue
             if(!$this->game->hasSpell('vanish')){
                 //On réaffiche l'inventaire
@@ -99,7 +99,9 @@ class ArticleController extends Controller
             //On changera l'affichage sur le client
             $response['reappear_sentence'] = 1;
             $response['message'] = trans('shop.use-glasses');
-        }elseif($article->id == 5){
+
+        // if object is telescope
+      }elseif($article->slug == 'telescope'){
 
             //Si la phrase n'a pas rapetissée
             if(!$this->game->hasSpell('shrink')){
@@ -112,25 +114,23 @@ class ArticleController extends Controller
 
             $response['increase_sentence'] = 1;
             $response['message'] = trans('shop.use-telescope');
-        }elseif($article->id == 4){
 
-            if ($effet != 0) {
+        // if the object is extractor
+        }elseif($article->slug == 'extractor'){
 
-                //On regarde si l'extracteur n'est pas actif
-                if($effet == 4){
-                     $response['message'] = trans('shop.error-extractor-already-active');
-                    return $this->inventaire($response);
-                }
 
-                if ($effet == 2 ) {
-                    $response['message'] = trans('shop.error-midas-hand-already-active');
-                    return $this->inventaire($response);
-                }
-            }else{
-
-                $this->game->set('effect', $article->id);
-
+            // extractor already active
+            if ($effet == 'extractor') {
+              $response['message'] = trans('shop.error-extractor-already-active');
+              return $this->inventaire($response);
             }
+
+            if ($effet == 'midas') {
+              $response['message'] = trans('shop.error-midas-hand-already-active');
+              return $this->inventaire($response);
+            }
+
+            $this->game->set('effect', $article->slug);
 
             $gain = $this->game->gain;
 
@@ -140,20 +140,22 @@ class ArticleController extends Controller
 
             $response['gain'] = $gain;
             $response['message'] = trans('shop.won-more-points');
-        }elseif($article->id == 2){
+
+        // if the object is midas
+      }elseif($article->slug == 'midas') {
 
 			//On regarde si la main de midas n'est pas active
-            if($effet == 2){
+            if($effet == 'midas'){
                 $response['message'] = trans('shop.error-midas-hand-already-active');
                 return $this->inventaire($response);
             }
 
-            if ($effet == 4 ) {
+            if ($effet == 'extractor' ) {
                $response['message'] = trans('shop.error-extractor-already-active');
                 return $this->inventaire($response);
             }
 
-            $this->game->set('effect', $article->id);
+            $this->game->set('effect', $article->slug);
 
             $this->game->set('type_gain','money');
             $response['message'] = trans('shop.points-to-money');

@@ -94,7 +94,7 @@ class GameGestion extends Game implements GameGestionInterface
 		$this->set('money_spent',0);
 		$this->set('errors',0);
 		$this->set('nb_successes',0);
-		$this->set('effect',0);
+		$this->set('effect','');
 		$this->set('next_level',0);
 		$this->set('mwe',0);
 		$this->set('already_spell',false);
@@ -447,7 +447,7 @@ class GameGestion extends Game implements GameGestionInterface
 
 		$this->set('annotation_id',null);
 		$this->set('spell',null);
-		$this->set('effect',0);
+		$this->set('effect','');
 
 	}
 
