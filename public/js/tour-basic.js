@@ -3,18 +3,7 @@ var tour = new Tour({
   name: "basic",
   debug: true,
   // storage: false,
-  template: "
-    <div class='popover tour'>
-      <div class='arrow'></div>
-      <h3 class='popover-header'></h3>
-      <div class='popover-body'></div>
-      <div class='popover-navigation'>
-        <button class='btn btn-default' data-role='prev'>« Précédent</button>
-        <span data-role='separator'>|</span>
-        <button class='btn btn-default' data-role='next'>Suivant »</button>
-        <button class='btn btn-default' data-role='end'>Fin du tutoriel</button>
-      </div>
-    </div>",
+  template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« Précédent</button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'>Suivant »</button><button class='btn btn-default' data-role='end'>Fin du tutoriel</button></div></div>",
   steps: [
   {
     element: "#zombi-logo",
