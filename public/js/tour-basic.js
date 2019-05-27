@@ -2,8 +2,19 @@
 var tour = new Tour({
   name: "basic",
   debug: true,
-  // storage: false,  
-  template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« Précédent</button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'>Suivant »</button><button class='btn btn-default' data-role='end'>Fin du tutoriel</button></div></div>",
+  // storage: false,
+  template: "
+    <div class='popover tour'>
+      <div class='arrow'></div>
+      <h3 class='popover-header'></h3>
+      <div class='popover-body'></div>
+      <div class='popover-navigation'>
+        <button class='btn btn-default' data-role='prev'>« Précédent</button>
+        <span data-role='separator'>|</span>
+        <button class='btn btn-default' data-role='next'>Suivant »</button>
+        <button class='btn btn-default' data-role='end'>Fin du tutoriel</button>
+      </div>
+    </div>",
   steps: [
   {
     element: "#zombi-logo",
@@ -28,7 +39,7 @@ var tour = new Tour({
     title: "Le focus",
     content: "Le mot sur lequel porte la relation&nbsp;: par exemple, dans le cas d'un sujet, il faudra trouver le sujet du verbe souligné",
     placement: "top",
-  },  
+  },
   {
     element: "#label-phenomenon",
     title: "La relation",
@@ -46,7 +57,7 @@ var tour = new Tour({
     title: "Croix d'os",
     content: "Si tu penses que la relation demandée n'existe pas dans la phrase, il te suffit de cliquer sur ce bouton pour l'indiquer.",
     placement: "top",
-  },  
+  },
   {
     element: ".savant",
     title: "Le professeur",
