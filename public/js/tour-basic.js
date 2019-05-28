@@ -7,24 +7,24 @@ var tour = new Tour({
   steps: [
   {
     element: "#zombi-logo",
-    title: "Bienvenue sur Zombilingo&nbsp;!",
-    content: "Ce tutoriel a pour but de t'expliquer les rudiments de ZombiLingo",
+    title: "Bienvenue&nbsp;!",
+    content: "Ce tutoriel a pour but de t'expliquer les rudiments du jeu",
     placement: "bottom",
   },
   {
     element: "#information",
     title: "Le principe",
-    content: "Le principe de ZombiLingo est de trouver des relations entre les mots d'une phrase. Pour plus d'informations concernant ZombiLingo et l'utilisation scientifique des données, tu peux cliquer ici.",
+    content: "Le principe est de trouver des relations entre les mots d'une phrase. Pour plus d'informations concernant le jeu et l'utilisation scientifique des données, tu peux cliquer ici.",
     placement: "bottom",
   },
   {
-    element: "#phrase",
+    element: "#sentence",
     title: "La phrase",
     content: "C'est ici que s'affiche la phrase dans laquelle apparaît la relation.",
     placement: "top",
   },
   {
-    element: "#phrase span.highlight",
+    element: "#sentence span.highlight",
     title: "Le focus",
     content: "Le mot sur lequel porte la relation&nbsp;: par exemple, dans le cas d'un sujet, il faudra trouver le sujet du verbe souligné",
     placement: "top",
@@ -42,7 +42,7 @@ var tour = new Tour({
     placement: "bottom",
   },
   {
-    element: "#refuse-sm",
+    element: "#refuse",
     title: "Croix d'os",
     content: "Si tu penses que la relation demandée n'existe pas dans la phrase, il te suffit de cliquer sur ce bouton pour l'indiquer.",
     placement: "top",

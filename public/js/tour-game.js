@@ -6,7 +6,7 @@ var tourA = new Tour({
   template: "<div class='popover tour'><div class='arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« Précédent</button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'>Suivant »</button><button class='btn btn-default' data-role='end'>Fin du tutoriel</button></div></div>",
   steps: [
   {
-    element: "#phrase",
+    element: "#sentence",
     title: "Notions avancées",
     content: "Bien joué, te voilà maintenant dans le mode de jeu réel&nbsp;! Le principe reste le même, mais maintenant tu peux gagner des cerveaux. De plus, certains éléments ont été ajoutés, en voici un bref tour d'horizon.",
     placement: "top",
@@ -26,22 +26,9 @@ var tourA = new Tour({
     content: "Si tu penses que la relation demandée n'existe pas dans la phrase, il te suffit de cliquer sur ce bouton pour l'indiquer.",
     placement: "left",
   },{
-    element: "#refuse-sm",
-    title: "Croix d'os",
-    content: "Si tu penses que la relation demandée n'existe pas dans la phrase, il te suffit de cliquer sur ce bouton pour l'indiquer.",
-    placement: "left",
-  },{
-    element: "#menuObjet",
+    element: "#menuObject",
     title: "La sacoche",
     content: "Dans ta sacoche se trouvent tous les objets achetés en boutique ou trouvés au cours de tes pérégrinations. Tu trouveras une description détaillée de l'effet de chaque objet dans la boutique.",
   }
 
 ]});
-// $(function () {
-//     $('[data-toggle="popover"]').popover()
-// });
-// Initialize the tour
-// tourA.init();
-// tourA.start();
-// // Start the tour
-// tourA.start();
