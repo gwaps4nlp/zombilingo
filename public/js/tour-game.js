@@ -13,7 +13,7 @@ var tourA = new Tour({
   },{
     element: "#resultat",
     title: "Points",
-    content: "Ici est indiqué le nombre de cerveaux que tu peux gagner si tu joues bien&nbsp;!.",
+    content: "Ici est indiqué le nombre de cerveaux que tu peux gagner si tu joues bien&nbsp;!",
     placement: "top",
   },{
     element: "#profil",

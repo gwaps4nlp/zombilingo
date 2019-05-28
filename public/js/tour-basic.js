@@ -26,7 +26,7 @@ var tour = new Tour({
   {
     element: "#sentence span.highlight",
     title: "Le focus",
-    content: "Le mot sur lequel porte la relation&nbsp;: par exemple, dans le cas d'un sujet, il faudra trouver le sujet du verbe souligné",
+    content: "Le mot sur lequel porte la relation&nbsp;: par exemple, dans le cas d'un sujet, il faudra trouver le sujet du l'élémént souligné",
     placement: "top",
   },
   {
@@ -45,7 +45,7 @@ var tour = new Tour({
     element: "#refuse",
     title: "Croix d'os",
     content: "Si tu penses que la relation demandée n'existe pas dans la phrase, il te suffit de cliquer sur ce bouton pour l'indiquer.",
-    placement: "top",
+    placement: "left",
   },
   {
     element: ".savant",
