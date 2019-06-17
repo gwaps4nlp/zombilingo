@@ -20,7 +20,9 @@ if($challenge){
     <div id="">
       <ul class="navbar-nav">
         <li class="d-none d-md-block nav-item">
-          <a class="nav-link rounded-btn {{ Request::is('/')?'active':'' }}" href="{!! asset('') !!}">Accueil</a>
+          <a class="nav-link rounded-btn {{ Request::is('/')?'active':'' }}" href="{!! asset('') !!}">
+            {{ trans('site.home') }}
+          </a>
         </li>
         <li class="d-none d-md-block nav-item dropdown {{ Request::is('game')?'active':'' }}">
           <a class="nav-link rounded-btn" href="#" style="margin-bottom:5px;">

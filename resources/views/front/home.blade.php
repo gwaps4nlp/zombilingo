@@ -3,6 +3,7 @@ if($challenge){
     $challenge_starts_at = new \Carbon\Carbon($challenge->start_date);
     $challenge_ends_at = new \Carbon\Carbon($challenge->end_date);
 }
+$app_name = Config::get('app.name');
 ?>
 
 @extends('front.template-home')
@@ -24,7 +25,12 @@ if($challenge){
     </div>
     <div class="col-8" id="container-logo" title="{{ trans('site.home') }}">
         <a href="{!! url('') !!}">
-            {!! Html::image('img/logo-home.png','ZombiLingo',['style'=>'width:80%']) !!}
+          @if($app_name == 'zombiludik')
+           {!! Html::image('img/logo_zlud.png','ZombiLingo',['style'=>'width:70%']) !!}
+          @else
+           {!! Html::image('img/logo-home.png','ZombiLingo',['style'=>'width:80%']) !!}
+          @endif
+
         </a>
     </div>
 
