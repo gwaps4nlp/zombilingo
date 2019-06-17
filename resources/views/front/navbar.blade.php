@@ -159,7 +159,7 @@ if($challenge){
   <div class="collapse">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link rounded-btn {{ Request::is('/')?'active':'' }}" href="{!! asset('') !!}">Accueil</a>
+        <a class="nav-link rounded-btn {{ Request::is('/')?'active':'' }}" href="{!! asset('') !!}">{{ trans('site.home') }}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link rounded-btn" href="{!! url('game') !!}" style="margin-bottom:5px;">
