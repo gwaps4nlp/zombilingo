@@ -73,4 +73,12 @@ return array (
   'file-conll' => 'File (CONLL format)',
   'download-file' => 'Download the file',
   'zombies-answered' => ':nb_answers zombie gave his opinion|:nb_answers zombies gave their opinion',
+  'classic' => 'Classic mode',
+  'duel' => 'Duel mode',
+  'lab' => 'My lab',
+  'enemies' => 'My enemies',
+  'mails' => 'Mails reception',
+  'ranking' => 'Leaderboard',
+  'shop' => 'Shopping',
+  'session-close' => 'Close the session',
 );

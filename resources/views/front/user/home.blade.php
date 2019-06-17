@@ -16,7 +16,7 @@
 			News
 		</div>
 		<div class="label" style="position: absolute;margin-top: 45.2%;left: 42%;">
-			Mon compte
+			{{ trans('site.account') }}
 		</div>
 		<div class="label" style="position: absolute;margin-top: 41.7%;left: 58%;">
 			{{ trans('site.statistics') }}
@@ -39,12 +39,12 @@
 							@foreach ($trophy->getAll() as $key => $_trophy)
 							    <span class="trophee">
 							    @if($user->hasTrophy($_trophy))
-							        {!! Html::image('img/trophee/'.$_trophy->image,$_trophy->name.' : '.$_trophy->description) !!}	
+							        {!! Html::image('img/trophee/'.$_trophy->image,$_trophy->name.' : '.$_trophy->description) !!}
 							    @elseif($_trophy->is_secret)
 						            {!! Html::image('img/trophee/secret.png','Trophée secret') !!}
 							    @endif
 							    </span>
-							@endforeach					
+							@endforeach
 						</td>
 					</tr>
 					<!--<tr>
@@ -57,11 +57,11 @@
 				            if($user->number_mwes > 0){
 				                echo '<span class="label">Rigor mortis : </span>' . $user->number_mwes . '<br />';
 				            }
-				            ?>					
+				            ?>
 						</td>
 					</tr>-->
 					</table>
-				</div>						
+				</div>
 			</div>
 			<div>
 				{!! Html::image('img/argent.png','Money',['id'=>'money']) !!}
@@ -86,7 +86,7 @@
 		<div id="number-friends">
 			{{ count($user->getAcceptedFriends()) }}
 	    	@if(count($user->getAskFriendRequests()))
-				<span id="pending-enemies" style="color:red;">({{ count($user->getAskFriendRequests()) }})</span>			    		
+				<span id="pending-enemies" style="color:red;">({{ count($user->getAskFriendRequests()) }})</span>
 	    	@endif
 		</div>
 		<div id="leader-board">
@@ -118,27 +118,27 @@
 					@else
 						<?php $in_leader[$ranking_periode] = true; ?>
 					@endif
-					
+
 					@if(!$leaders_annotations[$ranking_periode]->contains('user_id',$user->id)&&$scores_annotation_user[$ranking_periode])
 						<?php $in_leader_annotations[$ranking_periode] = false; ?>
 					@else
 						<?php $in_leader_annotations[$ranking_periode] = true; ?>
 					@endif
 
-					<?php 							
+					<?php
 					$rank = 1;
                     foreach ($leaders[$ranking_periode]->splice(0,6) as $ranking) {
 	                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-points '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
 						$rank++;
-					} 							
-					$rank_annotations = 1;						
-                    foreach ($leaders_annotations[$ranking_periode]->splice(0,6) as $ranking) {	                 
+					}
+					$rank_annotations = 1;
+                    foreach ($leaders_annotations[$ranking_periode]->splice(0,6) as $ranking) {
 	                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank_annotations . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
 						$rank_annotations++;
 					}
 				}
-            ?>					
-            </div>  
+            ?>
+            </div>
             <div id="leaders-3-4-5">
             <?php
 
@@ -155,7 +155,7 @@
 							@foreach($neighbors[$ranking_periode]['inf'] as $neighbor)
 								<div user_id="{{ $neighbor->user_id }}" class="rank rank-points {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
 							@endforeach
-						@endif							
+						@endif
 					@else
                         <?php
                         foreach ($leaders[$ranking_periode]->splice(0,5) as $ranking) {
@@ -173,20 +173,20 @@
 							@foreach($neighbors_annotations[$ranking_periode]['inf'] as $neighbor)
 								<div user_id="{{ $neighbor->user_id }}" class="rank rank-annotations {{ $ranking_periode }}">{{ $neighbor->rank }} {{ $neighbor->username }}&nbsp;: {{ Html::formatScore($neighbor->score) }}</div>
 							@endforeach
-						@endif							
+						@endif
 					@else
                         <?php
                         foreach ($leaders_annotations[$ranking_periode]->splice(0,5) as $ranking) {
 		                    echo '<div user_id="'.$ranking->user_id.'" class="rank rank-annotations '.$ranking_periode.' '.(($ranking->user_id==$user->id)?'self':'').'">'.$rank_annotations . ' ' . $ranking->username . '&nbsp;: ' .Html::formatScore($ranking->score).'</div>';
 							$rank_annotations++;
 						}
-						?>								
+						?>
 					@endif
 
-					<?php			
+					<?php
 				}
             ?>
-            </div>                                 
+            </div>
         </div>
         <div id="stats">
             {{ trans('game.parties-won') }} : <span>{{ $user->won }}</span><br />
@@ -206,7 +206,7 @@
 						</div>
 			            <div class="modal-footer">
 	  						<button type="button" class="btn btn-danger" data-dismiss="modal">{{ trans('site.close') }}</button>
-						</div>			                					       	
+						</div>
 			        </div>
 			    </div>
 		    </div>
@@ -226,7 +226,7 @@
 					Mes duels<br/>
 					<div style="font-family:'Times';text-transform:initial;">
 					{{ trans('game.won-duels') }} : {{ $duels->countWon($user) }}<br/>
-					{{ trans('game.lost-duels') }} : {{ $duels->countLost($user) }}<br/>					
+					{{ trans('game.lost-duels') }} : {{ $duels->countLost($user) }}<br/>
 					{{ trans('game.draws') }} : {{ $duels->countDraw($user) }}<br/>
 					</div>
 				</td>
@@ -235,13 +235,13 @@
 		</div>
 		<div class="modal fade" id="modalChangePassword" role="dialog">
 		    <div class="modal-dialog">
-		    {!! Form::open(['url' => 'password/change', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-password']) !!} 
+		    {!! Form::open(['url' => 'password/change', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-password']) !!}
 			    <div class="modal-content">
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h2>Modification du mot de passe</h2>
 						   <span id="error-change-password" class="error"></span>
-				          
+
 				            <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
 				              <label for="password">{{ trans('site.new-password') }}</label>
 				              <input type="password" class="form-control" name="password" id="password" placeholder="{{ trans('site.placeholder-enter-password') }}">
@@ -252,7 +252,7 @@
 				              <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="{{ trans('site.placeholder-confirm-password') }}">
 				              {{ $errors->first('password_confirmation', '<small class="help-block">:message</small>') }}
 				            </div>
-			          	                					       	
+
 			            <div class="modal-footer">
 				            <button type="submit" class="btn btn-success">
 				            	{{ trans('site.button-validate') }}
@@ -260,8 +260,8 @@
 				            <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal">
 				            	{{ trans('site.cancel') }}
 				            </button>
-						</div>			        
-			        </div>        
+						</div>
+			        </div>
 			    </div>
 			{!! Form::close() !!}
 		    </div>
@@ -269,13 +269,13 @@
 
 		<div class="modal fade" id="modalChangeEmail" role="dialog">
 		    <div class="modal-dialog">
-		    {!! Form::open(['url' => 'user/change-email', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-email']) !!} 
+		    {!! Form::open(['url' => 'user/change-email', 'method' => 'post', 'role' => 'form', 'id'=>'form-change-email']) !!}
 			    <div class="modal-content">
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h2>Envoi des emails</h2>
 						   <span id="error-change-email" class="error"></span>
-				          
+
 				            <div class="form-group {{ $errors->has('email_frequency_id') ? 'has-error' : '' }}">
 				              <label for="frequency">{{ trans('site.email-frequency') }}</label>
 				              <div style="text-align:left;">
@@ -294,12 +294,12 @@
 				              <input type="text" class="form-control" name="email" id="email" value="{{ $user->email }}">
 				              {{ $errors->first('email', '<small class="help-block">:message</small>') }}
 				            </div>
-			          	                					       	
+
 			            <div class="modal-footer">
 				            <button type="submit" class="btn btn-success">{{ trans('site.button-validate') }}</button>
 				            <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal">{{ trans('site.cancel') }}</button>
-						</div>			        
-			        </div>        
+						</div>
+			        </div>
 			    </div>
 			{!! Form::close() !!}
 		    </div>
@@ -310,17 +310,17 @@
 			        <div class="modal-body">
 				        <button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h2>Suppression du compte</h2>
-				          {!! Form::open(['url' => 'user/delete', 'method' => 'get', 'role' => 'form', 'id'=>'form-delete']) !!} 
+				          {!! Form::open(['url' => 'user/delete', 'method' => 'get', 'role' => 'form', 'id'=>'form-delete']) !!}
 				            <div class="form-group">
 				            	{{ trans('site.confirm-delete-account') }}
 				            </div>
 				            <button type="submit" class="btn btn-success">{{ trans('site.button-validate') }}</button>
 				            <button type="submit" class="btn btn-danger btn-default" data-dismiss="modal">{{ trans('site.cancel') }}</button>
-				          {!! Form::close() !!}		                					       	
+				          {!! Form::close() !!}
 			            <div class="modal-footer">
 
-						</div>			        
-			        </div>        
+						</div>
+			        </div>
 			    </div>
 		    </div>
 		</div>
@@ -335,7 +335,7 @@
 
 			</div>
 			<div class="col-sm-2 col-md-2">
-			
+
 			</div>
 			<div class="col-sm-2 col-md-2">
 
@@ -378,7 +378,7 @@
 			                @if(count($user->getAskFriendRequests()))
 			                    @foreach ($user->getAskFriendRequests() as $key => $ask_friend)
 			                        <div class="demande" user_id="{{ $ask_friend->user->id }}">
-			                        Demande en ennemi de 
+			                        Demande en ennemi de
 			                        {!! link_to('user/'.$ask_friend->user->id, $ask_friend->user->username) !!}&nbsp;
 			                        <a href="#autres" class="accepter btn btn-success" url="{{ url('user/accept-friend/'.$ask_friend->user->id) }}">Accepter</a>
 			                        <a href="#autres" class="annuler btn btn-success" url="{{ url('user/cancel-friend/'.$ask_friend->user->id) }}">Refuser</a>
@@ -389,7 +389,7 @@
           						<button type="button" class="btn btn-danger" data-dismiss="modal">
           							{{ trans('site.close') }}
           						</button>
-        					</div>			                					       	
+        					</div>
 				        </div>
 				    </div>
 
@@ -397,12 +397,12 @@
 				</div>
 			</div>
             <div class="col-sm-3 col-md-3">
-                
-                
+
+
             </div>
 
-		</div> 
- 	
+		</div>
+
 </div>
 
 @stop
@@ -421,15 +421,15 @@
         @endif
         @if(isset($_GET['enemies']))
         	$('#modalFriends').modal('show');
-        @elseif(isset($_GET['email']))	
+        @elseif(isset($_GET['email']))
         	$('#modalChangeEmail').modal('show');
-        @elseif(isset($_GET['password']))	
+        @elseif(isset($_GET['password']))
         	$('#modalChangePassword').modal('show');
         @endif
     }
 
     function animatePendingEnemies(){
-    	$("#number-friends").fadeOut(900).delay(300).fadeIn(800); 
+    	$("#number-friends").fadeOut(900).delay(300).fadeIn(800);
     }
     function animate(){
     	var friend = friends[index];
@@ -439,7 +439,7 @@
     	$("#img-level").css( { "display": "block" });
     	$("#label-friend").text(friend.friend.username);
     	$("#label-friend").css({ "display":"inline", "left": "-95%", "color":"#2b3233" });
-    	
+
         $("#label-friend").animate({ "left": "95%" }, 4000, "linear",function(){
 	        $("#label-friend").css({ "transform": "scaleX(-1)", "color" : "#8ea9ac" });
 	        $("#label-friend").animate({ "left": "-95%" }, 4000,"linear",function(){
@@ -447,7 +447,7 @@
 	        	$("#label-friend").css({ "display":"none", "transform": "scaleX(1)", "color" : "#2b3233" });
 	        	setTimeout(function(){ index++;next(); }, 1000);
 	        });
-        });	
+        });
 
     }
     function next(){
@@ -498,7 +498,7 @@
 	position: absolute;
 	margin-top: 18%;
 	margin-left: 15%;
-	font-family: "Charlemagne Std Bold"; 
+	font-family: "Charlemagne Std Bold";
 }
 .col-lg-10{
 	padding-left:0;
@@ -536,7 +536,7 @@ img.level {
 	position: absolute;
 	margin-top: -17%;
 	margin-left: 18%;
-	color:white;	
+	color:white;
 }
 #number-friends {
     width: 70%;
@@ -614,10 +614,10 @@ img.level-friend {
 #my-position{
 	text-transform: uppercase;
 	cursor:pointer;
-	font-size: 0.5vw;	
+	font-size: 0.5vw;
 }
 .periode-choice:hover{
-	text-shadow:0px 0px 5px #a8a8a8;	
+	text-shadow:0px 0px 5px #a8a8a8;
 }
 .rank_neighbor{
 	display:none;
@@ -627,7 +627,7 @@ img.level-friend {
 }
 #leaders-1-2{
     font-size:0.8vw;
-    position:absolute;    
+    position:absolute;
     margin-top: 73%;
     text-align: left;
     padding-left:26%;
@@ -637,7 +637,7 @@ img.level-friend {
     margin-top: 127%;
     position:absolute;
     text-align: left;
-    padding-left:14%;      
+    padding-left:14%;
 }
 #panel-trophies{
 	background-image: url("../img/white-background.png");
@@ -715,7 +715,7 @@ div.label-friends {
 #news {
     position: absolute;
 	margin-top: 51.2%;
-	left: 21%;    
+	left: 21%;
     z-index: 2;
     font-family: "";
     font-weight: normal;

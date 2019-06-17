@@ -26,7 +26,7 @@ $app_name = Config::get('app.name');
     <div class="col-8" id="container-logo" title="{{ trans('site.home') }}">
         <a href="{!! url('') !!}">
           @if($app_name == 'zombiludik')
-           {!! Html::image('img/logo_zlud.png','ZombiLingo',['style'=>'width:70%']) !!}
+           {!! Html::image('img/logo_zlud.png','ZombiLingo',['style'=>'width:76%']) !!}
           @else
            {!! Html::image('img/logo-home.png','ZombiLingo',['style'=>'width:80%']) !!}
           @endif

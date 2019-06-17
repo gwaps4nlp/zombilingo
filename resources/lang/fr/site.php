@@ -76,4 +76,12 @@ return array (
   'summary' => 'Sommaire',
   'question-not-in-the-faq' => "Tu as une question qui n'est pas dans la FAQ ?",
   'ask-a-question' => "Poser une question",
+  'classic' => 'Mode classique',
+  'duel' => 'Mode duel',
+  'lab' => 'Mon labo',
+  'enemies' => 'Mes ennemis',
+  'mails' => 'Réception des emails',
+  'ranking' => 'Classement',
+  'shop' => 'Boutique',
+  'session-close' => 'Fermer la session',
 );

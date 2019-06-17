@@ -30,10 +30,10 @@ if($challenge){
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>
-              <a href="{!! url('game') !!}">Mode classique</a>
+              <a href="{!! url('game') !!}">{{ trans('site.classic') }}</a>
             </li>
             <li>
-              <a href="{!! url('duel') !!}">Mode duel</a>
+              <a href="{!! url('duel') !!}">{{ trans('site.duel') }}</a>
             </li>
           </ul>
         </li>
@@ -114,27 +114,27 @@ if($challenge){
         <i class="fa fa-chevron-down pl-1 pr-2"></i>
       </div>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a href="{!! url('user/home') !!}">Mon laboratoire</a></li>
+        <li><a href="{!! url('user/home') !!}">{{ trans('site.lab') }}</a></li>
         @if(Auth::user()->isAdmin())
           <li class="d-xl-none"><a href="{!! url('admin') !!}">Administration</a></li>
         @endif
-        <li><a href="{!! url('user/home?enemies') !!}">Mes ennemis</a></li>
-        <li><a href="{!! url('user/home?email') !!}">Réception des emails</a></li>
-        <li><a href="{!! url('user/home?password') !!}">Mot de passe</a></li>
-        <li class="d-lg-none"><a href="{!! url('user/players') !!}">Classement</a></li>
-        <li class="d-lg-none"><a href="{!! url('shop') !!}">Boutique virtuelle</a></li>
+        <li><a href="{!! url('user/home?enemies') !!}">{{ trans('site.enemies') }}</a></li>
+        <li><a href="{!! url('user/home?email') !!}">{{ trans('site.mails') }}</a></li>
+        <li><a href="{!! url('user/home?password') !!}">{{ trans('site.password') }}</a></li>
+        <li class="d-lg-none"><a href="{!! url('user/players') !!}">{{ trans('site.ranking') }}</a></li>
+        <li class="d-lg-none"><a href="{!! url('shop') !!}">{{ trans('site.shop') }}</a></li>
         <li role="separator" class="divider"></li>
-        <li><a href="{!! route('logout') !!}">Fermer la session</a></li>
+        <li><a href="{!! route('logout') !!}">{{ trans('site.session-close') }}</a></li>
       </ul>
     </div>
 
     <div class="dropdown-money d-none d-lg-block float-left" style="cursor:pointer;padding-top:10px;padding-left:15px;">
-      <a href="{!! url('user/players') !!}" data-offset="-10 0" data-toggle="tooltip" data-placement="bottom" title="Classement">
+      <a href="{!! url('user/players') !!}" data-offset="-10 0" data-toggle="tooltip" data-placement="bottom" title="{{ trans('site.ranking') }}">
       {!! $score_html !!}
       </a>
     </div>
     <div class="dropdown-score d-none d-lg-block pr-2 float-left" style="cursor:pointer;padding-top:10px;padding-left:15px;">
-      <a href="{!! url('shop') !!}" data-offset="-10 0" data-toggle="tooltip" data-placement="bottom" title="Boutique virtuelle">
+      <a href="{!! url('shop') !!}" data-offset="-10 0" data-toggle="tooltip" data-placement="bottom" title="{{ trans('site.shop') }}">
       {!! $money_html !!}
       </a>
     </div>
