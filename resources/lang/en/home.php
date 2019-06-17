@@ -22,4 +22,5 @@ return array (
   'intro-play-1' => 'No more limits for you !',
   'intro-play-2' => 'You can access all the options and hidden bonuses!',
   'intro-demo' => 'This limited version will turn you into an addict, but you will not be able to save your points and results !',
+  'intro-account' => 'See your statistics and compare yourself with your friends!',
 );
