@@ -11,8 +11,8 @@ Ces données sont le produit de l'activité des joueurs de ZombiLingo.
 </p>
 <p>
 Les données sont {!! link_to('informations','accessibles',['target'=>'_blank']) !!} sous des licences libres variées (fonction de la licence de la ressource d'origine), qui sont précisées dans chaque ressource.
-Le code source de ZombiLingo reste, lui, pour l'instant privateur et appartient en totalité à ses auteurs.
-Tout accès, utilisation, détournement, publication ou divulgation d'informations de tout ou partie de ce code sans le consentement écrit des auteurs sera passible de poursuites.
+Le code source de ZombiLingo est librement disponible sur GitHub sous licence CeCILL 2.1.
+
 </p>
 <p>
 La présente charte a pour but de permettre aux joueurs de jouer dans l'environnement le plus agréable possible, s'ils respectent les quelques règles établies ci-dessous.
@@ -35,7 +35,7 @@ Les corpus proposés dans ZombiLingo peuvent contenir des textes ne convenant pa
 <p>
 Les informations recueillies font l’objet d’un traitement informatique destiné à assurer le bon fonctionnement du jeu.
 Certaines informations enregistrées dans notre base de données sont personnelles (mot de passe, adresse mail, etc.), d'autres sont amenées à être éventuellement fournies à d'autres personnes (réponses proposées par le joueur lors d'une partie, classement, etc.) dans le cadre du jeu.
-Aucune diffusion des Données Personnelles ne sera faite à aucun titre que ce soit en dehors des modalités prévues par le jeu (informations affichées dans le Classement, affichage du résultat d'une partie, etc.).
+Aucune diffusion des données personnelles ne sera faite à aucun titre que ce soit en dehors des modalités prévues par le jeu (informations affichées dans le classement, affichage du résultat d'une partie, etc.).
 </p>
 <p>
 Les destinataires des données sont&nbsp;: tous les membres de l'équipe du jeu, sans restriction.
@@ -115,7 +115,7 @@ La présente charte doit être lue et acceptée dans son intégralité pour pouv
 Elle est susceptible d'être modifiée par les gestionnaires du jeu.
 Le cas échéant, il sera demandé aux joueurs d'accepter explicitement les modifications apportées pour pouvoir continuer à jouer.
 
-Karën Fort et Bruno Guillaume - Administrateurs - Contact : karen point fort at paris-sorbonne point fr et bruno point guillaume at loria point fr | <a target="_blank" href="http://www.jeuxdemots.org">Sources de la charte JDM</a> - <a target="_blank" href="http://www.starshine-online.com/">SSO</a> - <a target="_blank" href="http://www.mountyhall.com/">MH</a> - <a target="_blank" href="http://www.cnil.fr/">CNIL</a>
+Karën Fort et Bruno Guillaume - Administrateurs - Contact : karen point fort at sorbonne-universite point fr et bruno point guillaume at loria point fr | <a target="_blank" href="http://www.jeuxdemots.org">Sources de la charte JDM</a> - <a target="_blank" href="http://www.starshine-online.com/">SSO</a> - <a target="_blank" href="http://www.mountyhall.com/">MH</a> - <a target="_blank" href="http://www.cnil.fr/">CNIL</a>
 
-Dernière mise à jour&nbsp;: janvier 2016
+Dernière mise à jour&nbsp;: juillet 2019
 </p>
