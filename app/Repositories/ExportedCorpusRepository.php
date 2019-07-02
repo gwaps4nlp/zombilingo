@@ -24,17 +24,6 @@ class ExportedCorpusRepository extends BaseRepository
 	}
 
 	/**
-	 * Get the last export of mwe
-	 *
-	 * @return ExportedCorpus
-	 */
-	public function getLastMwe()
-	{
-		$admin = User::getAdmin();
-		return $this->model->where('user_id',$admin->id)->where('type','mwe')->orderBy('created_at','desc')->first();
-	}
-
-	/**
 	 * Get the last exports of corpus
 	 *
 	 * @return array App\Models\ExportedCorpus

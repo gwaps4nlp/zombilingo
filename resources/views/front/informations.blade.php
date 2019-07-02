@@ -23,16 +23,13 @@
 	@endforeach
 	</tbody>
 	</table>
-	{{--
-	<a target="_blank" href="{{ url('asset/conll').'?exported_corpus_id='.$last_exported_mwe->id }}">{{ trans('site.export-mwes') }}</a> <span data-toggle="tooltip" data-placement="auto left" title="CC BY-NC-SA" class="license">{!! Html::image('img/logos/by-nc-sa.svg') !!}</span> <span style="font-size:small;font-style: italic;">{{ trans('site.date-export') }} : {{ $last_exported_mwe->created_at }}</span><br/>
-	--}}
 	</div>
 @stop
 
 @section('scripts')
 <script>
 $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
+    $('[data-toggle="tooltip"]').tooltip();
 });
 </script>
 @stop
@@ -40,7 +37,7 @@ $(document).ready(function(){
 @section('css')
 <style>
 .license img{
-	width:60px;	
+	width:60px;
 }
 </style>
 @stop

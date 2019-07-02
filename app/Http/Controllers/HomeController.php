@@ -24,10 +24,9 @@ class HomeController extends Controller
 	public function informations(ExportedCorpusRepository $export)
 	{
 		$last_exported_corpora = $export->getLast();
-		$last_exported_mwe = $export->getLastMwe();
-		return view('front.informations',compact('last_exported_corpora','last_exported_mwe'));
+		return view('front.informations',compact('last_exported_corpora'));
 	}
-	
+
 	/**
 	 * Display the home page.
 	 *
