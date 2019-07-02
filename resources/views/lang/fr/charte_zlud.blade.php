@@ -99,7 +99,7 @@ Pour Opéra 6.0 et au-delà : 1. choisissez le menu "Fichier">"Préférences" ; 
 (8) Addiction
 </h2>
 <p>
-Si vous observez des modifications notables dans votre vie quotidienne: syndromes de manque, perte de contrôle par rapport aux jeux, conflits avec vos proches, vous souffrez peut-être d'addiction aux jeux. Nous vous conseillons dans ce cas de contacter \emph{Joueurs Info Service} (http://www.joueurs-info-service.fr/).
+Si vous observez des modifications notables dans votre vie quotidienne: syndromes de manque, perte de contrôle par rapport aux jeux, conflits avec vos proches, vous souffrez peut-être d'addiction aux jeux. Nous vous conseillons dans ce cas de contacter <i>Joueurs Info Service</i> (<a target="_blank" href ="http://www.joueurs-info-service.fr">http://www.joueurs-info-service.fr</a>).
 </p>
 
 <h2>
