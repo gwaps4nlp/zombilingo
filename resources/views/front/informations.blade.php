@@ -1,8 +1,17 @@
+<?php
+use Gwaps4nlp\Core\Models\ConstantGame;
+$app_name = Config::get('app.name');
+?>
 @extends('front.template')
 
 @section('main')
 	<div id="informations" class="p-md-5">
-	@include('lang/'.App::getLocale().'/informations')
+
+	@if($app_name == 'zombiludik')
+		@include('lang/'.App::getLocale().'/informations_zlud')
+	@else
+		@include('lang/'.App::getLocale().'/informations')
+	@endif
 
 	<table class="table table-striped">
 	<thead>

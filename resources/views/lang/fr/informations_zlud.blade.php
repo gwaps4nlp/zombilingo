@@ -2,7 +2,7 @@
 
 <h2>Quoi ?</h2>
 <p>
-ZombiLUDik est un jeu frère de ZombiLingo, dont le but est d'annoter des corpus en syntaxe de dépendances (selon le formalisme Universal Dependencies) et de récolter d'autres données langagières.
+ZombiLUDik est un jeu frère de <a href="https://zombilingo.org">ZombiLingo</a>, dont le but est d'annoter des corpus en syntaxe de dépendances (selon le formalisme <a href="https://universaldependencies.org/">Universal Dependencies</a>) et de récolter d'autres données langagières.
 Les points (des cerveaux) peuvent être gagnés non seulement en annotant beaucoup de phrases, mais surtout en les annotant correctement.
 </p>
 
