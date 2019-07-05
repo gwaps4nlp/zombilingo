@@ -12,7 +12,7 @@ $app_name = Config::get('app.name');
 <div class="container-fluid">
 <div class="row text-center" id="header_new">
 
-    <div class="col-2 mt-5 text-center">
+    <div class="col-2 mt-5 text-center" style="z-index: 1">
         <a href="https://lingoboingo.org/" style="padding-left:70px;" target="_blank">
           <img
             src="{{ asset('img/lingo_logo_mobile.png') }}"
@@ -55,7 +55,7 @@ $app_name = Config::get('app.name');
         </a>
     @endif
     @if(Auth::check())
-        <div class="col-1" id="blocDeconnection42">
+        <div class="col-1" id="blocDeconnection42" style="z-index: 1">
             <a href="{!! route('logout') !!}">
                 {!! Html::image('img/deco.png',trans('site.quit'),array('style'=>'height:120%;width:120%;max-height:87px;max-width:105px;min-width:58px;min-height:48px;')) !!}
             </a>
