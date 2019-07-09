@@ -4,8 +4,8 @@
 
 <em>
   <ul>
-    <li><span class="sentence">Max <span class=solution>a</span><span class=highlight>marché</span> pendant des heures</span></li>
-    <li><span class="sentence">Il <span class=solution>est</span><span class=highlight>venu</span> cherché son sac</span></li>
+    <li><span class="sentence">Max <span class=solution>a</span> <span class=highlight>marché</span> pendant des heures</span></li>
+    <li><span class="sentence">Il <span class=solution>est</span> <span class=highlight>venu</span> cherché son sac</span></li>
   </ul>
 </em>
 
@@ -23,7 +23,7 @@
 <em>
   <ul>
     <li>
-      <span class="sentence">Le film <span class=solution>a</span> été span <class=highlight>tourné</span> à Los Angeles</span>
+      <span class="sentence">Le film <span class=solution>a</span> été <span class=highlight>tourné</span> à Los Angeles</span>
     </li>
   </ul>
 </em>

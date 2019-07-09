@@ -20,13 +20,32 @@ class UdRelationTableSeeder extends Seeder
             'type' => 'trouverDependant',
             'level_id' => 1
         ]);
+
+        Relation::create([
+            'slug' => 'aux',
+            'name' => 'Auxiliaire',
+            'description' => 'Il faut retrouver l’auxiliaire du mot surligné en vert',
+            'help_file' => 'ud_aux',
+            'type' => 'trouverDependant',
+            'level_id' => 1
+        ]);
+
+        Relation::create([
+            'slug' => 'aux:pass',
+            'name' => 'Auxiliaire à la voix passive',
+            'description' => 'Il faut retrouver l’auxiliaire passif associé au verbe surligné en vert',
+            'help_file' => 'ud_aux_pass',
+            'type' => 'trouverDependant',
+            'level_id' => 2
+        ]);
+
         Relation::create([
             'slug' => 'obj',
             'name' => 'Complément direct',
             'description' => 'Il faut retrouver le complément du mot surligné en vert',
             'help_file' => 'ud_obj',
             'type' => 'trouverDependant',
-            'level_id' => 3
+            'level_id' => 2
         ]);
         Relation::create([
             'slug' => 'dislocated',
@@ -46,14 +65,6 @@ class UdRelationTableSeeder extends Seeder
             'level_id' => 10
         ]);
 
-        Relation::create([
-            'slug' => 'aux',
-            'name' => 'Auxiliaire',
-            'description' => 'Il faut retrouver l’auxiliaire du mot surligné en vert',
-            'help_file' => 'ud_aux',
-            'type' => 'trouverDependant',
-            'level_id' => 1
-        ]);
 
         Relation::create([
             'slug' => 'aux:pass',

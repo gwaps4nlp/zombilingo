@@ -11,7 +11,7 @@
 <em>
   <ul>
     <li>
-      <span class="sentence">Le film a <span class=solution>été</span> <span class=highlight>tourné</span> à Los Angeles</span>
+      <span class="sentence">Le film <span class="not_solution">a</span> <span class=solution>été</span> <span class=highlight>tourné</span> à Los Angeles</span>
     </li>
   </ul>
 </em>
