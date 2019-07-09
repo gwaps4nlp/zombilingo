@@ -15,7 +15,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'nsubj',
             'name' => 'Sujet',
-            'description' => 'Il faut retrouver le nom qui est modifié par l’argument principal de l’énoncé.',
+            'description' => 'Il faut retrouver le sujet du mot surligné en vert.',
             'help_file' => 'ud_nsubj',
             'type' => 'trouverDependant',
             'level_id' => 1
@@ -23,7 +23,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'obj',
             'name' => 'Complément direct',
-            'description' => 'Trouve le complément (objet direct) du verbe indiqué&#8239;!',
+            'description' => 'Il faut retrouver le complément du mot surligné en vert',
             'help_file' => 'ud_obj',
             'type' => 'trouverDependant',
             'level_id' => 3
@@ -49,7 +49,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'aux',
             'name' => 'Auxiliaire',
-            'description' => 'Trouve l\'auxiliaire ##',
+            'description' => 'Il faut retrouver l’auxiliaire du mot surligné en vert',
             'help_file' => 'ud_aux',
             'type' => 'trouverDependant',
             'level_id' => 1
@@ -58,7 +58,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'aux:pass',
             'name' => 'Auxiliaire à la voix passive',
-            'description' => 'Trouve l\'auxiliaire de la voix passive',
+            'description' => 'Il faut retrouver l’auxiliaire passif associé au verbe surligné en vert',
             'help_file' => 'ud_aux_pass',
             'type' => 'trouverDependant',
             'level_id' => 4

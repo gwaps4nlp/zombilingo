@@ -6,7 +6,7 @@ if($mode=="admin-game"){
 } else
     $admin_mode = false;
 ?>
-    
+
 <div id="container-game" class="container-fluid">
 <div class="row">
     <div id="block-profil" class="col-2 pl-5 pr-2 pt-3">
@@ -36,7 +36,7 @@ if($mode=="admin-game"){
         <div class="row game-element" id="phase" style="">
             <div id="progress">0%</div>
 			<div id="progress-container" class="progress">
-                <div class="progress-bar-game" id="phaseBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">  
+                <div class="progress-bar-game" id="phaseBar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
                 </div>
                 {!! Html::image('img/bone.png','progression',array('id'=>'progressBar','style'=>'margin:0 20%;position:absolute;left:0;width:60%;')) !!}
 			</div>
@@ -50,12 +50,14 @@ if($mode=="admin-game"){
             <div class="aideTip" id="helpRelation">
             @if(View::exists('help.'.App::getLocale().'.'.$game->relation->help_file))
                 @include('help.'.App::getLocale().'.'.$game->relation->help_file)
+            @else
+                Not help, please report {{$game->relation->help_file}}
             @endif
             <a class="more-info" href="{{ url('faq#'.$game->relation->help_file) }}" target="_blank">En savoir plus <i class="fa fa-hand-o-right" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
-    @endif 
+    @endif
 </div>
 <div class="row">
     <div class="col-6" id="infos">
@@ -107,9 +109,9 @@ if($mode=="admin-game"){
         <div class="col-2 d-lg-none pr-5">
             <div id="refuse-sm" class="refuse">
             </div>
-        </div>       
+        </div>
     @else
-        <div class="col-10 mx-auto text-center">            
+        <div class="col-10 mx-auto text-center">
           <div id="resultat" class="d-inline"></div>
           @if($mode=="training" || $mode=="duel")
             <div id="refuse-sm" class="d-lg-none pr-5 float-right refuse"></div>
