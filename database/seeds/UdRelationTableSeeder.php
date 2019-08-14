@@ -42,7 +42,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'obj',
             'name' => 'Complément direct',
-            'description' => 'Il faut retrouver le complément du mot surligné en vert',
+            'description' => 'Il faut retrouver le complément direct du mot surligné en vert',
             'help_file' => 'ud_obj',
             'type' => 'trouverDependant',
             'level_id' => 2
@@ -50,7 +50,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'dislocated',
             'name' => 'Sujet/Objet préposé/postposé',
-            'description' => 'Il faut le retrouver l’élément qui ajoute une information au référent dont il est question et qui apparaît comme superflu',
+            'description' => 'Il faut retrouver l’élement qui apparaît en périphérie et reprend un élément déjà présent dans la phrase. On doit pouvoir enlever cet élément sans changer le sens de la phrase.',
             'help_file' => 'ud_dislocated',
             'type' => 'trouverDependant',
             'level_id' => 2
@@ -59,7 +59,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'acl:relcl',
             'name' => 'Modifieur de proposition relative',
-            'description' => 'Le nom/pronom/nom propre est modifié par le verbe dans la proposition relative qui le suit. Il faut le retrouver.',
+            'description' => 'Il faut retrouver le nom, pronom, ou nom propre qui est modifié par la proposition relative commençant par : qui, que, quoi, dont, où',
             'help_file' => 'ud_acl_relcl',
             'type' => 'trouverTête',
             'level_id' => 10
@@ -76,9 +76,18 @@ class UdRelationTableSeeder extends Seeder
         ]);
 
         Relation::create([
-            'slug' => 'conj:coord',
+            'slug' => 'conj:coord', # Spoken uses conj:coord instead of conj
             'name' => 'Conjonction',
-            'description' => 'Il faut le retrouver la tête de la relation, en recherchant le premier item lexical coordonné.',
+            'description' => 'Il faut retrouver le mot coordonné avec le mot surligné en vert.',
+            'help_file' => 'ud_conj_coord',
+            'type' => 'trouverTête',
+            'level_id' => 10
+        ]);
+
+        Relation::create([
+            'slug' => 'conj', # added for GSD
+            'name' => 'Conjonction',
+            'description' => 'Il faut retrouver le mot coordonné avec le mot surligné en vert.',
             'help_file' => 'ud_conj_coord',
             'type' => 'trouverTête',
             'level_id' => 10
@@ -86,7 +95,7 @@ class UdRelationTableSeeder extends Seeder
         Relation::create([
             'slug' => 'cc',
             'name' => 'Conjonction de coordination',
-            'description' => 'Il faut retrouver la tête de la relation de conjonction de coordination celle qui arrive après le marqueur de coordination (mais, ou, et, donc, or, ni, car)',
+            'description' => 'Il faut retrouver le mot qui suit la conjonction de coordination (et, ou, mais, c’est-à-dire, ni…)',
             'help_file' => 'ud_cc',
             'type' => 'trouverTête',
             'level_id' => 10
@@ -147,6 +156,17 @@ class UdRelationTableSeeder extends Seeder
           "root",
           "vocative",
           "xcomp",
+          # add for GSD
+          "appos",
+          "expl:pass",
+          "flat:foreign",
+          "flat:name",
+          "goeswith",
+          "iobj:agent",
+          "obj:agent",
+          "obl:agent",
+          "obl:arg",
+          "parataxis",
         );
 
         foreach ($other_relations as $relation) {
