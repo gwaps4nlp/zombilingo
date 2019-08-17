@@ -1,27 +1,23 @@
-<p>Quand une phrase est au passif, l'objet (celui qui subit l'action) devient le sujet et le verbe apparait au participe passé avec l'auxiliaire <em>être</em>. Ici, c'est cet auxiliaire qu'il faut retrouver.<p>
-<p>Par exemple, la phrase <em>la critique acclame le film</em> devient au passif&nbsp;:</p>
-
+<p>Un auxiliaire passif n‘est pas le verbe principal d‘une proposition mais contient l‘information que le sujet subit l‘action exprimée par le verbe principal.</p>
+<p>Seul <em>être</em> peut être utilisé comme auxiliaire passif.</p>
 <em>
   <ul>
-    <li><span class="sentence">le film <span class=solution>est</span> <span class=highlight>acclamé</span> par la critique</span></li>
+    <li><span class="sentence">la voiture <span class="solution">est</span> <span class="highlight">conduite</span> par le chauffeur</span></li>
+    <li><span class="sentence">Kennedy <span class="solution">fut</span> <span class="highlight">assassiné</span></span></li>
+  </ul>
+</em>
+<p>Dans un cas particulier on peut avoir deux auxiliaires rattachés au même mot&nbsp;:</p>
+<em>
+  <ul>
+    <li><span class="sentence">Kennedy a <span class="solution">été</span> <span class="highlight">assassiné</span> (ici a est l‘auxiliaire, été est l‘auxiliaire passif et assassiné est le verbe principal)</span></li>
+    <li><span class="sentence">elle a <span class="solution">été</span> <span class="highlight">abîmée</span></span></li>
   </ul>
 </em>
 
-<p>On peut avoir avec le même verbe un auxiliaire passif et un autre auxiliaire (non passif)&nbsp;:</p>
+<p>Mais dans tous les cas c’est être qui est l’auxiliaire passif.</p>
+<p>Il n’est possible d’avoir un auxiliaire passif qu’avec les verbes transitifs, ce sont des verbes qui admettent un ou plusieurs compléments d’objets.</p>
 <em>
   <ul>
-    <li>
-      <span class="sentence">Le film <span class="not_solution">a</span> <span class=solution>été</span> <span class=highlight>tourné</span> à Los Angeles</span>
-    </li>
-  </ul>
-</em>
-
-<p>Attention&nbsp;: l'auxiliaire <em>être</em> n'est pas toujours un auxiliaire passif.
-Dans ce cas-là, il faudrait répondre avec la croix d'os</p>
-<em>
-  <ul>
-    <li>
-      <span class="sentence">vous <span class="not_solution">êtes</span> <span class=highlight>venue</span> à Paris à quel âge&nbsp;?</span>
-    </li>
+    <li><span class="sentence">Le détroit <span class="solution">est</span> <span class="highlight">traversé</span> par deux ponts routiers&nbsp;: le Carquinez Bridge, sur lequel passe l‘Interstate 80, et le Benicia-Martinez Bridge emprunté par l‘Interstate 680.</span></li>
   </ul>
 </em>
