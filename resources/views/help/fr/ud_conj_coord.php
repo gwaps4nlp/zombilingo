@@ -3,7 +3,7 @@
 <p>Pour le premier cas le plus fréquent avec la conjonction «&nbsp;et&nbsp;» qui coordonnent deux noms&nbsp;:</p>
 <em>
   <ul>
-    <li><span class="sentence"><span class="highlight">Equipiers</span> et <span class="solution">adversaires</span> sont sur la même longueur d'ondes.</span></li>
+    <li><span class="sentence"><span class="solution">Equipiers</span> et <span class="highlight">adversaires</span> sont sur la même longueur d'ondes.</span></li>
   </ul>
 </em>
 
@@ -11,7 +11,7 @@
 
 <em>
   <ul>
-    <li><span class="sentence">Vraiment, j'y ai <span class="highlight">passé</span> du bon temps et <span class="solution">compte</span> y retourner !</span></li>
+    <li><span class="sentence">Vraiment, j'y ai <span class="solution">passé</span> du bon temps et <span class="highlight">compte</span> y retourner !</span></li>
   </ul>
 </em>
 
@@ -19,7 +19,7 @@
 <p>Lorsque plusieurs coordinations se suivent la ponctuation leur est préférée, à noter que la tête est toujours le premier élément de l’énumération&nbsp;:</p>
 <em>
   <ul>
-    <li><span class="sentence">Une seconde d’<span class="highlight">hésitation</span>, d’<span class="solution">inattention</span> ou de retard</span></li>
+    <li><span class="sentence">Une seconde d’<span class="solution">hésitation</span>, d’<span class="highlight">inattention</span> ou de retard</span></li>
   </ul>
 </em>
 
