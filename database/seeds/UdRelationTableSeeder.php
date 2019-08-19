@@ -61,7 +61,7 @@ class UdRelationTableSeeder extends Seeder
             'name' => 'Modifieur de proposition relative',
             'description' => 'Il faut retrouver le nom, pronom, ou nom propre qui est modifié par la proposition relative commençant par : qui, que, quoi, dont, où',
             'help_file' => 'ud_acl_relcl',
-            'type' => 'trouverTête',
+            'type' => 'trouverTete',
             'level_id' => 10
         ]);
 
@@ -80,7 +80,7 @@ class UdRelationTableSeeder extends Seeder
             'name' => 'Conjonction',
             'description' => 'Il faut retrouver le mot coordonné avec le mot surligné en vert.',
             'help_file' => 'ud_conj_coord',
-            'type' => 'trouverTête',
+            'type' => 'trouverTete',
             'level_id' => 10
         ]);
 
@@ -89,7 +89,7 @@ class UdRelationTableSeeder extends Seeder
             'name' => 'Conjonction',
             'description' => 'Il faut retrouver le mot coordonné avec le mot surligné en vert.',
             'help_file' => 'ud_conj_coord',
-            'type' => 'trouverTête',
+            'type' => 'trouverTete',
             'level_id' => 10
         ]);
         Relation::create([
@@ -97,7 +97,7 @@ class UdRelationTableSeeder extends Seeder
             'name' => 'Conjonction de coordination',
             'description' => 'Il faut retrouver le mot qui suit la conjonction de coordination (et, ou, mais, c’est-à-dire, ni…)',
             'help_file' => 'ud_cc',
-            'type' => 'trouverTête',
+            'type' => 'trouverTete',
             'level_id' => 10
         ]);
 
