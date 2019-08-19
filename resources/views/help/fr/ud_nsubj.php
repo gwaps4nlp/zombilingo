@@ -2,7 +2,7 @@
 Les sujets peuvent avoir différentes «&nbsp;natures&nbsp;» et les mots dont ils dépendent également.</p>
 
 
-<p>Le sujet peut être respectivement, un pronom, nom commun ou nom propre&nbsp;:</p>
+<p>Le sujet peut être respectivement, un pronom, un nom commun ou un nom propre&nbsp;:</p>
 
 <em>
   <ul>
@@ -35,14 +35,6 @@ Les sujets peuvent avoir différentes «&nbsp;natures&nbsp;» et les mots dont i
   <ul>
     <li><span class="sentence"><span class=solution>Phillipe</span> Zdar est  <span class=highlight>tombé</span> depuis la fenêtre de son immeuble hier.</span></li>
      <li><span class="sentence">Le <span class=solution>coach</span> Debord a <span class=highlight>dit</span> que c’était plus possible de venir au match sans protège-tibias.</span></li>
-  </ul>
-</em>
-
-<p>le sujet peut également être une nom de fonction&nbsp;:</p>
-
-<em>
-  <ul>
-   
   </ul>
 </em>
 
