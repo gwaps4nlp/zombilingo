@@ -1,7 +1,6 @@
 <p>Un objet direct est l’objet du verbe.</p>
 <em>
   <ul>
-    <li><span class="sentence">il <span class="highlight">mange</span> un <span class="solution">sandwich.</span></span></li>
     <li><span class="sentence">on <span class="highlight">voit</span> une jeune <span class="solution">fille</span> habillée en noir.</span></li>
   </ul>
 </em>
