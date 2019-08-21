@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\ExportDatabase::class,
         \App\Console\Commands\ImportDatabase::class,
         \App\Console\Commands\SendDatabase::class,
+        \App\Console\Commands\UpdateSentence::class,
     ];
 
     /**
@@ -53,13 +54,13 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('emails:plan-daily')
                  ->dailyAt('07:59');
-        
+
         $schedule->command('emails:plan-weekly')
                  ->weekly()->mondays()->at('08:05');
 
         $schedule->command('emails:plan-monthly')
                  ->monthly()->mondays()->at('08:10');
-                 
+
         $schedule->command('emails:send')
                  ->everyFiveMinutes();
 
