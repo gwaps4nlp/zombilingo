@@ -48,7 +48,7 @@ class UpdateSentence extends Command
                 foreach ($sents as $sent) {
                     $id = $sent->id;
                     $new_content=$split[1];
-                    DB::update('update Sentences set content = ? where id = ?', [$new_content, $id]);
+                    DB::update('update sentences set content = ? where id = ?', [$new_content, $id]);
                     $this->info($split[0] . " --> " . $id);
                 }
             }
