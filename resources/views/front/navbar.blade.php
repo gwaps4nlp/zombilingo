@@ -25,8 +25,8 @@ if($challenge){
           </a>
         </li>
         <li class="d-none d-md-block nav-item dropdown {{ Request::is('game')?'active':'' }}">
-          <a class="nav-link rounded-btn" href="#" style="margin-bottom:5px;">
-            {{ trans('site.play') }}
+          <a class="nav-link rounded-btn" style="margin-bottom:5px;">
+            {{ trans('site.play') }}<i class="fa fa-chevron-down pl-1 pr-2"></i>
           </a>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>
@@ -43,7 +43,9 @@ if($challenge){
           </li>
         @else
           <li class="d-none d-md-block nav-item dropdown {{ Request::is('discussion')?'active':'' }}">
-            <a class="nav-link rounded-btn" href="#">{{ trans('site.forum') }}</a>
+            <a class="nav-link rounded-btn" href="#">
+              {{ trans('site.forum') }}<i class="fa fa-chevron-down pl-1 pr-2"></i>
+            </a>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
               <li>
                 <a href="{!! url('discussion') !!}">{{ trans('site.discussions') }}</a>
