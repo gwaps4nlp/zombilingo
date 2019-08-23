@@ -27,7 +27,7 @@ class UdRelationTableSeeder extends Seeder
             'description' => 'Il faut retrouver l’auxiliaire du mot surligné en vert',
             'help_file' => 'ud_aux',
             'type' => 'trouverDependant',
-            'level_id' => 1
+            'level_id' => 2
         ]);
 
         Relation::create([
@@ -45,7 +45,7 @@ class UdRelationTableSeeder extends Seeder
             'description' => 'Il faut retrouver le complément direct du mot surligné en vert',
             'help_file' => 'ud_obj',
             'type' => 'trouverDependant',
-            'level_id' => 2
+            'level_id' => 1
         ]);
         Relation::create([
             'slug' => 'dislocated',
@@ -53,7 +53,7 @@ class UdRelationTableSeeder extends Seeder
             'description' => 'Il faut retrouver l’élement qui apparaît en périphérie et reprend un élément déjà présent dans la phrase. On doit pouvoir enlever cet élément sans changer le sens de la phrase.',
             'help_file' => 'ud_dislocated',
             'type' => 'trouverDependant',
-            'level_id' => 2
+            'level_id' => 4
         ]);
 
         Relation::create([
@@ -62,16 +62,6 @@ class UdRelationTableSeeder extends Seeder
             'description' => 'Il faut retrouver le nom, pronom, ou nom propre qui est modifié par la proposition relative commençant par : qui, que, quoi, dont, où',
             'help_file' => 'ud_acl_relcl',
             'type' => 'trouverTete',
-            'level_id' => 10
-        ]);
-
-
-        Relation::create([
-            'slug' => 'aux:pass',
-            'name' => 'Auxiliaire à la voix passive',
-            'description' => 'Il faut retrouver l’auxiliaire passif associé au verbe surligné en vert',
-            'help_file' => 'ud_aux_pass',
-            'type' => 'trouverDependant',
             'level_id' => 4
         ]);
 
@@ -81,7 +71,7 @@ class UdRelationTableSeeder extends Seeder
             'description' => 'Il faut retrouver le mot coordonné avec le mot surligné en vert.',
             'help_file' => 'ud_conj_coord',
             'type' => 'trouverTete',
-            'level_id' => 10
+            'level_id' => 3
         ]);
 
         Relation::create([
@@ -90,7 +80,7 @@ class UdRelationTableSeeder extends Seeder
             'description' => 'Il faut retrouver le mot coordonné avec le mot surligné en vert.',
             'help_file' => 'ud_conj_coord',
             'type' => 'trouverTete',
-            'level_id' => 10
+            'level_id' => 3
         ]);
         Relation::create([
             'slug' => 'cc',
