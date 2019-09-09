@@ -7,10 +7,10 @@ use Cache;
 
 class Relation extends Model
 {
-	
+
 	protected $visible = ['name','id','slug','type','level_id'];
 	protected $fillable = ['name','id','slug','type','level_id'];
-	
+
 	/**
 	 * One to Many relation
 	 *
@@ -20,7 +20,7 @@ class Relation extends Model
 	{
 		return $this->hasMany('App\Models\Annotation');
 	}
-	
+
 	/**
 	 * One to Many relation
 	 *
@@ -32,56 +32,57 @@ class Relation extends Model
 	}
 
 	public static function getIdBySlug($slug){
-		try {
-			return Cache::rememberForever(config('app.name').'-'.$slug, function() use ($slug) {
-				$relation = parent::select('id')->where('slug','=',$slug)->first();
-				if($relation){
-					return $relation->id;
-				} else {
-					return parent::select('id')->where('slug','=','UNK')->first()->id;
-				}
-			});
-		} catch (Exception $Ex){
+		// try {
+		// 	return Cache::rememberForever(config('app.name').'-'.$slug, function() use ($slug) {
+		// 		$relation = parent::select('id')->where('slug','=',$slug)->first();
+		// 		if($relation){
+		// 			return $relation->id;
+		// 		} else {
+		// 			return parent::select('id')->where('slug','=','UNK')->first()->id;
+		// 		}
+		// 	});
+		// } catch (Exception $Ex){
 			$relation = parent::select('id')->where('slug','=',$slug)->first();
 			if($relation){
 				return $relation->id;
 			} else {
 				return parent::select('id')->where('slug','=','UNK')->first()->id;
-			}			
+			}
 		}
-	}
+	// }
 
 	public static function getById($id){
-		try {
-			return Cache::rememberForever(config('app.name').'-'.'relation_'.$id, function() use ($id) {
-				$relation = parent::where('id','=',$id)->first();
-				if($relation){
-					return $relation;
-				} else {
-					return parent::where('slug','=','UNK')->first();
-				}
-			});
-		} catch (Exception $Ex){
+		// try {
+		// 	return Cache::rememberForever(config('app.name').'-'.'relation_'.$id, function() use ($id) {
+		// 		$relation = parent::where('id','=',$id)->first();
+		// 		if($relation){
+		// 			return $relation;
+		// 		} else {
+		// 			return parent::where('slug','=','UNK')->first();
+		// 		}
+		// 	});
+		// } catch (Exception $Ex){
 			$relation = parent::where('id','=',$id)->first();
 			if($relation){
 				return $relation->id;
 			} else {
 				return parent::where('slug','=','UNK')->first()->id;
-			}			
-		}
+			}
+//		}
 	}
 
 	public static function getSlugById($id){
-		if(!$id) return '_';
-		try {
-			return Cache::rememberForever($id, function() use ($id) {
-				return parent::select('slug')->where('id','=',$id)->first()->slug;
-			});
-		} catch (Exception $Ex){
-			return Cache::rememberForever($id, function() use ($id) {
-				return parent::select('slug')->where('id','=',$id)->first()->slug;
-			});			
-		}
+		if (!$id) return '_';
+		return parent::select('slug')->where('id','=',$id)->first()->slug;
+		// try {
+		// 	return Cache::rememberForever($id, function() use ($id) {
+		// 		return parent::select('slug')->where('id','=',$id)->first()->slug;
+		// 	});
+		// } catch (Exception $Ex){
+		// 	return Cache::rememberForever($id, function() use ($id) {
+		// 		return parent::select('slug')->where('id','=',$id)->first()->slug;
+		// 	});
+		// }
 	}
-	
+
 }

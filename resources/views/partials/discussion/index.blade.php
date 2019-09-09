@@ -135,7 +135,7 @@ $nb_sentences_first_answer = 0;
 						@endif
 					</div>
 				@endif
-		    	<span class="sentence-brat" id="annotation_{{ $annotation_id }}" focus="{{ $annotation->focus_position }}">{{ $annotation->sentence->content }}</span>
+		    	<span class="sentence-brat" id="annotation_{{ $annotation_id }}" focus="{{ $annotation->focus_position }}">{{ $annotation->sentence->content}}.</span>
 				<div style="display:inline-block;" class="py-2">
 					<span style="margin-right:20px;position:relative;">
 					@if(Auth::user()->followsDiscussionAnnotation($annotation_id))
