@@ -1,27 +1,26 @@
-<p>Le sujet peut être un pronom (je), un nom commun (participant), un nom propre (Jésus), un pronom relatif (qui)&nbsp;:
+<p>Le sujet peut être un pronom (je, qui), un nom commun (participant), un nom propre (Jésus)&nbsp;:
 <em>
   <ul>
     <li><span class="sentence"><span class=solution>Je</span> <span class=highlight>peux</span> pas vous dire.</span></li>
     <li><span class="sentence">Le plus jeune <span class=solution>participant</span> a <span class=highlight>gagné</span> la course.</span></li>
-    <li><span class="sentence"><span class=solution>Jésus</span> ne <span class=highlight>dit</span> rien avant la fin de l'épisode</span></li>
+    <li><span class="sentence"><span class=solution>Jésus</span> ne <span class=highlight>dit</span> rien avant la fin de l'épisode.</span></li>
 <li>
-<span class="sentence">Victor <span class=solution>qui</span> <span class=highlight>pète</span></span>.
+<span class="sentence">Victor <span class=solution>qui</span> <span class=highlight>pète</span>.</span>
 </li>
   </ul>
 </em>
 </p>
 
-<p>Attention, les sujets peuvent dépendre de mots qui sont des noms ou des adjectifs ! Dans ce cas, le verbe est forcément <it>être</it> (copule)&nbsp;:
+<p>Attention, les sujets peuvent dépendre de mots qui sont des noms ou des adjectifs ! Dans ce cas, le verbe est forcément <b>être</b> (copule)&nbsp;:
 <em>
   <ul>
-    <li><span class="sentence">L'<span class=solution>art</span> est le <span class=highlight>reflet</span> de la société.</span></li>
-    <li><span class="sentence">enfin toute ma <span class=solution>famille</span> est <span class=highlight>portugaise.</span></li>
-    <li>
+    <li><span class="sentence">L'<span class=solution>art</span> est le <span class=highlight>reflet</span> de la société.</span>
+</li>
   </ul>
 </em>
 </p>
 
-<p>Dans les cas des coordinations, le mot à chercher est toujours celui qui apparaît <b>avant</b> la conjonction de coordination&nbsp;:
+<p>Dans les cas des coordinations, le mot à chercher est toujours le premier de la coordination&nbsp;:
 <em>
   <ul>
     <li><span class="sentence">j’ai trouvé que l’<span class="solution">enseignement</span> et la recherche <span class=highlight>allaient</span> bien ensemble généralement.</span></li>
