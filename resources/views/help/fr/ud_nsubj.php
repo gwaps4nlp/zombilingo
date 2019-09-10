@@ -1,9 +1,12 @@
-<p>Le sujet peut être un pronom (je), un nom commun (participant) ou un nom propre (Jésus)&nbsp;:
+<p>Le sujet peut être un pronom (je), un nom commun (participant), un nom propre (Jésus), un pronom relatif (qui)&nbsp;:
 <em>
   <ul>
     <li><span class="sentence"><span class=solution>Je</span> <span class=highlight>peux</span> pas vous dire.</span></li>
     <li><span class="sentence">Le plus jeune <span class=solution>participant</span> a <span class=highlight>gagné</span> la course.</span></li>
     <li><span class="sentence"><span class=solution>Jésus</span> ne <span class=highlight>dit</span> rien avant la fin de l'épisode</span></li>
+<li>
+<span class="sentence">Victor <span class=solution>qui</span> <span class=highlight>pète</span></span>.
+</li>
   </ul>
 </em>
 </p>
