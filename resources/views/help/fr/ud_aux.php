@@ -6,6 +6,16 @@
   </ul>
 </em>
 </p>
+
+<p>Attention, dans certains cas, l'auxiliaire est un passif et ne doit pas être annoté comme un auxiliaire simple&nbsp;:
+
+<em>
+  <ul>
+    <li><span class="sentence">Elle était <span class="highlight">admirée</span> de tous</span></li>
+  </ul>
+</em>
+</p>
+
 <p>Le verbe associé à l‘auxiliaire peut lui aussi être être ou avoir&nbsp;:
 <em>
   <ul>

@@ -13,7 +13,7 @@
 </em>
 </p>
 
-<p>Lorsque le pronom fait partie d'une expression verbale fixe, il est également considéré en tant qu'objet direct (<span class="sentence"><span class="solution">se</span> <span class="highlight">douter</span>, <span class="solution">se</span> <span class="solution">souvenir</span>, etc.).</span></p>
+<p>Lorsque le pronom fait partie d'une expression verbale fixe, il est également considéré en tant qu'objet direct (<span class="sentence"><span class="solution">se</span> <span class="highlight">douter</span>, <span class="solution">se</span> <span class="highlight">souvenir</span>, etc.).</span></p>
 
 <p>En cas de doute, on peut utiliser un test d’interrogation : on pose une question de manière à trouver ce qui est affecté par le verbe. Dans l'exemple ci-dessous, «&nbsp;qu'est-ce qui a été repris&nbsp;» ?
 <em>
