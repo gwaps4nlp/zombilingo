@@ -11,12 +11,14 @@ use App\Repositories\ScoreRepository;
 use App\Repositories\ObjectRepository;
 use Gwaps4nlp\Core\Models\Source;
 use Gwaps4nlp\Core\Models\ConstantGame;
+use Gwaps4nlp\Core\GameGestionInterface;
 use App\Models\Relation;
 use App\Models\Score;
 use App\Models\User;
 use App\Models\Article;
 use App\Models\AnnotationUser;
 use App\Exceptions\GameException;
+use App\Services\GameGestion;
 use Response, View, App;
 
 class AdminGameGestion extends GameGestion implements GameGestionInterface
