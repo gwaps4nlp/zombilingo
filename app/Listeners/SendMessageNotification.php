@@ -13,6 +13,9 @@ use Mail, Log;
 
 class SendMessageNotification implements ShouldQueue
 {
+
+    public $queue = Config::get('app.name');
+
     /**
      * Create the event listener.
      *
@@ -36,7 +39,7 @@ class SendMessageNotification implements ShouldQueue
         $data['content'] = $message->content;
         if(!$message->user){
            Log::info('Message sans user: '.$message->id);
-           return; 
+           return;
         }
         $data['username_message'] = $message->user->username;
         $data['discussion_id'] = $discussion->id;
@@ -45,7 +48,7 @@ class SendMessageNotification implements ShouldQueue
         $data['entity_type'] = $discussion->entity_type;
 
         $role_admin = Role::where('slug','=','admin')->first();
-        
+
         $administrators = $role_admin->users()->get();
 
         $administrators_ids = [];
@@ -55,7 +58,7 @@ class SendMessageNotification implements ShouldQueue
                 $data['username'] = $user->username;
                 $data['user'] = $user;
                 // A notification is send if the administrator is not the author
-                if($user->id != $message->user_id)        
+                if($user->id != $message->user_id)
                     Mail::send('emails.notification-message', $data , function ($m) use ($user) {
                         $m->from('contact@zombilingo.org', 'ZombiLingo');
                         $m->to($user->email, $user->username)->subject("Nouveau message dans le forum");
@@ -65,7 +68,7 @@ class SendMessageNotification implements ShouldQueue
 
         //Users who follow the thread
         $users = $discussion->subscribers;
-        
+
         foreach($users as $user){
             // A notification is send if the user is not the author
             if($user->id != $message->user_id && !in_array($user->id,$administrators_ids)){
