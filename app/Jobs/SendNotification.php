@@ -63,7 +63,7 @@ class SendNotification implements ShouldQueue
             // A notification is send if the administrator is not the author
             if($user->id != $message->user_id)
                 Mail::send('emails.notification-message', $data , function ($m) use ($user) {
-                    $m->from('contact@zombilingo.org', 'ZombiLingo');
+                    $m->from('contact@zombilingo.org', config('app.name'));
                     $m->to($user->email, $user->username)->subject("Nouveau message dans le forum");
                 });
         }
@@ -78,7 +78,7 @@ class SendNotification implements ShouldQueue
                 $data['user'] = $user;
                 if($user->email)
                 Mail::send('emails.notification-message', $data , function ($m) use ($user) {
-                    $m->from('contact@zombilingo.org', 'ZombiLingo');
+                    $m->from('contact@zombilingo.org', config('app.name'));
                     $m->to($user->email, $user->username)->subject("Quelqu'un a commenté une discussion que tu surveilles");
                 });
             }
