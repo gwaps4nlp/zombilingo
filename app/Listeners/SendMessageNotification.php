@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Message;
 use App\Models\Discussion;
 use App\Models\Role;
-use Mail, Log;
+use Mail, Log, Config;
 
 class SendMessageNotification implements ShouldQueue
 {
