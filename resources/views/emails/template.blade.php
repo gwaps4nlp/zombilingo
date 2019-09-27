@@ -45,6 +45,8 @@
 
                         <tr>
                             <td border="0" cellspacing="0" cellpadding="0" style="padding:20px 0" width="100%">
+                                
+                                @if(config('app.name') == 'zombilingo')
                                 <table style="color:#808080;font-size:14px;line-height:18px;border-collapse:collapse" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tbody><tr>
                                         <td dir="ltr" style="padding-bottom:5px;padding-right:5px" width="50%">
@@ -71,6 +73,8 @@
                                         </td>
                                     </tr>
                                 </tbody></table>
+                                @endif
+
                                 <table style="border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" width="100%">
                                     <tbody><tr>
                                         <td style="padding:20px" width="100%">
