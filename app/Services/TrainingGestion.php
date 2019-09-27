@@ -78,7 +78,7 @@ class TrainingGestion extends Game
 		$this->annotation = $this->annotations->getRandomTutorial($this->relation,(int)($this->turn/2)+1,$this->already_played);
 
 		if(!$this->annotation && rand(0,100)<=ConstantGame::get("proba-negative-item-training"))
-			$this->annotation = $this->annotations->getRandomNegativeReference($this->relation);
+			$this->annotation = $this->annotations->getRandomNegative($this->relation);
 		
 		if(!$this->annotation){
 			$this->annotation = $this->annotations->getRandomReference($this->relation);
