@@ -47,23 +47,21 @@ class SendMessageNotification implements ShouldQueue
         $data['entity_id'] = $discussion->entity_id;
         $data['entity_type'] = $discussion->entity_type;
 
-        $role_admin = Role::where('slug','=','admin')->first();
+        $role_admin = Role::where('slug','=','super-admin')->first();
 
         $administrators = $role_admin->users()->get();
 
         $administrators_ids = [];
         foreach($administrators as $user){
-            if(in_array($user->id,[20,21,381])){
-                $administrators_ids[]=$user->id;
-                $data['username'] = $user->username;
-                $data['user'] = $user;
-                // A notification is send if the administrator is not the author
-                if($user->id != $message->user_id)
-                    Mail::send('emails.notification-message', $data , function ($m) use ($user) {
-                        $m->from('contact@zombilingo.org', 'ZombiLingo');
-                        $m->to($user->email, $user->username)->subject("Nouveau message dans le forum");
-                    });
-            }
+            $administrators_ids[]=$user->id;
+            $data['username'] = $user->username;
+            $data['user'] = $user;
+            // A notification is send if the administrator is not the author
+            if($user->id != $message->user_id)
+                Mail::send('emails.notification-message', $data , function ($m) use ($user) {
+                    $m->from('contact@zombilingo.org', 'ZombiLingo');
+                    $m->to($user->email, $user->username)->subject("Nouveau message dans le forum");
+                });
         }
 
         //Users who follow the thread
