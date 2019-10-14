@@ -12,8 +12,9 @@ use App\Models\Discussion;
 use App\Models\AnnotationUser;
 use Gwaps4nlp\FaqManager\Models\QuestionAnswer;
 use App\Events\MessagePosted;
+use App\Jobs\SendNotification;
 use Illuminate\Http\Request;
-use Event, Auth, DB;
+use Event, Auth, DB, Config;
 
 class DiscussionController extends Controller
 {
@@ -160,7 +161,8 @@ class DiscussionController extends Controller
         $message = Message::create($data);
         $entity = $discussion->entity;
         $thread = $this->messages->getByDiscussion($discussion);
-        Event::fire(new MessagePosted($message,$discussion));
+        // Event::fire(new MessagePosted($message,$discussion));
+        SendNotification::dispatch($message,$discussion)->onQueue(Config::get('app.name'));
         return view('partials.discussion.thread',compact('user','entity','thread'));     
     }
 
