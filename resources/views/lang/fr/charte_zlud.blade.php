@@ -6,7 +6,7 @@ L'objet de ce projet est la construction de ressources lexicales et de corpus an
 Ces données sont le produit de l'activité des joueurs.
 </p>
 <p>
-Les données sont {!! link_to('informations','accessibles',['target'=>'_blank']) !!} sous des licences libres variées (fonction de la licence de la ressource d'origine), qui sont précisées dans chaque ressource.
+Les données sont {!! link_to('informations','accessibles',['target'=>'_blank']) !!} sous des licences libres variées (fonction de la licence de la ressource d'origine), qui sont précisées dans chaque ressource. Les joueurs s'inscrivant sur le jeu acceptent donc de renoncer à leur propriété intellectuelle sur leurs productions, afin d'en permettre une utilisation large. 
 Le code source de ZombiLingo est librement disponible sur GitHub sous licence CeCILL 2.1.
 </p>
 <p>
@@ -38,10 +38,13 @@ L'équipe du jeu se réserve le droit d'exploiter à des fins de recherches les 
 En aucun cas, ces données ne contiennent d'informations personnelles permettant de retrouver leur(s) auteur(s).
 </p>
 <p>
-Le joueur peut à tout moment supprimer son compte ainsi que la totalité des informations le concernant dans la base de données.
-Cependant, les actions de jeu liées à ce joueur et qui sont utiles pour le construction de la ressource linguistiques seront conservées.
+Les interventions des joueurs sur le forum pourront être utilisées à des fins de recherches et sont réputées sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.
 </p>
 <p>
+Le joueur peut à tout moment supprimer son compte ainsi que la totalité des informations le concernant dans la base de données.
+Cependant, les actions de jeu liées à ce joueur et qui sont utiles pour le construction de la ressource linguistiques seront conservées, ainsi que ses interventions sur le forum.
+</p>
+<!--p>
 Conformément à la loi «&nbsp;informatique et libertés&nbsp;» du 6 janvier 1978 modifiée en 2004,
 vous bénéficiez d’un droit d’accès et de rectification aux informations qui vous concernent, que vous pouvez exercer en vous adressant à&nbsp;:
 </p>
@@ -50,7 +53,7 @@ vous bénéficiez d’un droit d’accès et de rectification aux informations q
 <a href="mailto:bruno.guillaume@loria.fr">Bruno Guillaume</a>, LORIA UMR 7503
 Campus Scientifique, BP 239
 F-54506 Vandœuvre-lès-Nancy Cedex
-</p>
+</p-->
 
 <h2>
 (3) Saisies
