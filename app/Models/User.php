@@ -216,6 +216,17 @@ class User extends Gwaps4nlpUser
 		return $this->role->slug != 'user' && $this->role->slug == 'admin';
 	}
 
+    /**
+    * Check if the user has a role
+    *
+    * @param Role $role
+    * @return boolean
+    */
+    public function hasRole($role): bool
+    {
+        return $this->roles->contains('id', $role->id);
+    }
+
 	public function hasTrophy($trophy)
 	{
 		return $this->trophies->contains('id', $trophy->id);

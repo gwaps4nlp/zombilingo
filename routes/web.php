@@ -45,7 +45,7 @@ Route::group(array('before' => 'auth'), function ()
 	Route::get('user/home', 'UserController@getHome');
 	Route::get('user/players', 'UserController@getPlayers')->name('players');
 	Route::get('user/connected', 'UserController@getConnected');
-	Route::get('user/index-admin', 'UserController@getIndexAdmin')->middleware('admin');
+	Route::get('user/index-admin', 'UserController@getIndexAdmin')->middleware('admin')->name('users.index');
     Route::get('user/{user}', 'UserController@show')->name('show-user');
     Route::get('user/ask-friend/{user}', 'UserController@getAskFriend');
     Route::get('user/accept-friend/{user}', 'UserController@getAcceptFriend');
@@ -56,6 +56,8 @@ Route::group(array('before' => 'auth'), function ()
 // AdminController
 Route::group(array('before' => 'admin'), function ()
 {
+	Route::get('user/edit/{user}', 'UserController@getEdit')->name('user.edit');
+	Route::post('user/update/{user}', 'UserController@postUpdate')->name('user.update');
 	Route::get('admin', 'AdminController@getIndex');
 	Route::get('admin/reporting', 'AdminController@getReporting');
 	Route::get('admin/mwe', 'AdminController@getMwe');
@@ -247,10 +249,5 @@ Route::get('object/checkHelpAsSeen/{id}', 'ArticleController@checkHelpAsSeen');
 Route::get('shop/objectWon', 'ArticleController@objectWon');
 Route::get('shop/{mode}/useObject/{id}', 'ArticleController@useObject');
 
-Route::group(array('before' => 'admin'), function ()
-{
-    Route::get('/laravel-filemanager', '\Unisharp\Laravelfilemanager\controllers\LfmController@show');
-    Route::post('/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\UploadController@upload');
-    // list all lfm routes here...
-});
+
 

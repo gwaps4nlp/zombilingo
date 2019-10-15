@@ -27,7 +27,7 @@
 		<tbody>
 @foreach ($users as $user)
 		<tr>
-			<td>{{ $user->username }}</td>
+			<td><a href="{{ route('user.edit',['user'=>$user->id]) }}" class="text-secondary">{{ $user->username }}</a></td>
 			<td>{{ $user->roles->implode('label', ', ') }}</td>
 			<td>{{ $user->score }}</td>
 			<td>{{ $user->level->id }}</td>

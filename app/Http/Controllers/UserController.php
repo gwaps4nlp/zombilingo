@@ -273,9 +273,41 @@ class UserController extends Controller
      */
     public function getIndexAdmin(RoleRepository $roles_repo)
     {
-        $users = $this->users->getAll();
+        $users = User::paginate(20);
         $roles = Role::get()->pluck('label', 'id');
         return view('back.user.index',compact('users','roles'));
+    }
+
+    /**
+     * Edit a user.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function getEdit(User $user)
+    {
+        $roles = Role::get();
+        return view('back.user.edit',compact('user','roles'));
+    }
+
+    /**
+     * Update a user.
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function postUpdate(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'email' => 'email|max:255|unique:users,email,'.$user->id,
+            'roles' => 'required'
+
+        ]);
+        $user->update($request->all());
+        $user->roles()->detach();
+        $user->roles()->attach($request->input('roles'));
+        return redirect()->route('users.index')
+
+                        ->with('success','User created successfully');
+        return view('back.user.edit',compact('user','roles'));
     }
 
     /**
