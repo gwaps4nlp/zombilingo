@@ -27,17 +27,17 @@ class TutorialAnnotationController extends Controller
     public function getIndex(RelationRepository $relation, AnnotationRepository $annotations, TutorialAnnotationRepository $tutorial_annotation, Request $request, $relation_id=null)
     {
         $current_relation = new Relation();
-        if($relation_id){
+        if ($relation_id) {
             $current_relation = $relation->getById($relation_id);
             $tutorial_annotations = $annotations->getTutorial($current_relation);
-        }
-		else
+        } else {
             $tutorial_annotations = array();
-		
+        }
+
         $relations = $tutorial_annotation->getByRelation();
-		return view('back.tutorial-annotation.index',compact('tutorial_annotations','relations','current_relation'));
+        return view('back.tutorial-annotation.index', compact('tutorial_annotations', 'relations', 'current_relation'));
     }
-    
+
     /**
      * Change the visibility of a tutorial annotation
      *
@@ -83,15 +83,13 @@ class TutorialAnnotationController extends Controller
      */
     public function postImport(Request $request)
     {
-
         $destinationPath= storage_path()."/import/";
         $fileName=$request->file('file')->getClientOriginalName();
-        
-        $request->file('file')->move($destinationPath,$fileName);
+
+        $request->file('file')->move($destinationPath, $fileName);
         $filePath = $destinationPath.$fileName;
         $parser = new TutorialAnnotationParser($filePath);
-		$parser->parse();
-		return view('back.tutorial-annotation.post-import',compact('parser'));
+        $parser->parse();
+        return view('back.tutorial-annotation.post-import', compact('parser'));
     }
-
 }
