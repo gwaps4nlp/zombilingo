@@ -271,9 +271,17 @@ class UserController extends Controller
      *
      * @return Illuminate\Http\Response
      */
-    public function getIndexAdmin(RoleRepository $roles_repo)
+    public function getIndexAdmin(Request $request, RoleRepository $roles_repo)
     {
-        $users = User::paginate(20);
+        if ($request->filled('role_id')) {
+            $role = Role::find($request->input('role_id'));
+            $users = User::whereHas('roles', function($q) use ($role) {
+                $q->where('slug', $role->slug);
+            })->get();
+        } else {
+            $users = User::get();
+        }
+
         $roles = Role::get()->pluck('label', 'id');
         return view('back.user.index',compact('users','roles'));
     }

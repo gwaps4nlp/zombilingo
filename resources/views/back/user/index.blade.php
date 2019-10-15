@@ -38,5 +38,6 @@
 	</tbody>
 	</table>
 
+{{-- {{ $users->links() }} --}}
 
 @stop
