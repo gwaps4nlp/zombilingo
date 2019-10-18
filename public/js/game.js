@@ -463,6 +463,7 @@ function suivant() {
       }
     }
   });
+  update_save_annot();
 }
 
 function initGame(_mode, _relation) {
@@ -543,6 +544,7 @@ function loadContent(json) {
 
     }
   });
+  update_save_annot();
 }
 
 function loadContentMwe(json) {
@@ -1080,5 +1082,41 @@ function processInventaire(json) {
 
   $('#menuObject').css({
     'background-color': '#9bc5aa'
+  });
+}
+
+function update_save_annot() {
+    $.ajax({
+      url: base_url + 'tutorial-annotation/getKind',
+      method: 'POST',
+      data: {
+        annotation_id: annotation_id
+      },
+      success: function(response) {
+        console.log ("********************");
+        console.log (response);
+        console.log ("********************");
+        if (response == "random") {
+          $('#save-tuto').show();
+        } else {
+          $('#save-tuto').hide();
+        }
+      }
+    });
+}
+
+function save_tuto_annot(level) {
+  console.log('[jeu.js] CLICK->.#save-tuto-annot');
+  $.ajax({
+    url: base_url + 'tutorial-annotation/add',
+    method: 'POST',
+    data: {
+      annotation_id: annotation_id,
+      level: level
+    },
+    success: function(response) {
+    console.log("DONE");
+    $('#save-tuto').hide();
+    }
   });
 }

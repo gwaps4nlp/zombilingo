@@ -82,6 +82,23 @@ if($mode=="admin-game"){
         <div id="sentence">
 
         </div>
+
+
+
+@if($mode == "training")
+  @if(Auth::user()->isAdmin())
+    <div id="save-tuto">
+      <button class="link btn btn-small btn-green" id="save-tuto-annot1" onclick="javascript:save_tuto_annot(1)">Save level 1</button>
+      <button class="link btn btn-small btn-green" id="save-tuto-annot2" onclick="javascript:save_tuto_annot(2)">Save level 2</button>
+      <button class="link btn btn-small btn-green" id="save-tuto-annot3" onclick="javascript:save_tuto_annot(3)">Save level 3</button>
+      <button class="link btn btn-small btn-green" id="save-tuto-annot4" onclick="javascript:save_tuto_annot(4)">Save level 4</button>
+      <button class="link btn btn-small btn-green" id="save-tuto-annot5" onclick="javascript:save_tuto_annot(5)">Save level 5</button>
+    </div>
+  @endif
+@endif
+
+
+
     </div>
 @if($mode!="demo")
     <div id="refuse" class="pt-4 col-lg-1 d-none d-lg-flex flex-column">

@@ -186,6 +186,8 @@ Route::group(array('before' => 'admin'), function ()
 	Route::get('tutorial-annotation/delete-by-relation', 'TutorialAnnotationController@getDeleteByRelation');
 	Route::get('tutorial-annotation/import', 'TutorialAnnotationController@getImport');
 	Route::post('tutorial-annotation/import', 'TutorialAnnotationController@postImport');
+	Route::post('tutorial-annotation/add', 'TutorialAnnotationController@add');
+	Route::post('tutorial-annotation/getKind', 'TutorialAnnotationController@getKind');
 });
 //Annotator
 Route::get('annotator/graph-corpus/{id}', 'AnnotatorController@getGraphCorpus');
