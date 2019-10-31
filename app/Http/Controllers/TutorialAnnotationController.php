@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Relation;
 use App\Models\TutorialAnnotation;
-use App\Models\Annotation;
 use App\Repositories\RelationRepository;
 use App\Repositories\AnnotationRepository;
 use App\Repositories\TutorialAnnotationRepository;
 use App\Services\TutorialAnnotationParser;
 use Illuminate\Http\RedirectResponse;
 use Response;
-use Log;
 
 class TutorialAnnotationController extends Controller
 {
@@ -94,34 +92,4 @@ class TutorialAnnotationController extends Controller
         $parser->parse();
         return view('back.tutorial-annotation.post-import', compact('parser'));
     }
-
-
-    public function add(Request $request)
-    {
-      $annotation_id = $request->input('annotation_id');
-      $level = $request->input('level');
-      $annotation = Annotation::where ('id','=',$annotation_id)->first();
-      $relation_id = $annotation->relation_id;
-      $relation = Relation::where ('id','=',$relation_id)->first();
-      $relation_type = $relation->type;
-      if ($relation_type == "trouverDependant") {
-        $type = 1;
-      } else {
-        $type = -1;
-      }
-      TutorialAnnotation::create([
-        'relation_id'=>$relation_id,
-        'level'=>$level,
-        'annotation_id'=>$annotation_id,
-        'explanation'=>"",
-        'visible'=>1,
-        'type'=>$type
-      ]);
-    }
-
-public function getKind(Request $request) {
-  $training = session()->get('training');
-  return ($training["annot_kind"]);
-}
-
 }

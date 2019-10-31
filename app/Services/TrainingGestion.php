@@ -13,7 +13,6 @@ use App\Repositories\TutorialRepository;
 use Gwaps4nlp\Core\Exceptions\GameException;
 use Response;
 use View;
-use Auth;
 
 class TrainingGestion extends Game
 {
@@ -77,23 +76,14 @@ class TrainingGestion extends Game
 
     public function loadContent()
     {
-        if (Auth::user()->isAdmin()) {
-            $this->set('annot_kind', 'tuto');
-        }
         $this->annotation = $this->annotations->getRandomTutorial($this->relation, (int)($this->turn/2)+1, $this->already_played);
 
         if (!$this->annotation && rand(0, 100)<=ConstantGame::get("proba-negative-item-training")) {
             $this->annotation = $this->annotations->getRandomNegative($this->relation);
-            if (Auth::user()->isAdmin()) {
-                $this->set('annot_kind', 'negative');
-            }
         }
 
         if (!$this->annotation) {
             $this->annotation = $this->annotations->getRandomReference($this->relation);
-            if (Auth::user()->isAdmin()) {
-                $this->set('annot_kind', 'random');
-            }
         }
 
         if (!$this->annotation) {
