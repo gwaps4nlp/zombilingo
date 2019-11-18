@@ -13,15 +13,15 @@ $app_name = Config::get('app.name');
 <div class="row text-center" id="header_new">
 
     <div class="col-2 mt-5 text-center" style="z-index: 1">
-        <a href="https://lingoboingo.org/" style="padding-left:70px;" target="_blank">
+        <!-- <a href="https://lingoboingo.org/" style="padding-left:70px;" target="_blank"> -->
           <img
-            src="{{ asset('img/lingo_logo_mobile.png') }}"
+            src="{{ asset('img/zola.png') }}"
             data-toggle="tooltip"
             data-placement="bottom"
-            title="ZombiLingo est présent sur le portail LingoBoingo.org où tu peux trouver d'autres jeux sur la langue"
+            title="J'accuse"
             style="width:100%"
           />
-        </a>
+        <!-- </a> -->
     </div>
     <div class="col-8" id="container-logo" title="{{ trans('site.home') }}">
         <a href="{!! url('') !!}">
