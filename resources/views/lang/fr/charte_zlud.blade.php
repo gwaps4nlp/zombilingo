@@ -38,7 +38,7 @@ L'équipe du jeu se réserve le droit d'exploiter à des fins de recherches les 
 En aucun cas, ces données ne contiennent d'informations personnelles permettant de retrouver leur(s) auteur(s).
 </p>
 <p>
-Les interventions des joueurs sur le forum pourront être utilisées à des fins de recherches et sont réputées sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a>.
+Les interventions des joueurs sur le forum pourront être utilisées à des fins de recherches et sont réputées sous licence <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> (attribution à ZombiLUDik).
 </p>
 <p>
 Le joueur peut à tout moment supprimer son compte ainsi que la totalité des informations le concernant dans la base de données.
