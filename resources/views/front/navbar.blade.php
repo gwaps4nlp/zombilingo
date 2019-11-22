@@ -69,7 +69,6 @@ if($challenge){
     @if($challenge)
       <div class="ml-auto">
         <div>
-          <a class="nav-link" href="https://interstices.info/jcms/p_95618"><img style="width:30px;" src="{{ asset('img/logo_interstices.png') }}" /></a>
         </div>
       </div>
       <div class="d-md-block align-self-center mr-auto" id="block-counter">
