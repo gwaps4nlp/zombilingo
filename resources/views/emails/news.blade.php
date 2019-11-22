@@ -11,7 +11,5 @@
         À bientôt sur <a href="{{ config('app.url') }}" style="text-decoration:none;color:#888;" target="_blank">{{ ucfirst(config('app.name')) }}</a>,<br/>
         Bob le Zombie.
     </p>
- 
-    <div style="padding:20px;margin:0;text-align:center;font-size:12px;color:#bbbbbb">Si tu ne souhaites pas recevoir de notifications, tu peux te désabonner <a href="{{ config('app.url') }}/auth/unsubscribe?email=<?php echo $user->email ?>" style="color:#bbbbbb;font-weight:bold;text-decoration:none;font-size:12px!important" target="_blank">ici</a>
-    </div> 
+
 @stop
