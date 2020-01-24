@@ -15,10 +15,10 @@ $app_name = Config::get('app.name');
     <div class="col-2 mt-5 text-center" style="z-index: 1">
         <!-- <a href="https://lingoboingo.org/" style="padding-left:70px;" target="_blank"> -->
           <img
-            src="{{ asset('img/zola.png') }}"
+            src="{{ asset('img/challenge/bike_polo.jpg') }}"
             data-toggle="tooltip"
             data-placement="bottom"
-            title="J'accuse"
+            title="Polo & Cie"
             style="width:100%"
           />
         <!-- </a> -->
