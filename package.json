@@ -19,7 +19,7 @@
     "bootstrap": "^4.2.1",
     "font-awesome": "^4.7.0",
     "hawk": "^7.0.10",
-    "highcharts": "^6.2.0",
+    "highcharts": "^7.2.2",
     "hoek": "4.2.1",
     "ioredis": "^1.11.1",
     "jquery": "^3.1.1",
