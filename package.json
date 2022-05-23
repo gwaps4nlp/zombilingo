@@ -18,7 +18,7 @@
     "babel-core": "^6",
     "bootstrap": "^4.2.1",
     "font-awesome": "^4.7.0",
-    "hawk": "^7.0.10",
+    "hawk": "^9.0.1",
     "highcharts": "^6.2.0",
     "hoek": "4.2.1",
     "ioredis": "^1.11.1",
